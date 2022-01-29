@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AsyncAnalyzers" Version="1.1.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Cortside.Common.BootStrap" Version="1.1.213-develop" />
+    <PackageReference Include="Cortside.DomainEvent" Version="1.1.159" />
+    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="1.1.159" />
+    <PackageReference Include="Cortside.Health" Version="1.0.49-develop" />
+    <PackageReference Include="DistributedLock.SqlServer" Version="1.0.1" />
+    <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.20.0" />
+    <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.2.22" />
+    <PackageReference Include="MiniProfiler.EntityFrameworkCore" Version="4.2.22" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Acme.DomainEvent.Events\Acme.DomainEvent.Events.csproj" />
+    <ProjectReference Include="..\Acme.ShoppingCart.Configuration\Acme.ShoppingCart.Configuration.csproj" />
+    <ProjectReference Include="..\Acme.ShoppingCart.Data\Acme.ShoppingCart.Data.csproj" />
+    <ProjectReference Include="..\Acme.ShoppingCart.DomainEvent\Acme.ShoppingCart.DomainEvent.csproj" />
+    <ProjectReference Include="..\Acme.ShoppingCart.DomainService\Acme.ShoppingCart.DomainService.csproj" />
+    <ProjectReference Include="..\Acme.ShoppingCart.Health\Acme.ShoppingCart.Health.csproj" />
+    <ProjectReference Include="..\Acme.ShoppingCart.Hosting\Acme.ShoppingCart.Hosting.csproj" />
+  </ItemGroup>
+</Project>
