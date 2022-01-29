@@ -1,0 +1,35 @@
+{
+  "subjects": [
+    {
+      "clientId": "api",
+      "subjectId": "132953b2-f6a7-4c1d-8da1-2b3c3dafe1c5",
+      "userType": "lender",
+      "referenceToken": "107d225e3ea706bbbceb83593daf5c73c1347a89eaa89f253ca845beffb2e3f9",
+      "policies": [
+        {
+          "policyName": "Rebate*",
+          "authorization": {
+            "roles": [
+              "Internal"
+            ],
+            "permissions": [
+              "CreateRebate",
+              "GetRebateModels",
+              "GetRebateProvider",
+              "GetRebateProviders",
+              "GetRebateRequest",
+              "GetRebateRequests",
+              "SearchRebates",
+              "ReviewRebateRequest",
+              "InvoiceRebateRequest",
+              "FundRebateRequest",
+              "CollectRebateRequest",
+              "OverrideRebateRequest",
+              "CancelRebateRequest"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "id": "49b84729-cc27-4387-b088-c43ded751713",
+  "name": "My Visual Studio extensions",
+  "description": "A collection of my Visual Studio extensions",
+  "version": "1.0",
+  "extensions": [
+    {
+      "name": ".NET Portability Analyzer",
+      "vsixId": "55d15546-28ca-40dc-af23-dfa503e9c5fe"
+    },
+    {
+      "name": "Align Assignments",
+      "vsixId": "AlignAssignments.41858b2d-ff0b-4a43-80b0-f1b2d6084935"
+    },
+    {
+      "name": "Azure Data Lake and Stream Analytics Tools",
+      "vsixId": "1e906ff5-9da8-4091-a299-5c253c55fdc9"
+    },
+    {
+      "name": "Cloud Explorer for VS 2019 Preview",
+      "vsixId": "Microsoft.VisualStudio.CloudExplorer.16.0"
+    },
+    {
+      "name": "Code Formatter",
+      "vsixId": "269b24f9-c53a-4aca-8142-15f1498ffa51"
+    },
+    {
+      "name": "CodeMaid",
+      "vsixId": "4c82e17d-927e-42d2-8460-b473ac7df316"
+    },
+    {
+      "name": "Copy As Html",
+      "vsixId": "CopyAsHtml.42374550-426a-400e-96f9-237682e8dea6"
+    },
+    {
+      "name": "Double-Click Maximize",
+      "vsixId": "DoubleClickMaximize.050825c2-33a4-4b7d-b3af-bd46bd99a265"
+    },
+    {
+      "name": "DPack",
+      "vsixId": "2C5C8843-AA71-420B-A561-2BF27265DE4D"
+    },
+    {
+      "name": "DPack Rx",
+      "vsixId": "3D22E261-32E5-46CE-A4B0-B884FA49A9A2"
+    },
+    {
+      "name": "Editor Guidelines",
+      "vsixId": "Editor_Guidelines.Microsoft Corp..123716ef-b2ed-4fab-bbcf-1d5f84856ca3"
+    },
+    {
+      "name": "EditorConfig Language Service",
+      "vsixId": "1209461d-57f8-46a4-814a-dbe5fecef941"
+    },
+    {
+      "name": "EF Core Power Tools",
+      "vsixId": "f4c4712c-ceae-4803-8e52-0e2049d5de9f"
+    },
+    {
+      "name": "Extension Manager 2019",
+      "vsixId": "4a196712-2c3f-4730-ad1d-e7cda4185eb2"
+    },
+    {
+      "name": "File Icons",
+      "vsixId": "3a7b4930-a5fb-46ec-a9b8-9610c8f953b8"
+    },
+    {
+      "name": "Fix Mixed Tabs",
+      "vsixId": "FixMixedTabs.9f1d3050-b986-4b10-ae36-97c6efc5e968"
+    },
+    {
+      "name": "Fix Namespace",
+      "vsixId": "f073da8c-bb52-41f8-b95a-a6346b1a0b52"
+    },
+    {
+      "name": "Format All Files",
+      "vsixId": "16a2b8be-df6a-49b4-87c3-d5aeb9478822"
+    },
+    {
+      "name": "Live Share",
+      "vsixId": "Microsoft.VisualStudio.LiveShare"
+    },
+    {
+      "name": "Markdown Editor",
+      "vsixId": "9ca64947-e9ca-4543-bfb8-6cce9be19fd6"
+    },
+    {
+      "name": "Match Margin",
+      "vsixId": "MatchMargin.d85a25b5-f7b3-46a9-997e-a2d669dc2c93"
+    },
+    {
+      "name": "Middle Click Scroll",
+      "vsixId": "MiddleClickScroll.263a3239-a004-40e6-b790-4fd371832c85"
+    },
+    {
+      "name": "NamespaceFixer",
+      "vsixId": "pch9d11e-9ed1-48f6-875b-4d144a5d790c"
+    },
+    {
+      "name": "Output enhancer",
+      "vsixId": "VSOutputEnhancer.Nikolay Balakin.a06be4c3-f97e-425c-8a0d-bdef08ac2abb"
+    },
+    {
+      "name": "Peek Help",
+      "vsixId": "PeekHelp.51f43c96-8220-43bf-a922-390a361e7640"
+    },
+    {
+      "name": "PostSharp",
+      "vsixId": "B1E3658F-0093-4C51-B4D2-5B31354F3E77"
+    },
+    {
+      "name": "Power Commands for Visual Studio",
+      "vsixId": "PowerCommands.3ecdd89b-f985-483d-8c94-be37de4dc083"
+    },
+    {
+      "name": "Productivity Power Tools 2017/2019",
+      "vsixId": "ProductivityPowerPack.0d5b9d71-e118-46de-a20c-555176e53900"
+    },
+    {
+      "name": "Quick Launch Tasks",
+      "vsixId": "QuickLaunchTasks"
+    },
+    {
+      "name": "Redgate SQL Change Automation",
+      "vsixId": "ReadyRoll.Redgate.C6DA5CFB-AF31-4107-8E82-522EE0B39886"
+    },
+    {
+      "name": "ResolveUR - Resolve Unused References",
+      "vsixId": "637ba02c-3388-4e54-9051-3eea7c51b054"
+    },
+    {
+      "name": "Roslynator 2019",
+      "vsixId": "d42db039-5432-4399-bb62-67a9b4c3b838"
+    },
+    {
+      "name": "Shrink Empty Lines",
+      "vsixId": "SyntacticLineCompression.4452fb8f-b348-49eb-9499-76669d3f9c75"
+    },
+    {
+      "name": "Solution Error Visualizer",
+      "vsixId": "SolutionErrorVisualizer.a392f96b-6b33-4b53-b4bb-3376a05f986c"
+    },
+    {
+      "name": "SonarLint for Visual Studio 2019",
+      "vsixId": "SonarLint.b986f788-6a16-4a3a-a68b-c757f6b1b7d5"
+    },
+    {
+      "name": "SpecFlow for Visual Studio 2019",
+      "vsixId": "TechTalk.SpecFlow.VisualStudioIntegration"
+    },
+    {
+      "name": "Syntax Highlighting Pack",
+      "vsixId": "4773ce75-6f30-4269-9557-1f7c30a47be2"
+    },
+    {
+      "name": "Time Stamp Margin",
+      "vsixId": "TimeStampMargin.255e8b14-4a53-4eb7-89a7-7ab741c1f612"
+    },
+    {
+      "name": "VSColorOutput",
+      "vsixId": "CD56B219-38CB-482A-9B2D-7582DF4AAF1E"
+    },
+    {
+      "name": "VSSonarExtension2019",
+      "vsixId": "VSSonarExtension2019.3abe7dac-900d-4091-b2e4-46158654c502"
+    },
+    {
+      "name": "Web Live Preview (Preview)",
+      "vsixId": "Microsoft.WebTools.BrowserLink.WebLivePreview"
+    }
+  ]
+}
