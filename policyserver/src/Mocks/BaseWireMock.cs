@@ -17,7 +17,8 @@ namespace PolicyServer.Mocks
                 {
                     StartAdminInterface = true,
                     AllowCSharpCodeMatcher = true,
-                    Logger = new WireMockLogger(Log.Logger)
+                    Logger = new WireMockLogger(Log.Logger),
+                    Port = 5001
                 });
             }
         }
