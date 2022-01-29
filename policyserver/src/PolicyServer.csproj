@@ -2,16 +2,9 @@
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<StartupObject>PolicyServer.Program</StartupObject>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<None Remove="appsettings.json" />
-		<None Remove="Data\Ids\configuration.json" />
-		<None Remove="Data\Ids\jwks.json" />
-		<None Remove="Mocks\subjects.json" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<Content Include="appsettings.json">
@@ -35,12 +28,6 @@
 		<PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
 		<PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" />
 		<PackageReference Include="WireMock.Net" Version="1.4.34" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Update="log4net.config">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
 	</ItemGroup>
 
 </Project>
