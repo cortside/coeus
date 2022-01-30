@@ -1,13 +1,19 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Helpers.Mocks.Models {
     public class Subject {
         public string ClientId { get; set; }
         public string SubjectId { get; set; }
+        public List<SubjectClaim> Claims { get; set; }
         public string UserType { get; set; }
         public string ReferenceToken { get; set; }
         public List<Policy> Policies { get; set; }
+    }
+
+    public class SubjectClaim {
+        public string Type { get; set; }
+        public string Value { get; set; }
     }
 
     public class Authorization {

@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.WebApi.Models.Requests;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -17,9 +16,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
 
         public WidgetTest(IntegrationTestFactory<Startup> fixture) {
             this.fixture = fixture;
-            testServerClient = fixture.CreateClient(new WebApplicationFactoryClientOptions {
-                AllowAutoRedirect = false
-            });
+            testServerClient = fixture.CreateAuthorizedClient("api");
         }
 
         [Fact]

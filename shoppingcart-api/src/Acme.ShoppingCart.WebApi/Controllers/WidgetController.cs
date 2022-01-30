@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Acme.ShoppingCart.DomainService;
 using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.WebApi.Models.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
@@ -32,7 +33,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// Gets widgets
         /// </summary>
         [HttpGet("")]
-        //[Authorize(Constants.Authorization.Permissions.GetWidgets)]
+        [Authorize(Constants.Authorization.Permissions.GetWidgets)]
         [ProducesResponseType(typeof(List<WidgetDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> GetWidgetsAsync() {
@@ -46,7 +47,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// <param name="id">the id of the widget to get</param>
         [HttpGet("{id}")]
         [ActionName(nameof(GetWidgetAsync))]
-        //[Authorize(Constants.Authorization.Permissions.GetWidget)]
+        [Authorize(Constants.Authorization.Permissions.GetWidget)]
         [ProducesResponseType(typeof(WidgetDto), 200)]
         public async Task<IActionResult> GetWidgetAsync(int id) {
             var widget = await service.GetWidgetAsync(id).ConfigureAwait(false);
@@ -58,7 +59,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// </summary>
         /// <param name="input"></param>
         [HttpPost("")]
-        //[Authorize(Constants.Authorization.Permissions.CreateWidget)]
+        [Authorize(Constants.Authorization.Permissions.CreateWidget)]
         [ProducesResponseType(typeof(WidgetDto), 201)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateWidgetAsync([FromBody] WidgetRequest input) {
@@ -77,7 +78,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// <param name="id"></param>
         /// <param name="input"></param>
         [HttpPut("{id}")]
-        //[Authorize(Constants.Authorization.Permissions.UpdateWidget)]
+        [Authorize(Constants.Authorization.Permissions.UpdateWidget)]
         [ProducesResponseType(typeof(WidgetDto), 204)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> UpdateWidgetAsync(int id, WidgetRequest input) {
@@ -99,7 +100,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// </summary>
         /// <param name="id"></param>
         [HttpPost("{id}/publish")]
-        //[Authorize(Constants.Authorization.Permissions.UpdateWidget)]
+        [Authorize(Constants.Authorization.Permissions.UpdateWidget)]
         [ProducesResponseType(typeof(WidgetDto), 204)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> PublishWidgetStateChangedEventAsync(int id) {
