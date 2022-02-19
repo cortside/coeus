@@ -34,7 +34,7 @@
 //            using (LogContext.PushProperty("MessageId", @event.MessageId))
 //            using (LogContext.PushProperty("CorrelationId", @event.CorrelationId))
 //            using (LogContext.PushProperty("WidgetId", @event.Data.WidgetId)) {
-//                logger.LogDebug($"Handling {typeof(EmailEvent).Name} for WebApiStarter {@event.Data.WidgetId}");
+//                logger.LogDebug($"Handling {typeof(EmailEvent).Name} for ShoppingCart {@event.Data.WidgetId}");
 
 //                using (IServiceScope scope = serviceProvider.CreateScope()) {
 //                    var service = scope.ServiceProvider.GetRequiredService<IWidgetService>();
@@ -51,7 +51,7 @@
 //                    }
 //                }
 
-//                logger.LogDebug($"Successfully handled {typeof(WidgetStageChangedEvent).Name} for WebApiStarter {@event.Data.WidgetId}");
+//                logger.LogDebug($"Successfully handled {typeof(WidgetStageChangedEvent).Name} for ShoppingCart {@event.Data.WidgetId}");
 //                return HandlerResult.Success;
 //            }
 //        }

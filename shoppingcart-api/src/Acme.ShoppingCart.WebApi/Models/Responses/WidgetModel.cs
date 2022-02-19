@@ -8,7 +8,7 @@ namespace Acme.ShoppingCart.WebApi.Models.Responses {
     /// </summary>
     public class WidgetModel {
         /// <summary>
-        /// Unique identifier for a WebApiStarter
+        /// Unique identifier for a ShoppingCart
         /// </summary>
         public Guid WidgetId { get; set; }
         public string Text { get; set; }

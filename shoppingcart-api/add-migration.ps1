@@ -12,4 +12,8 @@ echo "creating new migration $migration for $context context in project $project
 
 dotnet ef migrations add $migration --project "$project" --startup-project "$startup" --context "$context"
 
+dotnet build ./src
+
+.\generate-sql.ps1
+
 echo "done"

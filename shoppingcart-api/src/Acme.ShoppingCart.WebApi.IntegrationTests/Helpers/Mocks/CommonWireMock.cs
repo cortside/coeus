@@ -1,4 +1,4 @@
-﻿using WireMock.RequestBuilders;
+using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
 using WireMock.Server;
 

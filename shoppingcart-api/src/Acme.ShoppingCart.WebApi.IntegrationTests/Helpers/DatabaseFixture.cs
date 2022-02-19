@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Acme.ShoppingCart.Data;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Helpers {

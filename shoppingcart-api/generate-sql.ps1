@@ -33,6 +33,9 @@ $migrations = (dotnet ef migrations list --no-build --project "$project" --start
 
 $previousMigration="0"
 foreach($migration in $migrations) {
+	if ($migration.StartsWith("20")) {
+		$migration = $migration -replace ' \(Pending\)', ''
+
 	echo "Generating migration $migration..."
 	
 	$exists = test-path src/sql/table/$migration.migration.sql
@@ -55,6 +58,7 @@ foreach($migration in $migrations) {
 	
 	## set last for next loop
 	$previousMigration=$migration 
+	}	
 }
 
 echo "done"

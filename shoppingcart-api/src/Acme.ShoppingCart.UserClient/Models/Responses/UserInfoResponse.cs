@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Acme.ShoppingCart.UserClient.Models.Responses {
     public class UserInfoResponse {

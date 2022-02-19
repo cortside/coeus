@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Cortside.Common.Messages.MessageExceptions;
 
 namespace Acme.ShoppingCart.Exceptions {

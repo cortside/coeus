@@ -1,4 +1,4 @@
-﻿using Cortside.Common.BootStrap;
+using Cortside.Common.BootStrap;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Exceptions;
 using Acme.ShoppingCart.UserClient.Models.Responses;

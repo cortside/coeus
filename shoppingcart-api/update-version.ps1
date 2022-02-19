@@ -1,4 +1,4 @@
-﻿$a = Get-Content './src/version.json' -raw | ConvertFrom-Json
+$a = Get-Content './src/version.json' -raw | ConvertFrom-Json
 
 echo $a.version
 $version = [version] $a.version
