@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -8,7 +8,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Cortside.Common.BootStrap" Version="1.1.213-develop" />
+    <PackageReference Include="Cortside.Common.BootStrap" Version="1.1.215-develop" />
     <PackageReference Include="Cortside.DomainEvent" Version="1.1.159" />
     <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="1.1.159" />
     <PackageReference Include="Cortside.Health" Version="1.0.49-develop" />
@@ -26,5 +26,6 @@
     <ProjectReference Include="..\Acme.ShoppingCart.DomainService\Acme.ShoppingCart.DomainService.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.Health\Acme.ShoppingCart.Health.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.Hosting\Acme.ShoppingCart.Hosting.csproj" />
+    <ProjectReference Include="..\Acme.ShoppingCart.UserClient\Acme.ShoppingCart.Catalog.csproj" />
   </ItemGroup>
 </Project>

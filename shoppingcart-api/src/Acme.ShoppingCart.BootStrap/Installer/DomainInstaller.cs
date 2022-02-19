@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Reflection;
+using Acme.ShoppingCart.Data.Repositories;
 using Acme.ShoppingCart.DomainService;
 using Cortside.Common.BootStrap;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +17,7 @@ namespace Acme.ShoppingCart.BootStrap.Installer {
                     && x.GetInterfaces().Any())
                 .ToList().ForEach(x => {
                     x.GetInterfaces().ToList()
-                        .ForEach(i => services.AddSingleton(i, x));
+                        .ForEach(i => services.AddScoped(i, x));
                 });
 
             // register domain services
@@ -27,8 +28,20 @@ namespace Acme.ShoppingCart.BootStrap.Installer {
                     && x.GetInterfaces().Any())
                 .ToList().ForEach(x => {
                     x.GetInterfaces().ToList()
-                        .ForEach(i => services.AddSingleton(i, x));
+                        .ForEach(i => services.AddScoped(i, x));
                 });
+
+            typeof(OrderRepository).GetTypeInfo().Assembly.GetTypes()
+                .Where(x => (x.Name.EndsWith("Repository"))
+                    && x.GetTypeInfo().IsClass
+                    && !x.GetTypeInfo().IsAbstract
+                    && x.GetInterfaces().Any())
+                .ToList().ForEach(x => {
+                    x.GetInterfaces().ToList()
+                        .ForEach(i => services.AddScoped(i, x));
+                });
+
+            //services.AddScoped<ISubjectService, SubjectService>();
         }
     }
 }

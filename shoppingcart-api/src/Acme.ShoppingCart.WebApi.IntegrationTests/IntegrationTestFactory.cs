@@ -72,10 +72,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
             var loanservicingAuthConfig = loanservicingConfig.GetSection("Authentication");
             loanservicingAuthConfig["Url"] = $"{WireMockServer.WireMockUrl}/connect/token";
 
-            var goodmanApiConfig = Configuration.GetSection("GoodmanApi");
-            goodmanApiConfig["ServiceUrl"] = WireMockServer.WireMockUrl;
-
-            var userConfig = Configuration.GetSection("UserApi");
+            var userConfig = Configuration.GetSection("CatalogApi");
             userConfig["ServiceUrl"] = $"{WireMockServer.WireMockUrl}/api";
             var userAuthConfig = userConfig.GetSection("Authentication");
             userAuthConfig["Url"] = $"{WireMockServer.WireMockUrl}/connect/token";

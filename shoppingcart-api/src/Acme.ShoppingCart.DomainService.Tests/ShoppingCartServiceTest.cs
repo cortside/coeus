@@ -4,7 +4,7 @@ using Moq;
 using Xunit.Abstractions;
 
 namespace Acme.ShoppingCart.DomainService.Tests {
-    public class ShoppingCarterviceTest : DomainServiceTest<IWidgetService> {
+    public class ShoppingCarterviceTest : DomainServiceTest<ICustomerService> {
         private readonly DatabaseContext databaseContext;
         private readonly Mock<IDomainEventPublisher> domainEventPublisherMock;
         private readonly ITestOutputHelper testOutputHelper;
