@@ -1,4 +1,4 @@
-﻿PRINT 'Before TRY'
+PRINT 'Before TRY'
 BEGIN TRY
 	BEGIN TRAN
 	PRINT 'First Statement in the TRY block'

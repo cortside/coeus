@@ -65,13 +65,13 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Helpers.IDSMock {
 
             mockServer
                 .Given(
-                Request.Create().WithPath($"/runtime/policy/WebApiStarter*")
+                Request.Create().WithPath($"/runtime/policy/ShoppingCart*")
                     .UsingPost()
             )
             .RespondWith(
                 Response.Create()
                     .WithStatusCode(200)
-                    .WithBody(r => $"{{\"roles\":[\"Internal\"],\"permissions\":[\"CreateWebApiStarter\",\"GetWebApiStarter\",\"GetWebApiStarter\",\"SignWebApiStarter\",\"VoidWebApiStarter\",\"ActivateWebApiStarter\",\"GetWebApiStarterso\",\"GetWebApiStartersos\"]}}")
+                    .WithBody(r => $"{{\"roles\":[\"Internal\"],\"permissions\":[\"CreateShoppingCart\",\"GetShoppingCart\",\"GetShoppingCart\",\"SignShoppingCart\",\"VoidShoppingCart\",\"ActivateShoppingCart\",\"GetShoppingCartso\",\"GetShoppingCartsos\"]}}")
             );
 
             mockServer

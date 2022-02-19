@@ -1,4 +1,4 @@
-﻿using Acme.ShoppingCart.Configuration;
+using Acme.ShoppingCart.Configuration;
 using Cortside.Common.BootStrap;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text.RegularExpressions;
 using Acme.ShoppingCart.UserClient.Models.Responses;
 using Cortside.RestSharpClient.Authenticators.OpenIDConnect;

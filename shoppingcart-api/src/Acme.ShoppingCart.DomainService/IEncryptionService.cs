@@ -1,4 +1,4 @@
-﻿namespace Acme.ShoppingCart.DomainService {
+namespace Acme.ShoppingCart.DomainService {
     public interface IEncryptionService {
         string EncryptString<T>(T objectToEncrypt);
 

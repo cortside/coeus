@@ -69,7 +69,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                         Url = policyServer.GetValue<string>("PolicyServerUrl"),
                     }
                 },
-                Service = "WebApiStarter"
+                Service = "ShoppingCart"
             };
         }
     }

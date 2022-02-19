@@ -1,4 +1,4 @@
-﻿using Cortside.RestSharpClient.Authenticators.OpenIDConnect;
+using Cortside.RestSharpClient.Authenticators.OpenIDConnect;
 
 namespace Acme.ShoppingCart.UserClient {
     public class UserClientConfiguration {

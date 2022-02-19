@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Acme.ShoppingCart.WebApi.Models {
     /// <summary>

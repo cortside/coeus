@@ -3,6 +3,6 @@ using Microsoft.ApplicationInsights.Extensibility;
 
 internal class AppInsightsInitializer : ITelemetryInitializer {
     public void Initialize(ITelemetry telemetry) {
-        telemetry.Context.Cloud.RoleName = "WebApiStarter";
+        telemetry.Context.Cloud.RoleName = "ShoppingCart";
     }
 }
