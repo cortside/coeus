@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 
-namespace Acme.WebApiStarter.WebApi.IntegrationTests.Data.Ids {
-    public class Key {
+namespace PolicyServer.Data.Ids
+{
+    public class Key
+    {
         public string Kty { get; set; }
         public string Use { get; set; }
         public string Kid { get; set; }
@@ -12,7 +14,8 @@ namespace Acme.WebApiStarter.WebApi.IntegrationTests.Data.Ids {
         public string Alg { get; set; }
     }
 
-    public class IdsJwks {
+    public class IdsJwks
+    {
         public List<Key> Keys { get; set; }
     }
 }
