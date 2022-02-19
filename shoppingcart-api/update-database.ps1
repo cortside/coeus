@@ -1,7 +1,7 @@
 Param
 (
 	[Parameter(Mandatory = $false)][string]$server = "localhost",
-        [Parameter(Mandatory=$false)][string]$database = "ShoppingCart",
+	[Parameter(Mandatory=$false)][string]$database = "ShoppingCart",
 	[Parameter(Mandatory = $false)][string]$username = "",
 	[Parameter(Mandatory = $false)][string]$password = "",
 	[Parameter(Mandatory = $false)][string]$ConnectionString = "",
@@ -64,9 +64,9 @@ gci -Recurse @(".\src\sql\table\*.sql") | % {
 gci -Recurse @(".\src\sql\data\*.sql") | % {
 	$scripts += $_.FullName
 }
-# gci -Recurse @(".\src\sql\proc\*.sql") | % {
-	# $scripts += $_.FullName
-# }
+gci -Recurse @(".\src\sql\proc\*.sql") | % {
+	$scripts += $_.FullName
+}
 gci -Recurse @(".\src\sql\trigger\*.sql") | % {
 	$scripts += $_.FullName
 }

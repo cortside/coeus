@@ -19,7 +19,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Helpers.Mocks {
                        .WithStatusCode(200)
                        .WithHeader("Content-Type", "application/json")
                        .WithBody(r => JsonConvert.SerializeObject(
-                           new UserInfoResponse() {
+                           new CatalogItemResponse() {
                                UserId = Guid.NewGuid(),
                                FirstName = "first",
                                LastName = "last",

@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Data;
-using Acme.ShoppingCart.Domain;
+using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.Dto;
 
 namespace Acme.ShoppingCart.DomainService {

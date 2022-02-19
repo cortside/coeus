@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Acme.ShoppingCart.Domain.Entities;
 
 namespace Acme.ShoppingCart.Domain {
     /// <summary>

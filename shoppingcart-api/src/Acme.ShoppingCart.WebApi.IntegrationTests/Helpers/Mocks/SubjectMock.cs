@@ -13,6 +13,11 @@ using WireMock.Server;
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Helpers.Mocks {
     public class SubjectMock : IWireMockBuilder {
         public void Configure(WireMockServer server) {
+
+
+            // todo: add support for feature flags  -- http://bitbucket:7990/projects/OA/repos/onlineapplication/pull-requests/4798/diff#src/EBOA.ApplicationApi.IntegrationTests/Helpers/Mocks/BaseWireMock.cs
+
+
             var subjects = JsonConvert.DeserializeObject<Subjects>(File.ReadAllText(@"./Helpers/Mocks/subjects.json"));
             foreach (var subject in subjects.SubjectsList) {
                 Log.Logger.Debug($"Client: {subject.ClientId}");

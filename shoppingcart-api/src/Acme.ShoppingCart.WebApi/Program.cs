@@ -64,7 +64,12 @@ namespace Acme.ShoppingCart.WebApi {
                 host.Run();
                 return 0;
             } catch (Exception ex) {
-                Log.Fatal(ex, "Host terminated unexpectedly");
+                string type = ex.GetType().Name;
+                if (type.Equals("StopTheHostException", StringComparison.Ordinal)) {
+                    throw;
+                }
+
+                Log.Fatal(ex, "Unhandled exception");
                 return 1;
             } finally {
                 Log.CloseAndFlush();

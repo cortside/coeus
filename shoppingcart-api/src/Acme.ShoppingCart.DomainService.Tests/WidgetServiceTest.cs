@@ -10,7 +10,7 @@ using Xunit;
 using Xunit.Abstractions;
 
 namespace Acme.ShoppingCart.DomainService.Tests {
-    public class WidgetServiceTest : DomainServiceTest<IWidgetService> {
+    public class WidgetServiceTest : DomainServiceTest<ICustomerService> {
         private readonly DatabaseContext databaseContext;
         private readonly Mock<IDomainEventPublisher> domainEventPublisherMock;
         private readonly ITestOutputHelper testOutputHelper;
@@ -24,18 +24,18 @@ namespace Acme.ShoppingCart.DomainService.Tests {
         [Fact]
         public async Task ShouldCreateWidget() {
             // Arrange
-            var dto = new WidgetDto() {
-                Text = Guid.NewGuid().ToString()
+            var dto = new CustomerDto() {
+                FirstName = Guid.NewGuid().ToString()
             };
 
             var publisher = new Mock<IDomainEventOutboxPublisher>();
-            var service = new WidgetService(databaseContext, publisher.Object, NullLogger<WidgetService>.Instance);
+            var service = new CustomerService(databaseContext, publisher.Object, NullLogger<CustomerService>.Instance);
 
             // Act
-            await service.CreateWidgetAsync(dto);
+            await service.CreateCustomerAsync(dto);
 
             // Assert
-            Assert.True(databaseContext.Widgets.Any(x => x.Text == dto.Text));
+            Assert.True(databaseContext.Customers.Any(x => x.FirstName == dto.FirstName));
         }
     }
 }

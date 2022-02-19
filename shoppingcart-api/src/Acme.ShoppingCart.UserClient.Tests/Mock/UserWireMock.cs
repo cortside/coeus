@@ -30,7 +30,7 @@ namespace Acme.ShoppingCart.UserClient.Tests.Mock {
                        .WithStatusCode(200)
                        .WithHeader("Content-Type", "application/json")
                        .WithBody(_ => JsonConvert.SerializeObject(
-                           new UserInfoResponse() {
+                           new CatalogItemResponse() {
                                UserId = Guid.NewGuid(),
                                FirstName = "first",
                                LastName = "last",

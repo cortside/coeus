@@ -5,7 +5,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Helpers {
     public static class DatabaseFixture {
         public static async Task SeedInMemoryDbAsync(DatabaseContext dbContext) {
             await dbContext.Subjects.SeedFromFileAsync(".\\SeedData\\Subject.csv").ConfigureAwait(false);
-            await dbContext.Widgets.SeedFromFileAsync(".\\SeedData\\Widget.csv").ConfigureAwait(false);
+            await dbContext.Customers.SeedFromFileAsync(".\\SeedData\\Widget.csv").ConfigureAwait(false);
 
             // cast to get base implementation
             //((DbContext)dbContext).SaveChanges(true);

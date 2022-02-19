@@ -43,12 +43,14 @@ namespace Acme.ShoppingCart.BootStrap.Installer {
             // Register Hosted Services
             services.AddTransient<IDomainEventPublisher, DomainEventPublisher>();
             services.AddTransient<IDomainEventOutboxPublisher, DomainEventOutboxPublisher<DatabaseContext>>();
-            services.AddTransient<IDomainEventHandler<WidgetStageChangedEvent>, WidgetStateChangedHandler>();
+            services.AddTransient<IDomainEventHandler<CustomerStateChangedEvent>, WidgetStateChangedHandler>();
             services.AddSingleton<IDomainEventReceiver, DomainEventReceiver>();
+
+            //services.AddSingleton<IDomainEventHandler<ContractorStateChangedEvent>, ContractorStateChangedEventHandler>();
 
             var receiverHostedServiceSettings = configuration.GetSection("ReceiverHostedService").Get<ReceiverHostedServiceSettings>();
             receiverHostedServiceSettings.MessageTypes = new Dictionary<string, Type> {
-                { typeof(WidgetStageChangedEvent).FullName, typeof(WidgetStageChangedEvent) }
+                { typeof(CustomerStateChangedEvent).FullName, typeof(CustomerStateChangedEvent) }
             };
             services.AddSingleton(receiverHostedServiceSettings);
             services.AddHostedService<ReceiverHostedService>();
