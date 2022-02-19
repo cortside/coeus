@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 
-namespace Acme.WebApiStarter.WebApi.IntegrationTests.Data.Ids {
-    public class IdsConfiguration {
+namespace PolicyServer.Data.Ids
+{
+    public class IdsConfiguration
+    {
         public string Issuer { get; set; }
         public string Jwks_uri { get; set; }
         public string Authorization_endpoint { get; set; }

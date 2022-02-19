@@ -1,5 +1,5 @@
-using Acme.WebApiStarter.WebApi.IntegrationTests.Data.Ids;
 using Newtonsoft.Json;
+using PolicyServer.Data.Ids;
 using System.IO;
 using System.Linq;
 using WireMock.RequestBuilders;
