@@ -1,7 +1,9 @@
 using Newtonsoft.Json;
 
-namespace Acme.WebApiStarter.WebApi.IntegrationTests.Data.Ids {
-    public class AuthenticationResponseModel {
+namespace PolicyServer.Data.Ids
+{
+    public class AuthenticationResponseModel
+    {
         [JsonProperty("access_token")]
         public string AccessToken { get; set; }
         [JsonProperty("expires_in")]
