@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Acme.ShoppingCart.Data.Repositories;
 using Acme.ShoppingCart.DomainService;
 using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.WebApi.Models.Requests;
@@ -34,12 +35,11 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// Gets orders
         /// </summary>
         [HttpGet("")]
-        [Authorize(Constants.Authorization.Permissions.GetWidgets)]
+        [Authorize(Constants.Authorization.Permissions.GetOrders)]
         [ProducesResponseType(typeof(List<OrderDto>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(400)]
-        public async Task<IActionResult> GetOrdersAsync() {
-            var widgets = await service.GetOrdersAsync().ConfigureAwait(false);
-            return Ok(widgets);
+        public async Task<IActionResult> GetOrdersAsync([FromQuery] OrderSearch search, int pageNumber = 1, int pageSize = 30, string sort = null) {
+            var results = await service.SearchOrdersAsync(pageSize, pageNumber, sort ?? "", search).ConfigureAwait(false);
+            return Ok(results);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// <param name="id">the id of the widget to get</param>
         [HttpGet("{id}")]
         [ActionName(nameof(GetOrderAsync))]
-        [Authorize(Constants.Authorization.Permissions.GetWidget)]
+        [Authorize(Constants.Authorization.Permissions.GetOrder)]
         [ProducesResponseType(typeof(OrderDto), 200)]
         public async Task<IActionResult> GetOrderAsync(Guid id) {
             var widget = await service.GetOrderAsync(id).ConfigureAwait(false);
@@ -60,9 +60,8 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// </summary>
         /// <param name="input"></param>
         [HttpPost("")]
-        [Authorize(Constants.Authorization.Permissions.CreateWidget)]
+        [Authorize(Constants.Authorization.Permissions.CreateOrder)]
         [ProducesResponseType(typeof(OrderDto), 201)]
-        [ProducesResponseType(400)]
         public async Task<IActionResult> CreateOrderAsync([FromBody] OrderRequest input) {
             var dto = new OrderDto() {
                 Customer = new CustomerDto() {
@@ -93,7 +92,6 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         //[HttpPut("{id}")]
         //[Authorize(Constants.Authorization.Permissions.UpdateWidget)]
         //[ProducesResponseType(typeof(OrderDto), 204)]
-        //[ProducesResponseType(400)]
         //public async Task<IActionResult> UpdateWidgetAsync(int id, CustomerRequest input) {
         //    using (LogContext.PushProperty("WidgetId", id)) {
         //        var dto = new CustomerDto() {

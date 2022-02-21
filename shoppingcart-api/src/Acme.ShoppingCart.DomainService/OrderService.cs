@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
 using Acme.ShoppingCart.Data;
@@ -44,24 +45,22 @@ namespace Acme.ShoppingCart.DomainService {
             return ToOrderDto(entity);
         }
 
-        //public Task DeleteOrderAsync(int widgetId) {
-        //    throw new NotImplementedException();
-        //}
-
         public async Task<OrderDto> GetOrderAsync(Guid id) {
             var entity = await orderRepository.GetAsync(id);
             return ToOrderDto(entity);
         }
 
-        public async Task<List<OrderDto>> GetOrdersAsync() {
-            var entities = await db.Orders.ToListAsync().ConfigureAwait(false);
+        public async Task<PagedList<OrderDto>> SearchOrdersAsync(int pageSize, int pageNumber, string sortParams, OrderSearch search) {
+            var orders = await orderRepository.SearchAsync(pageSize, pageNumber, sortParams, search).ConfigureAwait(false);
 
-            var dtos = new List<OrderDto>();
-            foreach (var entity in entities) {
-                dtos.Add(ToOrderDto(entity));
-            }
+            var results = new PagedList<OrderDto> {
+                PageNumber = orders.PageNumber,
+                PageSize = orders.PageSize,
+                TotalItems = orders.TotalItems,
+                Items = orders.Items.Select(x => ToOrderDto(x)).ToList()
+            };
 
-            return dtos;
+            return results;
         }
 
         //public async Task<OrderDto> UpdateOrderAsync(OrderDto dto) {
@@ -96,21 +95,37 @@ namespace Acme.ShoppingCart.DomainService {
                     Country = entity.Address?.Country,
                     ZipCode = entity.Address?.ZipCode
                 },
-                Customer = new CustomerDto() {
-                    FirstName = entity.Customer?.FirstName,
-                    LastName = entity.Customer?.LastName,
-                    Email = entity.Customer?.Email
-                },
+                Customer = null,
                 CreatedDate = entity.CreatedDate,
                 LastModifiedDate = entity.LastModifiedDate,
                 CreatedSubject = new SubjectDto() {
+                    SubjectId = entity.CreatedSubject.SubjectId,
+                    GivenName = entity.CreatedSubject.GivenName,
+                    FamilyName = entity.CreatedSubject.FamilyName,
+                    Name = entity.CreatedSubject.Name,
+                    UserPrincipalName = entity.CreatedSubject.UserPrincipalName
                 },
                 LastModifiedSubject = new SubjectDto() {
+                    SubjectId = entity.LastModifiedSubject.SubjectId,
+                    GivenName = entity.LastModifiedSubject.GivenName,
+                    FamilyName = entity.LastModifiedSubject.FamilyName,
+                    Name = entity.LastModifiedSubject.Name,
+                    UserPrincipalName = entity.LastModifiedSubject.UserPrincipalName
                 },
                 Items = new List<OrderItemDto>()
             };
+
+            if (entity.Customer != null) {
+                dto.Customer = new CustomerDto() {
+                    CustomerId = entity.Customer.CustomerId,
+                    CustomerResourceId = entity.Customer.CustomerResourceId,
+                    FirstName = entity.Customer.FirstName,
+                    LastName = entity.Customer.LastName,
+                    Email = entity.Customer.Email
+                };
+            }
+
             return dto;
         }
     }
 }
-

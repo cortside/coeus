@@ -12,7 +12,7 @@ namespace Acme.ShoppingCart.Domain.Entities {
             Items = new List<OrderItem>();
         }
 
-        public Order(Customer customer, string street, string city, string state, string country, string zipCode) : base() {
+        public Order(Customer customer, string street, string city, string state, string country, string zipCode) {
             Customer = customer;
             Address = new Address(street, city, state, country, zipCode);
         }
