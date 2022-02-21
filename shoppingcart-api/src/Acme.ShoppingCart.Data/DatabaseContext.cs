@@ -1,9 +1,12 @@
+using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Domain.Entities;
 using Cortside.Common.Security;
 using Cortside.DomainEvent.EntityFramework;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+
 namespace Acme.ShoppingCart.Data {
     public class DatabaseContext : AuditableDatabaseContext, IUnitOfWork {
 
@@ -12,6 +15,10 @@ namespace Acme.ShoppingCart.Data {
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders { get; set; }
+
+        public Task<IDbContextTransaction> BeginTransactionAsync(IsolationLevel isolationLevel) {
+            return Database.BeginTransactionAsync(isolationLevel);
+        }
 
         public Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default) {
             throw new System.NotImplementedException();
