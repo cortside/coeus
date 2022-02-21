@@ -1,5 +1,5 @@
 {
-  "id": "f2360b16-ec3e-46f7-a28c-60aa84000e44",
+  "id": "387afc7e-c034-4d8e-af92-ad6df52900bd",
   "name": "My Visual Studio extensions",
   "description": "A collection of my Visual Studio extensions",
   "version": "1.0",
@@ -13,12 +13,28 @@
       "vsixId": "AsyncFixer2022.edab5fce-e3aa-4fea-9d60-a07bc11d493b"
     },
     {
+      "name": "Code Cleanup On Save",
+      "vsixId": "66985471-b701-4851-a2d7-5a8bdce1e694"
+    },
+    {
+      "name": "CodeMaid VS2022",
+      "vsixId": "9079e73d-3fbb-4e07-8dab-f44fa5d8e8b5"
+    },
+    {
       "name": "Copy As Html 2022",
       "vsixId": "CopyAsHtml2022.42374550-426a-400e-96f9-237682e8dea6"
     },
     {
       "name": "Double-Click Maximize 2022",
       "vsixId": "DoubleClickMaximize2022.050825c2-33a4-4b7d-b3af-bd46bd99a265"
+    },
+    {
+      "name": "DPack Rx 2022",
+      "vsixId": "3D22E261-32E5-46CE-A4B0-B884FA49A9A2.2022"
+    },
+    {
+      "name": "Editor Guidelines",
+      "vsixId": "EditorGuidelines.f7dfa085-35e4-4844-8842-48298d5eaee0"
     },
     {
       "name": "EF Core Power Tools",
@@ -41,6 +57,30 @@
       "vsixId": "2f4fac85-be4e-4d7a-8c74-93cc4389b427"
     },
     {
+      "name": "Format on Save for VS2022",
+      "vsixId": "VSFormatOnSave2022.9484441C-1BE1-4481-997F-0FEDF16868C8"
+    },
+    {
+      "name": "GhostDoc Community for VS2017 and Later",
+      "vsixId": "f646ea44-feb2-4168-802a-80c9b64bb8bb"
+    },
+    {
+      "name": "Git Diff Margin",
+      "vsixId": "GitDiffMargin..5ef9f816-d9ce-45cd-a8fa-cd67a807df0e"
+    },
+    {
+      "name": "Insert Guid",
+      "vsixId": "9def4441-acfd-4dd6-bffd-4531a57dee37"
+    },
+    {
+      "name": "Live Share 2022",
+      "vsixId": "Microsoft.VisualStudio.LiveShare.2022"
+    },
+    {
+      "name": "MappingGenerator for VS2022",
+      "vsixId": "MappingGenerator2022"
+    },
+    {
       "name": "Markdown Editor (64-bit)",
       "vsixId": "9ca64947-e9ca-4543-bfb8-6cce9be19fd7"
     },
@@ -53,12 +93,16 @@
       "vsixId": "MiddleClickScroll2022.263a3239-a004-40e6-b790-4fd371832c85"
     },
     {
-      "name": "NamespaceFixer 2022",
-      "vsixId": "9B94D118-318C-41FD-8A77-163A64689FA4"
+      "name": "ML.NET Model Builder 2022",
+      "vsixId": "A274A0E2-E41E-40CC-A694-8D5D14BBD2D0"
     },
     {
       "name": "Output enhancer",
       "vsixId": "VSOutputEnhancer.Nikolay Balakin.a06be4c3-f97e-425c-8a0d-bdef08ac2abb"
+    },
+    {
+      "name": "ParallelHelper",
+      "vsixId": "ParallelHelper.f833642b-cd24-49ac-addc-e5328ce8fe88"
     },
     {
       "name": "Peek Help 2022",
@@ -73,6 +117,14 @@
       "vsixId": "f326ee1b-81a6-4577-b251-1f29d391cef3"
     },
     {
+      "name": "Run Coverlet Report VS2022",
+      "vsixId": "e53256f9-2613-4a21-96ed-f203ddc437d5"
+    },
+    {
+      "name": "Serilog Analyzer",
+      "vsixId": "SerilogAnalyzer..811c872b-87a2-4144-a04f-c097d50929d2"
+    },
+    {
       "name": "Shrink Empty Lines 2022",
       "vsixId": "SyntacticLineCompression2022.4452fb8f-b348-49eb-9499-76669d3f9c75"
     },
@@ -81,8 +133,20 @@
       "vsixId": "SolutionErrorVisualizer2022.a392f96b-6b33-4b53-b4bb-3376a05f986c"
     },
     {
-      "name": "SpecFlow for Visual Studio 2022",
-      "vsixId": "SpecFlow.VisualStudio.2022.3c1441cb-29e4-49a6-b430-c98205b95236"
+      "name": "SonarLint for Visual Studio 2022",
+      "vsixId": "SonarLint.0DE19254-1DCA-4479-8EAF-58E5D677FF4D"
+    },
+    {
+      "name": "Time Stamp Margin 2022",
+      "vsixId": "TimeStampMargin2022.255e8b14-4a53-4eb7-89a7-7ab741c1f612"
+    },
+    {
+      "name": "ViceCode.Analyzers",
+      "vsixId": "ViceCode.Analyzers.35f903bc-07ae-4a28-97ce-9235da0c513c"
+    },
+    {
+      "name": "Visual Studio Theme Pack",
+      "vsixId": "VisualStudioThemePack.453e3fa1-2e0e-467e-abbd-1d08fe6468d1"
     },
     {
       "name": "VSColorOutput64",
