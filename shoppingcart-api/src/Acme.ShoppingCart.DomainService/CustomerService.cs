@@ -5,53 +5,36 @@ using Acme.DomainEvent.Events;
 using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.Data.Repositories;
 using Acme.ShoppingCart.Domain.Entities;
+using Acme.ShoppingCart.DomainService.Mappers;
 using Acme.ShoppingCart.Dto;
 using Cortside.DomainEvent;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Acme.ShoppingCart.DomainService {
     public class CustomerService : ICustomerService {
-        private readonly DatabaseContext db;
+        private readonly IUnitOfWork uow;
+        private readonly CustomerMapper mapper;
         private readonly IDomainEventOutboxPublisher publisher;
         private readonly ILogger<CustomerService> logger;
         private readonly ICustomerRepository customerRepository;
 
-        public CustomerService(DatabaseContext db, ICustomerRepository customerRepository, IDomainEventOutboxPublisher publisher, ILogger<CustomerService> logger) {
-            this.db = db;
+        public CustomerService(IUnitOfWork uow, ICustomerRepository customerRepository, CustomerMapper mapper, IDomainEventOutboxPublisher publisher, ILogger<CustomerService> logger) {
+            this.uow = uow;
+            this.mapper = mapper;
             this.publisher = publisher;
             this.logger = logger;
             this.customerRepository = customerRepository;
         }
 
         public async Task<CustomerDto> CreateCustomerAsync(CustomerDto dto) {
-            var entity = new Customer() {
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                Email = dto.Email
-            };
+            var entity = new Customer(dto.FirstName, dto.LastName, dto.Email);
+            await customerRepository.AddAsync(entity).ConfigureAwait(false);
 
-            // user initiated transaction with retry strategy set needs to execute in new strategy 
-            var strategy = db.Database.CreateExecutionStrategy();
-            await strategy.ExecuteAsync(async () => {
-                // need a transaction and 2 savechanges so that I have the id for the widget in the event
-                using (var tx = await db.Database.BeginTransactionAsync().ConfigureAwait(false)) {
-                    try {
-                        db.Customers.Add(entity);
-                        await db.SaveChangesAsync().ConfigureAwait(false);
-                        var @event = new CustomerStateChangedEvent() { CustomerResourceId = entity.CustomerResourceId, Timestamp = entity.LastModifiedDate };
-                        await publisher.PublishAsync(@event).ConfigureAwait(false);
-                        await db.SaveChangesAsync().ConfigureAwait(false);
-                        await tx.CommitAsync().ConfigureAwait(false);
-                    } catch (Exception ex) {
-                        logger.LogError(ex, "unhandled exception");
-                        await tx.RollbackAsync().ConfigureAwait(false);
-                        throw;
-                    }
-                }
-            }).ConfigureAwait(false);
+            var @event = new CustomerStateChangedEvent() { CustomerResourceId = entity.CustomerResourceId, Timestamp = entity.LastModifiedDate };
+            await publisher.PublishAsync(@event).ConfigureAwait(false);
+            await uow.SaveChangesAsync().ConfigureAwait(false);
 
-            return ToCustomerDto(entity);
+            return mapper.MapToDto(entity);
         }
 
         public Task<CustomerDto> DeleteCustomerAsync(int widgetId) {
@@ -59,8 +42,8 @@ namespace Acme.ShoppingCart.DomainService {
         }
 
         public async Task<CustomerDto> GetCustomerAsync(Guid customerResourceId) {
-            var entity = await db.Customers.SingleAsync(x => x.CustomerResourceId == customerResourceId).ConfigureAwait(false);
-            return ToCustomerDto(entity);
+            var entity = await customerRepository.GetAsync(customerResourceId).ConfigureAwait(false);
+            return mapper.MapToDto(entity);
         }
 
         public async Task<PagedList<CustomerDto>> SearchCustomersAsync(int pageSize, int pageNumber, string sortParams) {
@@ -70,14 +53,14 @@ namespace Acme.ShoppingCart.DomainService {
                 PageNumber = customers.PageNumber,
                 PageSize = customers.PageSize,
                 TotalItems = customers.TotalItems,
-                Items = customers.Items.Select(x => ToCustomerDto(x)).ToList()
+                Items = customers.Items.Select(x => mapper.MapToDto(x)).ToList()
             };
 
             return results;
         }
 
         public async Task<CustomerDto> UpdateCustomerAsync(CustomerDto dto) {
-            var entity = await db.Customers.FirstOrDefaultAsync(w => w.CustomerId == dto.CustomerId).ConfigureAwait(false);
+            var entity = await customerRepository.GetAsync(dto.CustomerResourceId).ConfigureAwait(false);
             entity.FirstName = dto.FirstName;
             entity.LastName = dto.LastName;
             entity.Email = dto.Email;
@@ -85,26 +68,16 @@ namespace Acme.ShoppingCart.DomainService {
             var @event = new CustomerStateChangedEvent() { CustomerResourceId = entity.CustomerResourceId, Timestamp = entity.LastModifiedDate };
             await publisher.PublishAsync(@event).ConfigureAwait(false);
 
-            await db.SaveChangesAsync().ConfigureAwait(false);
-            return ToCustomerDto(entity);
+            await uow.SaveChangesAsync().ConfigureAwait(false);
+            return mapper.MapToDto(entity);
         }
 
-        public async Task PublishCustomerStateChangedEventAsync(int id) {
-            var entity = await db.Customers.FirstOrDefaultAsync(w => w.CustomerId == id).ConfigureAwait(false);
+        public async Task PublishCustomerStateChangedEventAsync(Guid resourceId) {
+            var entity = await customerRepository.GetAsync(resourceId).ConfigureAwait(false);
 
             var @event = new CustomerStateChangedEvent() { CustomerResourceId = entity.CustomerResourceId, Timestamp = entity.LastModifiedDate };
             await publisher.PublishAsync(@event).ConfigureAwait(false);
-            await db.SaveChangesAsync().ConfigureAwait(false);
-        }
-
-        private CustomerDto ToCustomerDto(Customer entity) {
-            return new CustomerDto() {
-                CustomerId = entity.CustomerId,
-                CustomerResourceId = entity.CustomerResourceId,
-                FirstName = entity.FirstName,
-                LastName = entity.LastName,
-                Email = entity.Email
-            };
+            await uow.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

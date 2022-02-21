@@ -9,6 +9,6 @@ namespace Acme.ShoppingCart.DomainService {
         Task<PagedList<CustomerDto>> SearchCustomersAsync(int pageSize, int pageNumber, string sortParams);
         Task<CustomerDto> UpdateCustomerAsync(CustomerDto dto);
         Task<CustomerDto> DeleteCustomerAsync(int widgetId);
-        Task PublishCustomerStateChangedEventAsync(int id);
+        Task PublishCustomerStateChangedEventAsync(Guid resourceId);
     }
 }

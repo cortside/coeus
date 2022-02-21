@@ -100,9 +100,9 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [HttpPost("{id}/publish")]
         [Authorize(Constants.Authorization.Permissions.UpdateCustomer)]
         [ProducesResponseType(typeof(CustomerDto), 204)]
-        public async Task<IActionResult> PublishCustomerStateChangedEventAsync(int id) {
-            using (LogContext.PushProperty("WidgetId", id)) {
-                await service.PublishCustomerStateChangedEventAsync(id).ConfigureAwait(false);
+        public async Task<IActionResult> PublishCustomerStateChangedEventAsync(Guid resourceId) {
+            using (LogContext.PushProperty("CustomerResourceId", resourceId)) {
+                await service.PublishCustomerStateChangedEventAsync(resourceId).ConfigureAwait(false);
                 return StatusCode((int)HttpStatusCode.NoContent);
             }
         }

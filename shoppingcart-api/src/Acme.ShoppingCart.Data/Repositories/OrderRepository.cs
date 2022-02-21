@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Data.Paging;
 using Acme.ShoppingCart.Domain.Entities;
@@ -49,21 +48,23 @@ namespace Acme.ShoppingCart.Data.Repositories {
         }
 
         public async Task<Order> GetAsync(Guid id) {
-            var order = await context
-                                .Orders
-                                .Include(x => x.Address)
-                                .Include(x => x.Customer)
-                                .FirstOrDefaultAsync(o => o.OrderResourceId == id);
-            if (order == null) {
-                order = context
-                            .Orders
-                            .Local
-                            .FirstOrDefault(o => o.OrderResourceId == id);
-            }
-            if (order != null) {
-                await context.Entry(order)
-                    .Collection(i => i.Items).LoadAsync();
-            }
+            var order = await context.Orders
+                .Include(x => x.Address)
+                .Include(x => x.Customer)
+                .Include(x => x.CreatedSubject)
+                .Include(x => x.LastModifiedSubject)
+                .FirstOrDefaultAsync(o => o.OrderResourceId == id);
+
+            //if (order == null) {
+            //    order = context
+            //                .Orders
+            //                .Local
+            //                .FirstOrDefault(o => o.OrderResourceId == id);
+            //}
+            //if (order != null) {
+            //    await context.Entry(order)
+            //        .Collection(i => i.Items).LoadAsync();
+            //}
 
             return order;
         }

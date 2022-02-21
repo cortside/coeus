@@ -12,12 +12,12 @@ namespace Acme.ShoppingCart.Domain {
 
         [ForeignKey("CreateSubjectId")]
         [Required]
-        public virtual Subject CreatedSubject { get; set; }
+        public Subject CreatedSubject { get; set; }
 
         public DateTime LastModifiedDate { get; set; }
 
         [ForeignKey("LastModifiedSubjectId")]
         [Required]
-        public virtual Subject LastModifiedSubject { get; set; }
+        public Subject LastModifiedSubject { get; set; }
     }
 }
