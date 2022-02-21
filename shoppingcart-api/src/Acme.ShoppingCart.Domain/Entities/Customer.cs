@@ -5,7 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Acme.ShoppingCart.Domain.Entities {
     [Table("Customer")]
     public class Customer : AuditableEntity {
-        public Customer() {
+        public Customer(string firstName, string lastName, string email) {
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
             CustomerResourceId = Guid.NewGuid();
         }
 

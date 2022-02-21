@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.Data.Repositories;
+using Acme.ShoppingCart.DomainService.Mappers;
 using Acme.ShoppingCart.Dto;
 using Cortside.DomainEvent;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -30,8 +31,9 @@ namespace Acme.ShoppingCart.DomainService.Tests {
             };
 
             var publisher = new Mock<IDomainEventOutboxPublisher>();
-            var customerRepository = new Mock<ICustomerRepository>();
-            var service = new CustomerService(databaseContext, customerRepository.Object, publisher.Object, NullLogger<CustomerService>.Instance);
+            var customerRepository = new CustomerRepository(databaseContext);
+            var uow = new Mock<IUnitOfWork>();
+            var service = new CustomerService(databaseContext, customerRepository, new CustomerMapper(new SubjectMapper()), publisher.Object, NullLogger<CustomerService>.Instance);
 
             // Act
             await service.CreateCustomerAsync(dto);

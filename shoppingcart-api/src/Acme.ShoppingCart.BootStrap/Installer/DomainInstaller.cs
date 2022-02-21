@@ -2,6 +2,7 @@ using System.Linq;
 using System.Reflection;
 using Acme.ShoppingCart.Data.Repositories;
 using Acme.ShoppingCart.DomainService;
+using Acme.ShoppingCart.DomainService.Mappers;
 using Cortside.Common.BootStrap;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,7 +42,13 @@ namespace Acme.ShoppingCart.BootStrap.Installer {
                         .ForEach(i => services.AddScoped(i, x));
                 });
 
-            //services.AddScoped<ISubjectService, SubjectService>();
+            typeof(OrderMapper).GetTypeInfo().Assembly.GetTypes()
+                .Where(x => (x.Name.EndsWith("Mapper"))
+                    && x.GetTypeInfo().IsClass
+                    && !x.GetTypeInfo().IsAbstract)
+                .ToList().ForEach(x => {
+                    services.AddScoped(x);
+                });
         }
     }
 }

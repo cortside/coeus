@@ -6,7 +6,7 @@ namespace Acme.ShoppingCart.Domain.Tests {
         [Fact]
         public void Foo() {
             // Arrange
-            var customer = new Customer();
+            var customer = new Customer("elmer", "fudd", "elmer@fudd.org");
 
             // Act
             customer.CustomerId = 1;

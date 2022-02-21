@@ -18,7 +18,10 @@ namespace Acme.ShoppingCart.BootStrap.Installer {
                     });
                 opt.EnableSensitiveDataLogging();
             });
-            services.AddScoped<DatabaseContext, DatabaseContext>();
+            //services.AddScoped<DatabaseContext, DatabaseContext>();
+
+            // Register the service and implementation for the database context
+            services.AddScoped<IUnitOfWork>(provider => provider.GetService<DatabaseContext>());
 
             // for DbContextCheck
             services.AddTransient<DbContext, DatabaseContext>();
