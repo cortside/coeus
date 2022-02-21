@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
@@ -32,7 +33,7 @@ namespace Acme.ShoppingCart.DomainService {
         public async Task<OrderDto> CreateOrderAsync(OrderDto dto) {
             // don't use context directly
             var customer = await customerRespository.GetAsync(dto.Customer.CustomerResourceId).ConfigureAwait(false);
-            //Guard.Against();
+            //Guard.Against();  // TODO: this should be in common.messages
             if (customer == null) {
                 throw new BadRequestMessage("customer not found");
             }
@@ -52,16 +53,18 @@ namespace Acme.ShoppingCart.DomainService {
         }
 
         public async Task<PagedList<OrderDto>> SearchOrdersAsync(int pageSize, int pageNumber, string sortParams, OrderSearch search) {
-            var orders = await orderRepository.SearchAsync(pageSize, pageNumber, sortParams, search).ConfigureAwait(false);
+            using (var tx = await uow.BeginTransactionAsync(IsolationLevel.ReadUncommitted)) {
+                var orders = await orderRepository.SearchAsync(pageSize, pageNumber, sortParams, search).ConfigureAwait(false);
 
-            var results = new PagedList<OrderDto> {
-                PageNumber = orders.PageNumber,
-                PageSize = orders.PageSize,
-                TotalItems = orders.TotalItems,
-                Items = orders.Items.Select(x => mapper.MapToDto(x)).ToList()
-            };
+                var results = new PagedList<OrderDto> {
+                    PageNumber = orders.PageNumber,
+                    PageSize = orders.PageSize,
+                    TotalItems = orders.TotalItems,
+                    Items = orders.Items.Select(x => mapper.MapToDto(x)).ToList()
+                };
 
-            return results;
+                return results;
+            }
         }
 
         //public async Task<OrderDto> UpdateOrderAsync(OrderDto dto) {

@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Data.Paging;
 using Acme.ShoppingCart.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Acme.ShoppingCart.Data.Repositories {
     public class OrderRepository : IOrderRepository {
@@ -21,12 +24,17 @@ namespace Acme.ShoppingCart.Data.Repositories {
 
 
         public async Task<PagedList<Order>> SearchAsync(int pageSize, int pageNumber, string sortParams, IOrderSearch model) {
-            var orders = context.Orders
+            var orders = (IQueryable<Order>)context.Orders
                 .Include(x => x.Address)
                 .Include(x => x.Customer)
                 .Include(x => x.CreatedSubject)
-                .Include(x => x.LastModifiedSubject)
-                .AsNoTrackingWithIdentityResolution();
+                .Include(x => x.LastModifiedSubject);
+            //.AsTracking();   // TODO: i can't seem to get back to IQueryable from IIncludeQuerable
+
+            var tx = context.Database.CurrentTransaction?.GetDbTransaction();
+            if (tx != null && tx.IsolationLevel == IsolationLevel.ReadUncommitted) {
+                orders.AsNoTrackingWithIdentityResolution();
+            }
 
             orders = model.Build(orders);
             var result = new PagedList<Order> {
