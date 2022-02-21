@@ -2,6 +2,7 @@ using Serilog;
 using System.Linq;
 using WireMock.Server;
 using WireMock.Settings;
+using WireMock.Types;
 
 namespace PolicyServer.Mocks
 {
@@ -15,6 +16,7 @@ namespace PolicyServer.Mocks
             {
                 mockServer = WireMockServer.Start(new WireMockServerSettings
                 {
+                    CorsPolicyOptions = CorsPolicyOptions.AllowAll,
                     StartAdminInterface = true,
                     AllowCSharpCodeMatcher = true,
                     Logger = new WireMockLogger(Log.Logger),

@@ -13,10 +13,13 @@ namespace Acme.ShoppingCart.WebApi {
             /// Permission constants
             /// </summary>
             public static class Permissions {
-                public const string CreateWidget = "CreateWidget";
-                public const string UpdateWidget = "UpdateWidget";
-                public const string GetWidget = "GetWidget";
-                public const string GetWidgets = "GetWidgets";
+                public const string CreateCustomer = "CreateCustomer";
+                public const string UpdateCustomer = "UpdateCustomer";
+                public const string GetCustomer = "GetCustomer";
+                public const string GetCustomers = "GetCustomers";
+                public const string GetOrder = "GetOrder";
+                public const string GetOrders = "GetOrders";
+                public const string CreateOrder = "CreateOrder";
             }
         }
     }

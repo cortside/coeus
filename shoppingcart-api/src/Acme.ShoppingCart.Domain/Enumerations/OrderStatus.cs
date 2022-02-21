@@ -1,8 +1,6 @@
 namespace Acme.ShoppingCart.Domain.Enumerations {
     public enum OrderStatus {
-        Submitted,
-        AwaitingValidation,
-        StockConfirmed,
+        Created,
         Paid,
         Shipped,
         Cancelled

@@ -1,8 +1,9 @@
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
 using Acme.ShoppingCart.Data;
+using Acme.ShoppingCart.Data.Repositories;
 using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.Dto;
 using Cortside.DomainEvent;
@@ -14,11 +15,13 @@ namespace Acme.ShoppingCart.DomainService {
         private readonly DatabaseContext db;
         private readonly IDomainEventOutboxPublisher publisher;
         private readonly ILogger<CustomerService> logger;
+        private readonly ICustomerRepository customerRepository;
 
-        public CustomerService(DatabaseContext db, IDomainEventOutboxPublisher publisher, ILogger<CustomerService> logger) {
+        public CustomerService(DatabaseContext db, ICustomerRepository customerRepository, IDomainEventOutboxPublisher publisher, ILogger<CustomerService> logger) {
             this.db = db;
             this.publisher = publisher;
             this.logger = logger;
+            this.customerRepository = customerRepository;
         }
 
         public async Task<CustomerDto> CreateCustomerAsync(CustomerDto dto) {
@@ -60,15 +63,17 @@ namespace Acme.ShoppingCart.DomainService {
             return ToCustomerDto(entity);
         }
 
-        public async Task<List<CustomerDto>> GetCustomersAsync() {
-            var entities = await db.Customers.ToListAsync().ConfigureAwait(false);
+        public async Task<PagedList<CustomerDto>> SearchCustomersAsync(int pageSize, int pageNumber, string sortParams) {
+            var customers = await customerRepository.SearchAsync(pageSize, pageNumber, sortParams, new CustomerSearch()).ConfigureAwait(false);
 
-            var dtos = new List<CustomerDto>();
-            foreach (var entity in entities) {
-                dtos.Add(ToCustomerDto(entity));
-            }
+            var results = new PagedList<CustomerDto> {
+                PageNumber = customers.PageNumber,
+                PageSize = customers.PageSize,
+                TotalItems = customers.TotalItems,
+                Items = customers.Items.Select(x => ToCustomerDto(x)).ToList()
+            };
 
-            return dtos;
+            return results;
         }
 
         public async Task<CustomerDto> UpdateCustomerAsync(CustomerDto dto) {

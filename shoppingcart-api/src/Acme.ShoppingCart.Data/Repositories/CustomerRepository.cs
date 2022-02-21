@@ -7,38 +7,26 @@ using Acme.ShoppingCart.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Acme.ShoppingCart.Data.Repositories {
-    public class OrderRepository : IOrderRepository {
+    public class CustomerRepository : ICustomerRepository {
         private readonly DatabaseContext context;
 
-        public IUnitOfWork UnitOfWork {
-            get {
-                return context;
-            }
-        }
-
-        public OrderRepository(DatabaseContext context) {
+        public CustomerRepository(DatabaseContext context) {
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        public IUnitOfWork UnitOfWork => context;
 
-        public async Task<PagedList<Order>> SearchAsync(int pageSize, int pageNumber, string sortParams, IOrderSearch model) {
-            var orders = context.Orders
-                .Include(x => x.Address)
-                .Include(x => x.Customer)
-                .Include(x => x.CreatedSubject)
-                .Include(x => x.LastModifiedSubject)
-                .AsNoTrackingWithIdentityResolution();
-
-            orders = model.Build(orders);
-            var result = new PagedList<Order> {
+        public async Task<PagedList<Customer>> SearchAsync(int pageSize, int pageNumber, string sortParams, CustomerSearch model) {
+            var customers = model.Build(context.Customers.AsNoTracking());
+            var result = new PagedList<Customer> {
                 PageNumber = pageNumber,
                 PageSize = pageSize,
-                TotalItems = await orders.CountAsync().ConfigureAwait(false),
-                Items = new List<Order>(),
+                TotalItems = await customers.CountAsync().ConfigureAwait(false),
+                Items = new List<Customer>(),
             };
 
-            orders = orders.ToSortedQuery(sortParams);
-            result.Items = await orders.ToPagedQuery(pageNumber, pageSize).ToListAsync().ConfigureAwait(false);
+            customers = customers.ToSortedQuery(sortParams);
+            result.Items = await customers.ToPagedQuery(pageNumber, pageSize).ToListAsync();
 
             return result;
         }
@@ -66,11 +54,6 @@ namespace Acme.ShoppingCart.Data.Repositories {
             }
 
             return order;
-        }
-
-        public Task<Order> UpdateAsync(Order order) {
-            context.Entry(order).State = EntityState.Modified;
-            return Task.FromResult(order);
         }
     }
 }

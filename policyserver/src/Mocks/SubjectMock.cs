@@ -16,24 +16,14 @@ namespace PolicyServer.Mocks
     {
         public void Configure(WireMockServer server)
         {
-            var subjects = JsonConvert.DeserializeObject<Subjects>(File.ReadAllText(@"./subjects.json"));
+            var subjects = JsonConvert.DeserializeObject<Subjects>(File.ReadAllText("./subjects.json"));
             foreach (var subject in subjects.SubjectsList)
             {
-                Log.Logger.Debug($"Client: {subject.ClientId}");
+                Log.Logger.Debug("Client: {ClientId}", subject.ClientId);
                 var claims = new List<SubjectClaim>();
                 claims.AddRange(subject.Claims);
                 claims.Add(new SubjectClaim { Type = "sub", Value = subject.SubjectId });
                 claims.Add(new SubjectClaim { Type = "upn", Value = subject.ClientId });
-
-                //var dictClaims = claims
-                //  .GroupBy(claim => claim.Type) // Desired Key
-                //  .SelectMany(group => group
-                //     .Select((item, index) => group.Count() <= 1
-                //        ? Tuple.Create(group.Key, item) // One claim in group
-                //        : Tuple.Create($"{group.Key}_{index + 1}", item) // Many claims
-                //      ))
-                //  .ToDictionary(tuple => tuple.Item1, tuple => tuple.Item2);
-
                 var dictClaims = claims.ToDictionary(x => x.Type, x => x.Value);
                 var claimsJson = JsonConvert.SerializeObject(dictClaims);
 
@@ -69,6 +59,23 @@ namespace PolicyServer.Mocks
                                 AccessToken = subject.ReferenceToken
                             }))
                 );
+                server
+                    .Given(
+                        Request.Create().WithPath("/connect/token")
+                            .WithHeader(h => h.ContainsKey("Authorization") && h["Authorization"]?.FirstOrDefault() != null && h["Authorization"]?.FirstOrDefault().Replace("Basic ", "").DecodeBase64().Contains(subject.ClientId) == true)
+                            .UsingPost()
+                    )
+                    .RespondWith(
+                        Response.Create()
+                            .WithStatusCode(200)
+                            .WithHeader("Content-Type", "application/json")
+                            .WithBody(r => JsonConvert.SerializeObject(new AuthenticationResponseModel
+                            {
+                                TokenType = "Bearer",
+                                ExpiresIn = "3600",
+                                AccessToken = subject.ReferenceToken
+                            }))
+                );
 
                 server
                     .Given(
@@ -79,7 +86,6 @@ namespace PolicyServer.Mocks
                     .RespondWith(
                         Response.Create()
                             .WithStatusCode(200)
-                            //.WithBody(r => $"{{\"active\" : true, \"sub\": \"{subject.SubjectId}\"}}")
                             .WithBody(r => claimsJson)
                     );
             }
