@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
@@ -47,16 +48,19 @@ namespace Acme.ShoppingCart.DomainService {
         }
 
         public async Task<PagedList<CustomerDto>> SearchCustomersAsync(int pageSize, int pageNumber, string sortParams) {
-            var customers = await customerRepository.SearchAsync(pageSize, pageNumber, sortParams, new CustomerSearch()).ConfigureAwait(false);
+            using (var tx = await uow.BeginTransactionAsync(IsolationLevel.ReadUncommitted)) {
+                var customers = await customerRepository.SearchAsync(pageSize, pageNumber, sortParams, new CustomerSearch()).ConfigureAwait(false);
 
-            var results = new PagedList<CustomerDto> {
-                PageNumber = customers.PageNumber,
-                PageSize = customers.PageSize,
-                TotalItems = customers.TotalItems,
-                Items = customers.Items.Select(x => mapper.MapToDto(x)).ToList()
-            };
+                var results = new PagedList<CustomerDto> {
+                    PageNumber = customers.PageNumber,
+                    PageSize = customers.PageSize,
+                    TotalItems = customers.TotalItems,
+                    Items = customers.Items.Select(x => mapper.MapToDto(x)).ToList()
+                };
 
-            return results;
+                await tx.CommitAsync().ConfigureAwait(false);
+                return results;
+            }
         }
 
         public async Task<CustomerDto> UpdateCustomerAsync(CustomerDto dto) {

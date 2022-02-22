@@ -29,17 +29,6 @@ namespace Acme.ShoppingCart.WebApi.Filters {
                 operation.Parameters = new List<OpenApiParameter>();
             }
 
-            //// display input parameter Authorization
-            //operation.Parameters.Add(new OpenApiParameter {
-            //    Name = "Authorization",
-            //    @In = ParameterLocation.Header,
-            //    Description = "access token",
-            //    Required = false,
-            //    Schema = new OpenApiSchema {
-            //        Type = "string"
-            //    }
-            //});
-
             // display possible response status codes
             string code401 = ((int)HttpStatusCode.Unauthorized).ToString();
             if (!operation.Responses.ContainsKey(code401)) {
@@ -71,20 +60,6 @@ namespace Acme.ShoppingCart.WebApi.Filters {
                         }
                 }, new List<string>() }
             });
-
-            //operation.Security = new List<OpenApiSecurityRequirement>
-            //{
-            //    new OpenApiSecurityRequirement
-            //    {
-            //        [
-            //            new OpenApiSecurityScheme {Reference = new OpenApiReference
-            //            {
-            //                Type = ReferenceType.SecurityScheme,
-            //                Id = "oauth2"}
-            //            }
-            //        ] = new[] {"api1"}
-            //    }
-            //};
         }
 
         private void AddError(OpenApiOperation operation, string statusString, OperationFilterContext context) {
