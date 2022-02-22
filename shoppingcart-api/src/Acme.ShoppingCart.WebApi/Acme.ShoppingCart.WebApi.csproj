@@ -76,4 +76,7 @@
       <TransformOnBuild>true</TransformOnBuild>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mappers\" />
+  </ItemGroup>
 </Project>

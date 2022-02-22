@@ -1,5 +1,5 @@
-using Newtonsoft.Json;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Helpers.Mocks.Models {
     public class Subject {

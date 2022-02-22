@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 
 namespace Acme.ShoppingCart.WebApi.Installers {
     public class SwaggerInstaller : IInstaller {
+        [Obsolete]
         public void Install(IServiceCollection services, IConfigurationRoot configuration) {
             services.AddApiVersioning(o => {
                 o.ReportApiVersions = true;

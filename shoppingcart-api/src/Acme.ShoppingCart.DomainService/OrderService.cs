@@ -63,6 +63,7 @@ namespace Acme.ShoppingCart.DomainService {
                     Items = orders.Items.Select(x => mapper.MapToDto(x)).ToList()
                 };
 
+                await tx.CommitAsync().ConfigureAwait(false);
                 return results;
             }
         }

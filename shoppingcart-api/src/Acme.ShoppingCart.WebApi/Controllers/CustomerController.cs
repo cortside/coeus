@@ -96,6 +96,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// <summary>
         /// Update a widget
         /// </summary>
+        /// <param name="resourceId"></param>
         /// <param name="id"></param>
         [HttpPost("{id}/publish")]
         [Authorize(Constants.Authorization.Permissions.UpdateCustomer)]
