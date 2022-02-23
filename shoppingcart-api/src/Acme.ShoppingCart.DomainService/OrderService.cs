@@ -48,7 +48,7 @@ namespace Acme.ShoppingCart.DomainService {
         }
 
         public async Task<OrderDto> GetOrderAsync(Guid id) {
-            var entity = await orderRepository.GetAsync(id);
+            var entity = await orderRepository.GetAsync(id).ConfigureAwait(false);
             return mapper.MapToDto(entity);
         }
 
@@ -68,25 +68,25 @@ namespace Acme.ShoppingCart.DomainService {
             }
         }
 
-        //public async Task<OrderDto> UpdateOrderAsync(OrderDto dto) {
-        //    var entity = await db.Orders.FirstOrDefaultAsync(w => w.OrderId == dto.OrderId).ConfigureAwait(false);
-        //    entity.FirstName = dto.FirstName;
-        //    entity.LastName = dto.LastName;
-        //    entity.Email = dto.Email;
+        public async Task<OrderDto> UpdateOrderAsync(OrderDto dto) {
+            var entity = await orderRepository.GetAsync(dto.OrderResourceId).ConfigureAwait(false);
+            //entity.FirstName = dto.FirstName;
+            //entity.LastName = dto.LastName;
+            //entity.Email = dto.Email;
 
-        //    var @event = new OrderStageChangedEvent() { OrderId = entity.OrderId, FirstName = entity.FirstName, LastName = entity.LastName, Email = entity.Email, Timestamp = DateTime.UtcNow };
-        //    await publisher.PublishAsync(@event).ConfigureAwait(false);
+            var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = DateTime.UtcNow };
+            await publisher.PublishAsync(@event).ConfigureAwait(false);
 
-        //    await db.SaveChangesAsync().ConfigureAwait(false);
-        //    return ToWidgetDto(entity);
-        //}
+            await uow.SaveChangesAsync().ConfigureAwait(false);
+            return mapper.MapToDto(entity);
+        }
 
-        //public async Task PublishOrderStateChangedEventAsync(int id) {
-        //    var entity = await db.Orders.FirstOrDefaultAsync(w => w.OrderId == id).ConfigureAwait(false);
+        public async Task PublishOrderStateChangedEventAsync(Guid id) {
+            var entity = await orderRepository.GetAsync(id).ConfigureAwait(false);
 
-        //    var @event = new OrderStageChangedEvent() { OrderId = entity.OrderId, FirstName = entity.FirstName, LastName = entity.LastName, Email = entity.Email, Timestamp = DateTime.UtcNow };
-        //    await publisher.PublishAsync(@event).ConfigureAwait(false);
-        //    await db.SaveChangesAsync().ConfigureAwait(false);
-        //}
+            var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = DateTime.UtcNow };
+            await publisher.PublishAsync(@event).ConfigureAwait(false);
+            await uow.SaveChangesAsync().ConfigureAwait(false);
+        }
     }
 }

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Acme.ShoppingCart.WebApi.Models.Requests {
+namespace Acme.ShoppingCart.WebApi.Models.Responses {
     /// <summary>
     /// Represents a single loan
     /// </summary>

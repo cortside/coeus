@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace Acme.ShoppingCart.WebApi.Data {
+namespace Acme.ShoppingCart.WebApi {
     /// <summary>
     /// Design time context factory for EF
     /// https://codingblast.com/entityframework-core-idesigntimedbcontextfactory/
@@ -38,10 +38,9 @@ namespace Acme.ShoppingCart.WebApi.Data {
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            var builder = new DbContextOptionsBuilder<DatabaseContext>();
-
             var connectionString = configuration.GetSection("Database").GetValue<string>("ConnectionString");
 
+            var builder = new DbContextOptionsBuilder<DatabaseContext>();
             builder.UseSqlServer(connectionString);
 
             return new DatabaseContext(builder.Options, subjectPrincipal);

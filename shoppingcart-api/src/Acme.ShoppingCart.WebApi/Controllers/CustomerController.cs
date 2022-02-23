@@ -61,14 +61,14 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [HttpPost("")]
         [Authorize(Constants.Authorization.Permissions.CreateCustomer)]
         [ProducesResponseType(typeof(CustomerDto), 201)]
-        public async Task<IActionResult> CreateCustomerAsync([FromBody] CustomerRequest input) {
+        public async Task<IActionResult> CreateCustomerAsync([FromBody] CreateCustomerModel input) {
             var dto = new CustomerDto() {
                 FirstName = input.FirstName,
                 LastName = input.LastName,
                 Email = input.Email
             };
             var widget = await service.CreateCustomerAsync(dto).ConfigureAwait(false);
-            return CreatedAtAction(nameof(GetCustomerAsync), new { id = widget.CustomerId }, widget);
+            return CreatedAtAction(nameof(GetCustomerAsync), new { id = widget.CustomerResourceId }, widget);
         }
 
         /// <summary>
@@ -78,18 +78,18 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// <param name="input"></param>
         [HttpPut("{id}")]
         [Authorize(Constants.Authorization.Permissions.UpdateCustomer)]
-        [ProducesResponseType(typeof(CustomerDto), 204)]
-        public async Task<IActionResult> UpdateCustomerAsync(int id, CustomerRequest input) {
-            using (LogContext.PushProperty("WidgetId", id)) {
+        [ProducesResponseType(typeof(CustomerDto), 200)]
+        public async Task<IActionResult> UpdateCustomerAsync(Guid id, CreateCustomerModel input) {
+            using (LogContext.PushProperty("CustomerResourceId", id)) {
                 var dto = new CustomerDto() {
-                    CustomerId = id,
+                    CustomerResourceId = id,
                     FirstName = input.FirstName,
                     LastName = input.LastName,
                     Email = input.Email
                 };
 
-                var widget = await service.UpdateCustomerAsync(dto).ConfigureAwait(false);
-                return StatusCode((int)HttpStatusCode.NoContent, widget);
+                var result = await service.UpdateCustomerAsync(dto).ConfigureAwait(false);
+                return Ok(result);
             }
         }
 
@@ -97,8 +97,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// Update a widget
         /// </summary>
         /// <param name="resourceId"></param>
-        /// <param name="id"></param>
-        [HttpPost("{id}/publish")]
+        [HttpPost("{resourceId}/publish")]
         [Authorize(Constants.Authorization.Permissions.UpdateCustomer)]
         [ProducesResponseType(typeof(CustomerDto), 204)]
         public async Task<IActionResult> PublishCustomerStateChangedEventAsync(Guid resourceId) {

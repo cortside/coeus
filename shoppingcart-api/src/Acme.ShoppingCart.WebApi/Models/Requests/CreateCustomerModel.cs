@@ -6,7 +6,7 @@ namespace Acme.ShoppingCart.WebApi.Models.Requests {
     /// <summary>
     /// Represents a single loan
     /// </summary>
-    public class CustomerRequest {
+    public class CreateCustomerModel {
         [Required]
         public string FirstName { get; set; }
         [Required]

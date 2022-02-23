@@ -17,9 +17,12 @@ namespace Acme.ShoppingCart.WebApi {
                 public const string UpdateCustomer = "UpdateCustomer";
                 public const string GetCustomer = "GetCustomer";
                 public const string GetCustomers = "GetCustomers";
+                public const string PublishCustomer = "PublishCustomer";
                 public const string GetOrder = "GetOrder";
                 public const string GetOrders = "GetOrders";
                 public const string CreateOrder = "CreateOrder";
+                public const string UpdateOrder = "UpdateOrder";
+                public const string PublishOrder = "PublishOrder";
             }
         }
     }
