@@ -38,10 +38,6 @@ namespace Acme.ShoppingCart.DomainService {
             return mapper.MapToDto(entity);
         }
 
-        public Task<CustomerDto> DeleteCustomerAsync(int widgetId) {
-            throw new NotImplementedException();
-        }
-
         public async Task<CustomerDto> GetCustomerAsync(Guid customerResourceId) {
             var entity = await customerRepository.GetAsync(customerResourceId).ConfigureAwait(false);
             return mapper.MapToDto(entity);

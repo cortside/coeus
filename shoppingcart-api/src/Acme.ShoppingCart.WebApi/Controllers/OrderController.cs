@@ -9,6 +9,7 @@ using Acme.ShoppingCart.WebApi.Models.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Serilog.Context;
 
 namespace Acme.ShoppingCart.WebApi.Controllers {
     /// <summary>
@@ -62,7 +63,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [HttpPost("")]
         [Authorize(Constants.Authorization.Permissions.CreateOrder)]
         [ProducesResponseType(typeof(OrderDto), 201)]
-        public async Task<IActionResult> CreateOrderAsync([FromBody] OrderRequest input) {
+        public async Task<IActionResult> CreateOrderAsync([FromBody] CreateOrderModel input) {
             var dto = new OrderDto() {
                 Customer = new CustomerDto() {
                     CustomerResourceId = input.CustomerResourceId,
@@ -84,41 +85,40 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
             return CreatedAtAction(nameof(GetOrderAsync), new { id = order.OrderResourceId }, order);
         }
 
-        ///// <summary>
-        ///// Update a widget
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <param name="input"></param>
-        //[HttpPut("{id}")]
-        //[Authorize(Constants.Authorization.Permissions.UpdateWidget)]
-        //[ProducesResponseType(typeof(OrderDto), 204)]
-        //public async Task<IActionResult> UpdateWidgetAsync(int id, CustomerRequest input) {
-        //    using (LogContext.PushProperty("WidgetId", id)) {
-        //        var dto = new CustomerDto() {
-        //            CustomerId = id,
-        //            FirstName = input.FirstName,
-        //            LastName = input.LastName,
-        //            Email = input.Email
-        //        };
+        /// <summary>
+        /// Update a widget
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="input"></param>
+        [HttpPut("{id}")]
+        [Authorize(Constants.Authorization.Permissions.UpdateOrder)]
+        [ProducesResponseType(typeof(CustomerDto), 200)]
+        public async Task<IActionResult> UpdateOrderAsync(Guid id, CreateOrderModel input) {
+            using (LogContext.PushProperty("OrderResourceId", id)) {
+                var dto = new OrderDto() {
+                    OrderResourceId = id
+                    //FirstName = input.FirstName,
+                    //LastName = input.LastName,
+                    //Email = input.Email
+                };
 
-        //        var widget = await service.UpdateCustomerAsync(dto).ConfigureAwait(false);
-        //        return StatusCode((int)HttpStatusCode.NoContent, widget);
-        //    }
-        //}
+                var result = await service.UpdateOrderAsync(dto).ConfigureAwait(false);
+                return Ok(result);
+            }
+        }
 
-        ///// <summary>
-        ///// Update a widget
-        ///// </summary>
-        ///// <param name="id"></param>
-        //[HttpPost("{id}/publish")]
-        //[Authorize(Constants.Authorization.Permissions.UpdateWidget)]
-        //[ProducesResponseType(typeof(OrderDto), 204)]
-        //[ProducesResponseType(400)]
-        //public async Task<IActionResult> PublishWidgetStateChangedEventAsync(int id) {
-        //    using (LogContext.PushProperty("WidgetId", id)) {
-        //        await service.PublishCustomerStateChangedEventAsync(id).ConfigureAwait(false);
-        //        return StatusCode((int)HttpStatusCode.NoContent);
-        //    }
-        //}
+        /// <summary>
+        /// Update a widget
+        /// </summary>
+        /// <param name="resourceId"></param>
+        [HttpPost("{resourceId}/publish")]
+        [Authorize(Constants.Authorization.Permissions.UpdateCustomer)]
+        [ProducesResponseType(typeof(CustomerDto), 204)]
+        public async Task<IActionResult> PublishCustomerStateChangedEventAsync(Guid resourceId) {
+            using (LogContext.PushProperty("OrderResourceId", resourceId)) {
+                await service.PublishOrderStateChangedEventAsync(resourceId).ConfigureAwait(false);
+                return StatusCode((int)HttpStatusCode.NoContent);
+            }
+        }
     }
 }

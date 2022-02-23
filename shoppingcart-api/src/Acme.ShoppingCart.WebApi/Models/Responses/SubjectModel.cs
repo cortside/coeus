@@ -34,10 +34,5 @@ namespace Acme.ShoppingCart.WebApi.Models.Responses {
         /// </summary>
         [StringLength(100)]
         public string UserPrincipalName { get; set; }
-
-        /// <summary>
-        /// CreatedDate
-        /// </summary>
-        public DateTime CreatedDate { get; set; }
     }
 }
