@@ -77,7 +77,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                 },
                 Items = new System.Collections.Generic.List<OrderItemDto>()
             };
-            foreach (var item in input.Items) {
+            foreach (var item in input.Items ?? new List<CreateOrderItemModel>()) {
                 dto.Items.Add(new OrderItemDto() { Sku = item.Sku, Quantity = item.Quantity });
             }
 
@@ -118,6 +118,26 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
             using (LogContext.PushProperty("OrderResourceId", resourceId)) {
                 await service.PublishOrderStateChangedEventAsync(resourceId).ConfigureAwait(false);
                 return StatusCode((int)HttpStatusCode.NoContent);
+            }
+        }
+
+        /// <summary>
+        /// Add an order item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="input"></param>
+        [HttpPut("{id}")]
+        [Authorize(Constants.Authorization.Permissions.UpdateOrder)]
+        [ProducesResponseType(typeof(CustomerDto), 200)]
+        public async Task<IActionResult> AddOrderItemAsync(Guid id, CreateOrderItemModel input) {
+            using (LogContext.PushProperty("OrderResourceId", id)) {
+                var dto = new OrderItemDto() {
+                    Sku = input.Sku,
+                    Quantity = input.Quantity
+                };
+
+                var result = await service.AddOrderItemAsync(id, dto).ConfigureAwait(false);
+                return Ok(result);
             }
         }
     }

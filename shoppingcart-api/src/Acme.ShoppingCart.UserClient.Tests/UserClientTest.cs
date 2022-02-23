@@ -19,7 +19,7 @@ namespace Acme.ShoppingCart.UserClient.Tests {
 
         public UserClientTest() {
             UserWireMock userMock = new UserWireMock();
-            var wiremockurl = userMock.fluentMockServer.Urls.First();
+            var wiremockurl = userMock.server.Urls.First();
             var request = new TokenRequest {
                 AuthorityUrl = wiremockurl,
                 ClientId = "clientid",
@@ -35,29 +35,29 @@ namespace Acme.ShoppingCart.UserClient.Tests {
         [Fact]
         public async Task WireMock_ShouldGetUserAsync() {
             //arrange
-            Guid userId = Guid.NewGuid();
+            string sku = Guid.NewGuid().ToString();
 
             //act
-            CatalogItemResponse user = await userClient.GetUserByIdAsync(userId).ConfigureAwait(false);
+            CatalogItem item = await userClient.GetItem(sku).ConfigureAwait(false);
 
             //assert
-            user.Should().NotBeNull();
+            item.Should().NotBeNull();
         }
 
         [Fact]
         public async Task MockHttpMessageHandler_ShouldGetUserAsync() {
             // arrange
-            var user = new CatalogItemResponse() {
-                UserId = Guid.NewGuid(),
-                FirstName = "first",
-                LastName = "last",
-                EmailAddress = "first@last.com"
+            var user = new CatalogItem() {
+                ItemId = Guid.NewGuid(),
+                Name = "Foo",
+                Sku = Guid.NewGuid().ToString(),
+                UnitPrice = 12.34M
             };
             var json = JsonConvert.SerializeObject(user);
 
             string url = "http://localhost:1234";
             var mockHttp = new MockHttpMessageHandler();
-            mockHttp.When($"{url}/api/v1/users/*")
+            mockHttp.When($"{url}/api/v1/items/*")
                     .Respond("application/json", json);
 
             var options = new RestClientOptions {
@@ -67,7 +67,7 @@ namespace Acme.ShoppingCart.UserClient.Tests {
             var client = new CatalogClient(config, new Logger<CatalogClient>(new NullLoggerFactory()), options);
 
             //act
-            CatalogItemResponse response = await client.GetUserByIdAsync(user.UserId).ConfigureAwait(false);
+            CatalogItem response = await client.GetItem(user.Sku).ConfigureAwait(false);
 
             //assert
             response.Should().BeEquivalentTo(user);

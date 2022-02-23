@@ -9,6 +9,7 @@ using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.DomainService.Mappers;
 using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.Exceptions;
+using Acme.ShoppingCart.UserClient;
 using Cortside.DomainEvent;
 using Microsoft.Extensions.Logging;
 
@@ -18,16 +19,18 @@ namespace Acme.ShoppingCart.DomainService {
         private readonly ILogger<OrderService> logger;
         private readonly IOrderRepository orderRepository;
         private readonly IUnitOfWork uow;
+        private readonly ICatalogClient catalog;
         private readonly OrderMapper mapper;
         private readonly ICustomerRepository customerRespository;
 
-        public OrderService(IUnitOfWork uow, IOrderRepository orderRepository, ICustomerRepository customerRespository, OrderMapper mapper, IDomainEventOutboxPublisher publisher, ILogger<OrderService> logger) {
+        public OrderService(IUnitOfWork uow, IOrderRepository orderRepository, ICustomerRepository customerRespository, OrderMapper mapper, IDomainEventOutboxPublisher publisher, ILogger<OrderService> logger, ICatalogClient catalog) {
             this.publisher = publisher;
             this.logger = logger;
             this.orderRepository = orderRepository;
             this.mapper = mapper;
             this.customerRespository = customerRespository;
             this.uow = uow;
+            this.catalog = catalog;
         }
 
         public async Task<OrderDto> CreateOrderAsync(OrderDto dto) {
@@ -87,6 +90,17 @@ namespace Acme.ShoppingCart.DomainService {
             var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = DateTime.UtcNow };
             await publisher.PublishAsync(@event).ConfigureAwait(false);
             await uow.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task<OrderDto> AddOrderItemAsync(Guid id, OrderItemDto dto) {
+            var entity = await orderRepository.GetAsync(id).ConfigureAwait(false);
+            var item = await catalog.GetItem(dto.Sku).ConfigureAwait(false);
+            entity.AddItem(item, dto.Quantity);
+            var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = DateTime.UtcNow };
+            await publisher.PublishAsync(@event).ConfigureAwait(false);
+
+            await uow.SaveChangesAsync().ConfigureAwait(false);
+            return mapper.MapToDto(entity);
         }
     }
 }

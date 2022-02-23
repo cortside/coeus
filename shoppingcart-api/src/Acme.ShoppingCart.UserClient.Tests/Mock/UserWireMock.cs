@@ -9,19 +9,19 @@ using WireMock.Server;
 
 namespace Acme.ShoppingCart.UserClient.Tests.Mock {
     public class UserWireMock {
-        public WireMockServer fluentMockServer { get; }
+        public WireMockServer server { get; }
 
         public UserWireMock() {
-            if (fluentMockServer == null) {
-                fluentMockServer = WireMockServer.Start();
+            if (server == null) {
+                server = WireMockServer.Start();
             }
             Configure();
         }
 
         public void Configure() {
             var getUserUrl =
-            new Regex(@"^\/api/v1/users\/([0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12})$");
-            fluentMockServer
+            new Regex(@"^\/api/v1/items\/([0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12})$");
+            server
                .Given(
                    Request.Create().WithPath(p => getUserUrl.IsMatch(p)).UsingGet()
                )
@@ -29,16 +29,16 @@ namespace Acme.ShoppingCart.UserClient.Tests.Mock {
                    Response.Create()
                        .WithStatusCode(200)
                        .WithHeader("Content-Type", "application/json")
-                       .WithBody(_ => JsonConvert.SerializeObject(
-                           new CatalogItemResponse() {
-                               UserId = Guid.NewGuid(),
-                               FirstName = "first",
-                               LastName = "last",
-                               EmailAddress = "first@last.com"
+                       .WithBody(r => JsonConvert.SerializeObject(
+                           new CatalogItem() {
+                               ItemId = Guid.NewGuid(),
+                               Name = "Foo",
+                               Sku = r.PathSegments[3],
+                               UnitPrice = 12.34M
                            }
                        ))
                );
-            fluentMockServer
+            server
                 .Given(
                     Request.Create().WithPath("/connect/token").UsingPost()
                 )
