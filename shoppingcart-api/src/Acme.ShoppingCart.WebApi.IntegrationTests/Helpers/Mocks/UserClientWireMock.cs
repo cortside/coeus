@@ -9,7 +9,7 @@ using WireMock.Server;
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Helpers.Mocks {
     public class UserClientWireMock : IWireMockBuilder {
         public void Configure(WireMockServer server) {
-            var getUserUrl = new Regex(@"^\/api/v1/users\/([0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12})$");
+            var getUserUrl = new Regex(@"^\/api/v1/items\/([0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12})$");
             server
                .Given(
                    Request.Create().WithPath(p => getUserUrl.IsMatch(p)).UsingGet()
@@ -19,11 +19,11 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Helpers.Mocks {
                        .WithStatusCode(200)
                        .WithHeader("Content-Type", "application/json")
                        .WithBody(r => JsonConvert.SerializeObject(
-                           new CatalogItemResponse() {
-                               UserId = Guid.NewGuid(),
-                               FirstName = "first",
-                               LastName = "last",
-                               EmailAddress = "first@last.com"
+                           new CatalogItem() {
+                               ItemId = Guid.NewGuid(),
+                               Name = "Foo",
+                               Sku = r.PathSegments[3],
+                               UnitPrice = 12.34M
                            }
                        ))
                );

@@ -3,18 +3,24 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Acme.ShoppingCart.Domain.Enumerations;
+using Acme.ShoppingCart.UserClient.Models.Responses;
 
 namespace Acme.ShoppingCart.Domain.Entities {
     [Table("Order")]
     public class Order : AuditableEntity {
         public Order() {
-            OrderResourceId = Guid.NewGuid();
-            Items = new List<OrderItem>();
+            Init();
         }
 
         public Order(Customer customer, string street, string city, string state, string country, string zipCode) {
+            Init();
             Customer = customer;
             Address = new Address(street, city, state, country, zipCode);
+        }
+
+        private void Init() {
+            OrderResourceId = Guid.NewGuid();
+            Items = new List<OrderItem>();
         }
 
         [Key]
@@ -23,7 +29,7 @@ namespace Acme.ShoppingCart.Domain.Entities {
 
         public Guid OrderResourceId { get; set; }
 
-        [Column(TypeName = "nvarchar(20)")]
+        [StringLength(10)]
         public OrderStatus Status { get; set; }
 
         [ForeignKey("CustomerId")]
@@ -33,8 +39,8 @@ namespace Acme.ShoppingCart.Domain.Entities {
 
         public List<OrderItem> Items { get; set; }
 
-        public void AddItem(string sku, int quantity) {
-            Items.Add(new OrderItem() { Sku = sku, Quantity = quantity });
+        public void AddItem(CatalogItem item, int quantity) {
+            Items.Add(new OrderItem() { Sku = item.Sku, Quantity = quantity, UnitPrice = item.UnitPrice });
         }
     }
 }
