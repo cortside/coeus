@@ -39,9 +39,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.DomainEve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Exceptions", "Acme.ShoppingCart.Exceptions\Acme.ShoppingCart.Exceptions.csproj", "{AC8E1541-C882-4AAB-A8AA-ECADD0C9A41C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Catalog", "Acme.ShoppingCart.UserClient\Acme.ShoppingCart.Catalog.csproj", "{8651F26D-46CE-41F5-A90B-C1E27AEE2B80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.CatalogApi", "Acme.ShoppingCart.CatalogApi\Acme.ShoppingCart.CatalogApi.csproj", "{8651F26D-46CE-41F5-A90B-C1E27AEE2B80}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Catalog.Tests", "Acme.ShoppingCart.UserClient.Tests\Acme.ShoppingCart.Catalog.Tests.csproj", "{C9C87172-3B47-425A-8A7A-A41EF197EC82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.CatalogApi.Tests", "Acme.ShoppingCart.CatalogApi.Tests\Acme.ShoppingCart.CatalogApi.Tests.csproj", "{C9C87172-3B47-425A-8A7A-A41EF197EC82}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{A16D7C34-53DA-4BA0-A7CD-E7BA2851209E}"
 EndProject

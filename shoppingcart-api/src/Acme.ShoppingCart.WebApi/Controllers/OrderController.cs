@@ -97,6 +97,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// Create a new order
         /// </summary>
         /// <param name="input"></param>
+        /// <param name="resourceId"></param>
         [HttpPost("/api/v{version:apiVersion}/customers/{resourceId}/orders")]
         [Authorize(Constants.Authorization.Permissions.CreateOrder)]
         [ProducesResponseType(typeof(OrderModel), StatusCodes.Status201Created)]
