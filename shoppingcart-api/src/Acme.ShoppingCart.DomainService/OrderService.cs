@@ -42,6 +42,10 @@ namespace Acme.ShoppingCart.DomainService {
             }
 
             var entity = new Order(customer, dto.Address.Street, dto.Address.City, dto.Address.State, dto.Address.Country, dto.Address.ZipCode);
+            foreach (var i in dto.Items) {
+                var item = await catalog.GetItem(i.Sku).ConfigureAwait(false);
+                entity.AddItem(item, i.Quantity);
+            }
             await orderRepository.AddAsync(entity);
             var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = entity.LastModifiedDate };
             await publisher.PublishAsync(@event).ConfigureAwait(false);

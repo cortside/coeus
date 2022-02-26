@@ -46,9 +46,7 @@ namespace Acme.ShoppingCart.WebApi.Installers {
                 c.OperationFilter<AuthorizeOperationFilter>();
                 c.DocumentFilter<ReplaceVersionWithExactValueInPath>();
                 c.IgnoreObsoleteActions();
-                c.TagActionsBy(c => {
-                    return c.RelativePath;
-                });
+                c.TagActionsBy(c => new[] { c.RelativePath });
 
                 // https://www.scottbrady91.com/identity-server/aspnet-core-swagger-ui-authorization-using-identityserver4
                 var idsConfig = configuration.GetSection("IdentityServer").Get<IdentityServerConfiguration>();
@@ -58,13 +56,12 @@ namespace Acme.ShoppingCart.WebApi.Installers {
                         ClientCredentials = new OpenApiOAuthFlow {
                             AuthorizationUrl = new Uri($"{idsConfig.Authority}/connect/authorize"),
                             TokenUrl = new Uri($"{idsConfig.Authority}/connect/token"),
-                            Scopes = new Dictionary<string, string>             {
+                            Scopes = new Dictionary<string, string> {
                                 {idsConfig.ApiName, idsConfig.ApiName}
                             }
                         }
                     }
                 });
-
             });
             services.AddSwaggerGenNewtonsoftSupport();
         }

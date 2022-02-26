@@ -16,7 +16,7 @@ namespace Acme.ShoppingCart.Data.Repositories {
         public IUnitOfWork UnitOfWork => context;
 
         public async Task<PagedList<Customer>> SearchAsync(int pageSize, int pageNumber, string sortParams, CustomerSearch model) {
-            var customers = model.Build(context.Customers.AsNoTracking());
+            var customers = model.Build(context.Customers.Include(x => x.CreatedSubject).Include(x => x.LastModifiedSubject).AsNoTracking());
             var result = new PagedList<Customer> {
                 PageNumber = pageNumber,
                 PageSize = pageSize,

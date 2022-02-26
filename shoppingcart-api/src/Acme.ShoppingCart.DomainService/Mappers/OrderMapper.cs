@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Acme.ShoppingCart.Domain.Entities;
+﻿using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.Dto;
 
 namespace Acme.ShoppingCart.DomainService.Mappers {
@@ -23,7 +22,7 @@ namespace Acme.ShoppingCart.DomainService.Mappers {
                 OrderId = entity.OrderId,
                 OrderResourceId = entity.OrderResourceId,
                 Address = addressMapper.MapToDto(entity.Address),
-                Items = new List<OrderItemDto>(),
+                Items = entity.Items.ConvertAll(x => MapToDto(x)),
                 Customer = customerMapper.MapToDto(entity.Customer),
                 CreatedDate = entity.CreatedDate,
                 LastModifiedDate = entity.LastModifiedDate,
@@ -34,11 +33,21 @@ namespace Acme.ShoppingCart.DomainService.Mappers {
             return dto;
         }
 
-        public void UpdateCustomer(Order entity, OrderDto dto) {
-            //entity.FirstName = dto.FirstName;
-            //entity.LastName = dto.LastName;
-            //entity.Age = dto.Age;
-            //this.addressServiceMapper.UpdateAddress(entity.Address, dto.Address);
+        public OrderItemDto MapToDto(OrderItem entity) {
+            if (entity == null) {
+                return null;
+            }
+
+            return new OrderItemDto {
+                OrderItemId = entity.OrderItemId,
+                Sku = entity.Sku,
+                Quantity = entity.Quantity,
+                UnitPrice = entity.UnitPrice,
+                CreatedDate = entity.CreatedDate,
+                CreatedSubject = subjectMapper.MapToDto(entity.CreatedSubject),
+                LastModifiedDate = entity.LastModifiedDate,
+                LastModifiedSubject = subjectMapper.MapToDto(entity.LastModifiedSubject)
+            };
         }
     }
 }

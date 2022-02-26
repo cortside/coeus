@@ -1,5 +1,4 @@
 using System.Data;
-using System.Threading;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Domain.Entities;
 using Cortside.Common.Security;
@@ -18,10 +17,6 @@ namespace Acme.ShoppingCart.Data {
 
         public Task<IDbContextTransaction> BeginTransactionAsync(IsolationLevel isolationLevel) {
             return Database.BeginTransactionAsync(isolationLevel);
-        }
-
-        public Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default) {
-            throw new System.NotImplementedException();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {

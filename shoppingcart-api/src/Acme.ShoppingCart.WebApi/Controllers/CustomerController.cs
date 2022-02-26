@@ -1,10 +1,14 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using Acme.ShoppingCart.Data.Repositories;
 using Acme.ShoppingCart.DomainService;
 using Acme.ShoppingCart.Dto;
+using Acme.ShoppingCart.WebApi.Mappers;
 using Acme.ShoppingCart.WebApi.Models.Requests;
+using Acme.ShoppingCart.WebApi.Models.Responses;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
@@ -21,13 +25,15 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
     public class CustomerController : Controller {
         private readonly ILogger logger;
         private readonly ICustomerService service;
+        private readonly CustomerModelMapper customerMapper;
 
         /// <summary>
         /// Initializes a new instance of the WidgetController
         /// </summary>
-        public CustomerController(ILogger<CustomerController> logger, ICustomerService service) {
+        public CustomerController(ILogger<CustomerController> logger, ICustomerService service, CustomerModelMapper customerMapper) {
             this.logger = logger;
             this.service = service;
+            this.customerMapper = customerMapper;
         }
 
         /// <summary>
@@ -35,10 +41,11 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// </summary>
         [HttpGet("")]
         [Authorize(Constants.Authorization.Permissions.GetCustomers)]
-        [ProducesResponseType(typeof(ShoppingCart.Data.Paging.PagedList<CustomerDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetCustomersAsync(int pageNumber = 1, int pageSize = 30, string sort = null) {
-            var results = await service.SearchCustomersAsync(pageSize, pageNumber, sort ?? "").ConfigureAwait(false);
-            return Ok(results);
+        [ProducesResponseType(typeof(PagedList<CustomerModel>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetCustomersAsync([FromQuery] CustomerSearch search, int pageNumber = 1, int pageSize = 30, string sort = null) {
+            var results = await service.SearchCustomersAsync(pageSize, pageNumber, sort ?? "", search).ConfigureAwait(false);
+            var models = results.Convert(x => customerMapper.Map(x));
+            return Ok(models);
         }
 
         /// <summary>
@@ -48,10 +55,10 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [HttpGet("{id}")]
         [ActionName(nameof(GetCustomerAsync))]
         [Authorize(Constants.Authorization.Permissions.GetCustomer)]
-        [ProducesResponseType(typeof(CustomerDto), 200)]
+        [ProducesResponseType(typeof(CustomerModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCustomerAsync(Guid id) {
-            var widget = await service.GetCustomerAsync(id).ConfigureAwait(false);
-            return Ok(widget);
+            var dto = await service.GetCustomerAsync(id).ConfigureAwait(false);
+            return Ok(customerMapper.Map(dto));
         }
 
         /// <summary>
@@ -60,15 +67,15 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// <param name="input"></param>
         [HttpPost("")]
         [Authorize(Constants.Authorization.Permissions.CreateCustomer)]
-        [ProducesResponseType(typeof(CustomerDto), 201)]
+        [ProducesResponseType(typeof(CustomerModel), StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateCustomerAsync([FromBody] CreateCustomerModel input) {
             var dto = new CustomerDto() {
                 FirstName = input.FirstName,
                 LastName = input.LastName,
                 Email = input.Email
             };
-            var widget = await service.CreateCustomerAsync(dto).ConfigureAwait(false);
-            return CreatedAtAction(nameof(GetCustomerAsync), new { id = widget.CustomerResourceId }, widget);
+            var dto2 = await service.CreateCustomerAsync(dto).ConfigureAwait(false);
+            return CreatedAtAction(nameof(GetCustomerAsync), new { id = dto.CustomerResourceId }, customerMapper.Map(dto2));
         }
 
         /// <summary>
@@ -78,7 +85,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// <param name="input"></param>
         [HttpPut("{id}")]
         [Authorize(Constants.Authorization.Permissions.UpdateCustomer)]
-        [ProducesResponseType(typeof(CustomerDto), 200)]
+        [ProducesResponseType(typeof(CustomerModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateCustomerAsync(Guid id, CreateCustomerModel input) {
             using (LogContext.PushProperty("CustomerResourceId", id)) {
                 var dto = new CustomerDto() {
@@ -89,7 +96,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                 };
 
                 var result = await service.UpdateCustomerAsync(dto).ConfigureAwait(false);
-                return Ok(result);
+                return Ok(customerMapper.Map(result));
             }
         }
 
@@ -99,7 +106,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// <param name="resourceId"></param>
         [HttpPost("{resourceId}/publish")]
         [Authorize(Constants.Authorization.Permissions.UpdateCustomer)]
-        [ProducesResponseType(typeof(CustomerDto), 204)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> PublishCustomerStateChangedEventAsync(Guid resourceId) {
             using (LogContext.PushProperty("CustomerResourceId", resourceId)) {
                 await service.PublishCustomerStateChangedEventAsync(resourceId).ConfigureAwait(false);

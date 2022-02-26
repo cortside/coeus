@@ -18,26 +18,27 @@ namespace Acme.ShoppingCart.Domain.Entities {
             Address = new Address(street, city, state, country, zipCode);
         }
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int OrderId { get; private set; }
+
+        public Guid OrderResourceId { get; private set; }
+
+        [Column(TypeName = "nvarchar(20)")]
+        public OrderStatus Status { get; private set; }
+
+        [ForeignKey("CustomerId")]
+        public Customer Customer { get; private set; }
+
+        [ForeignKey("AddressId")]
+        public Address Address { get; private set; }
+
+        public List<OrderItem> Items { get; private set; }
+
         private void Init() {
             OrderResourceId = Guid.NewGuid();
             Items = new List<OrderItem>();
         }
-
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int OrderId { get; set; }
-
-        public Guid OrderResourceId { get; set; }
-
-        [StringLength(10)]
-        public OrderStatus Status { get; set; }
-
-        [ForeignKey("CustomerId")]
-        public Customer Customer { get; set; }
-        [ForeignKey("AddressId")]
-        public Address Address { get; set; }
-
-        public List<OrderItem> Items { get; set; }
 
         public void AddItem(CatalogItem item, int quantity) {
             Items.Add(new OrderItem() { Sku = item.Sku, Quantity = quantity, UnitPrice = item.UnitPrice });

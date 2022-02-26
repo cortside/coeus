@@ -27,7 +27,11 @@ namespace Acme.ShoppingCart.Data.Repositories {
                 .Include(x => x.Address)
                 .Include(x => x.Customer)
                 .Include(x => x.CreatedSubject)
-                .Include(x => x.LastModifiedSubject);
+                .Include(x => x.LastModifiedSubject)
+                .Include(x => x.Items)
+                    .ThenInclude(x => x.CreatedSubject)
+                .Include(x => x.Items)
+                    .ThenInclude(x => x.LastModifiedSubject);
 
             var tx = context.Database.CurrentTransaction?.GetDbTransaction();
             if (tx != null && tx.IsolationLevel == IsolationLevel.ReadUncommitted) {
@@ -59,25 +63,13 @@ namespace Acme.ShoppingCart.Data.Repositories {
                 .Include(x => x.Customer)
                 .Include(x => x.CreatedSubject)
                 .Include(x => x.LastModifiedSubject)
+                .Include(x => x.Items)
+                    .ThenInclude(x => x.CreatedSubject)
+                .Include(x => x.Items)
+                    .ThenInclude(x => x.LastModifiedSubject)
                 .FirstOrDefaultAsync(o => o.OrderResourceId == id);
 
-            //if (order == null) {
-            //    order = context
-            //                .Orders
-            //                .Local
-            //                .FirstOrDefault(o => o.OrderResourceId == id);
-            //}
-            //if (order != null) {
-            //    await context.Entry(order)
-            //        .Collection(i => i.Items).LoadAsync();
-            //}
-
             return order;
-        }
-
-        public Task<Order> UpdateAsync(Order order) {
-            context.Entry(order).State = EntityState.Modified;
-            return Task.FromResult(order);
         }
     }
 }

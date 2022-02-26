@@ -47,7 +47,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
                 .ConfigureBuilder<CommonWireMock>()
                 .ConfigureBuilder<IdsMock>()
                 .ConfigureBuilder<SubjectMock>()
-                .ConfigureBuilder<UserClientWireMock>();
+                .ConfigureBuilder<CatalogMock>();
 
             var section = Configuration.GetSection("HealthCheckHostedService");
             section["Checks:1:Value"] = $"{WireMockServer.WireMockUrl}/api/health";
@@ -73,7 +73,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
             loanservicingAuthConfig["Url"] = $"{WireMockServer.WireMockUrl}/connect/token";
 
             var userConfig = Configuration.GetSection("CatalogApi");
-            userConfig["ServiceUrl"] = $"{WireMockServer.WireMockUrl}/api";
+            userConfig["ServiceUrl"] = $"{WireMockServer.WireMockUrl}";
             var userAuthConfig = userConfig.GetSection("Authentication");
             userAuthConfig["Url"] = $"{WireMockServer.WireMockUrl}/connect/token";
 

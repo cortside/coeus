@@ -4,9 +4,9 @@ using System;
 
 namespace Acme.ShoppingCart.WebApi.Models.Responses {
     /// <summary>
-    /// Represents a single loan
+    /// Represents a single customer
     /// </summary>
-    public class CustomerModel {
+    public class CustomerModel : AuditableEntityModel {
         public Guid CustomerResourceId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

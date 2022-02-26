@@ -25,7 +25,8 @@ namespace PolicyServer
             server = new BaseWireMock(Guid.NewGuid().ToString())
                 .ConfigureBuilder<CommonWireMock>()
                 .ConfigureBuilder<IdsMock>()
-                .ConfigureBuilder<SubjectMock>();
+                .ConfigureBuilder<SubjectMock>()
+                .ConfigureBuilder<CatalogMock>();
 
             Log.Logger.Debug(server.mockServer.Urls.First());
 
