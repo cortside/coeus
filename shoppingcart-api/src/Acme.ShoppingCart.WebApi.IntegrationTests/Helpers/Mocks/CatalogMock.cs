@@ -1,16 +1,13 @@
-﻿using Newtonsoft.Json;
-using PolicyServer.Mocks.Models;
 using System;
+using Acme.ShoppingCart.UserClient.Models.Responses;
+using Newtonsoft.Json;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
 using WireMock.Server;
 
-namespace PolicyServer.Mocks
-{
-    public class CatalogMock : IWireMockBuilder
-    {
-        public void Configure(WireMockServer server)
-        {
+namespace Acme.ShoppingCart.WebApi.IntegrationTests.Helpers.Mocks {
+    public class CatalogMock : IWireMockBuilder {
+        public void Configure(WireMockServer server) {
             var rnd = new Random();
 
             server
@@ -22,8 +19,7 @@ namespace PolicyServer.Mocks
                     Response.Create()
                         .WithStatusCode(200)
                         .WithHeader("Content-Type", "application/json")
-                        .WithBody(r => JsonConvert.SerializeObject(new CatalogItem()
-                        {
+                        .WithBody(r => JsonConvert.SerializeObject(new CatalogItem() {
                             ItemId = Guid.NewGuid(),
                             Name = $"Item {r.PathSegments[3]}",
                             Sku = r.PathSegments[3],

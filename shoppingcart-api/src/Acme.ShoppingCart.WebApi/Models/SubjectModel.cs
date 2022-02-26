@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Acme.ShoppingCart.WebApi.Models.Responses {
+namespace Acme.ShoppingCart.WebApi.Models {
     /// <summary>
     /// Subject
     /// </summary>

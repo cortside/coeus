@@ -2,16 +2,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using Acme.ShoppingCart.WebApi.Models.Enumerations;
 
 namespace Acme.ShoppingCart.WebApi.Models.Responses {
     /// <summary>
     /// Represents a single loan
     /// </summary>
-    public class OrderRequest {
-        [Required]
-        public Guid CustomerResourceId { get; set; }
-        [Required]
+    public class OrderModel : AuditableEntityModel {
+        public Guid OrderResourceId { get; set; }
+        public OrderStatus Status { get; set; }
+        public CustomerModel Customer { get; set; }
         public AddressModel Address { get; set; }
         public List<OrderItemModel> Items { get; set; }
     }

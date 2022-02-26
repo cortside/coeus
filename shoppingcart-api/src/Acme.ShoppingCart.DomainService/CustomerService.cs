@@ -43,9 +43,9 @@ namespace Acme.ShoppingCart.DomainService {
             return mapper.MapToDto(entity);
         }
 
-        public async Task<PagedList<CustomerDto>> SearchCustomersAsync(int pageSize, int pageNumber, string sortParams) {
+        public async Task<PagedList<CustomerDto>> SearchCustomersAsync(int pageSize, int pageNumber, string sortParams, CustomerSearch search) {
             using (var tx = await uow.BeginTransactionAsync(IsolationLevel.ReadUncommitted)) {
-                var customers = await customerRepository.SearchAsync(pageSize, pageNumber, sortParams, new CustomerSearch()).ConfigureAwait(false);
+                var customers = await customerRepository.SearchAsync(pageSize, pageNumber, sortParams, search).ConfigureAwait(false);
 
                 var results = new PagedList<CustomerDto> {
                     PageNumber = customers.PageNumber,

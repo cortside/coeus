@@ -1,7 +1,7 @@
 using System;
 
 namespace Acme.ShoppingCart.Dto {
-    public class OrderItemDto {
+    public class OrderItemDto : AuditableEntityDto {
         public int OrderItemId { get; set; }
         public Guid ItemId { get; set; }
         public string Sku { get; set; }
