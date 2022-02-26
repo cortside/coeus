@@ -19,6 +19,6 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Acme.ShoppingCart.UserClient\Acme.ShoppingCart.Catalog.csproj" />
+    <ProjectReference Include="..\Acme.ShoppingCart.CatalogApi\Acme.ShoppingCart.CatalogApi.csproj" />
   </ItemGroup>
 </Project>

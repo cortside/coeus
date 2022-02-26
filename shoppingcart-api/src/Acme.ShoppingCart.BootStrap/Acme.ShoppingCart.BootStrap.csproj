@@ -26,6 +26,6 @@
     <ProjectReference Include="..\Acme.ShoppingCart.DomainService\Acme.ShoppingCart.DomainService.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.Health\Acme.ShoppingCart.Health.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.Hosting\Acme.ShoppingCart.Hosting.csproj" />
-    <ProjectReference Include="..\Acme.ShoppingCart.UserClient\Acme.ShoppingCart.Catalog.csproj" />
+    <ProjectReference Include="..\Acme.ShoppingCart.CatalogApi\Acme.ShoppingCart.CatalogApi.csproj" />
   </ItemGroup>
 </Project>
