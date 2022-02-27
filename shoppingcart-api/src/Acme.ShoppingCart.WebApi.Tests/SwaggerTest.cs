@@ -3,7 +3,6 @@ using Xunit;
 
 namespace Acme.ShoppingCart.WebApi.Tests {
     public class SwaggerTest {
-
         [Fact]
         public void Foo() {
             var controllers = typeof(Startup)

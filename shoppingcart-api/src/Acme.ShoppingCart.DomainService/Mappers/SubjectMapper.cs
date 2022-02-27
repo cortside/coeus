@@ -3,7 +3,6 @@ using Acme.ShoppingCart.Dto;
 
 namespace Acme.ShoppingCart.DomainService.Mappers {
     public class SubjectMapper {
-
         public SubjectDto MapToDto(Subject entity) {
             if (entity == null) {
                 return null;

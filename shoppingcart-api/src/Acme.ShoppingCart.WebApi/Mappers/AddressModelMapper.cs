@@ -3,7 +3,6 @@ using Acme.ShoppingCart.WebApi.Models;
 
 namespace Acme.ShoppingCart.WebApi.Mappers {
     public class AddressModelMapper {
-
         public AddressModel Map(AddressDto dto) {
             if (dto == null) {
                 return null;

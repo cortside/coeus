@@ -21,8 +21,7 @@ namespace Acme.ShoppingCart.DomainService {
         public string EncryptString<T>(T objectToEncrypt) {
             string objectString = JsonConvert.SerializeObject(objectToEncrypt);
             string encryptedString = EncryptString(objectString);
-            encryptedString = encryptedString.Replace("+", "%2B");
-            return encryptedString;
+            return encryptedString.Replace("+", "%2B");
         }
 
         public T DecryptString<T>(string cipherText) {
@@ -36,7 +35,7 @@ namespace Acme.ShoppingCart.DomainService {
 
         private string EncryptString(string plainText) {
             // Check arguments.
-            if (plainText == null || plainText.Length <= 0) {
+            if (string.IsNullOrEmpty(plainText)) {
                 throw new ArgumentNullException(nameof(plainText));
             }
             byte[] encrypted;
@@ -95,7 +94,6 @@ namespace Acme.ShoppingCart.DomainService {
                 using (MemoryStream msDecrypt = new MemoryStream(cipherText)) {
                     using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read)) {
                         using (StreamReader srDecrypt = new StreamReader(csDecrypt)) {
-
                             // Read the decrypted bytes from the decrypting stream
                             // and place them in a string.
                             plaintext = srDecrypt.ReadToEnd();

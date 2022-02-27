@@ -3,7 +3,6 @@ using Acme.ShoppingCart.Dto;
 
 namespace Acme.ShoppingCart.DomainService.Mappers {
     public class AddressMapper {
-
         private readonly SubjectMapper subjectMapper;
 
         public AddressMapper(SubjectMapper subjectMapper) {

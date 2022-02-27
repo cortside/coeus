@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Acme.ShoppingCart.Data {
     public class DatabaseContext : AuditableDatabaseContext, IUnitOfWork {
-
         public DatabaseContext(DbContextOptions<DatabaseContext> options, ISubjectPrincipal subjectPrincipal) : base(options, subjectPrincipal) {
         }
 
