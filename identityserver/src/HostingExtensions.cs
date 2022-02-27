@@ -1,8 +1,7 @@
-using Duende.IdentityServer;
-using Acme.IdentityServer;
 using Acme.IdentityServer.Pages.Admin.ApiScopes;
 using Acme.IdentityServer.Pages.Admin.Clients;
 using Acme.IdentityServer.Pages.Admin.IdentityScopes;
+using Duende.IdentityServer;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -78,11 +77,11 @@ internal static class HostingExtensions
 
         return builder.Build();
     }
-    
+
     public static WebApplication ConfigurePipeline(this WebApplication app)
-    { 
+    {
         app.UseSerilogRequestLogging();
-    
+
         if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
@@ -92,7 +91,7 @@ internal static class HostingExtensions
         app.UseRouting();
         app.UseIdentityServer();
         app.UseAuthorization();
-        
+
         app.MapRazorPages()
             .RequireAuthorization();
 

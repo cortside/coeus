@@ -14,15 +14,21 @@ namespace Acme.ShoppingCart.Domain.Entities {
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CustomerId { get; set; }
+        public int CustomerId { get; private set; }
 
-        public Guid CustomerResourceId { get; set; }
+        public Guid CustomerResourceId { get; private set; }
 
         [StringLength(50)]
-        public string FirstName { get; set; }
+        public string FirstName { get; private set; }
         [StringLength(50)]
-        public string LastName { get; set; }
+        public string LastName { get; private set; }
         [StringLength(250)]
-        public string Email { get; set; }
+        public string Email { get; private set; }
+
+        public void Update(string firstName, string lastName, string email) {
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+        }
     }
 }

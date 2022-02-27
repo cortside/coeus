@@ -1,5 +1,3 @@
-using System;
-
 namespace Acme.IdentityServer.Pages.Login;
 
 public class LoginOptions

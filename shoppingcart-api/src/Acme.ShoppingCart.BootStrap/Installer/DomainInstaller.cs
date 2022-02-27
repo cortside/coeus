@@ -22,7 +22,7 @@ namespace Acme.ShoppingCart.BootStrap.Installer {
                 });
 
             // register domain services
-            typeof(SubjectService).GetTypeInfo().Assembly.GetTypes()
+            typeof(OrderService).GetTypeInfo().Assembly.GetTypes()
                 .Where(x => (x.Name.EndsWith("Service"))
                     && x.GetTypeInfo().IsClass
                     && !x.GetTypeInfo().IsAbstract

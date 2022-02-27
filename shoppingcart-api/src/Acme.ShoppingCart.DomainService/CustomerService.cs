@@ -61,9 +61,7 @@ namespace Acme.ShoppingCart.DomainService {
 
         public async Task<CustomerDto> UpdateCustomerAsync(CustomerDto dto) {
             var entity = await customerRepository.GetAsync(dto.CustomerResourceId).ConfigureAwait(false);
-            entity.FirstName = dto.FirstName;
-            entity.LastName = dto.LastName;
-            entity.Email = dto.Email;
+            entity.Update(dto.FirstName, dto.LastName, dto.Email);
 
             var @event = new CustomerStateChangedEvent() { CustomerResourceId = entity.CustomerResourceId, Timestamp = entity.LastModifiedDate };
             await publisher.PublishAsync(@event).ConfigureAwait(false);

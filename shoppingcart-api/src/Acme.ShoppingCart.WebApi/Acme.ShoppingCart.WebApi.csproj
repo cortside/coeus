@@ -15,8 +15,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="AutoMapper" Version="11.0.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Cortside.Common.BootStrap" Version="1.1.215-develop" />
     <PackageReference Include="Cortside.Common.Correlation" Version="1.1.208" />
     <PackageReference Include="Cortside.Common.Hosting" Version="1.1.208" />

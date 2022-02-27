@@ -6,13 +6,13 @@ namespace Acme.ShoppingCart.Domain.Tests {
         [Fact]
         public void Foo() {
             // Arrange
-            var customer = new Customer("elmer", "fudd", "elmer@fudd.org");
+            var customer = new Customer("foo", "bar", "baz");
 
             // Act
-            customer.CustomerId = 1;
+            customer.Update("elmer", "fudd", "elmer@fudd.org");
 
             // Assert
-            Assert.Equal(1, customer.CustomerId);
+            Assert.Equal("elmer", customer.FirstName);
         }
     }
 }

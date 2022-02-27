@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
 
 namespace Acme.IdentityServer.Pages.Admin.ApiScopes;
 
@@ -18,7 +17,7 @@ public class NewModel : PageModel
 
     [BindProperty]
     public ApiScopeModel InputModel { get; set; }
-        
+
     public void OnGet()
     {
     }

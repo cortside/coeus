@@ -74,14 +74,7 @@ namespace Acme.ShoppingCart.Data {
 
             // create new subject if one is not found
             if (subject == null) {
-                subject = new Subject {
-                    CreatedDate = DateTime.Now.ToUniversalTime(),
-                    SubjectId = subjectId,
-                    GivenName = subjectPrincipal.GivenName,
-                    Name = subjectPrincipal.Name,
-                    FamilyName = subjectPrincipal.FamilyName,
-                    UserPrincipalName = subjectPrincipal.UserPrincipalName
-                };
+                subject = new Subject(subjectId, subjectPrincipal.GivenName, subjectPrincipal.FamilyName, subjectPrincipal.Name, subjectPrincipal.UserPrincipalName);
                 Subjects.Add(subject);
             }
             return subject;

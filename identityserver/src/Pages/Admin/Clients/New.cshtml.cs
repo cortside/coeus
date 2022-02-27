@@ -2,8 +2,6 @@ using IdentityModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
-using System.Threading.Tasks;
 
 namespace Acme.IdentityServer.Pages.Admin.Clients;
 
@@ -20,13 +18,13 @@ public class NewModel : PageModel
 
     [BindProperty]
     public CreateClientModel InputModel { get; set; }
-        
+
     public bool Created { get; set; }
 
     public void OnGet()
     {
         InputModel = new CreateClientModel
-        { 
+        {
             Secret = Convert.ToBase64String(CryptoRandom.CreateRandomKey(16))
         };
     }

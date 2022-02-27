@@ -4,8 +4,6 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Acme.ShoppingCart.WebApi.Models.Requests;
-using Acme.ShoppingCart.WebApi.Models.Responses;
 using FluentAssertions;
 using Newtonsoft.Json;
 using Xunit;

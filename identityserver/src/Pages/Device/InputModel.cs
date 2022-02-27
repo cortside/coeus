@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Acme.IdentityServer.Pages.Device;
 
 public class InputModel
