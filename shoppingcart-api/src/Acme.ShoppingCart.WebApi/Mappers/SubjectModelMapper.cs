@@ -3,7 +3,6 @@ using Acme.ShoppingCart.WebApi.Models;
 
 namespace Acme.ShoppingCart.WebApi.Mappers {
     public class SubjectModelMapper {
-
         public SubjectModel Map(SubjectDto dto) {
             if (dto == null) {
                 return null;

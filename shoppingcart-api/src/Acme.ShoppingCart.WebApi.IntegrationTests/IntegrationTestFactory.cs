@@ -157,7 +157,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
             var logger = scopedServices.GetRequiredService<ILogger<IntegrationTestFactory<TStartup>>>();
 
             // Ensure the database is created.
-            await db.Database.EnsureCreatedAsync();
+            await db.Database.EnsureCreatedAsync().ConfigureAwait(false);
 
             try {
                 await DatabaseFixture.SeedInMemoryDbAsync(db).ConfigureAwait(false);

@@ -67,7 +67,7 @@ namespace Acme.ShoppingCart.Data.Repositories {
                     .ThenInclude(x => x.CreatedSubject)
                 .Include(x => x.Items)
                     .ThenInclude(x => x.LastModifiedSubject)
-                .FirstOrDefaultAsync(o => o.OrderResourceId == id);
+                .FirstOrDefaultAsync(o => o.OrderResourceId == id).ConfigureAwait(false);
 
             return order;
         }

@@ -94,7 +94,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             var customer = db.Customers.First();
             var order = new Order(customer, "", "", "", "", "");
             db.Orders.Add(order);
-            await db.SaveChangesAsync();
+            await db.SaveChangesAsync().ConfigureAwait(false);
 
             //act
             var response = await testServerClient.GetAsync($"api/v1/orders/{order.OrderResourceId}").ConfigureAwait(false);
@@ -112,7 +112,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
                 var order = new Order(customer, "", "", "", "", "");
                 db.Orders.Add(order);
             }
-            await db.SaveChangesAsync();
+            await db.SaveChangesAsync().ConfigureAwait(false);
 
             //act
             var response = await testServerClient.GetAsync($"api/v1/orders?pageSize=5&page=1").ConfigureAwait(false);

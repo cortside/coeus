@@ -25,7 +25,7 @@ namespace Acme.ShoppingCart.Data.Repositories {
             };
 
             customers = customers.ToSortedQuery(sortParams);
-            result.Items = await customers.ToPagedQuery(pageNumber, pageSize).ToListAsync();
+            result.Items = await customers.ToPagedQuery(pageNumber, pageSize).ToListAsync().ConfigureAwait(false);
 
             return result;
         }
@@ -40,7 +40,7 @@ namespace Acme.ShoppingCart.Data.Repositories {
                                 .Customers
                                 .Include(x => x.CreatedSubject)
                                 .Include(x => x.LastModifiedSubject)
-                                .FirstOrDefaultAsync(o => o.CustomerResourceId == id);
+                                .FirstOrDefaultAsync(o => o.CustomerResourceId == id).ConfigureAwait(false);
 
             //if (order == null) {
             //    order = context

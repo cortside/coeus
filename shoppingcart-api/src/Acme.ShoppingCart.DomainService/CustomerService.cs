@@ -44,7 +44,7 @@ namespace Acme.ShoppingCart.DomainService {
         }
 
         public async Task<PagedList<CustomerDto>> SearchCustomersAsync(int pageSize, int pageNumber, string sortParams, CustomerSearch search) {
-            using (var tx = await uow.BeginTransactionAsync(IsolationLevel.ReadUncommitted)) {
+            using (var tx = await uow.BeginTransactionAsync(IsolationLevel.ReadUncommitted).ConfigureAwait(false)) {
                 var customers = await customerRepository.SearchAsync(pageSize, pageNumber, sortParams, search).ConfigureAwait(false);
 
                 var results = new PagedList<CustomerDto> {

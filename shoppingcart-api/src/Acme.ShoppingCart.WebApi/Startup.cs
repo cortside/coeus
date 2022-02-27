@@ -26,7 +26,6 @@ using Newtonsoft.Json.Serialization;
 using Serilog;
 
 namespace Acme.ShoppingCart.WebApi {
-
     /// <summary>
     /// Startup
     /// </summary>

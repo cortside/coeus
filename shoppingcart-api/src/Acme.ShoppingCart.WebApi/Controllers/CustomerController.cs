@@ -79,7 +79,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [HttpGet("search")]
         [Authorize(Constants.Authorization.Permissions.GetCustomers)]
         [ProducesResponseType(typeof(PagedList<CustomerModel>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetCustomersBySearch(string encryptedParams) {
+        public async Task<IActionResult> GetCustomersBySearchAsync(string encryptedParams) {
             if (string.IsNullOrWhiteSpace(encryptedParams)) {
                 return BadRequest(new ErrorModel { Message = "Encrypted params cannot be null, empty or whitespace", Type = nameof(BadRequestResponseException) });
             }

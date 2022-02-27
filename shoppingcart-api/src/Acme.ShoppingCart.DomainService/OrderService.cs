@@ -1,6 +1,5 @@
 using System;
 using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
 using Acme.ShoppingCart.Data;
@@ -46,10 +45,10 @@ namespace Acme.ShoppingCart.DomainService {
                 var item = await catalog.GetItem(i.Sku).ConfigureAwait(false);
                 entity.AddItem(item, i.Quantity);
             }
-            await orderRepository.AddAsync(entity);
+            await orderRepository.AddAsync(entity).ConfigureAwait(false);
             var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = entity.LastModifiedDate };
             await publisher.PublishAsync(@event).ConfigureAwait(false);
-            await uow.SaveChangesAsync();
+            await uow.SaveChangesAsync().ConfigureAwait(false);
 
             return mapper.MapToDto(entity);
         }
@@ -60,14 +59,14 @@ namespace Acme.ShoppingCart.DomainService {
         }
 
         public async Task<PagedList<OrderDto>> SearchOrdersAsync(int pageSize, int pageNumber, string sortParams, OrderSearch search) {
-            using (var tx = await uow.BeginTransactionAsync(IsolationLevel.ReadUncommitted)) {
+            using (var tx = await uow.BeginTransactionAsync(IsolationLevel.ReadUncommitted).ConfigureAwait(false)) {
                 var orders = await orderRepository.SearchAsync(pageSize, pageNumber, sortParams, search).ConfigureAwait(false);
 
                 var results = new PagedList<OrderDto> {
                     PageNumber = orders.PageNumber,
                     PageSize = orders.PageSize,
                     TotalItems = orders.TotalItems,
-                    Items = orders.Items.Select(x => mapper.MapToDto(x)).ToList()
+                    Items = orders.Items.ConvertAll(x => mapper.MapToDto(x))
                 };
 
                 await tx.CommitAsync().ConfigureAwait(false);
@@ -77,9 +76,7 @@ namespace Acme.ShoppingCart.DomainService {
 
         public async Task<OrderDto> UpdateOrderAsync(OrderDto dto) {
             var entity = await orderRepository.GetAsync(dto.OrderResourceId).ConfigureAwait(false);
-            //entity.FirstName = dto.FirstName;
-            //entity.LastName = dto.LastName;
-            //entity.Email = dto.Email;
+            // TODO: add method to update order
 
             var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = DateTime.UtcNow };
             await publisher.PublishAsync(@event).ConfigureAwait(false);

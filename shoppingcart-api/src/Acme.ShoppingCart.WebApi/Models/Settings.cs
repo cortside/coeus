@@ -49,4 +49,3 @@ namespace Acme.ShoppingCart.WebApi.Models {
         public Build Build { get; set; }
     }
 }
-

@@ -36,7 +36,7 @@ namespace Acme.ShoppingCart.DomainService.Tests {
             var service = new CustomerService(databaseContext, customerRepository, new CustomerMapper(new SubjectMapper()), publisher.Object, NullLogger<CustomerService>.Instance);
 
             // Act
-            await service.CreateCustomerAsync(dto);
+            await service.CreateCustomerAsync(dto).ConfigureAwait(false);
 
             // Assert
             Assert.True(databaseContext.Customers.Any(x => x.FirstName == dto.FirstName));
