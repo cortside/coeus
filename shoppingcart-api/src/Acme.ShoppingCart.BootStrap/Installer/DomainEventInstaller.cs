@@ -43,7 +43,7 @@ namespace Acme.ShoppingCart.BootStrap.Installer {
             // Register Hosted Services
             services.AddTransient<IDomainEventPublisher, DomainEventPublisher>();
             services.AddTransient<IDomainEventOutboxPublisher, DomainEventOutboxPublisher<DatabaseContext>>();
-            services.AddTransient<IDomainEventHandler<CustomerStateChangedEvent>, WidgetStateChangedHandler>();
+            services.AddTransient<IDomainEventHandler<CustomerStateChangedEvent>, CustomerStateChangedHandler>();
             services.AddSingleton<IDomainEventReceiver, DomainEventReceiver>();
 
             //services.AddSingleton<IDomainEventHandler<ContractorStateChangedEvent>, ContractorStateChangedEventHandler>();

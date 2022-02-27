@@ -7,6 +7,8 @@ using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.WebApi.Mappers;
 using Acme.ShoppingCart.WebApi.Models.Requests;
 using Acme.ShoppingCart.WebApi.Models.Responses;
+using Cortside.Common.Messages.MessageExceptions;
+using Cortside.Common.Messages.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +17,7 @@ using Serilog.Context;
 
 namespace Acme.ShoppingCart.WebApi.Controllers {
     /// <summary>
-    /// Represents the shared functionality/resources of the widget resource
+    /// Represents the shared functionality/resources of the customer resource
     /// </summary>
     [ApiVersion("1")]
     [ApiVersion("2")]
@@ -26,18 +28,20 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         private readonly ILogger logger;
         private readonly ICustomerService service;
         private readonly CustomerModelMapper customerMapper;
+        private readonly IEncryptionService encryptionService;
 
         /// <summary>
-        /// Initializes a new instance of the WidgetController
+        /// Initializes a new instance of the CustomerController
         /// </summary>
-        public CustomerController(ILogger<CustomerController> logger, ICustomerService service, CustomerModelMapper customerMapper) {
+        public CustomerController(ILogger<CustomerController> logger, ICustomerService service, CustomerModelMapper customerMapper, IEncryptionService encryptionService) {
             this.logger = logger;
             this.service = service;
             this.customerMapper = customerMapper;
+            this.encryptionService = encryptionService;
         }
 
         /// <summary>
-        /// Gets widgets
+        /// Gets customers
         /// </summary>
         [HttpGet("")]
         [Authorize(Constants.Authorization.Permissions.GetCustomers)]
@@ -49,9 +53,53 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         }
 
         /// <summary>
-        /// Gets a widget by id
+        /// Gets customers by post
         /// </summary>
-        /// <param name="id">the id of the widget to get</param>
+        [HttpPost("search")]
+        [Authorize(Constants.Authorization.Permissions.GetCustomers)]
+        [ProducesResponseType(typeof(PagedList<CustomerModel>), StatusCodes.Status200OK)]
+        public IActionResult GetCustomersByPost([FromBody] CustomerSearchModel search) {
+            if (search == null) {
+                return BadRequest(new ErrorModel { Message = "Search model cannot be null", Type = nameof(BadRequestResponseException) });
+            }
+
+            string encryptedString = encryptionService.EncryptString(search);
+            string reqUrl = HttpHelper.BuildUriFromRequest(Request);
+            reqUrl += "?encryptedParams=" + encryptedString;
+
+            Response.Headers.Add("Location", reqUrl);
+            return StatusCode((int)HttpStatusCode.SeeOther);
+        }
+
+        /// <summary>
+        /// Returns search results for rebate requests
+        /// </summary>
+        /// <param name="encryptedParams"></param>
+        /// <returns></returns>
+        [HttpGet("search")]
+        [Authorize(Constants.Authorization.Permissions.GetCustomers)]
+        [ProducesResponseType(typeof(PagedList<CustomerModel>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetCustomersBySearch(string encryptedParams) {
+            if (string.IsNullOrWhiteSpace(encryptedParams)) {
+                return BadRequest(new ErrorModel { Message = "Encrypted params cannot be null, empty or whitespace", Type = nameof(BadRequestResponseException) });
+            }
+
+            var param = encryptionService.DecryptString<CustomerSearchModel>(encryptedParams);
+            var search = new CustomerSearch() {
+                CustomerResourceId = param.CustomerResourceId,
+                FirstName = param.FirstName,
+                LastName = param.LastName
+            };
+
+            var results = await service.SearchCustomersAsync(param.PageSize, param.PageNumber, param.Sort, search).ConfigureAwait(false);
+            var models = results.Convert(x => customerMapper.Map(x));
+            return Ok(models);
+        }
+
+        /// <summary>
+        /// Gets a customer by id
+        /// </summary>
+        /// <param name="id">the id of the customer to get</param>
         [HttpGet("{id}")]
         [ActionName(nameof(GetCustomerAsync))]
         [Authorize(Constants.Authorization.Permissions.GetCustomer)]
@@ -62,7 +110,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         }
 
         /// <summary>
-        /// Create a new widget
+        /// Create a new customer
         /// </summary>
         /// <param name="input"></param>
         [HttpPost("")]
@@ -79,7 +127,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         }
 
         /// <summary>
-        /// Update a widget
+        /// Update a customer
         /// </summary>
         /// <param name="id"></param>
         /// <param name="input"></param>
@@ -101,7 +149,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         }
 
         /// <summary>
-        /// Update a widget
+        /// Update a customer
         /// </summary>
         /// <param name="resourceId"></param>
         [HttpPost("{resourceId}/publish")]

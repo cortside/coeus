@@ -12,19 +12,19 @@ using Xunit;
 using Xunit.Abstractions;
 
 namespace Acme.ShoppingCart.DomainService.Tests {
-    public class WidgetServiceTest : DomainServiceTest<ICustomerService> {
+    public class CustomerServiceTest : DomainServiceTest<ICustomerService> {
         private readonly DatabaseContext databaseContext;
         private readonly Mock<IDomainEventPublisher> domainEventPublisherMock;
         private readonly ITestOutputHelper testOutputHelper;
 
-        public WidgetServiceTest(ITestOutputHelper testOutputHelper) : base() {
+        public CustomerServiceTest(ITestOutputHelper testOutputHelper) : base() {
             databaseContext = GetDatabaseContext();
             domainEventPublisherMock = testFixture.Mock<IDomainEventPublisher>();
             this.testOutputHelper = testOutputHelper;
         }
 
         [Fact]
-        public async Task ShouldCreateWidget() {
+        public async Task ShouldCreateCustomer() {
             // Arrange
             var dto = new CustomerDto() {
                 FirstName = Guid.NewGuid().ToString()
