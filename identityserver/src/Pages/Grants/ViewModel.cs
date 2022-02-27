@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Acme.IdentityServer.Pages.Grants;
 
 public class ViewModel

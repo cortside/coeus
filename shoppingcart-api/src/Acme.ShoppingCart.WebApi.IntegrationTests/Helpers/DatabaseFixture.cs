@@ -1,15 +1,17 @@
+using System;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Data;
+using Acme.ShoppingCart.Domain.Entities;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Helpers {
     public static class DatabaseFixture {
-        public static async Task SeedInMemoryDbAsync(DatabaseContext dbContext) {
-            await dbContext.Subjects.SeedFromFileAsync(".\\SeedData\\Subject.csv").ConfigureAwait(false);
-            await dbContext.Customers.SeedFromFileAsync(".\\SeedData\\Widget.csv").ConfigureAwait(false);
+        public static Task SeedInMemoryDbAsync(DatabaseContext dbContext) {
+            //await dbContext.Subjects.SeedFromFileAsync(".\\SeedData\\Subject.csv").ConfigureAwait(false);
+            //await dbContext.Customers.SeedFromFileAsync(".\\SeedData\\Widget.csv").ConfigureAwait(false);
 
             // cast to get base implementation
             //((DbContext)dbContext).SaveChanges(true);
-            await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            //await dbContext.SaveChangesAsync().ConfigureAwait(false);
 
             //const int goodmanId = 1234500;
             //Random random = new Random();
@@ -43,7 +45,13 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Helpers {
             //};
             //await dbContext.RebateRequests.AddAsync(request);
 
-            //await dbContext.SaveChangesAsync();
+            var subject = new Subject(Guid.Empty, String.Empty, String.Empty, String.Empty, "system");
+            dbContext.Subjects.Add(subject);
+
+            var customer = new Customer("elmer", "fudd", "elmer.fudd@gmail.com");
+            dbContext.Customers.Add(customer);
+
+            return dbContext.SaveChangesAsync();
         }
     }
 }

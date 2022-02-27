@@ -8,12 +8,12 @@ using Acme.ShoppingCart.UserClient.Models.Responses;
 namespace Acme.ShoppingCart.Domain.Entities {
     [Table("Order")]
     public class Order : AuditableEntity {
-        public Order() {
-            Init();
+        protected Order() {
+            // Required by EF as it doesn't know about Customer
         }
 
         public Order(Customer customer, string street, string city, string state, string country, string zipCode) {
-            Init();
+            OrderResourceId = Guid.NewGuid();
             Customer = customer;
             Address = new Address(street, city, state, country, zipCode);
         }
@@ -33,15 +33,10 @@ namespace Acme.ShoppingCart.Domain.Entities {
         [ForeignKey("AddressId")]
         public Address Address { get; private set; }
 
-        public List<OrderItem> Items { get; private set; }
-
-        private void Init() {
-            OrderResourceId = Guid.NewGuid();
-            Items = new List<OrderItem>();
-        }
+        public List<OrderItem> Items { get; private set; } = new List<OrderItem>();
 
         public void AddItem(CatalogItem item, int quantity) {
-            Items.Add(new OrderItem() { Sku = item.Sku, Quantity = quantity, UnitPrice = item.UnitPrice });
+            Items.Add(new OrderItem(item, quantity));
         }
     }
 }

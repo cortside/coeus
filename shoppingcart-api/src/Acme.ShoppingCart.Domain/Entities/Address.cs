@@ -5,7 +5,7 @@ namespace Acme.ShoppingCart.Domain.Entities {
     public class Address : AuditableEntity {  //} : ValueObject {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int AddressId { get; set; }
+        public int AddressId { get; private set; }
 
         public string Street { get; private set; }
         public string City { get; private set; }
@@ -22,14 +22,5 @@ namespace Acme.ShoppingCart.Domain.Entities {
             Country = country;
             ZipCode = zipcode;
         }
-
-        //protected override IEnumerable<object> GetEqualityComponents() {
-        //    // Using a yield return statement to return each element one at a time
-        //    yield return Street;
-        //    yield return City;
-        //    yield return State;
-        //    yield return Country;
-        //    yield return ZipCode;
-        //}
     }
 }

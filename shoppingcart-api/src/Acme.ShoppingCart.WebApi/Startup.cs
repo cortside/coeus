@@ -105,8 +105,6 @@ namespace Acme.ShoppingCart.WebApi {
                 return sp.GetRequiredService<IUrlHelperFactory>().GetUrlHelper(sp.GetRequiredService<IActionContextAccessor>().ActionContext);
             });
 
-            services.AddAutoMapper(typeof(Startup).Assembly);
-
             services.AddSingleton(Configuration);
             bootstrapper.InitIoCContainer(Configuration as IConfigurationRoot, services);
         }
