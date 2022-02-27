@@ -14,16 +14,16 @@ namespace Acme.ShoppingCart.DomainEvent {
     /// <summary>
     /// Handles domain event <see cref="CustomerStateChangedEvent"/>
     /// </summary>
-    public class WidgetStateChangedHandler : IDomainEventHandler<CustomerStateChangedEvent> {
+    public class CustomerStateChangedHandler : IDomainEventHandler<CustomerStateChangedEvent> {
         private readonly IServiceProvider serviceProvider;
-        private readonly ILogger<WidgetStateChangedHandler> logger;
+        private readonly ILogger<CustomerStateChangedHandler> logger;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="serviceProvider"></param>
         /// <param name="logger"></param>
-        public WidgetStateChangedHandler(IServiceProvider serviceProvider, ILogger<WidgetStateChangedHandler> logger) {
+        public CustomerStateChangedHandler(IServiceProvider serviceProvider, ILogger<CustomerStateChangedHandler> logger) {
             this.serviceProvider = serviceProvider;
             this.logger = logger;
         }
@@ -31,13 +31,13 @@ namespace Acme.ShoppingCart.DomainEvent {
         public async Task<HandlerResult> HandleAsync(DomainEventMessage<CustomerStateChangedEvent> @event) {
             using (LogContext.PushProperty("MessageId", @event.MessageId))
             using (LogContext.PushProperty("CorrelationId", @event.CorrelationId))
-            using (LogContext.PushProperty("WidgetId", @event.Data.CustomerResourceId)) {
+            using (LogContext.PushProperty("CustomerResourceId", @event.Data.CustomerResourceId)) {
                 logger.LogDebug($"Handling {typeof(CustomerStateChangedEvent).Name} for ShoppingCart {@event.Data.CustomerResourceId}");
 
                 using (IServiceScope scope = serviceProvider.CreateScope()) {
                     var service = scope.ServiceProvider.GetRequiredService<ICustomerService>();
                     var lockProvider = scope.ServiceProvider.GetRequiredService<IDistributedLockProvider>();
-                    var lockName = $"WidgetId:{@event.Data.CustomerResourceId}";
+                    var lockName = $"CustomerResourceId:{@event.Data.CustomerResourceId}";
 
                     logger.LogDebug($"Acquiring lock for {lockName}");
                     await using (await lockProvider.AcquireLockAsync(lockName).ConfigureAwait(false)) {
@@ -45,7 +45,7 @@ namespace Acme.ShoppingCart.DomainEvent {
                         var entity = await service.GetCustomerAsync(@event.Data.CustomerResourceId).ConfigureAwait(false);
                         // simulate more work with sleep
                         await Task.Delay(TimeSpan.FromSeconds(5));
-                        logger.LogInformation($"widget was observed changing it's state with body: {JsonConvert.SerializeObject(@event.Data)} and entity: {JsonConvert.SerializeObject(entity)}");
+                        logger.LogInformation($"customer was observed changing it's state with body: {JsonConvert.SerializeObject(@event.Data)} and entity: {JsonConvert.SerializeObject(entity)}");
                     }
                 }
 

@@ -52,9 +52,9 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         }
 
         /// <summary>
-        /// Gets a widget by id
+        /// Gets a order by id
         /// </summary>
-        /// <param name="id">the id of the widget to get</param>
+        /// <param name="id">the id of the order to get</param>
         [HttpGet("{id}")]
         [ActionName(nameof(GetOrderAsync))]
         [Authorize(Constants.Authorization.Permissions.GetOrder)]
@@ -125,7 +125,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         }
 
         /// <summary>
-        /// Update a widget
+        /// Update a order
         /// </summary>
         /// <param name="id"></param>
         /// <param name="input"></param>
@@ -147,7 +147,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         }
 
         /// <summary>
-        /// Update a widget
+        /// Update a order
         /// </summary>
         /// <param name="resourceId"></param>
         [HttpPost("{resourceId}/publish")]
