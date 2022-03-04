@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -74,7 +73,6 @@ namespace Acme.ShoppingCart.WebApi {
             services.AddCors();
 
             services.AddControllers(options => {
-                options.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
                 options.CacheProfiles.Add("default", new CacheProfile {
                     Duration = 30,
                     Location = ResponseCacheLocation.Any
