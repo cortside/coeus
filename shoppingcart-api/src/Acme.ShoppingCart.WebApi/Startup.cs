@@ -119,7 +119,6 @@ namespace Acme.ShoppingCart.WebApi {
             app.UseSwagger();
             app.UseSwaggerUI(options => {
                 options.RoutePrefix = "swagger";
-                //options.DefaultModelExpandDepth(-1);
                 options.ShowExtensions();
                 options.ShowCommonExtensions();
                 options.EnableValidator();
@@ -135,7 +134,7 @@ namespace Acme.ShoppingCart.WebApi {
             foreach (var description in provider.ApiVersionDescriptions) {
                 app.UseReDoc(c => {
                     var version = description.GroupName.ToLowerInvariant();
-                    c.DocumentTitle = $"MY API Documentation {description.GroupName.ToUpperInvariant()}";
+                    c.DocumentTitle = $"Acme.ShoppingCart Api Documentation {description.GroupName.ToUpperInvariant()}";
                     c.RoutePrefix = $"api-docs/{version}";
                     c.SpecUrl = $"/swagger/{version}/swagger.json";
                 });
