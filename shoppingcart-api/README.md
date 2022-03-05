@@ -16,6 +16,8 @@ The template repo can be found at https://github.com/cortside/cortside.templates
 
 ## Feature Overview
 
+For a more detailed understanding of the features and their relation in the code see [Features.md](Features.md).
+
 * .net core api
 * IdentityServer/OpenID Connect authentication
 * Policy base authorization
@@ -34,4 +36,9 @@ The template repo can be found at https://github.com/cortside/cortside.templates
 * ApplicationInsights
 * integration tests with testserver
 
-For a more detailed understanding of the features and their relation in the code see [this feature list](Features.md).
+## todo
+
+* ListResult example
+
+
+
