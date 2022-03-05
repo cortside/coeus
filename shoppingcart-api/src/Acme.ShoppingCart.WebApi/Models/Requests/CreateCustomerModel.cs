@@ -4,13 +4,31 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Acme.ShoppingCart.WebApi.Models.Requests {
     /// <summary>
-    /// Represents a single loan
+    /// Request information to create a new customer
     /// </summary>
     public class CreateCustomerModel {
+        /// <summary>
+        /// Gets or sets the first name.
+        /// </summary>
+        /// <value>
+        /// The first name.
+        /// </value>
         [Required]
         public string FirstName { get; set; }
+        /// <summary>
+        /// Gets or sets the last name.
+        /// </summary>
+        /// <value>
+        /// The last name.
+        /// </value>
         [Required]
         public string LastName { get; set; }
+        /// <summary>
+        /// Gets or sets the email.
+        /// </summary>
+        /// <value>
+        /// The email.
+        /// </value>
         [Required]
         public string Email { get; set; }
     }
