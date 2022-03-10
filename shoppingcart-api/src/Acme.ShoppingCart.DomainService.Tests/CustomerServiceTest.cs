@@ -8,18 +8,17 @@ using Cortside.DomainEvent;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Acme.ShoppingCart.DomainService.Tests {
     public class CustomerServiceTest : DomainServiceTest<ICustomerService> {
         private readonly DatabaseContext databaseContext;
 
-        public CustomerServiceTest(ITestOutputHelper testOutputHelper) : base() {
+        public CustomerServiceTest() : base() {
             databaseContext = GetDatabaseContext();
         }
 
         [Fact]
-        public async Task ShouldCreateCustomer() {
+        public async Task ShouldCreateCustomerAsync() {
             // Arrange
             var dto = new CustomerDto() {
                 FirstName = Guid.NewGuid().ToString()
@@ -31,7 +30,7 @@ namespace Acme.ShoppingCart.DomainService.Tests {
 
             // Act
             await service.CreateCustomerAsync(dto).ConfigureAwait(false);
-            await databaseContext.SaveChangesAsync();
+            await databaseContext.SaveChangesAsync().ConfigureAwait(false);
 
             // Assert
             Assert.True(databaseContext.Customers.Any(x => x.FirstName == dto.FirstName));

@@ -18,14 +18,14 @@ namespace Acme.ShoppingCart.Facade {
             this.mapper = mapper;
         }
 
-        public async Task<CustomerDto> CreateCustomerAsync(CustomerDto dto) {
+        public async Task<CustomerDto?> CreateCustomerAsync(CustomerDto dto) {
             var customer = await customerService.CreateCustomerAsync(dto).ConfigureAwait(false);
             await uow.SaveChangesAsync().ConfigureAwait(false);
 
             return mapper.MapToDto(customer);
         }
 
-        public async Task<CustomerDto> GetCustomerAsync(Guid customerResourceId) {
+        public async Task<CustomerDto?> GetCustomerAsync(Guid customerResourceId) {
             var customer = await customerService.GetCustomerAsync(customerResourceId);
             return mapper.MapToDto(customer);
         }
@@ -43,12 +43,12 @@ namespace Acme.ShoppingCart.Facade {
                     PageNumber = customers.PageNumber,
                     PageSize = customers.PageSize,
                     TotalItems = customers.TotalItems,
-                    Items = customers.Items.Select(x => mapper.MapToDto(x)).ToList()
+                    Items = customers.Items.ConvertAll(x => mapper.MapToDto(x))
                 };
             }
         }
 
-        public async Task<CustomerDto> UpdateCustomerAsync(CustomerDto dto) {
+        public async Task<CustomerDto?> UpdateCustomerAsync(CustomerDto dto) {
             var customer = await customerService.UpdateCustomerAsync(dto).ConfigureAwait(false);
             await uow.SaveChangesAsync().ConfigureAwait(false);
 

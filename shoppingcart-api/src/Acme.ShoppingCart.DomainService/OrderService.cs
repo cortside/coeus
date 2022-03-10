@@ -7,6 +7,7 @@ using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.Exceptions;
 using Acme.ShoppingCart.UserClient;
+using Cortside.Common.Validation;
 using Cortside.DomainEvent;
 using Microsoft.Extensions.Logging;
 
@@ -16,28 +17,23 @@ namespace Acme.ShoppingCart.DomainService {
         private readonly ILogger<OrderService> logger;
         private readonly IOrderRepository orderRepository;
         private readonly ICatalogClient catalog;
-        private readonly ICustomerRepository customerRespository;
 
-        public OrderService(IOrderRepository orderRepository, ICustomerRepository customerRespository, IDomainEventOutboxPublisher publisher, ILogger<OrderService> logger, ICatalogClient catalog) {
+        public OrderService(IOrderRepository orderRepository, IDomainEventOutboxPublisher publisher, ILogger<OrderService> logger, ICatalogClient catalog) {
             this.publisher = publisher;
             this.logger = logger;
             this.orderRepository = orderRepository;
-            this.customerRespository = customerRespository;
             this.catalog = catalog;
         }
 
         public async Task<Order> CreateOrderAsync(Customer customer, OrderDto dto) {
-            //Guard.Against();  // TODO: this should be in common.messages
-            if (customer == null) {
-                throw new BadRequestMessage("customer not found");
-            }
+            Guard.From.Null<BadRequestMessage>(customer, "customer not found");
 
             var entity = new Order(customer, dto.Address.Street, dto.Address.City, dto.Address.State, dto.Address.Country, dto.Address.ZipCode);
             foreach (var i in dto.Items) {
                 var item = await catalog.GetItem(i.Sku).ConfigureAwait(false);
                 entity.AddItem(item, i.Quantity);
             }
-            await orderRepository.AddAsync(entity).ConfigureAwait(false);
+            orderRepository.Add(entity);
             var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = entity.LastModifiedDate };
             await publisher.PublishAsync(@event).ConfigureAwait(false);
 
@@ -49,13 +45,13 @@ namespace Acme.ShoppingCart.DomainService {
             return entity;
         }
 
-        public async Task<PagedList<Order>> SearchOrdersAsync(int pageSize, int pageNumber, string sortParams, OrderSearch search) {
-            return await orderRepository.SearchAsync(pageSize, pageNumber, sortParams, search).ConfigureAwait(false);
+        public Task<PagedList<Order>> SearchOrdersAsync(int pageSize, int pageNumber, string sortParams, OrderSearch search) {
+            return orderRepository.SearchAsync(pageSize, pageNumber, sortParams, search);
         }
 
         public async Task<Order> UpdateOrderAsync(OrderDto dto) {
             var entity = await orderRepository.GetAsync(dto.OrderResourceId).ConfigureAwait(false);
-            // TODO: add method to update order
+            entity.UpdateAddress(dto.Address.Street, dto.Address.City, dto.Address.State, dto.Address.Country, dto.Address.ZipCode);
 
             var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = DateTime.UtcNow };
             await publisher.PublishAsync(@event).ConfigureAwait(false);

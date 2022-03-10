@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.WebApi.Models.Requests;
+using Acme.ShoppingCart.WebApi.Models.Responses;
 using FluentAssertions;
 using Newtonsoft.Json;
 using Xunit;
@@ -13,11 +14,11 @@ using Xunit;
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
     public class OrderTest : IClassFixture<IntegrationTestFactory<Startup>> {
         private readonly IntegrationTestFactory<Startup> fixture;
-        private readonly HttpClient testServerClient;
+        private readonly HttpClient client;
 
         public OrderTest(IntegrationTestFactory<Startup> fixture) {
             this.fixture = fixture;
-            testServerClient = fixture.CreateAuthorizedClient("api");
+            client = fixture.CreateAuthorizedClient("api");
         }
 
         [Fact]
@@ -43,11 +44,13 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
 
             //act
             var orderBody = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");
-            var orderResponse = await testServerClient.PostAsync("/api/v1/orders", orderBody).ConfigureAwait(false);
+            var orderResponse = await client.PostAsync("/api/v1/orders", orderBody).ConfigureAwait(false);
 
             //assert
             var orderContent = await orderResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             orderResponse.StatusCode.Should().Be(HttpStatusCode.Created);
+            var order = JsonConvert.DeserializeObject<OrderModel>(orderContent);
+            order.Customer.CustomerResourceId.Should().NotBeEmpty();
         }
 
         [Fact]
@@ -74,17 +77,19 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             };
 
             //act
-            var response = await testServerClient.PostAsync("/api/v1/customers", requestBody).ConfigureAwait(false);
+            var response = await client.PostAsync("/api/v1/customers", requestBody).ConfigureAwait(false);
             var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var customer = JsonConvert.DeserializeObject<Models.Responses.CustomerModel>(content);
 
             var orderBody = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");
-            var orderResponse = await testServerClient.PostAsync($"/api/v1/customers/{customer.CustomerResourceId}/orders", orderBody).ConfigureAwait(false);
+            var orderResponse = await client.PostAsync($"/api/v1/customers/{customer.CustomerResourceId}/orders", orderBody).ConfigureAwait(false);
 
             //assert
             response.StatusCode.Should().Be(HttpStatusCode.Created);
             var orderContent = await orderResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             orderResponse.StatusCode.Should().Be(HttpStatusCode.Created);
+            var order = JsonConvert.DeserializeObject<OrderModel>(orderContent);
+            order.Customer.CustomerResourceId.Should().Be(customer.CustomerResourceId);
         }
 
         [Fact]
@@ -97,7 +102,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             await db.SaveChangesAsync().ConfigureAwait(false);
 
             //act
-            var response = await testServerClient.GetAsync($"api/v1/orders/{order.OrderResourceId}").ConfigureAwait(false);
+            var response = await client.GetAsync($"api/v1/orders/{order.OrderResourceId}").ConfigureAwait(false);
 
             //assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -115,7 +120,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             await db.SaveChangesAsync().ConfigureAwait(false);
 
             //act
-            var response = await testServerClient.GetAsync($"api/v1/orders?pageSize=5&page=1").ConfigureAwait(false);
+            var response = await client.GetAsync("api/v1/orders?pageSize=5&page=1").ConfigureAwait(false);
 
             //assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);

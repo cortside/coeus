@@ -133,10 +133,14 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         public async Task<IActionResult> UpdateOrderAsync(Guid id, CreateOrderModel input) {
             using (LogContext.PushProperty("OrderResourceId", id)) {
                 var dto = new OrderDto() {
-                    OrderResourceId = id
-                    //FirstName = input.FirstName,
-                    //LastName = input.LastName,
-                    //Email = input.Email
+                    OrderResourceId = id,
+                    Address = new AddressDto() {
+                        Street = input.Address.Street,
+                        City = input.Address.City,
+                        Country = input.Address.Country,
+                        State = input.Address.State,
+                        ZipCode = input.Address.ZipCode
+                    }
                 };
 
                 var result = await facade.UpdateOrderAsync(dto).ConfigureAwait(false);

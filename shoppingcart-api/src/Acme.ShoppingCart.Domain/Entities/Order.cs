@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Acme.ShoppingCart.Domain.Enumerations;
 using Acme.ShoppingCart.UserClient.Models.Responses;
+using Cortside.Common.Validation;
 
 namespace Acme.ShoppingCart.Domain.Entities {
     [Table("Order")]
@@ -37,6 +38,11 @@ namespace Acme.ShoppingCart.Domain.Entities {
 
         public void AddItem(CatalogItem item, int quantity) {
             Items.Add(new OrderItem(item, quantity));
+        }
+
+        public void UpdateAddress(string street, string city, string state, string country, string zipCode) {
+            Guard.Against(() => Status == OrderStatus.Cancelled || Status == OrderStatus.Shipped, () => throw new InvalidOperationException($"Update not allowed when Status is {Status}"));
+            Address.Update(street, city, state, country, zipCode);
         }
     }
 }

@@ -13,7 +13,8 @@ namespace Acme.ShoppingCart.BootStrap.Installer {
                 .Where(x => (x.Name.EndsWith("Facade"))
                     && x.GetTypeInfo().IsClass
                     && !x.GetTypeInfo().IsAbstract)
-                .ToList().ForEach(x => {
+                .ToList()
+                .ForEach(x => {
                     x.GetInterfaces().ToList()
                         .ForEach(i => services.AddScoped(i, x));
                 });
@@ -22,9 +23,8 @@ namespace Acme.ShoppingCart.BootStrap.Installer {
                 .Where(x => (x.Name.EndsWith("Mapper"))
                     && x.GetTypeInfo().IsClass
                     && !x.GetTypeInfo().IsAbstract)
-                .ToList().ForEach(x => {
-                    services.AddScoped(x);
-                });
+                .ToList()
+                .ForEach(x => services.AddSingleton(x));
         }
     }
 }

@@ -1,57 +1,59 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.DomainService", ".\shoppingcart-api\src\Acme.ShoppingCart.DomainService\Acme.ShoppingCart.DomainService.csproj", "{6731FE8E-5725-44C9-920F-E139453138BC}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32228.444
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.DomainService", "shoppingcart-api\src\Acme.ShoppingCart.DomainService\Acme.ShoppingCart.DomainService.csproj", "{6731FE8E-5725-44C9-920F-E139453138BC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Dto", ".\shoppingcart-api\src\Acme.ShoppingCart.Dto\Acme.ShoppingCart.Dto.csproj", "{52A41795-DCBA-4B14-A7DE-9E76142E3BA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Dto", "shoppingcart-api\src\Acme.ShoppingCart.Dto\Acme.ShoppingCart.Dto.csproj", "{52A41795-DCBA-4B14-A7DE-9E76142E3BA1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.DomainService.Tests", ".\shoppingcart-api\src\Acme.ShoppingCart.DomainService.Tests\Acme.ShoppingCart.DomainService.Tests.csproj", "{8A502400-39EB-40A5-A2BB-B4E3F0D79004}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.DomainService.Tests", "shoppingcart-api\src\Acme.ShoppingCart.DomainService.Tests\Acme.ShoppingCart.DomainService.Tests.csproj", "{8A502400-39EB-40A5-A2BB-B4E3F0D79004}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.WebApi", ".\shoppingcart-api\src\Acme.ShoppingCart.WebApi\Acme.ShoppingCart.WebApi.csproj", "{F5BBF1CD-3293-460F-8EDF-4F27DE633A4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.WebApi", "shoppingcart-api\src\Acme.ShoppingCart.WebApi\Acme.ShoppingCart.WebApi.csproj", "{F5BBF1CD-3293-460F-8EDF-4F27DE633A4F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.WebApi.Tests", ".\shoppingcart-api\src\Acme.ShoppingCart.WebApi.Tests\Acme.ShoppingCart.WebApi.Tests.csproj", "{3962C39E-46D9-4F08-9038-95C5DDCE6673}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.WebApi.Tests", "shoppingcart-api\src\Acme.ShoppingCart.WebApi.Tests\Acme.ShoppingCart.WebApi.Tests.csproj", "{3962C39E-46D9-4F08-9038-95C5DDCE6673}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Data", ".\shoppingcart-api\src\Acme.ShoppingCart.Data\Acme.ShoppingCart.Data.csproj", "{7E0E20B3-1B2A-483D-AC50-A177AF3EBBF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Data", "shoppingcart-api\src\Acme.ShoppingCart.Data\Acme.ShoppingCart.Data.csproj", "{7E0E20B3-1B2A-483D-AC50-A177AF3EBBF6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{F604444D-0344-42DC-812A-9B132D0D7EFF}"
 	ProjectSection(SolutionItems) = preProject
-		.\shoppingcart-api\src\.editorconfig = .\shoppingcart-api\src\.editorconfig
-		.\shoppingcart-api\Features.md = .\shoppingcart-api\Features.md
-		.\shoppingcart-api\README.md = .\shoppingcart-api\README.md
+		shoppingcart-api\src\.editorconfig = shoppingcart-api\src\.editorconfig
+		shoppingcart-api\Features.md = shoppingcart-api\Features.md
+		shoppingcart-api\README.md = shoppingcart-api\README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Domain", ".\shoppingcart-api\src\Acme.ShoppingCart.Domain\Acme.ShoppingCart.Domain.csproj", "{1F32F33B-D53E-42BB-969C-1331F2261EA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Domain", "shoppingcart-api\src\Acme.ShoppingCart.Domain\Acme.ShoppingCart.Domain.csproj", "{1F32F33B-D53E-42BB-969C-1331F2261EA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.WebApi.IntegrationTests", ".\shoppingcart-api\src\Acme.ShoppingCart.WebApi.IntegrationTests\Acme.ShoppingCart.WebApi.IntegrationTests.csproj", "{89CC45A5-DB6F-4C8E-8CD3-EDE8F726A44F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.WebApi.IntegrationTests", "shoppingcart-api\src\Acme.ShoppingCart.WebApi.IntegrationTests\Acme.ShoppingCart.WebApi.IntegrationTests.csproj", "{89CC45A5-DB6F-4C8E-8CD3-EDE8F726A44F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.DomainEvent.Events", ".\shoppingcart-api\src\Acme.DomainEvent.Events\Acme.DomainEvent.Events.csproj", "{871E1128-459E-4B42-AE91-A60F31014CE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.DomainEvent.Events", "shoppingcart-api\src\Acme.DomainEvent.Events\Acme.DomainEvent.Events.csproj", "{871E1128-459E-4B42-AE91-A60F31014CE6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Domain.Tests", ".\shoppingcart-api\src\Acme.ShoppingCart.Domain.Tests\Acme.ShoppingCart.Domain.Tests.csproj", "{B0F54646-0F25-4788-AC0B-264BE1DC7D17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Domain.Tests", "shoppingcart-api\src\Acme.ShoppingCart.Domain.Tests\Acme.ShoppingCart.Domain.Tests.csproj", "{B0F54646-0F25-4788-AC0B-264BE1DC7D17}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.BootStrap", ".\shoppingcart-api\src\Acme.ShoppingCart.BootStrap\Acme.ShoppingCart.BootStrap.csproj", "{34F84B37-6F88-4F2A-AE54-EEF269D9C02B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.BootStrap", "shoppingcart-api\src\Acme.ShoppingCart.BootStrap\Acme.ShoppingCart.BootStrap.csproj", "{34F84B37-6F88-4F2A-AE54-EEF269D9C02B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Configuration", ".\shoppingcart-api\src\Acme.ShoppingCart.Configuration\Acme.ShoppingCart.Configuration.csproj", "{AD366478-FE61-4D09-97DD-C42973292813}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Configuration", "shoppingcart-api\src\Acme.ShoppingCart.Configuration\Acme.ShoppingCart.Configuration.csproj", "{AD366478-FE61-4D09-97DD-C42973292813}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Hosting", ".\shoppingcart-api\src\Acme.ShoppingCart.Hosting\Acme.ShoppingCart.Hosting.csproj", "{F7DE854F-EFF9-4020-9529-2788FCD222BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Hosting", "shoppingcart-api\src\Acme.ShoppingCart.Hosting\Acme.ShoppingCart.Hosting.csproj", "{F7DE854F-EFF9-4020-9529-2788FCD222BB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Health", ".\shoppingcart-api\src\Acme.ShoppingCart.Health\Acme.ShoppingCart.Health.csproj", "{BFD17CB4-8B37-49F7-B5B4-D514FB1A1D90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Health", "shoppingcart-api\src\Acme.ShoppingCart.Health\Acme.ShoppingCart.Health.csproj", "{BFD17CB4-8B37-49F7-B5B4-D514FB1A1D90}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.DomainEvent", ".\shoppingcart-api\src\Acme.ShoppingCart.DomainEvent\Acme.ShoppingCart.DomainEvent.csproj", "{0F44D63A-A010-476B-8EAE-FF1EBC53492B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.DomainEvent", "shoppingcart-api\src\Acme.ShoppingCart.DomainEvent\Acme.ShoppingCart.DomainEvent.csproj", "{0F44D63A-A010-476B-8EAE-FF1EBC53492B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Exceptions", ".\shoppingcart-api\src\Acme.ShoppingCart.Exceptions\Acme.ShoppingCart.Exceptions.csproj", "{AC8E1541-C882-4AAB-A8AA-ECADD0C9A41C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Exceptions", "shoppingcart-api\src\Acme.ShoppingCart.Exceptions\Acme.ShoppingCart.Exceptions.csproj", "{AC8E1541-C882-4AAB-A8AA-ECADD0C9A41C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.CatalogApi", ".\shoppingcart-api\src\Acme.ShoppingCart.CatalogApi\Acme.ShoppingCart.CatalogApi.csproj", "{8651F26D-46CE-41F5-A90B-C1E27AEE2B80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.CatalogApi", "shoppingcart-api\src\Acme.ShoppingCart.CatalogApi\Acme.ShoppingCart.CatalogApi.csproj", "{8651F26D-46CE-41F5-A90B-C1E27AEE2B80}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.CatalogApi.Tests", ".\shoppingcart-api\src\Acme.ShoppingCart.CatalogApi.Tests\Acme.ShoppingCart.CatalogApi.Tests.csproj", "{C9C87172-3B47-425A-8A7A-A41EF197EC82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.CatalogApi.Tests", "shoppingcart-api\src\Acme.ShoppingCart.CatalogApi.Tests\Acme.ShoppingCart.CatalogApi.Tests.csproj", "{C9C87172-3B47-425A-8A7A-A41EF197EC82}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{A16D7C34-53DA-4BA0-A7CD-E7BA2851209E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Facade", ".\shoppingcart-api\src\Acme.ShoppingCart.Facade\Acme.ShoppingCart.Facade.csproj", "{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Facade", "shoppingcart-api\src\Acme.ShoppingCart.Facade\Acme.ShoppingCart.Facade.csproj", "{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acme.ShoppingCart.Facade.Tests", ".\shoppingcart-api\src\Acme.ShoppingCart.Facade.Tests\Acme.ShoppingCart.Facade.Tests.csproj", "{BF18D118-E5C7-48ED-AC61-9714ED725B11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Facade.Tests", "shoppingcart-api\src\Acme.ShoppingCart.Facade.Tests\Acme.ShoppingCart.Facade.Tests.csproj", "{BF18D118-E5C7-48ED-AC61-9714ED725B11}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.IdentityServer", ".\identityserver\src\Acme.IdentityServer.csproj", "{E59463EF-2F18-4863-8E54-73DF9D84CBF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.IdentityServer", "identityserver\src\Acme.IdentityServer.csproj", "{E59463EF-2F18-4863-8E54-73DF9D84CBF2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolicyServer", ".\policyserver\src\PolicyServer.csproj", "{E3BFA1CA-DFA9-4583-A86F-222BC7503B40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolicyServer", "policyserver\src\PolicyServer.csproj", "{E3BFA1CA-DFA9-4583-A86F-222BC7503B40}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Acme.ShoppingCart", "Acme.ShoppingCart", "{183E900D-DE6A-4866-8C8B-EB809CE4EF75}"
 EndProject
@@ -60,6 +62,100 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PolicyServer", "PolicyServer", "{1D4B8D68-95AE-45EE-ABC7-18A34C194888}"
 EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6731FE8E-5725-44C9-920F-E139453138BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6731FE8E-5725-44C9-920F-E139453138BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6731FE8E-5725-44C9-920F-E139453138BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6731FE8E-5725-44C9-920F-E139453138BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52A41795-DCBA-4B14-A7DE-9E76142E3BA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52A41795-DCBA-4B14-A7DE-9E76142E3BA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52A41795-DCBA-4B14-A7DE-9E76142E3BA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52A41795-DCBA-4B14-A7DE-9E76142E3BA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A502400-39EB-40A5-A2BB-B4E3F0D79004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A502400-39EB-40A5-A2BB-B4E3F0D79004}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A502400-39EB-40A5-A2BB-B4E3F0D79004}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A502400-39EB-40A5-A2BB-B4E3F0D79004}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5BBF1CD-3293-460F-8EDF-4F27DE633A4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5BBF1CD-3293-460F-8EDF-4F27DE633A4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5BBF1CD-3293-460F-8EDF-4F27DE633A4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5BBF1CD-3293-460F-8EDF-4F27DE633A4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3962C39E-46D9-4F08-9038-95C5DDCE6673}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3962C39E-46D9-4F08-9038-95C5DDCE6673}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3962C39E-46D9-4F08-9038-95C5DDCE6673}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3962C39E-46D9-4F08-9038-95C5DDCE6673}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E0E20B3-1B2A-483D-AC50-A177AF3EBBF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E0E20B3-1B2A-483D-AC50-A177AF3EBBF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E0E20B3-1B2A-483D-AC50-A177AF3EBBF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E0E20B3-1B2A-483D-AC50-A177AF3EBBF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F32F33B-D53E-42BB-969C-1331F2261EA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F32F33B-D53E-42BB-969C-1331F2261EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F32F33B-D53E-42BB-969C-1331F2261EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F32F33B-D53E-42BB-969C-1331F2261EA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89CC45A5-DB6F-4C8E-8CD3-EDE8F726A44F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89CC45A5-DB6F-4C8E-8CD3-EDE8F726A44F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89CC45A5-DB6F-4C8E-8CD3-EDE8F726A44F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89CC45A5-DB6F-4C8E-8CD3-EDE8F726A44F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{871E1128-459E-4B42-AE91-A60F31014CE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{871E1128-459E-4B42-AE91-A60F31014CE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{871E1128-459E-4B42-AE91-A60F31014CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{871E1128-459E-4B42-AE91-A60F31014CE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0F54646-0F25-4788-AC0B-264BE1DC7D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0F54646-0F25-4788-AC0B-264BE1DC7D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0F54646-0F25-4788-AC0B-264BE1DC7D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0F54646-0F25-4788-AC0B-264BE1DC7D17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34F84B37-6F88-4F2A-AE54-EEF269D9C02B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34F84B37-6F88-4F2A-AE54-EEF269D9C02B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34F84B37-6F88-4F2A-AE54-EEF269D9C02B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34F84B37-6F88-4F2A-AE54-EEF269D9C02B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD366478-FE61-4D09-97DD-C42973292813}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD366478-FE61-4D09-97DD-C42973292813}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD366478-FE61-4D09-97DD-C42973292813}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD366478-FE61-4D09-97DD-C42973292813}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7DE854F-EFF9-4020-9529-2788FCD222BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7DE854F-EFF9-4020-9529-2788FCD222BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7DE854F-EFF9-4020-9529-2788FCD222BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7DE854F-EFF9-4020-9529-2788FCD222BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFD17CB4-8B37-49F7-B5B4-D514FB1A1D90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFD17CB4-8B37-49F7-B5B4-D514FB1A1D90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFD17CB4-8B37-49F7-B5B4-D514FB1A1D90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFD17CB4-8B37-49F7-B5B4-D514FB1A1D90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F44D63A-A010-476B-8EAE-FF1EBC53492B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F44D63A-A010-476B-8EAE-FF1EBC53492B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F44D63A-A010-476B-8EAE-FF1EBC53492B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F44D63A-A010-476B-8EAE-FF1EBC53492B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC8E1541-C882-4AAB-A8AA-ECADD0C9A41C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC8E1541-C882-4AAB-A8AA-ECADD0C9A41C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC8E1541-C882-4AAB-A8AA-ECADD0C9A41C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC8E1541-C882-4AAB-A8AA-ECADD0C9A41C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8651F26D-46CE-41F5-A90B-C1E27AEE2B80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8651F26D-46CE-41F5-A90B-C1E27AEE2B80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8651F26D-46CE-41F5-A90B-C1E27AEE2B80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8651F26D-46CE-41F5-A90B-C1E27AEE2B80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9C87172-3B47-425A-8A7A-A41EF197EC82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9C87172-3B47-425A-8A7A-A41EF197EC82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9C87172-3B47-425A-8A7A-A41EF197EC82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9C87172-3B47-425A-8A7A-A41EF197EC82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF18D118-E5C7-48ED-AC61-9714ED725B11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF18D118-E5C7-48ED-AC61-9714ED725B11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF18D118-E5C7-48ED-AC61-9714ED725B11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF18D118-E5C7-48ED-AC61-9714ED725B11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E59463EF-2F18-4863-8E54-73DF9D84CBF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E59463EF-2F18-4863-8E54-73DF9D84CBF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E59463EF-2F18-4863-8E54-73DF9D84CBF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E59463EF-2F18-4863-8E54-73DF9D84CBF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3BFA1CA-DFA9-4583-A86F-222BC7503B40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3BFA1CA-DFA9-4583-A86F-222BC7503B40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3BFA1CA-DFA9-4583-A86F-222BC7503B40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3BFA1CA-DFA9-4583-A86F-222BC7503B40}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
@@ -88,5 +184,8 @@ Global
 		{BF18D118-E5C7-48ED-AC61-9714ED725B11} = {183E900D-DE6A-4866-8C8B-EB809CE4EF75}
 		{E59463EF-2F18-4863-8E54-73DF9D84CBF2} = {A4A086B6-DF50-4F1C-B0F1-E8921016412B}
 		{E3BFA1CA-DFA9-4583-A86F-222BC7503B40} = {1D4B8D68-95AE-45EE-ABC7-18A34C194888}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C91B68F1-80BB-4486-B129-3E95751FC7EC}
 	EndGlobalSection
 EndGlobal

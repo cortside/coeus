@@ -7,9 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Acme.ShoppingCart.BootStrap.Installer {
     public class DbContextInstaller : IInstaller {
         public void Install(IServiceCollection services, IConfigurationRoot configuration) {
-            services.AddDbContext<DatabaseContext>(opt => {
-                opt.UseSqlServer(configuration.GetSection("Database").GetValue<string>("ConnectionString"));
-            });
+            services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(configuration.GetSection("Database").GetValue<string>("ConnectionString")));
 
             // Register the service and implementation for the database context
             services.AddScoped<IUnitOfWork>(provider => provider.GetService<DatabaseContext>());

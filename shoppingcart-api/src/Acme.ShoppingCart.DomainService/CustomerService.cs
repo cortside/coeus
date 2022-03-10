@@ -22,7 +22,7 @@ namespace Acme.ShoppingCart.DomainService {
 
         public async Task<Customer> CreateCustomerAsync(CustomerDto dto) {
             var entity = new Customer(dto.FirstName, dto.LastName, dto.Email);
-            await customerRepository.AddAsync(entity).ConfigureAwait(false);
+            customerRepository.Add(entity);
 
             var @event = new CustomerStateChangedEvent() { CustomerResourceId = entity.CustomerResourceId, Timestamp = entity.LastModifiedDate };
             await publisher.PublishAsync(@event).ConfigureAwait(false);
@@ -35,8 +35,8 @@ namespace Acme.ShoppingCart.DomainService {
             return entity;
         }
 
-        public async Task<PagedList<Customer>> SearchCustomersAsync(int pageSize, int pageNumber, string sortParams, CustomerSearch search) {
-            return await customerRepository.SearchAsync(pageSize, pageNumber, sortParams, search).ConfigureAwait(false);
+        public Task<PagedList<Customer>> SearchCustomersAsync(int pageSize, int pageNumber, string sortParams, CustomerSearch search) {
+            return customerRepository.SearchAsync(pageSize, pageNumber, sortParams, search);
         }
 
         public async Task<Customer> UpdateCustomerAsync(CustomerDto dto) {
