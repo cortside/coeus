@@ -9,6 +9,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Cortside.Common.BootStrap" Version="1.1.215-develop" />
+    <PackageReference Include="Cortside.Common.Cryptography" Version="1.1.216-develop" />
     <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
     <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.2.22" />
     <PackageReference Include="MiniProfiler.EntityFrameworkCore" Version="4.2.22" />
@@ -19,6 +20,7 @@
     <ProjectReference Include="..\Acme.ShoppingCart.Data\Acme.ShoppingCart.Data.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.DomainEvent\Acme.ShoppingCart.DomainEvent.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.DomainService\Acme.ShoppingCart.DomainService.csproj" />
+    <ProjectReference Include="..\Acme.ShoppingCart.Facade\Acme.ShoppingCart.Facade.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.Health\Acme.ShoppingCart.Health.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.Hosting\Acme.ShoppingCart.Hosting.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.CatalogApi\Acme.ShoppingCart.CatalogApi.csproj" />

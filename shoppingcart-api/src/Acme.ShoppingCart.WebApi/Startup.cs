@@ -42,7 +42,6 @@ namespace Acme.ShoppingCart.WebApi {
             bootstrapper.AddInstaller(new SubjectPrincipalInstaller());
             bootstrapper.AddInstaller(new SwaggerInstaller());
             bootstrapper.AddInstaller(new ModelMapperInstaller());
-            bootstrapper.AddInstaller(new FacadeInstaller());
             Configuration = configuration;
         }
 

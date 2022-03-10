@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Acme.ShoppingCart.Data.Paging;
 using Acme.ShoppingCart.Data.Repositories;
-using Acme.ShoppingCart.DomainService;
 using Acme.ShoppingCart.Dto;
-using Acme.ShoppingCart.WebApi.Facades;
+using Acme.ShoppingCart.Facade;
 using Acme.ShoppingCart.WebApi.Mappers;
 using Acme.ShoppingCart.WebApi.Models.Requests;
 using Acme.ShoppingCart.WebApi.Models.Responses;
@@ -26,18 +26,16 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
     [Route("api/v{version:apiVersion}/orders")]
     public class OrderController : Controller {
         private readonly ILogger logger;
-        private readonly IOrderService service;
         private readonly OrderModelMapper orderMapper;
         private readonly IOrderFacade facade;
 
         /// <summary>
         /// Initializes a new instance of the OrderController
         /// </summary>
-        public OrderController(ILogger<OrderController> logger, IOrderFacade facade, IOrderService service, OrderModelMapper orderMapper) {
+        public OrderController(ILogger<OrderController> logger, IOrderFacade facade, OrderModelMapper orderMapper) {
             this.logger = logger;
-            this.service = service;
-            this.orderMapper = orderMapper;
             this.facade = facade;
+            this.orderMapper = orderMapper;
         }
 
         /// <summary>
@@ -47,7 +45,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [Authorize(Constants.Authorization.Permissions.GetOrders)]
         [ProducesResponseType(typeof(PagedList<OrderModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetOrdersAsync([FromQuery] OrderSearch search, int pageNumber = 1, int pageSize = 30, string sort = null) {
-            var results = await service.SearchOrdersAsync(pageSize, pageNumber, sort ?? "", search).ConfigureAwait(false);
+            var results = await facade.SearchOrdersAsync(pageSize, pageNumber, sort ?? "", search).ConfigureAwait(false);
             return Ok(results.Convert(x => orderMapper.Map(x)));
         }
 
@@ -60,7 +58,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [Authorize(Constants.Authorization.Permissions.GetOrder)]
         [ProducesResponseType(typeof(OrderModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetOrderAsync(Guid id) {
-            var dto = await service.GetOrderAsync(id).ConfigureAwait(false);
+            var dto = await facade.GetOrderAsync(id).ConfigureAwait(false);
             return Ok(orderMapper.Map(dto));
         }
 
@@ -141,7 +139,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                     //Email = input.Email
                 };
 
-                var result = await service.UpdateOrderAsync(dto).ConfigureAwait(false);
+                var result = await facade.UpdateOrderAsync(dto).ConfigureAwait(false);
                 return Ok(orderMapper.Map(result));
             }
         }
@@ -155,7 +153,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> PublishCustomerStateChangedEventAsync(Guid resourceId) {
             using (LogContext.PushProperty("OrderResourceId", resourceId)) {
-                await service.PublishOrderStateChangedEventAsync(resourceId).ConfigureAwait(false);
+                await facade.PublishOrderStateChangedEventAsync(resourceId).ConfigureAwait(false);
                 return StatusCode((int)HttpStatusCode.NoContent);
             }
         }
@@ -175,7 +173,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                     Quantity = input.Quantity
                 };
 
-                var result = await service.AddOrderItemAsync(id, dto).ConfigureAwait(false);
+                var result = await facade.AddOrderItemAsync(id, dto).ConfigureAwait(false);
                 return Ok(result);
             }
         }

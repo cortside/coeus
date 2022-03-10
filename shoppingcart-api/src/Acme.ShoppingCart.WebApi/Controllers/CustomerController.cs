@@ -1,12 +1,14 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using Acme.ShoppingCart.Data.Paging;
 using Acme.ShoppingCart.Data.Repositories;
-using Acme.ShoppingCart.DomainService;
 using Acme.ShoppingCart.Dto;
+using Acme.ShoppingCart.Facade;
 using Acme.ShoppingCart.WebApi.Mappers;
 using Acme.ShoppingCart.WebApi.Models.Requests;
 using Acme.ShoppingCart.WebApi.Models.Responses;
+using Cortside.Common.Cryptography;
 using Cortside.Common.Messages.MessageExceptions;
 using Cortside.Common.Messages.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -26,16 +28,16 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
     [Route("api/v{version:apiVersion}/customers")]
     public class CustomerController : Controller {
         private readonly ILogger logger;
-        private readonly ICustomerService service;
+        private readonly ICustomerFacade facade;
         private readonly CustomerModelMapper customerMapper;
         private readonly IEncryptionService encryptionService;
 
         /// <summary>
         /// Initializes a new instance of the CustomerController
         /// </summary>
-        public CustomerController(ILogger<CustomerController> logger, ICustomerService service, CustomerModelMapper customerMapper, IEncryptionService encryptionService) {
+        public CustomerController(ILogger<CustomerController> logger, ICustomerFacade facade, CustomerModelMapper customerMapper, IEncryptionService encryptionService) {
             this.logger = logger;
-            this.service = service;
+            this.facade = facade;
             this.customerMapper = customerMapper;
             this.encryptionService = encryptionService;
         }
@@ -47,7 +49,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [Authorize(Constants.Authorization.Permissions.GetCustomers)]
         [ProducesResponseType(typeof(PagedList<CustomerModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCustomersAsync([FromQuery] CustomerSearch search, int pageNumber = 1, int pageSize = 30, string sort = null) {
-            var results = await service.SearchCustomersAsync(pageSize, pageNumber, sort ?? "", search).ConfigureAwait(false);
+            var results = await facade.SearchCustomersAsync(pageSize, pageNumber, sort ?? "", search).ConfigureAwait(false);
             var models = results.Convert(x => customerMapper.Map(x));
             return Ok(models);
         }
@@ -63,7 +65,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                 return BadRequest(new ErrorModel { Message = "Search model cannot be null", Type = nameof(BadRequestResponseException) });
             }
 
-            string encryptedString = encryptionService.EncryptString(search);
+            string encryptedString = encryptionService.EncryptObject(search);
             string reqUrl = HttpHelper.BuildUriFromRequest(Request);
             reqUrl += "?encryptedParams=" + encryptedString;
 
@@ -84,14 +86,14 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                 return BadRequest(new ErrorModel { Message = "Encrypted params cannot be null, empty or whitespace", Type = nameof(BadRequestResponseException) });
             }
 
-            var param = encryptionService.DecryptString<CustomerSearchModel>(encryptedParams);
+            var param = encryptionService.DecryptObject<CustomerSearchModel>(encryptedParams);
             var search = new CustomerSearch() {
                 CustomerResourceId = param.CustomerResourceId,
                 FirstName = param.FirstName,
                 LastName = param.LastName
             };
 
-            var results = await service.SearchCustomersAsync(param.PageSize, param.PageNumber, param.Sort, search).ConfigureAwait(false);
+            var results = await facade.SearchCustomersAsync(param.PageSize, param.PageNumber, param.Sort, search).ConfigureAwait(false);
             var models = results.Convert(x => customerMapper.Map(x));
             return Ok(models);
         }
@@ -105,7 +107,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [Authorize(Constants.Authorization.Permissions.GetCustomer)]
         [ProducesResponseType(typeof(CustomerModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCustomerAsync(Guid id) {
-            var dto = await service.GetCustomerAsync(id).ConfigureAwait(false);
+            var dto = await facade.GetCustomerAsync(id).ConfigureAwait(false);
             return Ok(customerMapper.Map(dto));
         }
 
@@ -122,7 +124,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                 LastName = input.LastName,
                 Email = input.Email
             };
-            var dto2 = await service.CreateCustomerAsync(dto).ConfigureAwait(false);
+            var dto2 = await facade.CreateCustomerAsync(dto).ConfigureAwait(false);
             return CreatedAtAction(nameof(GetCustomerAsync), new { id = dto.CustomerResourceId }, customerMapper.Map(dto2));
         }
 
@@ -143,7 +145,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                     Email = input.Email
                 };
 
-                var result = await service.UpdateCustomerAsync(dto).ConfigureAwait(false);
+                var result = await facade.UpdateCustomerAsync(dto).ConfigureAwait(false);
                 return Ok(customerMapper.Map(result));
             }
         }
@@ -157,7 +159,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> PublishCustomerStateChangedEventAsync(Guid resourceId) {
             using (LogContext.PushProperty("CustomerResourceId", resourceId)) {
-                await service.PublishCustomerStateChangedEventAsync(resourceId).ConfigureAwait(false);
+                await facade.PublishCustomerStateChangedEventAsync(resourceId).ConfigureAwait(false);
                 return StatusCode((int)HttpStatusCode.NoContent);
             }
         }

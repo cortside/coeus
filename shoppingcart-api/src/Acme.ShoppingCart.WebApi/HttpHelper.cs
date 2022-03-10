@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 
-namespace Acme.ShoppingCart.DomainService {
+namespace Acme.ShoppingCart.WebApi {
     public class HttpHelper {
         public static string BuildUriFromRequest(HttpRequest request) {
             string reqUrl = "";

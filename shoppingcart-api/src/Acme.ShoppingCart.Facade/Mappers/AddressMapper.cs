@@ -1,7 +1,7 @@
 ﻿using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.Dto;
 
-namespace Acme.ShoppingCart.DomainService.Mappers {
+namespace Acme.ShoppingCart.Facade.Mappers {
     public class AddressMapper {
         private readonly SubjectMapper subjectMapper;
 
@@ -9,7 +9,7 @@ namespace Acme.ShoppingCart.DomainService.Mappers {
             this.subjectMapper = subjectMapper;
         }
 
-        public AddressDto MapToDto(Address entity) {
+        public AddressDto? MapToDto(Address entity) {
             if (entity == null) {
                 return null;
             }

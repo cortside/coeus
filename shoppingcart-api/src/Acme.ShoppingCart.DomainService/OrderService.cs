@@ -1,11 +1,9 @@
 using System;
-using System.Data;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
-using Acme.ShoppingCart.Data;
+using Acme.ShoppingCart.Data.Paging;
 using Acme.ShoppingCart.Data.Repositories;
 using Acme.ShoppingCart.Domain.Entities;
-using Acme.ShoppingCart.DomainService.Mappers;
 using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.Exceptions;
 using Acme.ShoppingCart.UserClient;
@@ -17,24 +15,18 @@ namespace Acme.ShoppingCart.DomainService {
         private readonly IDomainEventOutboxPublisher publisher;
         private readonly ILogger<OrderService> logger;
         private readonly IOrderRepository orderRepository;
-        private readonly IUnitOfWork uow;
         private readonly ICatalogClient catalog;
-        private readonly OrderMapper mapper;
         private readonly ICustomerRepository customerRespository;
 
-        public OrderService(IUnitOfWork uow, IOrderRepository orderRepository, ICustomerRepository customerRespository, OrderMapper mapper, IDomainEventOutboxPublisher publisher, ILogger<OrderService> logger, ICatalogClient catalog) {
+        public OrderService(IOrderRepository orderRepository, ICustomerRepository customerRespository, IDomainEventOutboxPublisher publisher, ILogger<OrderService> logger, ICatalogClient catalog) {
             this.publisher = publisher;
             this.logger = logger;
             this.orderRepository = orderRepository;
-            this.mapper = mapper;
             this.customerRespository = customerRespository;
-            this.uow = uow;
             this.catalog = catalog;
         }
 
-        public async Task<OrderDto> CreateOrderAsync(OrderDto dto) {
-            // don't use context directly
-            var customer = await customerRespository.GetAsync(dto.Customer.CustomerResourceId).ConfigureAwait(false);
+        public async Task<Order> CreateOrderAsync(Customer customer, OrderDto dto) {
             //Guard.Against();  // TODO: this should be in common.messages
             if (customer == null) {
                 throw new BadRequestMessage("customer not found");
@@ -48,41 +40,27 @@ namespace Acme.ShoppingCart.DomainService {
             await orderRepository.AddAsync(entity).ConfigureAwait(false);
             var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = entity.LastModifiedDate };
             await publisher.PublishAsync(@event).ConfigureAwait(false);
-            await uow.SaveChangesAsync().ConfigureAwait(false);
 
-            return mapper.MapToDto(entity);
+            return entity;
         }
 
-        public async Task<OrderDto> GetOrderAsync(Guid id) {
+        public async Task<Order> GetOrderAsync(Guid id) {
             var entity = await orderRepository.GetAsync(id).ConfigureAwait(false);
-            return mapper.MapToDto(entity);
+            return entity;
         }
 
-        public async Task<PagedList<OrderDto>> SearchOrdersAsync(int pageSize, int pageNumber, string sortParams, OrderSearch search) {
-            using (var tx = await uow.BeginTransactionAsync(IsolationLevel.ReadUncommitted).ConfigureAwait(false)) {
-                var orders = await orderRepository.SearchAsync(pageSize, pageNumber, sortParams, search).ConfigureAwait(false);
-
-                var results = new PagedList<OrderDto> {
-                    PageNumber = orders.PageNumber,
-                    PageSize = orders.PageSize,
-                    TotalItems = orders.TotalItems,
-                    Items = orders.Items.ConvertAll(x => mapper.MapToDto(x))
-                };
-
-                await tx.CommitAsync().ConfigureAwait(false);
-                return results;
-            }
+        public async Task<PagedList<Order>> SearchOrdersAsync(int pageSize, int pageNumber, string sortParams, OrderSearch search) {
+            return await orderRepository.SearchAsync(pageSize, pageNumber, sortParams, search).ConfigureAwait(false);
         }
 
-        public async Task<OrderDto> UpdateOrderAsync(OrderDto dto) {
+        public async Task<Order> UpdateOrderAsync(OrderDto dto) {
             var entity = await orderRepository.GetAsync(dto.OrderResourceId).ConfigureAwait(false);
             // TODO: add method to update order
 
             var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = DateTime.UtcNow };
             await publisher.PublishAsync(@event).ConfigureAwait(false);
 
-            await uow.SaveChangesAsync().ConfigureAwait(false);
-            return mapper.MapToDto(entity);
+            return entity;
         }
 
         public async Task PublishOrderStateChangedEventAsync(Guid id) {
@@ -90,18 +68,16 @@ namespace Acme.ShoppingCart.DomainService {
 
             var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = DateTime.UtcNow };
             await publisher.PublishAsync(@event).ConfigureAwait(false);
-            await uow.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task<OrderDto> AddOrderItemAsync(Guid id, OrderItemDto dto) {
+        public async Task<Order> AddOrderItemAsync(Guid id, OrderItemDto dto) {
             var entity = await orderRepository.GetAsync(id).ConfigureAwait(false);
             var item = await catalog.GetItem(dto.Sku).ConfigureAwait(false);
             entity.AddItem(item, dto.Quantity);
             var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = DateTime.UtcNow };
             await publisher.PublishAsync(@event).ConfigureAwait(false);
 
-            await uow.SaveChangesAsync().ConfigureAwait(false);
-            return mapper.MapToDto(entity);
+            return entity;
         }
     }
 }
