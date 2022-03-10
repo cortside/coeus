@@ -19,6 +19,41 @@ insert_final_newline = true
 [*.json]
 indent_size = 4
 
+# XML Configuration Files
+[*.{xml,config,props,targets,nuspec,resx,ruleset,vsixmanifest,vsct}]
+indent_size = 2
+
+# C++ Files
+[*.{cpp,h,in}]
+curly_bracket_next_line = true
+indent_brace_style = Allman
+
+# Xml project files
+[*.{csproj,vcxproj,vcxproj.filters,proj,nativeproj,locproj}]
+indent_size = 2
+
+# Xml build files
+[*.builds]
+indent_size = 2
+
+# Xml files
+[*.{xml,stylecop,resx,ruleset}]
+indent_size = 2
+
+# Xml config files
+[*.{props,targets,config,nuspec}]
+indent_size = 2
+
+# Shell scripts
+[*.sh]
+end_of_line = lf
+[*.{cmd, bat}]
+end_of_line = crlf
+
+# Feature files
+[*.{feature,tt}]
+end_of_line = crlf
+
 # C# files
 [*.cs]
 end_of_line = crlf
@@ -195,37 +230,11 @@ dotnet_diagnostic.IDE0090.severity = none
 roslynator.RCS1246.suppress_when_expression_is_invocation.serverity = none
 roslynator.RCS1246.suppress_when_expression_is_invocation = true
 
-# XML Configuration Files
-[*.{xml,config,props,targets,nuspec,resx,ruleset,vsixmanifest,vsct}]
-indent_size = 2
+# CA1822: Mark members as static
+dotnet_diagnostic.CA1822.severity = none
 
-# C++ Files
-[*.{cpp,h,in}]
-curly_bracket_next_line = true
-indent_brace_style = Allman
+# VC0000: Generate a constructor that takes a System.Data.DataRow
+dotnet_diagnostic.VC0000.severity = none
 
-# Xml project files
-[*.{csproj,vcxproj,vcxproj.filters,proj,nativeproj,locproj}]
-indent_size = 2
-
-# Xml build files
-[*.builds]
-indent_size = 2
-
-# Xml files
-[*.{xml,stylecop,resx,ruleset}]
-indent_size = 2
-
-# Xml config files
-[*.{props,targets,config,nuspec}]
-indent_size = 2
-
-# Shell scripts
-[*.sh]
-end_of_line = lf
-[*.{cmd, bat}]
-end_of_line = crlf
-
-# Feature files
-[*.{feature,tt}]
-end_of_line = crlf
+# RCS1021: Convert lambda expression body to expression body.
+dotnet_diagnostic.RCS1021.severity = none

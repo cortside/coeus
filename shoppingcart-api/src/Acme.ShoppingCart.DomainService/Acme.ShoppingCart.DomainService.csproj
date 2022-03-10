@@ -10,6 +10,7 @@
     </PackageReference>
     <PackageReference Include="Cortside.Common.Correlation" Version="1.1.208" />
     <PackageReference Include="Cortside.Common.Messages" Version="1.1.215-develop" />
+    <PackageReference Include="Cortside.Common.Validation" Version="1.1.218-develop" />
     <PackageReference Include="Cortside.DomainEvent" Version="1.1.159" />
     <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />

@@ -12,9 +12,9 @@
     <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="1.1.159" />
     <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Acme.ShoppingCart.Domain\Acme.ShoppingCart.Domain.csproj" />

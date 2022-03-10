@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.WebApi.IntegrationTests.Helpers;
 using Acme.ShoppingCart.WebApi.IntegrationTests.Helpers.Mocks;
@@ -80,26 +78,19 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
             WireMockServer.WaitForStart();
 
             return Host.CreateDefaultBuilder()
-                .ConfigureAppConfiguration(builder => {
-                    builder.AddConfiguration(Configuration);
-                })
+                .ConfigureAppConfiguration(builder => builder.AddConfiguration(Configuration))
                 .ConfigureWebHostDefaults(webbuilder => {
                     webbuilder
                     .UseConfiguration(Configuration)
                     .UseStartup<TStartup>()
                     .UseSerilog(Log.Logger)
-                    .ConfigureTestServices(async sc => {
-                        var tasks = new List<Task> {
-                            //Task.Run(() => UnauthorizedClient = CreateDefaultClient())
-                        };
+                    .ConfigureTestServices(sc => {
                         var useInMemory = bool.Parse(Configuration["IntegrationTestFactory:InMemoryDatabase"]);
                         if (useInMemory) {
-                            tasks.Add(RegisterDbContextAsync(sc));
+                            RegisterDbContext(sc);
                             RegisterFileSystemDistributedLock(sc);
                         }
                         RegisterDomainEventPublisher(sc);
-
-                        await Task.WhenAll(tasks).ConfigureAwait(false);
                     });
                 });
         }
@@ -127,7 +118,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
                  .Build();
         }
 
-        private async Task RegisterDbContextAsync(IServiceCollection services) {
+        private void RegisterDbContext(IServiceCollection services) {
             // Remove the app's DbContext registration.
             var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<DatabaseContext>));
             if (descriptor != null) {
@@ -157,11 +148,11 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
             var logger = scopedServices.GetRequiredService<ILogger<IntegrationTestFactory<TStartup>>>();
 
             // Ensure the database is created.
-            await db.Database.EnsureCreatedAsync().ConfigureAwait(false);
+            db.Database.EnsureCreated();
 
             try {
-                await DatabaseFixture.SeedInMemoryDbAsync(db).ConfigureAwait(false);
-                if (!await db.Subjects.AnyAsync().ConfigureAwait(false)) {
+                DatabaseFixture.SeedInMemoryDb(db);
+                if (!db.Subjects.Any()) {
                     throw new DbUpdateException();
                 }
             } catch (Exception ex) {
@@ -212,14 +203,14 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
 
         public HttpClient CreateAuthorizedClient(string clientId) {
             var client = CreateDefaultClient();
-            subjects ??= JsonConvert.DeserializeObject<Subjects>(File.ReadAllText(@"./Helpers/Mocks/subjects.json"));
+            subjects ??= JsonConvert.DeserializeObject<Subjects>(File.ReadAllText("./Helpers/Mocks/subjects.json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", subjects.SubjectsList.First(s => s.ClientId == clientId).ReferenceToken);
             return client;
         }
 
         public HttpClient CreateCustomAuthorizedClient(Uri uri, string clientId) {
             var client = CreateDefaultClient(uri);
-            subjects ??= JsonConvert.DeserializeObject<Subjects>(File.ReadAllText(@"./Helpers/Mocks/subjects.json"));
+            subjects ??= JsonConvert.DeserializeObject<Subjects>(File.ReadAllText("./Helpers/Mocks/subjects.json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", subjects.SubjectsList.First(s => s.ClientId == clientId).ReferenceToken);
             return client;
         }

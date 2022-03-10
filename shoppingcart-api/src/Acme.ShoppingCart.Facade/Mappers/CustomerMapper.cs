@@ -26,12 +26,5 @@ namespace Acme.ShoppingCart.Facade.Mappers {
                 LastModifiedSubject = subjectMapper.MapToDto(entity.LastModifiedSubject),
             };
         }
-
-        //public void UpdateCustomerEntity(Customer entity, CustomerDto dto) {
-        //    entity.FirstName = dto.FirstName;
-        //    entity.LastName = dto.LastName;
-        //    entity.Age = dto.Age;
-        //    this.addressServiceMapper.UpdateAddress(entity.Address, dto.Address);
-        //}
     }
 }

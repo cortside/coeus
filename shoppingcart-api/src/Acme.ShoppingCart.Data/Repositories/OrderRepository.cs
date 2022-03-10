@@ -28,7 +28,7 @@ namespace Acme.ShoppingCart.Data.Repositories {
                     .ThenInclude(x => x.LastModifiedSubject);
 
             var tx = context.Database.CurrentTransaction?.GetDbTransaction();
-            if (tx != null && tx.IsolationLevel == IsolationLevel.ReadUncommitted) {
+            if (tx?.IsolationLevel == IsolationLevel.ReadUncommitted) {
                 orders.AsNoTrackingWithIdentityResolution();
             }
 
@@ -46,8 +46,8 @@ namespace Acme.ShoppingCart.Data.Repositories {
             return result;
         }
 
-        public async Task<Order> AddAsync(Order order) {
-            var entity = await context.Orders.AddAsync(order).ConfigureAwait(false);
+        public Order Add(Order order) {
+            var entity = context.Orders.Add(order);
             return entity.Entity;
         }
 

@@ -36,7 +36,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Helpers {
 
             portArray.Sort();
 
-            for (int i = startingPort; i < UInt16.MaxValue; i++)
+            for (int i = startingPort; i < ushort.MaxValue; i++)
                 if (!portArray.Contains(i))
                     return i;
 

@@ -22,15 +22,6 @@ namespace Acme.ShoppingCart.Data {
             modelBuilder.HasDefaultSchema("dbo");
             modelBuilder.AddDomainEventOutbox();
 
-            //modelBuilder.Entity<Order>(x => {
-            //    x.HasMany(y => y.Items);
-            //    x.HasOne(y => y.Customer);
-            //    x.HasOne(y => y.Address);
-
-            //    x.HasOne(y => y.CreatedSubject);
-            //    x.HasOne(y => y.LastModifiedSubject);
-            //});
-
             SetDateTime(modelBuilder);
             SetCascadeDelete(modelBuilder);
         }

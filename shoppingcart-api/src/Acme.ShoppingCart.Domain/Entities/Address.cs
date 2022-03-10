@@ -2,7 +2,17 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Acme.ShoppingCart.Domain.Entities {
-    public class Address : AuditableEntity {  //} : ValueObject {
+    public class Address : AuditableEntity {
+        protected Address() { }
+
+        public Address(string street, string city, string state, string country, string zipcode) {
+            Street = street;
+            City = city;
+            State = state;
+            Country = country;
+            ZipCode = zipcode;
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AddressId { get; private set; }
@@ -13,9 +23,7 @@ namespace Acme.ShoppingCart.Domain.Entities {
         public string Country { get; private set; }
         public string ZipCode { get; private set; }
 
-        public Address() { }
-
-        public Address(string street, string city, string state, string country, string zipcode) {
+        public void Update(string street, string city, string state, string country, string zipcode) {
             Street = street;
             City = city;
             State = state;

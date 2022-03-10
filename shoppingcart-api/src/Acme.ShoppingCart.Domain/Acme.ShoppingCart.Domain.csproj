@@ -15,6 +15,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Cortside.Common.Validation" Version="1.1.218-develop" />
     <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
