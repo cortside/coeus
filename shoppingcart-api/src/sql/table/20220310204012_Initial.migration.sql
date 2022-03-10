@@ -13,7 +13,7 @@ END;
 
 BEGIN TRANSACTION;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE TABLE [dbo].[Outbox] (
         [OutboxId] int NOT NULL IDENTITY,
@@ -33,7 +33,7 @@ BEGIN
     );
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE TABLE [dbo].[Subject] (
         [SubjectId] uniqueidentifier NOT NULL,
@@ -46,7 +46,7 @@ BEGIN
     );
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE TABLE [dbo].[Address] (
         [AddressId] int NOT NULL IDENTITY,
@@ -65,7 +65,7 @@ BEGIN
     );
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE TABLE [dbo].[Customer] (
         [CustomerId] int NOT NULL IDENTITY,
@@ -83,7 +83,7 @@ BEGIN
     );
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE TABLE [dbo].[Order] (
         [OrderId] int NOT NULL IDENTITY,
@@ -103,10 +103,11 @@ BEGIN
     );
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE TABLE [dbo].[OrderItem] (
         [OrderItemId] int NOT NULL IDENTITY,
+        [ItemId] uniqueidentifier NOT NULL,
         [Sku] nvarchar(10) NULL,
         [Quantity] int NOT NULL,
         [UnitPrice] money NOT NULL,
@@ -122,80 +123,80 @@ BEGIN
     );
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE INDEX [IX_Address_CreateSubjectId] ON [dbo].[Address] ([CreateSubjectId]);
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE INDEX [IX_Address_LastModifiedSubjectId] ON [dbo].[Address] ([LastModifiedSubjectId]);
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE INDEX [IX_Customer_CreateSubjectId] ON [dbo].[Customer] ([CreateSubjectId]);
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE INDEX [IX_Customer_LastModifiedSubjectId] ON [dbo].[Customer] ([LastModifiedSubjectId]);
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE INDEX [IX_Order_AddressId] ON [dbo].[Order] ([AddressId]);
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE INDEX [IX_Order_CreateSubjectId] ON [dbo].[Order] ([CreateSubjectId]);
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE INDEX [IX_Order_CustomerId] ON [dbo].[Order] ([CustomerId]);
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE INDEX [IX_Order_LastModifiedSubjectId] ON [dbo].[Order] ([LastModifiedSubjectId]);
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE INDEX [IX_OrderItem_CreateSubjectId] ON [dbo].[OrderItem] ([CreateSubjectId]);
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE INDEX [IX_OrderItem_LastModifiedSubjectId] ON [dbo].[OrderItem] ([LastModifiedSubjectId]);
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE INDEX [IX_OrderItem_OrderId] ON [dbo].[OrderItem] ([OrderId]);
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE UNIQUE INDEX [IX_Outbox_MessageId] ON [dbo].[Outbox] ([MessageId]);
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE INDEX [IX_ScheduleDate_Status] ON [dbo].[Outbox] ([ScheduledDate], [Status]) INCLUDE ([EventType]);
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     CREATE INDEX [IX_Status_LockId_ScheduleDate] ON [dbo].[Outbox] ([Status], [LockId], [ScheduledDate]);
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220219044643_Initial')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220310204012_Initial')
 BEGIN
     INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'20220219044643_Initial', N'6.0.2');
+    VALUES (N'20220310204012_Initial', N'6.0.3');
 END;
 
 COMMIT;
