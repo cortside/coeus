@@ -3,16 +3,20 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Acme.ShoppingCart.Data.Migrations {
-    public partial class Initial : Migration {
-        protected override void Up(MigrationBuilder migrationBuilder) {
+namespace Acme.ShoppingCart.Data.Migrations
+{
+    public partial class Initial : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
             migrationBuilder.EnsureSchema(
                 name: "dbo");
 
             migrationBuilder.CreateTable(
                 name: "Outbox",
                 schema: "dbo",
-                columns: table => new {
+                columns: table => new
+                {
                     OutboxId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MessageId = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
@@ -28,14 +32,16 @@ namespace Acme.ShoppingCart.Data.Migrations {
                     LockId = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Outbox", x => x.OutboxId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Subject",
                 schema: "dbo",
-                columns: table => new {
+                columns: table => new
+                {
                     SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     GivenName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
@@ -43,14 +49,16 @@ namespace Acme.ShoppingCart.Data.Migrations {
                     UserPrincipalName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Subject", x => x.SubjectId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Address",
                 schema: "dbo",
-                columns: table => new {
+                columns: table => new
+                {
                     AddressId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -63,7 +71,8 @@ namespace Acme.ShoppingCart.Data.Migrations {
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedSubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Address", x => x.AddressId);
                     table.ForeignKey(
                         name: "FK_Address_Subject_CreateSubjectId",
@@ -82,7 +91,8 @@ namespace Acme.ShoppingCart.Data.Migrations {
             migrationBuilder.CreateTable(
                 name: "Customer",
                 schema: "dbo",
-                columns: table => new {
+                columns: table => new
+                {
                     CustomerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerResourceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -94,7 +104,8 @@ namespace Acme.ShoppingCart.Data.Migrations {
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedSubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Customer", x => x.CustomerId);
                     table.ForeignKey(
                         name: "FK_Customer_Subject_CreateSubjectId",
@@ -113,7 +124,8 @@ namespace Acme.ShoppingCart.Data.Migrations {
             migrationBuilder.CreateTable(
                 name: "Order",
                 schema: "dbo",
-                columns: table => new {
+                columns: table => new
+                {
                     OrderId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderResourceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -125,7 +137,8 @@ namespace Acme.ShoppingCart.Data.Migrations {
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedSubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Order", x => x.OrderId);
                     table.ForeignKey(
                         name: "FK_Order_Address_AddressId",
@@ -156,9 +169,11 @@ namespace Acme.ShoppingCart.Data.Migrations {
             migrationBuilder.CreateTable(
                 name: "OrderItem",
                 schema: "dbo",
-                columns: table => new {
+                columns: table => new
+                {
                     OrderItemId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Sku = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     UnitPrice = table.Column<decimal>(type: "money", nullable: false),
@@ -168,7 +183,8 @@ namespace Acme.ShoppingCart.Data.Migrations {
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedSubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_OrderItem", x => x.OrderItemId);
                     table.ForeignKey(
                         name: "FK_OrderItem_Order_OrderId",
@@ -277,7 +293,8 @@ namespace Acme.ShoppingCart.Data.Migrations {
                 columns: new[] { "Status", "LockId", "ScheduledDate" });
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder) {
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
             migrationBuilder.DropTable(
                 name: "OrderItem",
                 schema: "dbo");

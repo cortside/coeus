@@ -1,6 +1,7 @@
 using Acme.ShoppingCart.BootStrap;
 using Acme.ShoppingCart.WebApi.Filters;
 using Acme.ShoppingCart.WebApi.Installers;
+using Acme.ShoppingCart.WebApi.Middleware;
 using Cortside.Common.BootStrap;
 using Cortside.Common.Correlation;
 using Cortside.Common.Json;
@@ -143,8 +144,6 @@ namespace Acme.ShoppingCart.WebApi {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSerilogRequestLogging();
-
             app.UseCors(builder => builder
                 .WithOrigins(Configuration.GetSection("Cors").GetSection("Origins").Get<string[]>())
                 .SetIsOriginAllowedToAllowWildcardSubdomains()
@@ -153,6 +152,11 @@ namespace Acme.ShoppingCart.WebApi {
                 .AllowCredentials());
 
             app.UseAuthentication();
+
+            // intentionally set after UseAuthentication
+            app.UseMiddleware<SubjectMiddleware>();
+            app.UseSerilogRequestLogging();
+
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
