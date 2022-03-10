@@ -17,6 +17,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{F604444D-0344-42DC-812A-9B132D0D7EFF}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		..\Features.md = ..\Features.md
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Domain", "Acme.ShoppingCart.Domain\Acme.ShoppingCart.Domain.csproj", "{1F32F33B-D53E-42BB-969C-1331F2261EA7}"
@@ -44,6 +46,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.CatalogApi.Tests", "Acme.ShoppingCart.CatalogApi.Tests\Acme.ShoppingCart.CatalogApi.Tests.csproj", "{C9C87172-3B47-425A-8A7A-A41EF197EC82}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{A16D7C34-53DA-4BA0-A7CD-E7BA2851209E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Facade", "Acme.ShoppingCart.Facade\Acme.ShoppingCart.Facade.csproj", "{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -271,6 +275,18 @@ Global
 		{C9C87172-3B47-425A-8A7A-A41EF197EC82}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9C87172-3B47-425A-8A7A-A41EF197EC82}.Staging|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9C87172-3B47-425A-8A7A-A41EF197EC82}.Staging|Any CPU.Build.0 = Debug|Any CPU
+		{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}.Develop|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}.Develop|Any CPU.Build.0 = Debug|Any CPU
+		{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}.Production|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}.Production|Any CPU.Build.0 = Debug|Any CPU
+		{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}.QA|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}.QA|Any CPU.Build.0 = Debug|Any CPU
+		{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}.Staging|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}.Staging|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

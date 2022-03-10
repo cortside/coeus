@@ -14,7 +14,8 @@ namespace Acme.ShoppingCart.BootStrap {
                 new MiniProfilerInstaller(),
                 new DistributedLockInstaller(),
                 new EncryptionInstaller(),
-                new CatalogClientInstaller()
+                new CatalogClientInstaller(),
+                new FacadeInstaller()
             };
         }
     }

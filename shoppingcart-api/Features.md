@@ -2,9 +2,9 @@
 
 This template has been created to demonstrate sample implementation of key features of an expected microservice oriented api.  The template is based around a shopping cart or order, that gets pricing information for another catalog api serivce. The actual domain functionality is implemented only to the point of being able to illusatrate concepts.
 
-
-
 ## Feature Overview
+
+You can find documentation that points out the expectations or needs of a microservices and related architectural documentation [here](https://github.com/cortside/guidelines/tree/master/docs/architecture).
 
 ### Synchronous communication
 

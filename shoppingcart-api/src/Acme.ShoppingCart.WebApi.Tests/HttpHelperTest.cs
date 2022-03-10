@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Moq;
 using Xunit;
 
-namespace Acme.ShoppingCart.DomainService.Tests {
+namespace Acme.ShoppingCart.WebApi.Tests {
     public class HttpHelperTest {
         private readonly Mock<HttpRequest> httpRequestMock;
 

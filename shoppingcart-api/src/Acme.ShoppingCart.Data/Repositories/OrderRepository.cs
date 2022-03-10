@@ -12,12 +12,6 @@ namespace Acme.ShoppingCart.Data.Repositories {
     public class OrderRepository : IOrderRepository {
         private readonly DatabaseContext context;
 
-        public IUnitOfWork UnitOfWork {
-            get {
-                return context;
-            }
-        }
-
         public OrderRepository(DatabaseContext context) {
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
