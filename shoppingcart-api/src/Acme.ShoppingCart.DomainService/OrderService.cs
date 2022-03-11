@@ -50,6 +50,8 @@ namespace Acme.ShoppingCart.DomainService {
         }
 
         public async Task<Order> UpdateOrderAsync(OrderDto dto) {
+            // TODO: change argument or more fully implement dto in update
+
             var entity = await orderRepository.GetAsync(dto.OrderResourceId).ConfigureAwait(false);
             entity.UpdateAddress(dto.Address.Street, dto.Address.City, dto.Address.State, dto.Address.Country, dto.Address.ZipCode);
 

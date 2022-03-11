@@ -17,6 +17,7 @@ namespace Acme.ShoppingCart.Domain.Entities {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AddressId { get; private set; }
 
+        [StringLength(50)]
         public string Street { get; private set; }
         public string City { get; private set; }
         public string State { get; private set; }
