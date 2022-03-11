@@ -34,9 +34,12 @@ namespace Acme.ShoppingCart.Domain.Entities {
         [ForeignKey("AddressId")]
         public Address Address { get; private set; }
 
+        // TODO: readonly collection
+
         public List<OrderItem> Items { get; private set; } = new List<OrderItem>();
 
         public void AddItem(CatalogItem item, int quantity) {
+            Guard.Against(() => Status == OrderStatus.Cancelled || Status == OrderStatus.Shipped, () => throw new InvalidOperationException($"Update not allowed when Status is {Status}"));
             Items.Add(new OrderItem(item, quantity));
         }
 

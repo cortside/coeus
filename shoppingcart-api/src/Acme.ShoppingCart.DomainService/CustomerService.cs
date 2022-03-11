@@ -24,6 +24,8 @@ namespace Acme.ShoppingCart.DomainService {
             var entity = new Customer(dto.FirstName, dto.LastName, dto.Email);
             customerRepository.Add(entity);
 
+            // TODO: is there where we want to publish from?
+
             var @event = new CustomerStateChangedEvent() { CustomerResourceId = entity.CustomerResourceId, Timestamp = entity.LastModifiedDate };
             await publisher.PublishAsync(@event).ConfigureAwait(false);
 
