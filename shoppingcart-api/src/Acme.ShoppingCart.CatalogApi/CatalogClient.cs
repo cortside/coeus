@@ -37,14 +37,14 @@ namespace Acme.ShoppingCart.UserClient {
             };
         }
 
-        public async Task<CatalogItem> GetItem(string sku) {
-            logger.LogInformation($"Getting item by sku: {sku}.");
+        public async Task<CatalogItem> GetItemAsync(string sku) {
+            logger.LogInformation("Getting item by sku: {sku}", sku);
             RestRequest request = new RestRequest($"api/v1/items/{sku}", Method.Get);
             try {
                 var response = await client.GetAsync<CatalogItem>(request).ConfigureAwait(false);
                 return response.Data;
             } catch (Exception ex) {
-                logger.LogError($"Error contacting user api to retrieve user info for {sku}.");
+                logger.LogError("Error contacting user api to retrieve user info for {sku}", sku);
                 throw new ExternalCommunicationFailureMessage($"Error contacting user api to retrieve user info for {sku}.", ex);
             }
         }

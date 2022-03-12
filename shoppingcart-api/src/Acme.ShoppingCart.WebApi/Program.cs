@@ -54,7 +54,7 @@ namespace Acme.ShoppingCart.WebApi {
                 .Enrich.WithBowdlerizer(bowdlerizer);
 
             var serverUrl = Configuration["Seq:ServerUrl"];
-            if (!String.IsNullOrWhiteSpace(serverUrl)) {
+            if (!string.IsNullOrWhiteSpace(serverUrl)) {
                 loggerConfiguration.WriteTo.Seq(serverUrl);
             }
             Log.Logger = loggerConfiguration.CreateLogger();
@@ -62,8 +62,8 @@ namespace Acme.ShoppingCart.WebApi {
             CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
 
             try {
-                Log.Information($"Starting {service}");
-                Log.Information($"ASPNETCORE environment = {Environment}");
+                Log.Information("Starting {Service}", service);
+                Log.Information("ASPNETCORE environment = {Environment}", Environment);
 
                 var host = CreateHostBuilder(args, config).Build();
 
@@ -95,11 +95,11 @@ namespace Acme.ShoppingCart.WebApi {
                 })
                 .ConfigureWebHostDefaults(webBuilder => {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseSerilog();
                     webBuilder.UseKestrel(k => {
                         k.Limits.MaxRequestLineSize = int.MaxValue;
                         k.Limits.MaxRequestBufferSize = int.MaxValue;
                     });
-                });
+                })
+                .UseSerilog();
     }
 }

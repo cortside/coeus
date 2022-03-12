@@ -32,7 +32,7 @@ namespace Acme.ShoppingCart.DomainService {
             var entity = new Order(customer, dto.Address.Street, dto.Address.City, dto.Address.State, dto.Address.Country, dto.Address.ZipCode);
             using (LogContext.PushProperty("OrderResourceId", entity.OrderResourceId)) {
                 foreach (var i in dto.Items) {
-                    var item = await catalog.GetItem(i.Sku).ConfigureAwait(false);
+                    var item = await catalog.GetItemAsync(i.Sku).ConfigureAwait(false);
                     entity.AddItem(item, i.Quantity);
                 }
                 logger.LogInformation("Created new order");
@@ -73,7 +73,7 @@ namespace Acme.ShoppingCart.DomainService {
 
         public async Task<Order> AddOrderItemAsync(Guid id, OrderItemDto dto) {
             var entity = await orderRepository.GetAsync(id).ConfigureAwait(false);
-            var item = await catalog.GetItem(dto.Sku).ConfigureAwait(false);
+            var item = await catalog.GetItemAsync(dto.Sku).ConfigureAwait(false);
             entity.AddItem(item, dto.Quantity);
             var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = DateTime.UtcNow };
             await publisher.PublishAsync(@event).ConfigureAwait(false);

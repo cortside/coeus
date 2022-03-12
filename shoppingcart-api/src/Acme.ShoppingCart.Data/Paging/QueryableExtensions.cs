@@ -5,7 +5,6 @@ using System.Reflection;
 using Acme.ShoppingCart.Data.Paging;
 
 namespace Acme.ShoppingCart.Data.Paging {
-    // TODO: should probably be in a common project
     public static class QueryableExtensions {
         public static IQueryable<T> ToPagedQuery<T>(this IQueryable<T> query, int page, int pageSize) {
             return query.Skip(pageSize * (page - 1)).Take(pageSize);
@@ -16,9 +15,9 @@ namespace Acme.ShoppingCart.Data.Paging {
         }
 
         /// <summary>
-        /// the sortParameters must have the next format: 
+        /// the sortParameters must have the next format:
         /// if want to sort by descending use '-', for example: -ColumnName, if want to sort ascending use just the name of the column, for example: ColumnName
-        /// if want to sot by multiple parameters separarate them with a comma, for example ColumnName1,ColumnName2 
+        /// if want to sot by multiple parameters separarate them with a comma, for example ColumnName1,ColumnName2
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="query">the IQUERABLE send from the persistence class</param>
@@ -44,7 +43,7 @@ namespace Acme.ShoppingCart.Data.Paging {
 
                 var propertyLambda = GetPropertyLambda<T>(propertyName);
 
-                if (propertyLambda.Item2.Name.ToLower().Contains("nullable")) {
+                if (propertyLambda.Item2.Name.Contains("nullable", StringComparison.CurrentCultureIgnoreCase)) {
                     // first add an expression where we order by the property.HasValue
                     var nullCheckProperty = GetPropertyLambda<T>($"{propertyName}.HasValue");
                     expression = Expression.Call(typeof(Queryable), method, new Type[] { query.ElementType, nullCheckProperty.Item2 },
@@ -64,9 +63,17 @@ namespace Acme.ShoppingCart.Data.Paging {
         }
 
         private static string GetOrderMethod(int index, string orderType) {
-            return string.Equals(orderType, "-", StringComparison.OrdinalIgnoreCase) ?
-                    index == 0 ? "OrderByDescending" : "ThenByDescending" :
-                    index == 0 ? "OrderBy" : "ThenBy";
+            if (string.Equals(orderType, "-", StringComparison.OrdinalIgnoreCase)) {
+                if (index == 0) {
+                    return "OrderByDescending";
+                } else {
+                    return "ThenByDescending";
+                }
+            } else if (index == 0) {
+                return "OrderBy";
+            } else {
+                return "ThenBy";
+            }
         }
 
         private static (Expression, Type) GetPropertyLambda<T>(string propertyName) {
@@ -81,7 +88,7 @@ namespace Acme.ShoppingCart.Data.Paging {
 
                     var propertyInfo = propertyType.GetProperty(subMember);
                     if (propertyInfo == null) {
-                        throw new Exception("Sort property does not exist!");
+                        throw new ArgumentException("Sort property does not exist!");
                     }
 
                     propertyType = propertyInfo.PropertyType;
@@ -93,7 +100,7 @@ namespace Acme.ShoppingCart.Data.Paging {
             } else {
                 var propertyInfo = typeof(T).GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
                 if (propertyInfo == null) {
-                    throw new Exception("Sort property does not exist!");
+                    throw new ArgumentException("Sort property does not exist!");
                 }
 
                 var propertyType = propertyInfo.PropertyType;
