@@ -1,7 +1,9 @@
+using System.Linq;
 using Acme.ShoppingCart.BootStrap;
 using Acme.ShoppingCart.WebApi.Filters;
 using Acme.ShoppingCart.WebApi.Installers;
 using Acme.ShoppingCart.WebApi.Middleware;
+using Acme.ShoppingCart.WebApi.Utils;
 using Cortside.Common.BootStrap;
 using Cortside.Common.Correlation;
 using Cortside.Common.Json;
@@ -131,10 +133,10 @@ namespace Acme.ShoppingCart.WebApi {
                 }
             });
 
-            foreach (var description in provider.ApiVersionDescriptions) {
+            foreach (var groupName in provider.ApiVersionDescriptions.Select(x => x.GroupName)) {
                 app.UseReDoc(c => {
-                    var version = description.GroupName.ToLowerInvariant();
-                    c.DocumentTitle = $"Acme.ShoppingCart Api Documentation {description.GroupName.ToUpperInvariant()}";
+                    var version = groupName.ToLowerInvariant();
+                    c.DocumentTitle = $"Acme.ShoppingCart Api Documentation {groupName.ToUpperInvariant()}";
                     c.RoutePrefix = $"api-docs/{version}";
                     c.SpecUrl = $"/swagger/{version}/swagger.json";
                 });

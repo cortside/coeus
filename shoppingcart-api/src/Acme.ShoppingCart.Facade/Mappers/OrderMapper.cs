@@ -22,7 +22,7 @@ namespace Acme.ShoppingCart.Facade.Mappers {
                 OrderId = entity.OrderId,
                 OrderResourceId = entity.OrderResourceId,
                 Address = addressMapper.MapToDto(entity.Address),
-                Items = entity.Items.ConvertAll(x => MapToDto(x)),
+                Items = entity.Items.ToList().ConvertAll(x => MapToDto(x)),
                 Customer = customerMapper.MapToDto(entity.Customer),
                 CreatedDate = entity.CreatedDate,
                 LastModifiedDate = entity.LastModifiedDate,

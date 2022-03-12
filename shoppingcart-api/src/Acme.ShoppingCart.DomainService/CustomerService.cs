@@ -7,6 +7,7 @@ using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.Dto;
 using Cortside.DomainEvent;
 using Microsoft.Extensions.Logging;
+using Serilog.Context;
 
 namespace Acme.ShoppingCart.DomainService {
     public class CustomerService : ICustomerService {
@@ -22,14 +23,15 @@ namespace Acme.ShoppingCart.DomainService {
 
         public async Task<Customer> CreateCustomerAsync(CustomerDto dto) {
             var entity = new Customer(dto.FirstName, dto.LastName, dto.Email);
-            customerRepository.Add(entity);
+            using (LogContext.PushProperty("CustomerResourceId", entity.CustomerResourceId)) {
+                customerRepository.Add(entity);
+                logger.LogInformation("Created new customer");
 
-            // TODO: is there where we want to publish from?
+                var @event = new CustomerStateChangedEvent() { CustomerResourceId = entity.CustomerResourceId, Timestamp = entity.LastModifiedDate };
+                await publisher.PublishAsync(@event).ConfigureAwait(false);
 
-            var @event = new CustomerStateChangedEvent() { CustomerResourceId = entity.CustomerResourceId, Timestamp = entity.LastModifiedDate };
-            await publisher.PublishAsync(@event).ConfigureAwait(false);
-
-            return entity;
+                return entity;
+            }
         }
 
         public async Task<Customer> GetCustomerAsync(Guid customerResourceId) {
@@ -43,12 +45,15 @@ namespace Acme.ShoppingCart.DomainService {
 
         public async Task<Customer> UpdateCustomerAsync(CustomerDto dto) {
             var entity = await customerRepository.GetAsync(dto.CustomerResourceId).ConfigureAwait(false);
-            entity.Update(dto.FirstName, dto.LastName, dto.Email);
+            using (LogContext.PushProperty("CustomerResourceId", entity.CustomerResourceId)) {
+                entity.Update(dto.FirstName, dto.LastName, dto.Email);
+                logger.LogInformation("Updated existing customer");
 
-            var @event = new CustomerStateChangedEvent() { CustomerResourceId = entity.CustomerResourceId, Timestamp = entity.LastModifiedDate };
-            await publisher.PublishAsync(@event).ConfigureAwait(false);
+                var @event = new CustomerStateChangedEvent() { CustomerResourceId = entity.CustomerResourceId, Timestamp = entity.LastModifiedDate };
+                await publisher.PublishAsync(@event).ConfigureAwait(false);
 
-            return entity;
+                return entity;
+            }
         }
 
         public async Task PublishCustomerStateChangedEventAsync(Guid resourceId) {

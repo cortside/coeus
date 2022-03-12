@@ -10,6 +10,7 @@ using Acme.ShoppingCart.UserClient;
 using Cortside.Common.Validation;
 using Cortside.DomainEvent;
 using Microsoft.Extensions.Logging;
+using Serilog.Context;
 
 namespace Acme.ShoppingCart.DomainService {
     public class OrderService : IOrderService {
@@ -29,15 +30,19 @@ namespace Acme.ShoppingCart.DomainService {
             Guard.From.Null<BadRequestMessage>(customer, "customer not found");
 
             var entity = new Order(customer, dto.Address.Street, dto.Address.City, dto.Address.State, dto.Address.Country, dto.Address.ZipCode);
-            foreach (var i in dto.Items) {
-                var item = await catalog.GetItem(i.Sku).ConfigureAwait(false);
-                entity.AddItem(item, i.Quantity);
-            }
-            orderRepository.Add(entity);
-            var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = entity.LastModifiedDate };
-            await publisher.PublishAsync(@event).ConfigureAwait(false);
+            using (LogContext.PushProperty("OrderResourceId", entity.OrderResourceId)) {
+                foreach (var i in dto.Items) {
+                    var item = await catalog.GetItem(i.Sku).ConfigureAwait(false);
+                    entity.AddItem(item, i.Quantity);
+                }
+                logger.LogInformation("Created new order");
 
-            return entity;
+                orderRepository.Add(entity);
+                var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = entity.LastModifiedDate };
+                await publisher.PublishAsync(@event).ConfigureAwait(false);
+
+                return entity;
+            }
         }
 
         public async Task<Order> GetOrderAsync(Guid id) {
@@ -50,8 +55,6 @@ namespace Acme.ShoppingCart.DomainService {
         }
 
         public async Task<Order> UpdateOrderAsync(OrderDto dto) {
-            // TODO: change argument or more fully implement dto in update
-
             var entity = await orderRepository.GetAsync(dto.OrderResourceId).ConfigureAwait(false);
             entity.UpdateAddress(dto.Address.Street, dto.Address.City, dto.Address.State, dto.Address.Country, dto.Address.ZipCode);
 

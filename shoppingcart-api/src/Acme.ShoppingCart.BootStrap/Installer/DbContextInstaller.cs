@@ -9,7 +9,7 @@ namespace Acme.ShoppingCart.BootStrap.Installer {
         public void Install(IServiceCollection services, IConfigurationRoot configuration) {
             services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(configuration.GetSection("Database").GetValue<string>("ConnectionString")));
 
-            // TODO: dbcontext interface without savechanges?
+            services.AddScoped<IDatabaseContext>(provider => provider.GetService<DatabaseContext>());
 
             // Register the service and implementation for the database context
             services.AddScoped<IUnitOfWork>(provider => provider.GetService<DatabaseContext>());
