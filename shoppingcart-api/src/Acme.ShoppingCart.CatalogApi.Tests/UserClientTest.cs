@@ -38,7 +38,7 @@ namespace Acme.ShoppingCart.UserClient.Tests {
             string sku = Guid.NewGuid().ToString();
 
             //act
-            CatalogItem item = await userClient.GetItem(sku).ConfigureAwait(false);
+            CatalogItem item = await userClient.GetItemAsync(sku).ConfigureAwait(false);
 
             //assert
             item.Should().NotBeNull();
@@ -67,7 +67,7 @@ namespace Acme.ShoppingCart.UserClient.Tests {
             var client = new CatalogClient(config, new Logger<CatalogClient>(new NullLoggerFactory()), options);
 
             //act
-            CatalogItem response = await client.GetItem(user.Sku).ConfigureAwait(false);
+            CatalogItem response = await client.GetItemAsync(user.Sku).ConfigureAwait(false);
 
             //assert
             response.Should().BeEquivalentTo(user);

@@ -83,7 +83,6 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
                     webbuilder
                     .UseConfiguration(Configuration)
                     .UseStartup<TStartup>()
-                    .UseSerilog(Log.Logger)
                     .ConfigureTestServices(sc => {
                         var useInMemory = bool.Parse(Configuration["IntegrationTestFactory:InMemoryDatabase"]);
                         if (useInMemory) {
@@ -92,7 +91,8 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
                         }
                         RegisterDomainEventPublisher(sc);
                     });
-                });
+                })
+                .UseSerilog(Log.Logger);
         }
 
         private void SetupLogger() {
