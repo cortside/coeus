@@ -1,11 +1,14 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using Acme.ShoppingCart.WebApi.Models;
+using Cortside.Bowdlerizer;
+using Cortside.Health.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Serilog.Bowdlerizer;
 
 namespace Acme.ShoppingCart.WebApi {
     /// <summary>
@@ -35,17 +38,21 @@ namespace Acme.ShoppingCart.WebApi {
         /// <returns></returns>
         public static int Main(string[] args) {
             var config = Configuration;
-            // TODO:  use version from health?
-            var build = Configuration.GetSection("Build").Get<Build>();
+            var build = Configuration.GetSection("Build").Get<BuildModel>();
             var service = Configuration["Service:Name"];
+
+            var rules = config.GetSection("Bowdlerizer").Get<List<BowdlerizerRuleConfiguration>>();
+            var bowdlerizer = new Bowdlerizer(rules);
 
             var loggerConfiguration = new LoggerConfiguration()
                 .ReadFrom.Configuration(config)
                 .Enrich.FromLogContext()
                 .Enrich.WithProperty("Environment", Environment)
                 .Enrich.WithProperty("Service", service)
-                .Enrich.WithProperty("BuildVersion", build.Version)
-                .Enrich.WithProperty("BuildTag", build.Tag);
+                .Enrich.WithProperty("BuildVersion", build?.Version)
+                .Enrich.WithProperty("BuildTag", build?.Tag)
+                .Destructure.UsingBowdlerizer(bowdlerizer)
+                .Enrich.WithBowdlerizer(bowdlerizer);
 
             var serverUrl = Configuration["Seq:ServerUrl"];
             if (!String.IsNullOrWhiteSpace(serverUrl)) {
@@ -56,8 +63,8 @@ namespace Acme.ShoppingCart.WebApi {
             CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
 
             try {
-                Log.Information("Starting {Service}");
-                Log.Information("ASPNETCORE environment = {Environment}");
+                Log.Information($"Starting {service}");
+                Log.Information($"ASPNETCORE environment = {Environment}");
 
                 var host = CreateHostBuilder(args, config).Build();
 
