@@ -43,9 +43,11 @@ Here is a high level list of things to note, for more details see below.
     * used to control the scope of the over all transaction.  it's implied by single calls to it's SaveChangesAsync method
     * can be used to begin an explicit transaction or strategy
 * copy of files
-  * don't specify copy always unless really needed, it adds additional build time with dependencies
+    * don't specify copy always unless really needed, it adds additional build time with dependencies
 * entity class as domain logic class
+    * DDD style domain entities, where domain classes are responsible for their consistency of their own state.
 * bowdlerizer
+    * When logging objects, some properties may be [obfuscated](https://github.com/cortside/serilog.bowdlerizer) so that sensitive information is not visible.  [OrderStateChangedHanlder](src/Acme.ShoppingCart.DomainEvent.OrderStateChangedHandler.cs) log an order object, to keep customer name out of logs [appsettings.json](src/Acme.ShoppingCart.WebApi/appsettings.json) has rules in `Bowdlerizer` section for obfuscating specific properties.
 * integration tests with testserver
 
 ## Feature Overview
