@@ -51,7 +51,6 @@ namespace Acme.ShoppingCart.WebApi {
                 .Enrich.WithProperty("Service", service)
                 .Enrich.WithProperty("BuildVersion", build?.Version)
                 .Enrich.WithProperty("BuildTag", build?.Tag)
-                .Destructure.UsingBowdlerizer(bowdlerizer)
                 .Enrich.WithBowdlerizer(bowdlerizer);
 
             var serverUrl = Configuration["Seq:ServerUrl"];

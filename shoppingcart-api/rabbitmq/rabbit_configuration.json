@@ -1,0 +1,63 @@
+{
+    "rabbit_version": "3.6.15",
+    "users": [
+        {
+            "name": "admin",
+            "password_hash": "9X8QnCA+uDWKwxV+7WeE0IA4eqR32gtjjgikdiJYhqfQskmk",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "administrator"
+        }
+    ],
+    "vhosts": [
+        {
+            "name": "/"
+        }
+    ],
+    "permissions": [
+        {
+            "user": "admin",
+            "vhost": "/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        }
+    ],
+    "parameters": [],
+    "global_parameters": [
+        {
+            "name": "cluster_name",
+            "value": "rabbit@rabbitmq"
+        }
+    ],
+    "policies": [],
+    "queues": [
+        {
+            "name": "shoppingcart.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        }
+    ],
+    "exchanges": [
+        {
+            "name": "shoppingcart",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        }
+    ],
+    "bindings": [
+        {
+            "source": "shoppingcart",
+            "vhost": "/",
+            "destination": "shoppingcart.queue",
+            "destination_type": "queue",
+            "routing_key": "OrderStateChangedEvent",
+            "arguments": {}
+        }
+    ]
+}

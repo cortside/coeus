@@ -43,7 +43,8 @@ namespace Acme.ShoppingCart.DomainEvent {
                     await using (await lockProvider.AcquireLockAsync(lockName).ConfigureAwait(false)) {
                         logger.LogDebug($"Acquired lock for {lockName}");
                         var entity = await service.GetOrderAsync(@event.Data.OrderResourceId).ConfigureAwait(false);
-                        logger.LogInformation($"Emailing customer at {entity.Customer.Email} for order change");
+                        logger.LogInformation($"Emailing customer at {entity.Customer.Email} for change to order {entity.OrderResourceId}");
+                        logger.LogDebug("Handling change event for order {@order}", entity);
 
                         // simulate work
                         await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
