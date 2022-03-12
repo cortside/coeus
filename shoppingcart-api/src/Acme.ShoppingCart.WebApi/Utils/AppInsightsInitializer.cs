@@ -3,6 +3,9 @@ using Microsoft.ApplicationInsights.Extensibility;
 
 internal class AppInsightsInitializer : ITelemetryInitializer {
     public void Initialize(ITelemetry telemetry) {
-        telemetry.Context.Cloud.RoleName = "ShoppingCart";
+
+        // TODO: need to add shoppingcart to the replacements
+
+        telemetry.Context.Cloud.RoleName = "shoppingcart-api";
     }
 }

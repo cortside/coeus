@@ -12,6 +12,8 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Helpers.IDSMock {
         private readonly IdsConfiguration idsConfiguration;
         private readonly IdsJwks idsJwks;
 
+        // TODO: make scopes match service setup + stuff in subjects
+
         public IdsMock(WireMockServer server) {
             this.mockServer = server;
             idsConfiguration = JsonConvert.DeserializeObject<IdsConfiguration>(File.ReadAllText(@"./Data/Ids/configuration.json"));
