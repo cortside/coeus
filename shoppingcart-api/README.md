@@ -9,6 +9,10 @@ dotnet new cortside-api --name Acme.ShoppingCart --company Acme --product Shoppi
 
 The template repo can be found at https://github.com/cortside/cortside.templates.
 
+## Features
+
+The template is a contrived example that was created to show a number of concepts, you have find a list of the notable [features here](Features.md).
+
 ## Service Diagram
 
 To better understand the responsibilities and relationship of this service with others, see the [service diagram](docs/ServiceDiagram.md).
@@ -63,7 +67,7 @@ That means editing existing migrations can really only be done sensibly in a bra
 
 In other words, **if your branch has not yet merged AND has not yet deployed to dev/test/stage/uat/etc** then:
 
-- delete your **local** db`*`
+- delete your local `ShoppingCart` database
 - delete the generated sql migration file
 - update the cs migration _or_ delete the existing cs migration and add a fresh one
 - repeat the remaining steps for adding a migration
@@ -79,8 +83,5 @@ Database changes are deployed to shared environments when Octopus runs `update-d
 - `run.ps1` is a convenience script, if debugging in VisualStudio is not needed
 - you may need to run `update-database.ps1` to update your local database (do not run against SqlTestOnlineApp, as deployments should do that)
 - you may need to run rabbitmq in docker locally, when working with domain event message publication and consumption
-  - pre-reqs: docker-desktop installed and running locally
-  - clone http://bitbucket:7990/projects/SYS/repos/systemtest/browse
   - run `start-rabbitmq.ps1` - this will start a container and configure queues and subscriptions per the config in the cloned repo
-    - if working on a new domain event with new configuration, add it in this repo (and create a pull request) in addition to the Azure ServiceBus repo
     - admin UI can be accessed at http://localhost:15672/ with admin/password as credentials
