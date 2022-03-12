@@ -1,0 +1,486 @@
+{
+	"info": {
+		"_postman_id": "1af72ca6-ff5d-4d5d-8929-0ff66289a8a3",
+		"name": "shoppingcart-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "customers",
+			"item": [
+				{
+					"name": "GET customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/v1/customers?pageSize=5&pageNumber=1&firstName=Cort",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"customers"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "5"
+								},
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "firstName",
+									"value": "Cort"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST customers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Jack\",\r\n  \"lastName\": \"Doe\",\r\n  \"email\": \"jack.doe@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/v1/customers",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET customer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/v1/customers/990d6cab-0bdf-4868-915a-e635ca61f5d7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"990d6cab-0bdf-4868-915a-e635ca61f5d7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT customer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Elmer\",\r\n  \"lastName\": \"Fudd\",\r\n  \"email\": \"elmer.fudd@gmail.org\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/customers/f4e79d32-48d0-4829-94ec-677855dde675",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"f4e79d32-48d0-4829-94ec-677855dde675"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST customers/id/publish",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Elmer\",\r\n  \"lastName\": \"Fudd\",\r\n  \"email\": \"elmer.fudd@gmail.org\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/customers/f4e79d32-48d0-4829-94ec-677855dde675/publish",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"f4e79d32-48d0-4829-94ec-677855dde675",
+								"publish"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST customers/id/orders",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"address\": {\r\n    \"street\": \"1234 Main St\",\r\n    \"city\": \"Salt Lake City\",\r\n    \"state\": \"UT\",\r\n    \"country\": \"USA\",\r\n    \"zipCode\": \"84123\"\r\n  },\r\n  \"items\": [\r\n      { \r\n          \"sku\": \"123\", \r\n          \"quantity\": 2\r\n      },\r\n      { \r\n          \"sku\": \"234\", \r\n          \"quantity\": 1\r\n      }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/v1/customers/ddd55930-8ff9-4aec-9088-6c34da328438/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"ddd55930-8ff9-4aec-9088-6c34da328438",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST customers/search",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pageSize\": 5,\r\n    \"pageNumber\":1,\r\n    \"firstName\": \"Jack\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/v1/customers/search",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "orders",
+			"item": [
+				{
+					"name": "GET orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/v1/orders?pageSize=5&pageNumber=1&firstName=cort",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "5"
+								},
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "firstName",
+									"value": "cort"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST orders",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"customer\": {\r\n        \"firstName\": \"Jack\",\r\n        \"lastName\": \"Doe\",\r\n        \"email\": \"jack.doe@gmail.com\"\r\n  },\r\n  \"address\": {\r\n    \"street\": \"1234 Main St\",\r\n    \"city\": \"Salt Lake City\",\r\n    \"state\": \"UT\",\r\n    \"country\": \"USA\",\r\n    \"zipCode\": \"84123\"\r\n  },\r\n  \"items\": [\r\n      { \r\n          \"sku\": \"123\", \r\n          \"quantity\": 2\r\n      },\r\n      { \r\n          \"sku\": \"234\", \r\n          \"quantity\": 1\r\n      }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/v1/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/v1/orders/DC4D89CB-6A61-4B2C-A88D-ED10F0A90E16",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"DC4D89CB-6A61-4B2C-A88D-ED10F0A90E16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT order",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"customerResourceId\": \"e7899852-730c-437f-a307-72dbd17ccd24\",\r\n  \"address\": {\r\n    \"street\": \"1234 Main St\",\r\n    \"city\": \"Salt Lake City\",\r\n    \"state\": \"UT\",\r\n    \"country\": \"USA\",\r\n    \"zipCode\": \"84123\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/orders/869e8778-eb64-43f4-ad00-6370847f472e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"869e8778-eb64-43f4-ad00-6370847f472e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST orders/id/publish",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/v1/orders/869e8778-eb64-43f4-ad00-6370847f472e/publish",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"869e8778-eb64-43f4-ad00-6370847f472e",
+								"publish"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//get response body\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"//check status code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//set auth token environment variable\r",
+							"pm.environment.set(\"Bearer_Token\", jsonData.access_token);\r",
+							"\r",
+							"//set auth token global variable\r",
+							"pm.globals.set(\"token\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "grant_type=client_credentials&scope=shoppingcart-api&client_id=cort&client_secret=secret"
+				},
+				"url": {
+					"raw": "http://localhost:5001/connect/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST connect/introspect",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{token}}"
+				},
+				"url": {
+					"raw": "http://localhost:5001/connect/introspect",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"connect",
+						"introspect"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET authorization",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/api/v1/authorization",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"authorization"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

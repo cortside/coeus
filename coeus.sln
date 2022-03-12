@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solutio
 		shoppingcart-api\src\.editorconfig = shoppingcart-api\src\.editorconfig
 		shoppingcart-api\Features.md = shoppingcart-api\Features.md
 		shoppingcart-api\README.md = shoppingcart-api\README.md
+		shoppingcart-api\docs\ServiceDiagram.md = shoppingcart-api\docs\ServiceDiagram.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Domain", "shoppingcart-api\src\Acme.ShoppingCart.Domain\Acme.ShoppingCart.Domain.csproj", "{1F32F33B-D53E-42BB-969C-1331F2261EA7}"
