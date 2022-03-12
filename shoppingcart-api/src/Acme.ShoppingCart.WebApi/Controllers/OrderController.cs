@@ -12,7 +12,6 @@ using Acme.ShoppingCart.WebApi.Models.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Serilog.Context;
 
 namespace Acme.ShoppingCart.WebApi.Controllers {
@@ -25,15 +24,13 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
     [ApiController]
     [Route("api/v{version:apiVersion}/orders")]
     public class OrderController : Controller {
-        private readonly ILogger logger;
         private readonly OrderModelMapper orderMapper;
         private readonly IOrderFacade facade;
 
         /// <summary>
         /// Initializes a new instance of the OrderController
         /// </summary>
-        public OrderController(ILogger<OrderController> logger, IOrderFacade facade, OrderModelMapper orderMapper) {
-            this.logger = logger;
+        public OrderController(IOrderFacade facade, OrderModelMapper orderMapper) {
             this.facade = facade;
             this.orderMapper = orderMapper;
         }

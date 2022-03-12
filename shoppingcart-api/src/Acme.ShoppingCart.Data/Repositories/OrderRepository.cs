@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 using Acme.ShoppingCart.Data.Paging;
 using Acme.ShoppingCart.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Acme.ShoppingCart.Data.Repositories {
     public class OrderRepository : IOrderRepository {
-        private readonly DatabaseContext context;
+        private readonly IDatabaseContext context;
 
-        public OrderRepository(DatabaseContext context) {
+        public OrderRepository(IDatabaseContext context) {
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
@@ -27,7 +26,7 @@ namespace Acme.ShoppingCart.Data.Repositories {
                 .Include(x => x.Items)
                     .ThenInclude(x => x.LastModifiedSubject);
 
-            var tx = context.Database.CurrentTransaction?.GetDbTransaction();
+            var tx = context.GetDbTransaction();
             if (tx?.IsolationLevel == IsolationLevel.ReadUncommitted) {
                 orders.AsNoTrackingWithIdentityResolution();
             }

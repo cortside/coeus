@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Acme.ShoppingCart.UserClient.Models.Responses;
+using Cortside.Common.Validation;
 
 namespace Acme.ShoppingCart.Domain.Entities {
     [Table("OrderItem")]
@@ -11,6 +12,9 @@ namespace Acme.ShoppingCart.Domain.Entities {
         }
 
         public OrderItem(CatalogItem item, int quantity) {
+            Guard.From.Null(item, nameof(item));
+            Guard.Against(() => quantity < 0, () => throw new ArgumentException($"Quantity of {quantity} is invalid"));
+
             ItemId = item.ItemId;
             Sku = item.Sku;
             Quantity = quantity;
@@ -25,5 +29,12 @@ namespace Acme.ShoppingCart.Domain.Entities {
         public int Quantity { get; private set; }
         [Column(TypeName = "money")]
         public decimal UnitPrice { get; private set; }
+
+        internal void AddQuantity(int quantity) {
+            Guard.Against(() => Quantity < 0, () => throw new ArgumentException($"Item quantity of {Quantity} is invalid"));
+            Guard.Against(() => quantity < 0, () => throw new ArgumentException($"Quantity of {quantity} is invalid"));
+
+            Quantity += quantity;
+        }
     }
 }

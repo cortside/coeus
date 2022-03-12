@@ -17,6 +17,7 @@ namespace Acme.ShoppingCart.Domain.Entities {
             OrderResourceId = Guid.NewGuid();
             Customer = customer;
             Address = new Address(street, city, state, country, zipCode);
+            items = new List<OrderItem>();
         }
 
         [Key]
@@ -34,13 +35,19 @@ namespace Acme.ShoppingCart.Domain.Entities {
         [ForeignKey("AddressId")]
         public Address Address { get; private set; }
 
-        // TODO: readonly collection
-
-        public List<OrderItem> Items { get; private set; } = new List<OrderItem>();
+        // expose items as a read only collection so that the collection cannot be manipulated without going through order
+        private readonly List<OrderItem> items = new List<OrderItem>();
+        public virtual IReadOnlyList<OrderItem> Items => items;
 
         public void AddItem(CatalogItem item, int quantity) {
             Guard.Against(() => Status == OrderStatus.Cancelled || Status == OrderStatus.Shipped, () => throw new InvalidOperationException($"Update not allowed when Status is {Status}"));
-            Items.Add(new OrderItem(item, quantity));
+
+            var orderItem = items.Find(x => x.ItemId == item.ItemId);
+            if (orderItem != null) {
+                orderItem.AddQuantity(quantity);
+            } else {
+                items.Add(new OrderItem(item, quantity));
+            }
         }
 
         public void UpdateAddress(string street, string city, string state, string country, string zipCode) {

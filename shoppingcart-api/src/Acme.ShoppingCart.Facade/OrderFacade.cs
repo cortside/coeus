@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Acme.ShoppingCart.Data;
+﻿using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.Data.Paging;
 using Acme.ShoppingCart.Data.Repositories;
 using Acme.ShoppingCart.Domain.Entities;
@@ -55,7 +54,7 @@ namespace Acme.ShoppingCart.Facade {
         }
 
         public async Task<PagedList<OrderDto>> SearchOrdersAsync(int pageSize, int pageNumber, string sortParams, OrderSearch search) {
-            using (var tx = await uow.BeginTransactionAsync(IsolationLevel.ReadUncommitted).ConfigureAwait(false)) {
+            using (var tx = await uow.BeginReadUncommitedAsync().ConfigureAwait(false)) {
                 var orders = await orderService.SearchOrdersAsync(pageSize, pageNumber, sortParams, search).ConfigureAwait(false);
 
                 var results = new PagedList<OrderDto> {

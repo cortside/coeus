@@ -14,7 +14,6 @@ using Cortside.Common.Messages.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Serilog.Context;
 
 namespace Acme.ShoppingCart.WebApi.Controllers {
@@ -27,7 +26,6 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
     [ApiController]
     [Route("api/v{version:apiVersion}/customers")]
     public class CustomerController : Controller {
-        private readonly ILogger logger;
         private readonly ICustomerFacade facade;
         private readonly CustomerModelMapper customerMapper;
         private readonly IEncryptionService encryptionService;
@@ -35,8 +33,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// <summary>
         /// Initializes a new instance of the CustomerController
         /// </summary>
-        public CustomerController(ILogger<CustomerController> logger, ICustomerFacade facade, CustomerModelMapper customerMapper, IEncryptionService encryptionService) {
-            this.logger = logger;
+        public CustomerController(ICustomerFacade facade, CustomerModelMapper customerMapper, IEncryptionService encryptionService) {
             this.facade = facade;
             this.customerMapper = customerMapper;
             this.encryptionService = encryptionService;

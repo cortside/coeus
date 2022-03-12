@@ -24,7 +24,15 @@ namespace Acme.ShoppingCart.Domain.Entities {
         public string Country { get; private set; }
         public string ZipCode { get; private set; }
 
-        public void Update(string street, string city, string state, string country, string zipcode) {
+        /// <summary>
+        /// Updates the specified street.
+        /// </summary>
+        /// <param name="street">The street.</param>
+        /// <param name="city">The city.</param>
+        /// <param name="state">The state.</param>
+        /// <param name="country">The country.</param>
+        /// <param name="zipcode">The zipcode.</param>
+        internal void Update(string street, string city, string state, string country, string zipcode) {
             Street = street;
             City = city;
             State = state;

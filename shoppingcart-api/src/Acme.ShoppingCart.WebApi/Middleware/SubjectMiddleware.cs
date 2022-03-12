@@ -5,11 +5,9 @@ using Microsoft.AspNetCore.Http;
 namespace Acme.ShoppingCart.WebApi.Middleware {
     public class SubjectMiddleware {
         private readonly RequestDelegate _next;
-        private readonly IHttpContextAccessor _httpAccessor;
 
-        public SubjectMiddleware(RequestDelegate next, IHttpContextAccessor httpAccessor) {
+        public SubjectMiddleware(RequestDelegate next) {
             _next = next;
-            _httpAccessor = httpAccessor;
         }
 
         public async Task InvokeAsync(HttpContext context) {

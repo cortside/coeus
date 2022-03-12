@@ -8,10 +8,7 @@ namespace Acme.ShoppingCart.Data {
     public interface IUnitOfWork : IDisposable {
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         Task<IDbContextTransaction> BeginTransactionAsync(IsolationLevel isolationLevel);
-
-
-        //Task<IDbContextTransaction> BeginReadUncommitedAsync();
-
-        // TODO: add method to start a strategy
+        Task<IDbContextTransaction> BeginReadUncommitedAsync();
+        IExecutionStrategy CreateExecutionStrategy();
     }
 }

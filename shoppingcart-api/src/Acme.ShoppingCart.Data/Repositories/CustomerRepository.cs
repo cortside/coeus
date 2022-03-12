@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Acme.ShoppingCart.Data.Repositories {
     public class CustomerRepository : ICustomerRepository {
-        private readonly DatabaseContext context;
+        private readonly IDatabaseContext context;
 
-        public CustomerRepository(DatabaseContext context) {
+        public CustomerRepository(IDatabaseContext context) {
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
