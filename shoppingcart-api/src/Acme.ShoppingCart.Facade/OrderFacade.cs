@@ -42,10 +42,11 @@ namespace Acme.ShoppingCart.Facade {
         }
 
         public async Task<OrderDto?> GetOrderAsync(Guid id) {
-            var order = await orderService.GetOrderAsync(id).ConfigureAwait(false);
-            await uow.SaveChangesAsync().ConfigureAwait(false);
+            using (var tx = uow.BeginNoTracking()) {
+                var order = await orderService.GetOrderAsync(id).ConfigureAwait(false);
 
-            return mapper.MapToDto(order);
+                return mapper.MapToDto(order);
+            }
         }
 
         public async Task PublishOrderStateChangedEventAsync(Guid id) {

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Data.Paging;
@@ -25,11 +24,6 @@ namespace Acme.ShoppingCart.Data.Repositories {
                     .ThenInclude(x => x.CreatedSubject)
                 .Include(x => x.Items)
                     .ThenInclude(x => x.LastModifiedSubject);
-
-            var tx = context.GetDbTransaction();
-            if (tx?.IsolationLevel == IsolationLevel.ReadUncommitted) {
-                orders.AsNoTrackingWithIdentityResolution();
-            }
 
             orders = model.Build(orders);
             var result = new PagedList<Order> {
