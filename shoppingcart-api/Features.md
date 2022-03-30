@@ -101,3 +101,4 @@ OpenAPI is a standard to describe REST APIs and it allows you to declare your AP
 * delete/remove example in repository?
 * date only in request/response
 * datetime vs datetimeoffset
+* repository caching (https://codewithmukesh.com/blog/repository-pattern-caching-hangfire-aspnet-core/)

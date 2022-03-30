@@ -84,7 +84,8 @@ namespace Acme.ShoppingCart.WebApi {
                 options.Conventions.Add(new ApiControllerVersionConvention());
             })
             .AddNewtonsoftJson(options => {
-                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.SerializerSettings.ContractResolver = new OrderedContractResolver();
+                //options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
                 options.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy()));

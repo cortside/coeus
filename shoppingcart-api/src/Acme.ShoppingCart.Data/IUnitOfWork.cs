@@ -9,6 +9,7 @@ namespace Acme.ShoppingCart.Data {
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         Task<IDbContextTransaction> BeginTransactionAsync(IsolationLevel isolationLevel);
         Task<IDbContextTransaction> BeginReadUncommitedAsync();
+        IUnitOfWork BeginNoTracking();
         IExecutionStrategy CreateExecutionStrategy();
     }
 }

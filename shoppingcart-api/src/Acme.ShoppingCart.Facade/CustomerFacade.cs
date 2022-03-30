@@ -25,8 +25,10 @@ namespace Acme.ShoppingCart.Facade {
         }
 
         public async Task<CustomerDto?> GetCustomerAsync(Guid customerResourceId) {
-            var customer = await customerService.GetCustomerAsync(customerResourceId);
-            return mapper.MapToDto(customer);
+            using (var tx = uow.BeginNoTracking()) {
+                var customer = await customerService.GetCustomerAsync(customerResourceId);
+                return mapper.MapToDto(customer);
+            }
         }
 
         public async Task PublishCustomerStateChangedEventAsync(Guid resourceId) {
