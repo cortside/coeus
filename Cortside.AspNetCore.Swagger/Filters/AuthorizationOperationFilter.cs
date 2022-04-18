@@ -1,51 +1,58 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using Cortside.Common.Messages.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Net;
 
-namespace Acme.ShoppingCart.WebApi.Filters {
-    public class AuthorizeOperationFilter : IOperationFilter {
-        public void Apply(OpenApiOperation operation, OperationFilterContext context) {
+namespace Acme.ShoppingCart.WebApi.Filters
+{
+    public class AuthorizeOperationFilter : IOperationFilter
+    {
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        {
             var isPost = context.GetControllerAndActionAttributes<HttpPostAttribute>().Any();
             var isPut = context.GetControllerAndActionAttributes<HttpPutAttribute>().Any();
 
             // TODO: should probably be in another filter or this one renamed
             string code400 = ((int)HttpStatusCode.BadRequest).ToString();
-            if (!operation.Responses.ContainsKey(code400) && (isPost || isPut)) {
+            if (!operation.Responses.ContainsKey(code400) && (isPost || isPut))
+            {
                 AddError(operation, code400, context);
             }
 
             var authorizationAttributes = context.GetControllerAndActionAttributes<AuthorizeAttribute>();
-            if (!authorizationAttributes.Any()) {
+            if (!authorizationAttributes.Any())
+            {
                 return;
             }
 
-            if (operation.Parameters == null) {
+            if (operation.Parameters == null)
+            {
                 operation.Parameters = new List<OpenApiParameter>();
             }
 
             // display possible response status codes
             string code401 = ((int)HttpStatusCode.Unauthorized).ToString();
-            if (!operation.Responses.ContainsKey(code401)) {
+            if (!operation.Responses.ContainsKey(code401))
+            {
                 operation.Responses.Add(code401, new OpenApiResponse { Description = "Unauthorized" });
             }
 
             AuthorizeAttribute authorizeAttribute = authorizationAttributes.OfType<AuthorizeAttribute>().FirstOrDefault();
-            if (authorizeAttribute != null && !string.IsNullOrWhiteSpace(authorizeAttribute.Policy)) {
+            if (authorizeAttribute != null && !string.IsNullOrWhiteSpace(authorizeAttribute.Policy))
+            {
                 string code403 = ((int)HttpStatusCode.Forbidden).ToString();
-                if (!operation.Responses.ContainsKey(code403)) {
+                if (!operation.Responses.ContainsKey(code403))
+                {
                     operation.Responses.Add(code403, new OpenApiResponse { Description = "Forbidden" });
                 }
             }
 
             // display required authentication/policy
             string authorizationDescription = " (Auth)";
-            if (authorizeAttribute != null && !string.IsNullOrWhiteSpace(authorizeAttribute.Policy)) {
+            if (authorizeAttribute != null && !string.IsNullOrWhiteSpace(authorizeAttribute.Policy))
+            {
                 authorizationDescription = $" (Auth permission: {authorizeAttribute.Policy})";
             }
             operation.Summary ??= "";
@@ -62,8 +69,10 @@ namespace Acme.ShoppingCart.WebApi.Filters {
             });
         }
 
-        private void AddError(OpenApiOperation operation, string statusString, OperationFilterContext context) {
-            if (!operation.Responses.TryGetValue(statusString, out OpenApiResponse response)) {
+        private static void AddError(OpenApiOperation operation, string statusString, OperationFilterContext context)
+        {
+            if (!operation.Responses.TryGetValue(statusString, out OpenApiResponse response))
+            {
                 response = new OpenApiResponse();
                 operation.Responses.Add(statusString, response);
             }
@@ -74,9 +83,11 @@ namespace Acme.ShoppingCart.WebApi.Filters {
             var openApiMediaType = new OpenApiMediaType();
 
             var type = typeof(ErrorsModel);
-            if (!context.SchemaRepository.TryLookupByType(type, out var schema)) {
+            if (!context.SchemaRepository.TryLookupByType(type, out var schema))
+            {
                 schema = context.SchemaGenerator.GenerateSchema(type, context.SchemaRepository);
-                if (schema == null) {
+                if (schema == null)
+                {
                     throw new InvalidOperationException($"Failed to register swagger schema type '{type.Name}'");
                 }
             }

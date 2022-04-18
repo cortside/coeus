@@ -2,10 +2,13 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Acme.ShoppingCart.Domain.Entities {
+namespace Acme.ShoppingCart.Domain.Entities
+{
     [Table("Subject")]
-    public class Subject {
-        public Subject(Guid subjectId, string givenName, string familyName, string name, string userPrincipalName) {
+    public class Subject
+    {
+        public Subject(Guid subjectId, string givenName, string familyName, string name, string userPrincipalName)
+        {
             SubjectId = subjectId;
             GivenName = givenName;
             FamilyName = familyName;

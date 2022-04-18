@@ -28,7 +28,6 @@ namespace Acme.ShoppingCart.WebApi.Installers {
                     options.CacheDuration = idsConfig.CacheDuration;
                 });
 
-
             // policy server
             configuration["PolicyServer:TokenClient:Authority"] = idsConfig.Authority;
             configuration["PolicyServer:TokenClient:ClientId"] = idsConfig.Authentication.ClientId;

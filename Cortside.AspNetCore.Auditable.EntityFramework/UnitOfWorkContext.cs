@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Acme.ShoppingCart.Data {
     public class UnitOfWorkContext : AuditableDatabaseContext, IUnitOfWork {
-        public UnitOfWorkContext(DbContextOptions<DatabaseContext> options, ISubjectPrincipal subjectPrincipal) : base(options, subjectPrincipal) {
+        public UnitOfWorkContext(DbContextOptions options, ISubjectPrincipal subjectPrincipal) : base(options, subjectPrincipal) {
         }
 
         public Task<IDbContextTransaction> BeginReadUncommitedAsync() {

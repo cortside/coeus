@@ -19,6 +19,7 @@
     <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Cortside.AspNetCore.Auditable\Cortside.AspNetCore.Auditable.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.CatalogApi\Acme.ShoppingCart.CatalogApi.csproj" />
   </ItemGroup>
 </Project>
