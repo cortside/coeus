@@ -1,15 +1,16 @@
+using System.IO.Compression;
 using System.Linq;
 using Acme.ShoppingCart.BootStrap;
 using Acme.ShoppingCart.WebApi.Filters;
 using Acme.ShoppingCart.WebApi.Installers;
-using Acme.ShoppingCart.WebApi.Middleware;
-using Acme.ShoppingCart.WebApi.Utils;
+using Cortside.AspNetCore;
+using Cortside.AspNetCore.ApplicationInsights;
+using Cortside.AspNetCore.Middleware;
 using Cortside.Common.BootStrap;
 using Cortside.Common.Correlation;
 using Cortside.Common.Json;
 using Cortside.Common.Messages.Filters;
 using Cortside.Health.Controllers;
-using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -58,16 +59,25 @@ namespace Acme.ShoppingCart.WebApi {
         /// </summary>
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services) {
-            services.AddSingleton<ITelemetryInitializer, AppInsightsInitializer>();
+            var serviceName = Configuration["Service:Name"];
             services.AddApplicationInsightsTelemetry(o => {
                 o.InstrumentationKey = Configuration["ApplicationInsights:InstrumentationKey"];
                 o.EnableAdaptiveSampling = false;
                 o.EnableActiveTelemetryConfigurationSetup = true;
             });
+            services.AddCloudRoleNameInitializer(serviceName);
 
             services.AddResponseCaching();
             services.AddResponseCompression(options => {
+                options.EnableForHttps = true;
+                options.Providers.Add<BrotliCompressionProvider>();
                 options.Providers.Add<GzipCompressionProvider>();
+            });
+            services.Configure<BrotliCompressionProviderOptions>(options => {
+                options.Level = CompressionLevel.Optimal;
+            });
+            services.Configure<GzipCompressionProviderOptions>(options => {
+                options.Level = CompressionLevel.Optimal;
             });
 
             services.AddMemoryCache();
@@ -75,7 +85,7 @@ namespace Acme.ShoppingCart.WebApi {
             services.AddCors();
 
             services.AddControllers(options => {
-                options.CacheProfiles.Add("default", new CacheProfile {
+                options.CacheProfiles.Add("Default", new CacheProfile {
                     Duration = 30,
                     Location = ResponseCacheLocation.Any
                 });
@@ -84,14 +94,17 @@ namespace Acme.ShoppingCart.WebApi {
                 options.Conventions.Add(new ApiControllerVersionConvention());
             })
             .AddNewtonsoftJson(options => {
-                options.SerializerSettings.ContractResolver = new OrderedContractResolver();
-                //options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                options.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy()));
-                options.SerializerSettings.Converters.Add(new IsoDateTimeConverter {
-                    DateTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
-                });
+
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.MissingMemberHandling = MissingMemberHandling.Ignore;
+                options.SerializerSettings.NullValueHandling = NullValueHandling.Include;
+                options.SerializerSettings.DefaultValueHandling = DefaultValueHandling.Include;
+
+                options.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
+                options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
+                options.SerializerSettings.DateParseHandling = DateParseHandling.DateTimeOffset;
                 options.SerializerSettings.Converters.Add(new IsoTimeSpanConverter());
             })
             .PartManager.ApplicationParts.Add(new AssemblyPart(typeof(HealthController).Assembly));
@@ -104,6 +117,12 @@ namespace Acme.ShoppingCart.WebApi {
             services.AddScoped(sp => {
                 return sp.GetRequiredService<IUrlHelperFactory>().GetUrlHelper(sp.GetRequiredService<IActionContextAccessor>().ActionContext);
             });
+
+            // warm all the serivces up, can chain these together if needed
+            services.AddStartupTask<WarmupServicesStartupTask>();
+
+            // this is used in the warmup tasks
+            services.AddSingleton(services);
 
             services.AddSingleton(Configuration);
             bootstrapper.InitIoCContainer(Configuration as IConfigurationRoot, services);
@@ -118,6 +137,9 @@ namespace Acme.ShoppingCart.WebApi {
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider) {
             app.UseMiniProfiler();
             app.UseMiddleware<CorrelationMiddleware>();
+
+            app.UseResponseCompression();
+            app.UseResponseCaching();
 
             app.UseSwagger();
             app.UseSwaggerUI(options => {

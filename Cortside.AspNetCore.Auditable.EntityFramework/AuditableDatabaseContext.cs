@@ -12,7 +12,7 @@ namespace Acme.ShoppingCart.Data {
     public class AuditableDatabaseContext : DbContext {
         private readonly ISubjectPrincipal subjectPrincipal;
 
-        public AuditableDatabaseContext(DbContextOptions<DatabaseContext> options, ISubjectPrincipal subjectPrincipal) : base(options) {
+        public AuditableDatabaseContext(DbContextOptions options, ISubjectPrincipal subjectPrincipal) : base(options) {
             this.subjectPrincipal = subjectPrincipal;
         }
 

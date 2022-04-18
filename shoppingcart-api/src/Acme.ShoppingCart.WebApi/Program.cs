@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Threading.Tasks;
+using Cortside.AspNetCore;
 using Cortside.Bowdlerizer;
 using Cortside.Health.Models;
 using Microsoft.AspNetCore.Hosting;
@@ -36,7 +38,7 @@ namespace Acme.ShoppingCart.WebApi {
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static int Main(string[] args) {
+        public static async Task<int> Main(string[] args) {
             var config = Configuration;
             var build = Configuration.GetSection("Build").Get<BuildModel>();
             var service = Configuration["Service:Name"];
@@ -65,9 +67,10 @@ namespace Acme.ShoppingCart.WebApi {
                 Log.Information("Starting {Service}", service);
                 Log.Information("ASPNETCORE environment = {Environment}", Environment);
 
-                var host = CreateHostBuilder(args, config).Build();
+                var host = CreateHostBuilder(args, config)
+                    .Build();
 
-                host.Run();
+                await host.RunWithTasksAsync().ConfigureAwait(false);
                 return 0;
             } catch (Exception ex) {
                 string type = ex.GetType().Name;

@@ -8,6 +8,7 @@ using Acme.ShoppingCart.Facade;
 using Acme.ShoppingCart.WebApi.Mappers;
 using Acme.ShoppingCart.WebApi.Models.Requests;
 using Acme.ShoppingCart.WebApi.Models.Responses;
+using Cortside.AspNetCore;
 using Cortside.Common.Cryptography;
 using Cortside.Common.Messages.MessageExceptions;
 using Cortside.Common.Messages.Models;

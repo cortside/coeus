@@ -31,6 +31,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// <returns></returns>
         [HttpGet("")]
         [ProducesResponseType(typeof(SettingsModel), 200)]
+        [ResponseCache(CacheProfileName = "Default")]
         public IActionResult Get() {
             var result = GetSettingsModel();
             return Ok(result);

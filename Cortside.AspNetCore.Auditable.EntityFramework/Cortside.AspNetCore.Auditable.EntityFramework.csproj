@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AsyncAnalyzers" Version="1.1.7">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Cortside.Common.Security" Version="1.1.220" />
+		<PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="1.1.159" />
+		<PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Cortside.AspNetCore.Auditable\Cortside.AspNetCore.Auditable.csproj" />
+	</ItemGroup>
+
+</Project>

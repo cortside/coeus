@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
-
 namespace Acme.ShoppingCart.WebApi.Installers {
     public class NewtonsoftInstaller : IInstaller {
         public void Install(IServiceCollection services, IConfigurationRoot configuration) {
