@@ -8,8 +8,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Cortside.Common.BootStrap" Version="1.1.215-develop" />
-    <PackageReference Include="Cortside.Common.Cryptography" Version="1.1.216-develop" />
+    <PackageReference Include="Cortside.Common.BootStrap" Version="1.1.220" />
+    <PackageReference Include="Cortside.Common.Cryptography" Version="1.1.220" />
     <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
     <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.2.22" />
     <PackageReference Include="MiniProfiler.EntityFrameworkCore" Version="4.2.22" />
