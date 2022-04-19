@@ -1,9 +1,11 @@
-﻿using Acme.ShoppingCart.Data;
-using Acme.ShoppingCart.Data.Paging;
-using Acme.ShoppingCart.Data.Repositories;
+﻿using System;
+using System.Threading.Tasks;
+using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.DomainService;
 using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.Facade.Mappers;
+using Cortside.AspNetCore.Common.Paging;
+using Cortside.AspNetCore.EntityFramework;
 
 namespace Acme.ShoppingCart.Facade {
     public class CustomerFacade : ICustomerFacade {
@@ -17,14 +19,14 @@ namespace Acme.ShoppingCart.Facade {
             this.mapper = mapper;
         }
 
-        public async Task<CustomerDto?> CreateCustomerAsync(CustomerDto dto) {
+        public async Task<CustomerDto> CreateCustomerAsync(CustomerDto dto) {
             var customer = await customerService.CreateCustomerAsync(dto).ConfigureAwait(false);
             await uow.SaveChangesAsync().ConfigureAwait(false);
 
             return mapper.MapToDto(customer);
         }
 
-        public async Task<CustomerDto?> GetCustomerAsync(Guid customerResourceId) {
+        public async Task<CustomerDto> GetCustomerAsync(Guid customerResourceId) {
             using (var tx = uow.BeginNoTracking()) {
                 var customer = await customerService.GetCustomerAsync(customerResourceId);
                 return mapper.MapToDto(customer);
@@ -49,7 +51,7 @@ namespace Acme.ShoppingCart.Facade {
             }
         }
 
-        public async Task<CustomerDto?> UpdateCustomerAsync(CustomerDto dto) {
+        public async Task<CustomerDto> UpdateCustomerAsync(CustomerDto dto) {
             var customer = await customerService.UpdateCustomerAsync(dto).ConfigureAwait(false);
             await uow.SaveChangesAsync().ConfigureAwait(false);
 

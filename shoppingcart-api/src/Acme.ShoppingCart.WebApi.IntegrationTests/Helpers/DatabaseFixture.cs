@@ -1,6 +1,7 @@
 using System;
 using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.Domain.Entities;
+using Cortside.AspNetCore.Auditable.Entities;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Helpers {
     public static class DatabaseFixture {

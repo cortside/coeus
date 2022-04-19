@@ -1,9 +1,9 @@
-﻿using Acme.ShoppingCart.Domain.Entities;
-using Acme.ShoppingCart.Dto;
+﻿using Acme.ShoppingCart.Dto;
+using Cortside.AspNetCore.Auditable.Entities;
 
 namespace Acme.ShoppingCart.Facade.Mappers {
     public class SubjectMapper {
-        public SubjectDto? MapToDto(Subject entity) {
+        public SubjectDto MapToDto(Subject entity) {
             if (entity == null) {
                 return null;
             }

@@ -1,10 +1,12 @@
-﻿using Acme.ShoppingCart.Data;
-using Acme.ShoppingCart.Data.Paging;
-using Acme.ShoppingCart.Data.Repositories;
+﻿using System;
+using System.Threading.Tasks;
+using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.DomainService;
 using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.Facade.Mappers;
+using Cortside.AspNetCore.Common.Paging;
+using Cortside.AspNetCore.EntityFramework;
 
 namespace Acme.ShoppingCart.Facade {
     public class OrderFacade : IOrderFacade {
@@ -20,14 +22,14 @@ namespace Acme.ShoppingCart.Facade {
             this.mapper = mapper;
         }
 
-        public async Task<OrderDto?> AddOrderItemAsync(Guid id, OrderItemDto dto) {
+        public async Task<OrderDto> AddOrderItemAsync(Guid id, OrderItemDto dto) {
             var order = await orderService.AddOrderItemAsync(id, dto).ConfigureAwait(false);
             await uow.SaveChangesAsync().ConfigureAwait(false);
 
             return mapper.MapToDto(order);
         }
 
-        public async Task<OrderDto?> CreateOrderAsync(OrderDto input) {
+        public async Task<OrderDto> CreateOrderAsync(OrderDto input) {
             Customer customer;
             if (input.Customer.CustomerResourceId == Guid.Empty) {
                 customer = await customerService.CreateCustomerAsync(input.Customer).ConfigureAwait(false);
@@ -41,7 +43,7 @@ namespace Acme.ShoppingCart.Facade {
             return mapper.MapToDto(order);
         }
 
-        public async Task<OrderDto?> GetOrderAsync(Guid id) {
+        public async Task<OrderDto> GetOrderAsync(Guid id) {
             using (var tx = uow.BeginNoTracking()) {
                 var order = await orderService.GetOrderAsync(id).ConfigureAwait(false);
 
@@ -69,7 +71,7 @@ namespace Acme.ShoppingCart.Facade {
             }
         }
 
-        public async Task<OrderDto?> UpdateOrderAsync(OrderDto dto) {
+        public async Task<OrderDto> UpdateOrderAsync(OrderDto dto) {
             var order = await orderService.UpdateOrderAsync(dto).ConfigureAwait(false);
             await uow.SaveChangesAsync().ConfigureAwait(false);
 

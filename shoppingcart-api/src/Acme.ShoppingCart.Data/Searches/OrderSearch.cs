@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
-using Acme.ShoppingCart.Data.Paging;
 using Acme.ShoppingCart.Domain.Entities;
 
-namespace Acme.ShoppingCart.Data.Repositories {
+namespace Acme.ShoppingCart.Data.Searches {
     public class OrderSearch : ISearchBuilder<Order>, IOrderSearch {
         public Guid? CustomerResourceId { get; set; }
         public string FirstName { get; set; }

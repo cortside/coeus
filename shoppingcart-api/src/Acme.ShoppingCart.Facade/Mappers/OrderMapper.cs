@@ -1,4 +1,5 @@
-﻿using Acme.ShoppingCart.Domain.Entities;
+﻿using System.Linq;
+using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.Dto;
 
 namespace Acme.ShoppingCart.Facade.Mappers {
@@ -13,7 +14,7 @@ namespace Acme.ShoppingCart.Facade.Mappers {
             this.subjectMapper = subjectMapper;
         }
 
-        public OrderDto? MapToDto(Order entity) {
+        public OrderDto MapToDto(Order entity) {
             if (entity == null) {
                 return null;
             }
@@ -33,7 +34,7 @@ namespace Acme.ShoppingCart.Facade.Mappers {
             return dto;
         }
 
-        public OrderItemDto? MapToDto(OrderItem entity) {
+        public OrderItemDto MapToDto(OrderItem entity) {
             if (entity == null) {
                 return null;
             }

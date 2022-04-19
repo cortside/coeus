@@ -31,6 +31,7 @@ Here are the Visual Studio Extensions we use for this project:
 - SonarLint for Visual Studio
 - Extension Manager
 - Code Cleanup On Save
+- MappingGenerator -- https://mappinggenerator.net/
 
 # First Time To Run
 

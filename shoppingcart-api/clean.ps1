@@ -1,5 +1,3 @@
-
-
 Function remove {
     param([string]$item)
     If (Test-Path $item){
@@ -35,5 +33,11 @@ Function Invoke-Cleanup {
         #return $true
 }
 
+# stop extraneous processes
 dotnet build-server shutdown
+
+# cleanup all nuget resources
+#dotnet nuget locals --clear all
+
+# remove all bin/obj folders
 Invoke-Cleanup

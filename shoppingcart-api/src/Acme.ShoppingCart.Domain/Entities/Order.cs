@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Acme.ShoppingCart.Domain.Enumerations;
 using Acme.ShoppingCart.UserClient.Models.Responses;
+using Cortside.AspNetCore.Auditable.Entities;
 using Cortside.Common.Validation;
 
 namespace Acme.ShoppingCart.Domain.Entities {

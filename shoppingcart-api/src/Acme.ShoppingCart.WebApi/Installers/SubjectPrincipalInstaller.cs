@@ -1,4 +1,4 @@
-using Cortside.AspNetCore;
+using Cortside.AspNetCore.Auditable;
 using Cortside.Common.BootStrap;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

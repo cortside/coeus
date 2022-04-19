@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Acme.ShoppingCart.Data.Paging;
+using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.Domain.Entities;
+using Cortside.AspNetCore.Common.Paging;
+using Cortside.AspNetCore.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
 namespace Acme.ShoppingCart.Data.Repositories {

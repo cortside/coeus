@@ -10,6 +10,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Cortside.AspNetCore" Version="1.0.6-develop" />
+    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="1.0.6-develop" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="1.0.6-develop" />
+    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="1.0.6-develop" />
     <PackageReference Include="Cortside.Common.BootStrap" Version="1.1.215-develop" />
     <PackageReference Include="Cortside.Common.Correlation" Version="1.1.208" />
     <PackageReference Include="Cortside.Common.Hosting" Version="1.1.208" />
@@ -51,9 +55,6 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Cortside.AspNetCore.ApplicationInsights\Cortside.AspNetCore.ApplicationInsights.csproj" />
-    <ProjectReference Include="..\..\..\Cortside.AspNetCore.Swagger\Cortside.AspNetCore.Swagger.csproj" />
-    <ProjectReference Include="..\..\Cortside.AspNetCore\Cortside.AspNetCore.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.BootStrap\Acme.ShoppingCart.BootStrap.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.CatalogApi\Acme.ShoppingCart.CatalogApi.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.Facade\Acme.ShoppingCart.Facade.csproj" />
