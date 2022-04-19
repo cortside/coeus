@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Acme.ShoppingCart.Configuration;
-using Acme.ShoppingCart.WebApi.Filters;
+using Cortside.AspNetCore.Swagger.Filters;
 using Cortside.Common.BootStrap;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,4 +1,5 @@
 using Acme.ShoppingCart.Domain.Entities;
+using Cortside.AspNetCore.EntityFramework;
 using Cortside.Common.Security;
 using Cortside.DomainEvent.EntityFramework;
 using Microsoft.EntityFrameworkCore;

@@ -102,3 +102,8 @@ OpenAPI is a standard to describe REST APIs and it allows you to declare your AP
 * date only in request/response
 * datetime vs datetimeoffset
 * repository caching (https://codewithmukesh.com/blog/repository-pattern-caching-hangfire-aspnet-core/)
+* uow with strategy support?
+  * example - email with identity column value in email text
+
+
+![Service Tier Responsibilities](docs/ServiceTierResponsibilities.png)

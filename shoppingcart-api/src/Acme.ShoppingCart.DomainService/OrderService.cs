@@ -1,12 +1,13 @@
 using System;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
-using Acme.ShoppingCart.Data.Paging;
 using Acme.ShoppingCart.Data.Repositories;
+using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.Exceptions;
 using Acme.ShoppingCart.UserClient;
+using Cortside.AspNetCore.Common.Paging;
 using Cortside.Common.Validation;
 using Cortside.DomainEvent;
 using Microsoft.Extensions.Logging;

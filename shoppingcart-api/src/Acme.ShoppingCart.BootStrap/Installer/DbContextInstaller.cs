@@ -1,4 +1,5 @@
 using Acme.ShoppingCart.Data;
+using Cortside.AspNetCore.EntityFramework;
 using Cortside.Common.BootStrap;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

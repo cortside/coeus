@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Cortside.AspNetCore.Auditable.Entities;
 
 namespace Acme.ShoppingCart.Domain.Entities {
     public class Address : AuditableEntity {

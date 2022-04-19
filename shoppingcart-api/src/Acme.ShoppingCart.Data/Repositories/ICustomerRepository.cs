@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Acme.ShoppingCart.Data.Paging;
+using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.Domain.Entities;
+using Cortside.AspNetCore.Common.Paging;
 
 namespace Acme.ShoppingCart.Data.Repositories {
     public interface ICustomerRepository : IRepository<Customer> {

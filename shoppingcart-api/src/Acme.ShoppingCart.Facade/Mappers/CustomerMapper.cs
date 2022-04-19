@@ -9,7 +9,7 @@ namespace Acme.ShoppingCart.Facade.Mappers {
             this.subjectMapper = subjectMapper;
         }
 
-        public CustomerDto? MapToDto(Customer entity) {
+        public CustomerDto MapToDto(Customer entity) {
             if (entity == null) {
                 return null;
             }

@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.DomainService;
+using Cortside.AspNetCore.EntityFramework;
 using Moq;
 using Xunit;
 

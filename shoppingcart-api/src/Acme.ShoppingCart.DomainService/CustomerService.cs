@@ -1,10 +1,11 @@
 using System;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
-using Acme.ShoppingCart.Data.Paging;
 using Acme.ShoppingCart.Data.Repositories;
+using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.Dto;
+using Cortside.AspNetCore.Common.Paging;
 using Cortside.DomainEvent;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;

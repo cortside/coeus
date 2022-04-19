@@ -3,7 +3,7 @@ using Acme.ShoppingCart.Dto;
 
 namespace Acme.ShoppingCart.Facade.Mappers {
     public class AddressMapper {
-        public AddressDto? MapToDto(Address entity) {
+        public AddressDto MapToDto(Address entity) {
             if (entity == null) {
                 return null;
             }

@@ -1,11 +1,11 @@
 using System.IO.Compression;
 using System.Linq;
 using Acme.ShoppingCart.BootStrap;
-using Acme.ShoppingCart.WebApi.Filters;
 using Acme.ShoppingCart.WebApi.Installers;
 using Cortside.AspNetCore;
 using Cortside.AspNetCore.ApplicationInsights;
-using Cortside.AspNetCore.Middleware;
+using Cortside.AspNetCore.Auditable.Middleware;
+using Cortside.AspNetCore.Filters;
 using Cortside.Common.BootStrap;
 using Cortside.Common.Correlation;
 using Cortside.Common.Json;
