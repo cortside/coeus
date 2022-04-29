@@ -15,10 +15,10 @@
     <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="1.0.14" />
     <PackageReference Include="Cortside.AspNetCore.Common" Version="1.0.14" />
     <PackageReference Include="Cortside.AspNetCore.Swagger" Version="1.0.14" />
-    <PackageReference Include="Cortside.Common.BootStrap" Version="1.1.220" />
-    <PackageReference Include="Cortside.Common.Correlation" Version="1.1.220" />
-    <PackageReference Include="Cortside.Common.Hosting" Version="1.1.220" />
-    <PackageReference Include="Cortside.Common.Json" Version="1.1.220" />
+    <PackageReference Include="Cortside.Common.BootStrap" Version="1.1.224-develop" />
+    <PackageReference Include="Cortside.Common.Correlation" Version="1.1.224-develop" />
+    <PackageReference Include="Cortside.Common.Hosting" Version="1.1.224-develop" />
+    <PackageReference Include="Cortside.Common.Json" Version="1.1.224-develop" />
     <PackageReference Include="Cortside.Health" Version="1.0.51" />
 
     <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
