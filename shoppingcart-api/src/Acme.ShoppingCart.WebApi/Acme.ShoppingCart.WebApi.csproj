@@ -10,15 +10,15 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Cortside.AspNetCore" Version="1.0.17" />
-    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="1.0.17" />
-    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="1.0.17" />
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="1.0.17" />
-    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="1.0.17" />
-    <PackageReference Include="Cortside.Common.BootStrap" Version="1.1.224-develop" />
-    <PackageReference Include="Cortside.Common.Correlation" Version="1.1.224-develop" />
-    <PackageReference Include="Cortside.Common.Hosting" Version="1.1.224-develop" />
-    <PackageReference Include="Cortside.Common.Json" Version="1.1.224-develop" />
+    <PackageReference Include="Cortside.AspNetCore" Version="1.0.25" />
+    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="1.0.25" />
+    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="1.0.25" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="1.0.25" />
+    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="1.0.25" />
+    <PackageReference Include="Cortside.Common.BootStrap" Version="1.1.226" />
+    <PackageReference Include="Cortside.Common.Correlation" Version="1.1.226" />
+    <PackageReference Include="Cortside.Common.Hosting" Version="1.1.226" />
+    <PackageReference Include="Cortside.Common.Json" Version="1.1.226" />
     <PackageReference Include="Cortside.Health" Version="1.0.51" />
 
     <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
@@ -40,6 +40,7 @@
 <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
 -->
     <PackageReference Include="RestSharp" Version="107.3.0" />
+    <PackageReference Include="Serilog" Version="2.11.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
     <PackageReference Include="Serilog.Bowdlerizer" Version="1.0.19" />
     <PackageReference Include="Serilog.Enrichers.AspNetCore" Version="1.0.0" />
