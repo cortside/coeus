@@ -1,4 +1,4 @@
-﻿using Acme.IdentityServer;
+using Acme.IdentityServer;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()

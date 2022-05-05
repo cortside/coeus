@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using PolicyServer.Mocks.Models;
 using System;
 using WireMock.RequestBuilders;

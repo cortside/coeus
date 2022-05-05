@@ -1,4 +1,4 @@
-﻿using Acme.ShoppingCart.Dto;
+using Acme.ShoppingCart.Dto;
 using Cortside.AspNetCore.Auditable.Entities;
 
 namespace Acme.ShoppingCart.Facade.Mappers {
