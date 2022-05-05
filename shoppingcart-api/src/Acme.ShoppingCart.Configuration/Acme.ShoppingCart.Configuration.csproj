@@ -9,6 +9,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
-    <PackageReference Include="Cortside.RestSharpClient" Version="1.0.12-develop" />
+    <PackageReference Include="Cortside.RestSharpClient" Version="1.0.16" />
   </ItemGroup>
 </Project>

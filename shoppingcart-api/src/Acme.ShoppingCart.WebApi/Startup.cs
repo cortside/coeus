@@ -8,6 +8,7 @@ using Cortside.AspNetCore.AccessControl;
 using Cortside.AspNetCore.ApplicationInsights;
 using Cortside.AspNetCore.Auditable;
 using Cortside.AspNetCore.Auditable.Middleware;
+using Cortside.AspNetCore.Builder;
 using Cortside.AspNetCore.Filters;
 using Cortside.AspNetCore.Swagger;
 using Cortside.Common.Correlation;
@@ -22,7 +23,6 @@ using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -33,7 +33,7 @@ namespace Acme.ShoppingCart.WebApi {
     /// <summary>
     /// Startup
     /// </summary>
-    public class Startup {
+    public class Startup : IWebApiStartup {
         /// <summary>
         /// Startup
         /// </summary>
@@ -42,10 +42,13 @@ namespace Acme.ShoppingCart.WebApi {
             Configuration = configuration;
         }
 
+        public Startup() {
+        }
+
         /// <summary>
         /// Config
         /// </summary>
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; set; }
 
         /// <summary>
         /// Configure Services
@@ -140,10 +143,6 @@ namespace Acme.ShoppingCart.WebApi {
 
             app.UseSwagger("Acme.ShoppingCart Api", provider);
 
-            if (env.IsDevelopment()) {
-                app.UseDeveloperExceptionPage();
-            }
-
             app.UseCors(builder => builder
                 .WithOrigins(Configuration.GetSection("Cors").GetSection("Origins").Get<string[]>())
                 .SetIsOriginAllowedToAllowWildcardSubdomains()
@@ -161,6 +160,10 @@ namespace Acme.ShoppingCart.WebApi {
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
+        }
+
+        public void UseConfiguration(IConfiguration config) {
+            Configuration = config;
         }
     }
 }

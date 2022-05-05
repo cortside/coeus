@@ -8,7 +8,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Cortside.Common.Hosting" Version="1.1.224-develop" />
+    <PackageReference Include="Cortside.Common.Hosting" Version="1.1.226" />
     <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
