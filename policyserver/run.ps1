@@ -1,4 +1,4 @@
-﻿[cmdletBinding()]
+[cmdletBinding()]
 Param()
 
 Push-Location "$PSScriptRoot/src"

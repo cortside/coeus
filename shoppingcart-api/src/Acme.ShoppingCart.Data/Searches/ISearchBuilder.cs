@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 
 namespace Acme.ShoppingCart.Data.Searches {
     public interface ISearchBuilder<T> {

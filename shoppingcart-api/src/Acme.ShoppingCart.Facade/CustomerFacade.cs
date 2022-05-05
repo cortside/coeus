@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.DomainService;

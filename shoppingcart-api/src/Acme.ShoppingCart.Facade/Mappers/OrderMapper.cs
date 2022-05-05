@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.Dto;
 

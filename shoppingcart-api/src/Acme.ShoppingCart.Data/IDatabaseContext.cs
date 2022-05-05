@@ -1,4 +1,4 @@
-﻿using Acme.ShoppingCart.Domain.Entities;
+using Acme.ShoppingCart.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Acme.ShoppingCart.Data {

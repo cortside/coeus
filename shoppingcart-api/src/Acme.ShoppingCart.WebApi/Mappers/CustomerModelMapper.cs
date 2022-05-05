@@ -1,4 +1,4 @@
-﻿using Acme.ShoppingCart.Dto;
+using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.WebApi.Models.Responses;
 
 namespace Acme.ShoppingCart.WebApi.Mappers {
