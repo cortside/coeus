@@ -17,4 +17,13 @@ TODO:
 * authorize controller in aspnetcore --- accesscontrol?
 * someway to get common settings controller that can expose subset of appsettings???
 	* bowdlerized version of appsettings?
+* get master merged into develop of cortside.domainevent
+* domainevent retry handling without transactions
+* default docker image creation in template
+* healthmonitor package like sqlreport-api
+* ids5
+* policyserver mock docker image
+* mocks docker image
+* make sure that migrations work in coeus/template 
+	* recreate initial migration
 
