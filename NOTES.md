@@ -34,6 +34,8 @@ TODO:
 * restsharpclient "requestId" for correlating requests and responses
 * spectrum authenticator 
 * async everything
+* sonarcloud integration for all projects
+* templates project to check dotnet new and build/test results
 
 https://andrewlock.net/exploring-dotnet-6-part-3-exploring-the-code-behind-webapplicationbuilder/
 https://github.com/andrewlock
