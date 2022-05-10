@@ -36,6 +36,8 @@ TODO:
 * async everything
 * sonarcloud integration for all projects
 * templates project to check dotnet new and build/test results
+* add async analyzers to update-nugetpackages.ps1
+	* https://www.nuget.org/packages/Microsoft.VisualStudio.Threading.Analyzers/
 
 https://andrewlock.net/exploring-dotnet-6-part-3-exploring-the-code-behind-webapplicationbuilder/
 https://github.com/andrewlock
