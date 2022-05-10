@@ -39,6 +39,8 @@ TODO:
 * add async analyzers to update-nugetpackages.ps1
 	* https://www.nuget.org/packages/Microsoft.VisualStudio.Threading.Analyzers/
 * if anyone hates powershell like I do and wants to run the nifty create release scripts in bash:
+	* https://docs.microsoft.com/en-us/powershell/scripting/install/install-ubuntu?view=powershell-7.2
+
 	```bash
 	# Update the list of packages
 	sudo apt-get update
