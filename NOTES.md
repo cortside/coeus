@@ -38,6 +38,25 @@ TODO:
 * templates project to check dotnet new and build/test results
 * add async analyzers to update-nugetpackages.ps1
 	* https://www.nuget.org/packages/Microsoft.VisualStudio.Threading.Analyzers/
+* if anyone hates powershell like I do and wants to run the nifty create release scripts in bash:
+	```bash
+	# Update the list of packages
+	sudo apt-get update
+	# Install pre-requisite packages.
+	sudo apt-get install -y wget apt-transport-https software-properties-common
+	# Download the Microsoft repository GPG keys
+	wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
+	# Register the Microsoft repository GPG keys
+	sudo dpkg -i packages-microsoft-prod.deb
+	# Update the list of products
+	sudo apt-get update
+	# Enable the "universe" repositories
+	sudo add-apt-repository universe
+	# Install PowerShell
+	sudo apt-get install -y powershell
+	# Start PowerShell
+	pwsh
+	```
 
 https://andrewlock.net/exploring-dotnet-6-part-3-exploring-the-code-behind-webapplicationbuilder/
 https://github.com/andrewlock
