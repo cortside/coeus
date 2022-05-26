@@ -60,6 +60,11 @@ TODO:
 	pwsh
 	```
 
+REST file api:
+* https://hub.docker.com/r/ugeek/webdav
+* https://github.com/skazantsev/WebDavClient
+* https://github.com/saguiitay/WebDAVClient
+
 https://andrewlock.net/exploring-dotnet-6-part-3-exploring-the-code-behind-webapplicationbuilder/
 https://github.com/andrewlock
 
