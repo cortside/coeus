@@ -59,6 +59,9 @@ TODO:
 	# Start PowerShell
 	pwsh
 	```
+* remove guards from cortside.domainevent
+* add retry to health checks
+* alternate appsettings provider for consul, vault, k8s configmap, k8s secrets, etc
 
 REST file api:
 * https://hub.docker.com/r/ugeek/webdav
