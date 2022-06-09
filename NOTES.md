@@ -5,6 +5,7 @@ TODO:
 * finish up work with restsharpclient
 	* logging
 	* configurable retry
+* extension method to make registering client easier in restsharpclient
 * cortside.aspnetcore.entityframework extension method for db setup with unit of work 
 * extention method for cortside.common.cryptography EncryptionService
 * cortside.aspnetcore extension method for registering types from assembly with name ending in x -- see repositoryinstaller
