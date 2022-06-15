@@ -1,5 +1,5 @@
 using System;
-using Cortside.RestSharpClient.Authenticators.OpenIDConnect;
+using Cortside.RestApiClient.Authenticators.OpenIDConnect;
 
 namespace Acme.ShoppingCart.Configuration {
     public class IdentityServerConfiguration {

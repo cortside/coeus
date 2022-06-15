@@ -1,7 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 using Acme.ShoppingCart.UserClient.Models.Responses;
-using Cortside.RestSharpClient.Authenticators.OpenIDConnect;
+using Cortside.RestApiClient.Authenticators.OpenIDConnect;
 using Newtonsoft.Json;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
