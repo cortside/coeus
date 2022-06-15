@@ -1,12 +1,13 @@
 using System;
 using Acme.ShoppingCart.UserClient.Models.Responses;
+using Cortside.MockServer;
 using Newtonsoft.Json;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
 using WireMock.Server;
 
-namespace Acme.ShoppingCart.WebApi.IntegrationTests.Helpers.Mocks {
-    public class CatalogMock : IWireMockBuilder {
+namespace Acme.ShoppingCart.WebApi.IntegrationTests.Mocks {
+    public class CatalogMock : IMockHttpServerBuilder {
         public void Configure(WireMockServer server) {
             var rnd = new Random();
 

@@ -27,6 +27,8 @@ namespace Acme.ShoppingCart.Facade {
         }
 
         public async Task<CustomerDto> GetCustomerAsync(Guid customerResourceId) {
+            // Using BeginNoTracking on GET endpoints for a single entity so that data is read committed
+            // with assumption that it might be used for changes in future calls
             using (var tx = uow.BeginNoTracking()) {
                 var customer = await customerService.GetCustomerAsync(customerResourceId);
                 return mapper.MapToDto(customer);
@@ -39,6 +41,8 @@ namespace Acme.ShoppingCart.Facade {
         }
 
         public async Task<PagedList<CustomerDto>> SearchCustomersAsync(int pageSize, int pageNumber, string sortParams, CustomerSearch search) {
+            // Using BeginReadUncommittedAsync on GET endpoints that return a list, this will read uncommitted and
+            // as notracking in ef core.  this will result in a non-blocking dirty read, which is accepted best practice for mssql
             using (var tx = await uow.BeginReadUncommitedAsync().ConfigureAwait(false)) {
                 var customers = await customerService.SearchCustomersAsync(pageSize, pageNumber, sortParams, search).ConfigureAwait(false);
 

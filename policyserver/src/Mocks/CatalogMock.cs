@@ -1,3 +1,4 @@
+using Cortside.MockServer;
 using Newtonsoft.Json;
 using PolicyServer.Mocks.Models;
 using System;
@@ -7,7 +8,7 @@ using WireMock.Server;
 
 namespace PolicyServer.Mocks
 {
-    public class CatalogMock : IWireMockBuilder
+    public class CatalogMock : IMockHttpServerBuilder
     {
         public void Configure(WireMockServer server)
         {

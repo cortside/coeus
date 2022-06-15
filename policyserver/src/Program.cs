@@ -1,3 +1,5 @@
+using Cortside.MockServer;
+using Cortside.MockServer.AccessControl;
 using Microsoft.Extensions.Configuration;
 using PolicyServer.Mocks;
 using Serilog;
@@ -5,16 +7,13 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using WireMock.RequestBuilders;
-using WireMock.ResponseBuilders;
-using WireMock.Util;
 
 namespace PolicyServer
 {
     static class Program
     {
         private static int sleepTime = 30000;
-        private static BaseWireMock server;
+        private static MockHttpServer server;
 
         static void Main(string[] args)
         {
@@ -22,29 +21,13 @@ namespace PolicyServer
             SetupLogger(configuration);
             Log.Logger.Debug("WireMock.Net server arguments [{0}]", string.Join(", ", args.Select(a => $"'{a}'")));
 
-            server = new BaseWireMock(Guid.NewGuid().ToString())
-                .ConfigureBuilder<CommonWireMock>()
-                .ConfigureBuilder<IdsMock>()
-                .ConfigureBuilder<SubjectMock>()
+            server = new MockHttpServer(Guid.NewGuid().ToString(), 5001, Log.Logger)
+                .ConfigureBuilder<CommonMock>()
+                .ConfigureBuilder(new IdentityServerMock("./Data/discovery.json", "./Data/jwks.json"))
+                .ConfigureBuilder(new SubjectMock("./Data/subjects.json"))
                 .ConfigureBuilder<CatalogMock>();
 
-            Log.Logger.Debug(server.mockServer.Urls.First());
-
-            server.mockServer.Given(Request.Create().WithPath("/api/sap")
-                .UsingPost()
-                .WithBody((IBodyData xmlData) =>
-                {
-                    //xmlData is always null
-                    return true;
-                }))
-                .RespondWith(Response.Create().WithStatusCode(System.Net.HttpStatusCode.OK));
-
-            server.mockServer
-                .Given(Request.Create()
-                    .UsingAnyMethod())
-                .RespondWith(Response.Create()
-                    .WithTransformer()
-                    .WithBody("{{Random Type=\"Integer\" Min=100 Max=999999}} {{DateTime.Now}} {{DateTime.Now \"yyyy-MMM\"}} {{String.Format (DateTime.Now) \"MMM-dd\"}}"));
+            Log.Logger.Debug($"Server is listening at {server.Url}");
 
             Console.WriteLine($"{DateTime.UtcNow} Press Ctrl+C to shut down");
             Console.CancelKeyPress += (s, e) =>
@@ -91,9 +74,9 @@ namespace PolicyServer
 
         private static void Stop(string why)
         {
-            Console.WriteLine($"{DateTime.UtcNow} WireMock.Net server stopping because '{why}'");
-            server.mockServer.Stop();
-            Console.WriteLine($"{DateTime.UtcNow} WireMock.Net server stopped");
+            Console.WriteLine($"{DateTime.UtcNow} Server stopping because '{why}'");
+            server.Stop();
+            Console.WriteLine($"{DateTime.UtcNow} Server stopped");
         }
     }
 }
