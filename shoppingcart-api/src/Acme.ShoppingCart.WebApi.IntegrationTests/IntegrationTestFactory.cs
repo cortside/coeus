@@ -4,11 +4,12 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Acme.ShoppingCart.Data;
-using Acme.ShoppingCart.WebApi.IntegrationTests.Helpers;
-using Acme.ShoppingCart.WebApi.IntegrationTests.Helpers.Mocks;
-using Acme.ShoppingCart.WebApi.IntegrationTests.Helpers.Mocks.Models;
+using Acme.ShoppingCart.WebApi.IntegrationTests.Mocks;
 using Cortside.DomainEvent;
 using Cortside.DomainEvent.Stub;
+using Cortside.MockServer;
+using Cortside.MockServer.AccessControl;
+using Cortside.MockServer.AccessControl.Models;
 using Medallion.Threading;
 using Medallion.Threading.FileSystem;
 using Microsoft.AspNetCore.Hosting;
@@ -28,54 +29,54 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
         public static string WireMockUrl { get; set; }
         public static string RoutePrefix { get; set; }
         public static bool IsStarted { get; set; } = false;
-        public static BaseWireMock Server { get; set; }
+        public static MockHttpServer Server { get; set; }
     }
 
     public class IntegrationTestFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class {
         private readonly string dbName = Guid.NewGuid().ToString();
         private Subjects subjects;
-        public BaseWireMock WireMockServer { get; private set; }
+        public MockHttpServer Server { get; private set; }
         private IConfiguration Configuration { get; set; }
 
         protected override IHostBuilder CreateHostBuilder() {
             SetupConfiguration();
             SetupLogger();
 
-            WireMockServer = new BaseWireMock(dbName)
-                .ConfigureBuilder<CommonWireMock>()
-                .ConfigureBuilder<IdsMock>()
-                .ConfigureBuilder<SubjectMock>()
+            Server = new MockHttpServer(dbName)
+                .ConfigureBuilder<CommonMock>()
+                .ConfigureBuilder(new IdentityServerMock("./Data/discovery.json", "./Data/jwks.json"))
+                .ConfigureBuilder(new SubjectMock("./Data/subjects.json"))
                 .ConfigureBuilder<CatalogMock>();
 
             var section = Configuration.GetSection("HealthCheckHostedService");
-            section["Checks:1:Value"] = $"{WireMockServer.WireMockUrl}/api/health";
-            section["Checks:2:Value"] = $"{WireMockServer.WireMockUrl}/api/health";
-            section["Checks:4:Value"] = $"{WireMockServer.WireMockUrl}/api/health";
+            section["Checks:1:Value"] = $"{Server.Url}/api/health";
+            section["Checks:2:Value"] = $"{Server.Url}/api/health";
+            section["Checks:4:Value"] = $"{Server.Url}/api/health";
 
             var authConfig = Configuration.GetSection("IdentityServer");
-            authConfig["Authority"] = WireMockServer.WireMockUrl;
-            authConfig["BaseUrl"] = $"{WireMockServer.WireMockUrl}/connect/token";
+            authConfig["Authority"] = Server.Url;
+            authConfig["BaseUrl"] = $"{Server.Url}/connect/token";
             authConfig["RequireHttpsMetadata"] = "false";
 
             var policyServerConfig = Configuration.GetSection("PolicyServer");
             var policyserverTokenClient = policyServerConfig.GetSection("TokenClient");
-            policyserverTokenClient["Authority"] = WireMockServer.WireMockUrl;
-            policyServerConfig["PolicyServerUrl"] = WireMockServer.WireMockUrl;
+            policyserverTokenClient["Authority"] = Server.Url;
+            policyServerConfig["PolicyServerUrl"] = Server.Url;
 
             var distributedLockConfig = Configuration.GetSection("DistributedLock");
             distributedLockConfig["UseRedisLockProvider"] = "false";
 
             var loanservicingConfig = Configuration.GetSection("LoanServicingApi");
-            loanservicingConfig["BaseUrl"] = WireMockServer.WireMockUrl;
+            loanservicingConfig["BaseUrl"] = Server.Url;
             var loanservicingAuthConfig = loanservicingConfig.GetSection("Authentication");
-            loanservicingAuthConfig["Url"] = $"{WireMockServer.WireMockUrl}/connect/token";
+            loanservicingAuthConfig["Url"] = $"{Server.Url}/connect/token";
 
             var userConfig = Configuration.GetSection("CatalogApi");
-            userConfig["ServiceUrl"] = $"{WireMockServer.WireMockUrl}";
+            userConfig["ServiceUrl"] = $"{Server.Url}";
             var userAuthConfig = userConfig.GetSection("Authentication");
-            userAuthConfig["Url"] = $"{WireMockServer.WireMockUrl}/connect/token";
+            userAuthConfig["Url"] = $"{Server.Url}/connect/token";
 
-            WireMockServer.WaitForStart();
+            Server.WaitForStart();
 
             return Host.CreateDefaultBuilder()
                 .ConfigureAppConfiguration(builder => builder.AddConfiguration(Configuration))
@@ -203,14 +204,14 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
 
         public HttpClient CreateAuthorizedClient(string clientId) {
             var client = CreateDefaultClient();
-            subjects ??= JsonConvert.DeserializeObject<Subjects>(File.ReadAllText("./Helpers/Mocks/subjects.json"));
+            subjects ??= JsonConvert.DeserializeObject<Subjects>(File.ReadAllText("./Data/subjects.json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", subjects.SubjectsList.First(s => s.ClientId == clientId).ReferenceToken);
             return client;
         }
 
         public HttpClient CreateCustomAuthorizedClient(Uri uri, string clientId) {
             var client = CreateDefaultClient(uri);
-            subjects ??= JsonConvert.DeserializeObject<Subjects>(File.ReadAllText("./Helpers/Mocks/subjects.json"));
+            subjects ??= JsonConvert.DeserializeObject<Subjects>(File.ReadAllText("./Data/subjects.json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", subjects.SubjectsList.First(s => s.ClientId == clientId).ReferenceToken);
             return client;
         }
