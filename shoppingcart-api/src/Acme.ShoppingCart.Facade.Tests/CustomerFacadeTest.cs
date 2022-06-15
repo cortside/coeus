@@ -8,7 +8,7 @@ using Xunit;
 namespace Acme.ShoppingCart.Facade.Tests {
     public class CustomerFacadeTest {
         [Fact]
-        public async Task ShouldGetCustomer() {
+        public async Task ShouldGetCustomerAsync() {
             // arrange
             var uow = new Mock<IUnitOfWork>();
             var customerService = new Mock<ICustomerService>();

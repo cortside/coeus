@@ -3,12 +3,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.UserClient.Models.Responses;
 using Acme.ShoppingCart.UserClient.Tests.Mock;
-using Cortside.RestSharpClient.Authenticators.OpenIDConnect;
+using Cortside.RestApiClient;
+using Cortside.RestApiClient.Authenticators.OpenIDConnect;
 using FluentAssertions;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using RestSharp;
 using RichardSzalay.MockHttp;
 using Xunit;
 
@@ -60,9 +63,12 @@ namespace Acme.ShoppingCart.UserClient.Tests {
             mockHttp.When($"{url}/api/v1/items/*")
                     .Respond("application/json", json);
 
-            var options = new RestClientOptions {
+            var options = new RestApiClientOptions {
                 BaseUrl = new Uri(url),
-                ConfigureMessageHandler = _ => mockHttp
+                ConfigureMessageHandler = _ => mockHttp,
+                //Authenticator = new OpenIDConnectAuthenticator(userClientConfiguration.Authentication),
+                Serializer = new JsonNetSerializer(),
+                Cache = new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions()))
             };
             var client = new CatalogClient(config, new Logger<CatalogClient>(new NullLoggerFactory()), options);
 
