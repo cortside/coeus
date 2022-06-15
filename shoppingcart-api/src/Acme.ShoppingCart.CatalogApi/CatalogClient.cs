@@ -2,8 +2,8 @@ using System;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Exceptions;
 using Acme.ShoppingCart.UserClient.Models.Responses;
-using Cortside.RestSharpClient;
-using Cortside.RestSharpClient.Authenticators.OpenIDConnect;
+using Cortside.RestApiClient;
+using Cortside.RestApiClient.Authenticators.OpenIDConnect;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -12,34 +12,31 @@ using RestSharp;
 
 namespace Acme.ShoppingCart.UserClient {
     public class CatalogClient : IDisposable, ICatalogClient {
-        private readonly RestSharpClient client;
+        private readonly RestApiClient client;
         private readonly ILogger<CatalogClient> logger;
 
         public CatalogClient(CatalogClientConfiguration userClientConfiguration, ILogger<CatalogClient> logger) {
             this.logger = logger;
-            var options = new RestClientOptions {
+            var options = new RestApiClientOptions {
                 BaseUrl = new Uri(userClientConfiguration.ServiceUrl),
-                FollowRedirects = true
-            };
-            client = new RestSharpClient(options, logger) {
+                FollowRedirects = true,
                 Authenticator = new OpenIDConnectAuthenticator(userClientConfiguration.Authentication),
                 Serializer = new JsonNetSerializer(),
                 Cache = new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions()))
+            };
+            client = new RestApiClient(logger, options) {
             };
         }
 
-        public CatalogClient(CatalogClientConfiguration userClientConfiguration, ILogger<CatalogClient> logger, RestClientOptions options) {
+        public CatalogClient(CatalogClientConfiguration userClientConfiguration, ILogger<CatalogClient> logger, RestApiClientOptions options) {
             this.logger = logger;
-            client = new RestSharpClient(options, logger) {
-                Authenticator = new OpenIDConnectAuthenticator(userClientConfiguration.Authentication),
-                Serializer = new JsonNetSerializer(),
-                Cache = new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions()))
+            client = new RestApiClient(logger, options) {
             };
         }
 
         public async Task<CatalogItem> GetItemAsync(string sku) {
             logger.LogInformation("Getting item by sku: {sku}", sku);
-            RestRequest request = new RestRequest($"api/v1/items/{sku}", Method.Get);
+            RestApiRequest request = new RestApiRequest($"api/v1/items/{sku}", Method.Get);
             try {
                 var response = await client.GetAsync<CatalogItem>(request).ConfigureAwait(false);
                 return response.Data;
