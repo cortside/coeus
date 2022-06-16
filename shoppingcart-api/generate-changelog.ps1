@@ -4,7 +4,7 @@ $currentVersion = $a.version
 
 # TODO: find current version in file if it exists and truncate to the end
 
-$commits = (git --no-pager log --pretty=format:'| %h | <span style="white-space:nowrap;">%ad</span> | <span style="white-space:nowrap;">%aN</span> | %d %s' --date=short master.. | tac)
+$commits = (git --no-pager log --pretty=format:'| %h | <span style="white-space:nowrap;">%ad</span> | <span style="white-space:nowrap;">%aN</span> | %d %s' --date=short master.. --reverse)
 
 "" | Out-File CHANGELOG.md -Encoding utf8 -Append
 "# Release $currentVersion" | Out-File CHANGELOG.md -Encoding utf8 -Append
