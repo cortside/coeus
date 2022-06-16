@@ -6,17 +6,16 @@ Param
 	[Parameter(Mandatory = $false)][string]$password = "",
 	[Parameter(Mandatory = $false)][string]$ConnectionString = "",
 	[Parameter(Mandatory = $false)][switch]$UseIntegratedSecurity,
-	[Parameter(Mandatory = $false)][switch]$CreateDatabase
+	[Parameter(Mandatory = $false)][switch]$CreateDatabase,
+	[Parameter(Mandatory = $false)][switch]$RebuildDatabase
 )
 
 $ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';
 
-
 try {
 	# ErrorAction must be Stop in order to trigger catch
 	Import-Module SqlServer -ErrorAction Stop
-}
-catch {
+} catch {
 	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 	Install-PackageProvider -Name NuGet -Force
 	Install-Module -Name SqlServer -AllowClobber -Force
@@ -33,21 +32,31 @@ if ($ConnectionString) {
 	if (!($UseIntegratedSecurity.IsPresent)) {
 		$conn.TryGetValue('User ID', [ref]$username)
 		$conn.TryGetValue('Password', [ref]$password)
-	}
- else {
+	} else {
 		Write-Output "using integrated security"
 	}
 }
 
-if ($CreateDatabase.IsPresent) {
-	Write-Output "Creating database..."
+if ($RebuildDatabase.IsPresent) {
+	Write-Output "Rebuilding database..."
 	if ($username -eq "") {
-		invoke-sqlcmd -Server "$server" -Query "CREATE database $database"
-	}
- else {
+		invoke-sqlcmd -Server "$server" -Query "IF EXISTS(SELECT * FROM sys.databases WHERE name = '$database') BEGIN alter database [$database] set single_user with rollback immediate; DROP database [$database] END"
+	} else {
 		$secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
 		$creds = New-Object System.Management.Automation.PSCredential ($username, $secpasswd)
-		invoke-sqlcmd -Credential $creds -Server $server -Query "CREATE database $database"
+		invoke-sqlcmd -Credential $creds -Server $server -Query "IF EXISTS(SELECT * FROM sys.databases WHERE name = '$database') BEGIN alter database [$database] set single_user with rollback immediate; DROP database [$database] END"
+	}
+}
+
+
+if ($CreateDatabase.IsPresent -OR $RebuildDatabase.IsPresent) {
+	Write-Output "Creating database..."
+	if ($username -eq "") {
+		invoke-sqlcmd -Server "$server" -Query "IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = '$database') BEGIN CREATE database [$database] END"
+	} else {
+		$secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
+		$creds = New-Object System.Management.Automation.PSCredential ($username, $secpasswd)
+		invoke-sqlcmd -Credential $creds -Server $server -Query "IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = '$database') BEGIN CREATE database [$database] END"
 	}
 }
 
@@ -55,28 +64,51 @@ echo "update database..."
 
 
 $scripts = @()
-# gci -Recurse @(".\src\sql\migration\*.sql") | % {
-	# $scripts += $_.FullName
-# }
-gci -Recurse @(".\src\sql\table\*.sql") | % {
-	$scripts += $_.FullName
+if (Test-Path -path ".\src\sql\types\*.sql") {
+	gci -Recurse @(".\src\sql\types\*.sql") | % {
+		$scripts += $_.FullName
+	}
 }
-gci -Recurse @(".\src\sql\data\*.sql") | % {
-	$scripts += $_.FullName
+if (Test-Path -path ".\src\sql\migration\*.sql") {
+	gci -Recurse @(".\src\sql\migration\*.sql") | % {
+		$scripts += $_.FullName
+	}
 }
-gci -Recurse @(".\src\sql\proc\*.sql") | % {
-	$scripts += $_.FullName
+if (Test-Path -path ".\src\sql\table\*.sql") {
+	gci -Recurse @(".\src\sql\table\*.sql") | % {
+		$scripts += $_.FullName
+	}
 }
-gci -Recurse @(".\src\sql\trigger\*.sql") | % {
-	$scripts += $_.FullName
+if (Test-Path -path ".\src\sql\function\*.sql") {
+	gci -Recurse @(".\src\sql\function\*.sql") | % {
+		$scripts += $_.FullName
+	}
 }
-# gci -Recurse @(".\src\sql\view\*.sql") | % {
-	# $scripts += $_.FullName
-# }
-#gci -Recurse @(".\src\sql\release\*.sql") | % {
-#	$scripts += $_.FullName
-#}
-
+if (Test-Path -path ".\src\sql\proc\*.sql") {
+	gci -Recurse @(".\src\sql\proc\*.sql") | % {
+		$scripts += $_.FullName
+	}
+}
+if (Test-Path -path ".\src\sql\trigger\*.sql") {
+	gci -Recurse @(".\src\sql\trigger\*.sql") | % {
+		$scripts += $_.FullName
+	}
+}
+if (Test-Path -path ".\src\sql\view\*.sql") {
+	gci -Recurse @(".\src\sql\view\*.sql") | % {
+		$scripts += $_.FullName
+	}
+}
+if (Test-Path -path ".\src\sql\data\*.sql") {
+	gci -Recurse @(".\src\sql\data\*.sql") | % {
+		$scripts += $_.FullName
+	}
+}
+if (Test-Path -path ".\src\sql\release\*.sql") {
+	gci -Recurse @(".\src\sql\release\*.sql") | % {
+		$scripts += $_.FullName
+	}
+}
 
 echo "Server: $Server"
 echo "Database: $database"
@@ -88,8 +120,7 @@ foreach ($script in $scripts) {
 	
 	if ($username -eq "") {
 		invoke-sqlcmd -Server "$server" -Database $database -inputFile "$script" | Out-File -FilePath "$log"
-	}
- else {
+	} else {
 		$secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
 		$creds = New-Object System.Management.Automation.PSCredential ($username, $secpasswd)
 		
