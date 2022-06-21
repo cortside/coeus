@@ -1,5 +1,6 @@
 TODO:
 
+* policyserver returns json with UpperCamelCase property names, can we have it as camelCase?
 * extension methods in cortside.health for services setup
 * extension methods in cortisde.domainevent for services setup
 * finish up work with restsharpclient
