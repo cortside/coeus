@@ -11,3 +11,10 @@
 
 * shoppingcart-api
   * https://github.com/cortside/cortside.templates
+
+* shoppingcart-web
+
+## Getting started
+1. Run policyserver 
+1. Run shoppingcart-api
+1. Run shoppingcart-web
