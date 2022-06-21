@@ -33,6 +33,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
     }
 
     public class IntegrationTestFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class {
+        // dbname is created outside of the options so that it's constant and not reevaluated at instance creation time
         private readonly string dbName = Guid.NewGuid().ToString();
         private Subjects subjects;
         public MockHttpServer Server { get; private set; }
