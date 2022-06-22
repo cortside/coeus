@@ -25,7 +25,13 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.png",
-              "src/assets"
+              "src/assets",
+              "src/config.json",
+              {
+                  "glob": "config.*.json",
+                  "input": "src/",
+                  "output": "/"
+              }
             ],
             "styles": [
               "src/styles.scss"
@@ -93,7 +99,13 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.png",
-              "src/assets"
+              "src/assets",
+              "src/config.json",
+              {
+                  "glob": "config.*.json",
+                  "input": "src/",
+                  "output": "/"
+              }
             ],
             "styles": [
               "src/styles.scss"

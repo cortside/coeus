@@ -13,6 +13,7 @@
 	// - `*`:  Matches any string, may only be used once per child pattern
 	"explorer.fileNesting.patterns": {
         "*.component.ts": "${capture}.component.html, ${capture}.component.scss, ${capture}.component.spec.ts, ${capture}.component.ts",
+        "config.json": "config.json, config.*.json",
 		"tsconfig.json": "tsconfig.*.json",
 		"package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml"
 	}
