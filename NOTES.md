@@ -1,16 +1,11 @@
 TODO:
 
-* policyserver returns json with UpperCamelCase property names, can we have it as camelCase?
 * extension methods in cortside.health for services setup
 * extension methods in cortisde.domainevent for services setup
-* finish up work with restsharpclient
-	* logging
-	* configurable retry
 * extension method to make registering client easier in restsharpclient
 * cortside.aspnetcore.entityframework extension method for db setup with unit of work 
 * extention method for cortside.common.cryptography EncryptionService
 * cortside.aspnetcore extension method for registering types from assembly with name ending in x -- see repositoryinstaller
-* update program to use webapi builder
 * add services registration to webapi builder
 * add configure to webapi builder
 * integration test base classes/helpers/utilities in new aspnetcore package
@@ -20,7 +15,6 @@ TODO:
 * authorize controller in aspnetcore --- accesscontrol?
 * someway to get common settings controller that can expose subset of appsettings???
 	* bowdlerized version of appsettings?
-* get master merged into develop of cortside.domainevent
 * domainevent retry handling without transactions
 * default docker image creation in template
 * healthmonitor package like sqlreport-api
@@ -33,13 +27,10 @@ TODO:
 * review net5 to net6 change suggestions
 * system test using docker images
 * https://github.com/cortside/serilog.bowdlerizer/issues/4
-* restsharpclient "requestId" for correlating requests and responses
 * spectrum authenticator 
 * async everything
 * sonarcloud integration for all projects
 * templates project to check dotnet new and build/test results
-* add async analyzers to update-nugetpackages.ps1
-	* https://www.nuget.org/packages/Microsoft.VisualStudio.Threading.Analyzers/
 * if anyone hates powershell like I do and wants to run the nifty create release scripts in bash:
 	* https://docs.microsoft.com/en-us/powershell/scripting/install/install-ubuntu?view=powershell-7.2
 
@@ -61,9 +52,15 @@ TODO:
 	# Start PowerShell
 	pwsh
 	```
-* remove guards from cortside.domainevent
 * add retry to health checks
 * alternate appsettings provider for consul, vault, k8s configmap, k8s secrets, etc
+	* https://dev.to/engincanv/usage-of-consul-in-net-core-configuration-management-39h5
+	* https://github.com/wintoncode/Winton.Extensions.Configuration.Consul
+	* https://anthonychu.ca/post/aspnet-core-appsettings-secrets-kubernetes/
+	* https://github.com/mrjamiebowman-blog/kubernetes-tutorial-configmap/tree/main/KubernetesTutorial
+	* https://www.mrjamiebowman.com/software-development/dotnet/kubernetes-configmaps-with-net-core/
+	* https://github.com/anthonychu/aspnet-core-secrets-kubernetes/
+	
 
 REST file api:
 * https://hub.docker.com/r/ugeek/webdav
@@ -79,3 +76,18 @@ https://docs.microsoft.com/en-us/aspnet/core/migration/50-to-60-samples?view=asp
 https://docs.microsoft.com/en-us/aspnet/core/migration/50-to-60?view=aspnetcore-6.0&tabs=visual-studio#use-startup-with-the-new-minimal-hosting-model
 https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new-install
 https://blog.markvincze.com/overriding-configuration-in-asp-net-core-integration-tests/
+
+
+
+TODONE:
+
+* policyserver returns json with UpperCamelCase property names, can we have it as camelCase?
+* finish up work with restsharpclient
+	* logging
+	* configurable retry
+* update program to use webapi builder
+* get master merged into develop of cortside.domainevent
+* restsharpclient "requestId" for correlating requests and responses
+* add async analyzers to update-nugetpackages.ps1
+	* https://www.nuget.org/packages/Microsoft.VisualStudio.Threading.Analyzers/
+* remove guards from cortside.domainevent
