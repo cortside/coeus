@@ -1,12 +1,16 @@
-using Cortside.MockServer;
-using Cortside.MockServer.AccessControl;
-using Microsoft.Extensions.Configuration;
-using PolicyServer.Mocks;
-using Serilog;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using Cortside.Common.Json;
+using Cortside.MockServer;
+using Cortside.MockServer.AccessControl;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
+using PolicyServer.Mocks;
+using Serilog;
 
 namespace PolicyServer
 {
@@ -20,6 +24,27 @@ namespace PolicyServer
             IConfigurationRoot configuration = SetupConfiguration();
             SetupLogger(configuration);
             Log.Logger.Debug("WireMock.Net server arguments [{0}]", string.Join(", ", args.Select(a => $"'{a}'")));
+
+            JsonConvert.DefaultSettings = () =>
+            {
+                var settings = new JsonSerializerSettings();
+                settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                settings.MissingMemberHandling = MissingMemberHandling.Ignore;
+                settings.NullValueHandling = NullValueHandling.Include;
+                settings.DefaultValueHandling = DefaultValueHandling.Include;
+                settings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
+                settings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
+                settings.DateParseHandling = DateParseHandling.DateTimeOffset;
+                settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                settings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy()));
+                settings.Converters.Add(new IsoTimeSpanConverter());
+                settings.Converters.Add(new IsoDateTimeConverter
+                {
+                    DateTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
+                });
+
+                return settings;
+            };
 
             server = new MockHttpServer(Guid.NewGuid().ToString(), 5001, Log.Logger)
                 .ConfigureBuilder<CommonMock>()
