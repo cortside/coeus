@@ -26,3 +26,4 @@
 -   [ ] commands
 -   [ ] build
 -   [ ] error handling
+-   [ ] bootstrap failure
