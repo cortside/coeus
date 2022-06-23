@@ -15,8 +15,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Cortside.AspNetCore.Auditable" Version="1.0.33" />
-    <PackageReference Include="Cortside.Common.Validation" Version="1.1.226" />
+    <PackageReference Include="Cortside.AspNetCore.Auditable" Version="1.0.45-usecustomsubject" />
+    <PackageReference Include="Cortside.Common.Validation" Version="1.1.231" />
     <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.2.32">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
