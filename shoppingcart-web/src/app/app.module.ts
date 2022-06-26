@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AuthModule } from './auth/auth.module';
 import { ItemModule } from './item/item.module';
 import { OrderModule } from './order/order.module';
 
@@ -14,10 +15,10 @@ import { OrderModule } from './order/order.module';
   imports: [
     BrowserModule,
     HttpClientModule,
+    AuthModule,
 
     // features
     ItemModule,
-    OrderModule,
 
     // route
     AppRoutingModule
