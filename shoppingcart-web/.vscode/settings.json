@@ -1,6 +1,6 @@
 {
     // Controls whether file nesting is enabled in the explorer. File nesting allows for related files in a directory to be visually grouped together under a single parent file.
-	"explorer.fileNesting.enabled": true,
+	"explorer.fileNesting.enabled": false,
 
 	// Controls whether file nests are automatically expanded. `explorer.fileNesting.enabled` must be set for this to take effect.
 	"explorer.fileNesting.expand": true,
