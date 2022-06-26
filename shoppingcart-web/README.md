@@ -3,14 +3,14 @@
 ## Todo
 
 -   [ ] css framework
--   [ ] support local configuration
+-   [x] local configuration
+-   [ ] module configuration
 -   [ ] api client
 -   [ ] logging
 -   [ ] path setup
 -   [ ] formatting
 -   [ ] schematics
 -   [ ] cypress
--   [ ] module configuration
 -   [ ] analytics
 -   [ ] authentication
 -   [ ] authorization
@@ -22,7 +22,7 @@
 -   [ ] loading behavior
 -   [ ] css, responsiveness
 -   [ ] health
--   [ ] lazy module
+-   [x] lazy module
 -   [ ] commands
 -   [ ] build
 -   [ ] error handling
