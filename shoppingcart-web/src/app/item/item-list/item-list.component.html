@@ -1,5 +1,7 @@
 <h1>Catalog items</h1>
 
-<div>
-    {{items$ | async | json}}
+<div *ngIf="(items$ | async) as items">
+    <div *ngFor="let item of items.results">
+        {{item | json}}
+    </div>
 </div>
