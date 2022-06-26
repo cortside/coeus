@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ItemModule } from './item/item.module';
+import { OrderModule } from './order/order.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { ItemModule } from './item/item.module';
 
     // features
     ItemModule,
+    OrderModule,
 
     // route
     AppRoutingModule
