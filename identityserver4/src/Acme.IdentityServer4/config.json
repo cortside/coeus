@@ -1,0 +1,39 @@
+﻿{
+    "ConnectionStrings": {
+        "AuthConnString": "Server=localhost;Database=identityserver;integrated security=True;MultipleActiveResultSets=true;"
+    },
+    "publicOrigin": "http://localhost:5004",
+    "ServiceBus": {
+        "Protocol": "amqps",
+        "Namespace": "enerbank-test.servicebus.windows.net",
+        "Policy": "SendListen",
+        "Key": "6dWxFg7nTPyrjoK6eFJ0gGlLzg8O1RiPUihohRDxOrY=",
+        "AppName": "identityserver.receiver",
+        "Queue": "identityserver.queue",
+        "Exchange": "identityserver."
+    },
+    "forgotPasswordAddress": "",
+    "authentication": {
+        "authority": "http://localhost:5004",
+        "apiResource": "identity",
+        "apiResourceSecret": "secret",
+        "requireHttpsMetadata": false
+    },
+    "azureActiveDirectory": {
+        "authority": "https://login.microsoftonline.com/common",
+        "clientId": "d0abb606-ebd5-4939-903f-f2c702ff40b0"
+    },
+    "RestrictedEmailDomains": [
+        "enerbank.com",
+        "enerbankusa.com"
+    ],
+    "GoogleRecaptchaV3": {
+        "ApiUrl": "https://www.google.com/recaptcha/api/siteverify"
+    },
+    "HtmlTemplateLocation": "./Static/HtmlTemplates/",
+    "ClientSecretRequest": {
+        "ExpirationInHours": "24",
+        "VerificationExpirationInMinutes": "15",
+        "VerificationAttempts": "3"
+    }
+}

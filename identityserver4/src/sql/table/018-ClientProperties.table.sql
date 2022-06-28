@@ -1,0 +1,36 @@
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'auth' AND TABLE_NAME = 'ClientProperties')
+CREATE TABLE [auth].[ClientProperties](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ClientId] [int] NOT NULL,
+	[Key] [nvarchar](200) NOT NULL,
+	[Value] [nvarchar](200) NULL,
+ CONSTRAINT [PK_ClientProperties] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE [name] = 'IX_ClientProperties_ClientId' AND object_id = OBJECT_ID(N'[auth].[ClientProperties]'))
+CREATE NONCLUSTERED INDEX [IX_ClientProperties_ClientId] ON [auth].[ClientProperties]
+(
+	[ClientId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS Tab WHERE CONSTRAINT_SCHEMA = N'AUTH' and 
+TABLE_NAME = N'ClientProperties' and CONSTRAINT_Name = N'FK_ClientProperties_Clients_ClientId' and CONSTRAINT_TYPE = N'FOREIGN KEY')
+ALTER TABLE [auth].[ClientProperties]  WITH CHECK ADD  CONSTRAINT [FK_ClientProperties_Clients_ClientId] FOREIGN KEY([ClientId])
+REFERENCES [auth].[Clients] ([Id])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [auth].[ClientProperties] CHECK CONSTRAINT [FK_ClientProperties_Clients_ClientId]
+GO
+

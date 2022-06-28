@@ -1,0 +1,49 @@
+---- OD-10262 Enforce Uniqueness for Clients in Identity Server
+
+---- Ensure the guids from the User table aren't being used in the ClientClaims table
+--IF OBJECT_ID('AUTH.CheckGuidIsNotUsedByClient', 'FN') IS NULL
+--BEGIN
+--EXEC(N'
+--		CREATE FUNCTION AUTH.CheckGuidIsNotUsedByClient (@guid nvarchar(36))
+--		RETURNS bit
+--		AS 
+--		BEGIN
+--			IF NOT EXISTS (SELECT TOP 1 CC.[Value] FROM [AUTH].[ClientClaims] CC WHERE CC.[Type] = ''sub'' AND CC.[Value] = @guid)
+--				RETURN 1
+--			RETURN 0
+--		END
+--	')
+--END
+--GO
+
+--IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS WHERE CONSTRAINT_NAME='CK_User_GuidNotUsedBy_ClientClaims')
+--BEGIN
+--	ALTER TABLE [AUTH].[User]
+--	ADD CONSTRAINT CK_User_GuidNotUsedBy_ClientClaims
+--	CHECK (AUTH.CheckGuidIsNotUsedByClient([UserId]) = 1)
+--END
+--GO
+
+---- Ensure the guids from the ClientClaims table aren't being used in the User table
+--IF OBJECT_ID('AUTH.CheckGuidIsNotUsedByUser', 'FN') IS NULL
+--BEGIN
+--EXEC(N'
+--		CREATE OR ALTER FUNCTION AUTH.CheckGuidIsNotUsedByUser (@guid nvarchar(36))
+--		RETURNS bit
+--		AS 
+--		BEGIN
+--			IF NOT EXISTS (SELECT TOP 1 U.[UserId] FROM [AUTH].[User] U WHERE CAST(U.[UserId] as nvarchar(36)) = @guid)
+--				RETURN 1
+--			RETURN 0
+--		END
+--	')
+--END
+--GO
+
+--IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS WHERE CONSTRAINT_NAME='CK_ClientClaims_GuidNotUsedBy_User')
+--BEGIN
+--	ALTER TABLE [AUTH].[ClientClaims]
+--	ADD CONSTRAINT CK_ClientClaims_GuidNotUsedBy_User
+--	CHECK ([Type] != 'sub' OR AUTH.CheckGuidIsNotUsedByUser([Value]) = 1)
+--END
+--GO

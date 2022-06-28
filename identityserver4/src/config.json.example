@@ -1,0 +1,9 @@
+{
+    "ConnectionStrings": {
+        "AuthConnString": "Server=localhost;Database=identityserver;Trusted_Connection=True;MultipleActiveResultSets=true"
+    },
+    "authentication": {
+        "authority": "http://localhost:5000"
+    },
+    "defaultUrl": "http://localhost:5000"
+}
