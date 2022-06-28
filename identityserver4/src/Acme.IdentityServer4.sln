@@ -1,9 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30011.22
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32602.201
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{61219453-ED80-4CC7-BEC6-781679E5300E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F4979FB-110E-4C9E-AD4C-2A6469893634}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -11,17 +9,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		version.json = version.json
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{67DD0020-6054-45C9-9E1F-09AC64B0636B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.IdentityServer4", "Acme.IdentityServer4\Acme.IdentityServer4.csproj", "{EB557693-3917-4902-A76C-325239C8F3B8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cortside.IdentityServer.WebApi", "Cortside.IdentityServer.WebApi\Cortside.IdentityServer.WebApi.csproj", "{D8F76830-757F-4767-BDC3-748A58AB40F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.IdentityServer4.IntegrationTests", "Acme.IdentityServer4.IntegrationTests\Acme.IdentityServer4.IntegrationTests.csproj", "{28CCD4EE-EF31-42FE-A7B9-CD3AEB5B1E13}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cortside.IdentityServer.WebApi.Tests", "Cortside.IdentityServer.WebApi.Tests\Cortside.IdentityServer.WebApi.Tests.csproj", "{7C20C065-CBED-4D0F-9E82-34F68BBABC8D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cortside.IdentityServer.WebApi.IntegrationTests", "Cortside.IdentityServer.WebApi.IntegrationTests\Cortside.IdentityServer.WebApi.IntegrationTests.csproj", "{4AE8F243-FAFA-463B-8BA7-AD855C71B078}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cortside.IdentityServer.Exceptions", "Cortside.IdentityServer.Exceptions\Cortside.IdentityServer.Exceptions.csproj", "{D032451C-D1EB-43E7-AD4C-09A5E3ADF34D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cortside.DomainEvent.Events", "Cortside.DomainEvent.Events\Cortside.DomainEvent.Events.csproj", "{031BF4DC-8D8B-4ED5-9554-D893EAB4F330}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.IdentityServer4.Tests", "Acme.IdentityServer4.Tests\Acme.IdentityServer4.Tests.csproj", "{56AAD9CA-4BBD-4453-B9FE-E74AB443AF4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,36 +21,21 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D8F76830-757F-4767-BDC3-748A58AB40F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8F76830-757F-4767-BDC3-748A58AB40F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D8F76830-757F-4767-BDC3-748A58AB40F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D8F76830-757F-4767-BDC3-748A58AB40F5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7C20C065-CBED-4D0F-9E82-34F68BBABC8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C20C065-CBED-4D0F-9E82-34F68BBABC8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C20C065-CBED-4D0F-9E82-34F68BBABC8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C20C065-CBED-4D0F-9E82-34F68BBABC8D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4AE8F243-FAFA-463B-8BA7-AD855C71B078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4AE8F243-FAFA-463B-8BA7-AD855C71B078}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4AE8F243-FAFA-463B-8BA7-AD855C71B078}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4AE8F243-FAFA-463B-8BA7-AD855C71B078}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D032451C-D1EB-43E7-AD4C-09A5E3ADF34D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D032451C-D1EB-43E7-AD4C-09A5E3ADF34D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D032451C-D1EB-43E7-AD4C-09A5E3ADF34D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D032451C-D1EB-43E7-AD4C-09A5E3ADF34D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{031BF4DC-8D8B-4ED5-9554-D893EAB4F330}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{031BF4DC-8D8B-4ED5-9554-D893EAB4F330}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{031BF4DC-8D8B-4ED5-9554-D893EAB4F330}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{031BF4DC-8D8B-4ED5-9554-D893EAB4F330}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB557693-3917-4902-A76C-325239C8F3B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB557693-3917-4902-A76C-325239C8F3B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB557693-3917-4902-A76C-325239C8F3B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB557693-3917-4902-A76C-325239C8F3B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28CCD4EE-EF31-42FE-A7B9-CD3AEB5B1E13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28CCD4EE-EF31-42FE-A7B9-CD3AEB5B1E13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28CCD4EE-EF31-42FE-A7B9-CD3AEB5B1E13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28CCD4EE-EF31-42FE-A7B9-CD3AEB5B1E13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56AAD9CA-4BBD-4453-B9FE-E74AB443AF4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56AAD9CA-4BBD-4453-B9FE-E74AB443AF4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56AAD9CA-4BBD-4453-B9FE-E74AB443AF4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56AAD9CA-4BBD-4453-B9FE-E74AB443AF4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{D8F76830-757F-4767-BDC3-748A58AB40F5} = {61219453-ED80-4CC7-BEC6-781679E5300E}
-		{7C20C065-CBED-4D0F-9E82-34F68BBABC8D} = {67DD0020-6054-45C9-9E1F-09AC64B0636B}
-		{4AE8F243-FAFA-463B-8BA7-AD855C71B078} = {67DD0020-6054-45C9-9E1F-09AC64B0636B}
-		{D032451C-D1EB-43E7-AD4C-09A5E3ADF34D} = {61219453-ED80-4CC7-BEC6-781679E5300E}
-		{031BF4DC-8D8B-4ED5-9554-D893EAB4F330} = {61219453-ED80-4CC7-BEC6-781679E5300E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D2AA434-A5A9-4EBF-A047-87D95B49DE7A}
