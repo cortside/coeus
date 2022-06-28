@@ -1,0 +1,35 @@
+{
+    "ConnectionStrings": {
+        "AuthConnString": "Server=tcp:localhost;Database=identityserver;integrated security=True;MultipleActiveResultSets=true;"
+    },
+    "_publicOrigin": "http://identityserver.cortside.testcontainers",
+    "_issuerUri": "http://chiron.docker.local:8000/auth",
+    "_defaultUrl": "http://chiron.docker.local:8000/adminui",
+    "ServiceBus": {
+        "Protocol": "amqp",
+        "Namespace": "rabbitmq",
+        "Policy": "admin",
+        "Key": "password",
+        "AppName": "auth",
+        "Address": "auth.queue"
+    },
+    "_ServiceBus": {
+        "Protocol": "amqps",
+        "Namespace": "Chiron-recruiter-stage.servicebus.windows.net",
+        "Policy": "SendListen",
+        "Key": "3q6LicPSwS0Jg10IHAquscXdpHKbJLa6coXsBmkvUc0=",
+        "AppName": "auth",
+        "Address": "auth.queue"
+    },
+    "authentication": {
+        "authority": "http://localhost",
+        "apiResource": "identity",
+        "apiResourceSecret": "secret",
+        "requireHttpsMetadata": false
+    },
+    "azureActiveDirectory": {
+        "authority": "https://login.microsoftonline.com/common",
+        "clientId": "aad-client-id"
+    },
+    "RestrictedEmailDomains": [ "cortside.com", "cortsideusa.com" ]
+}

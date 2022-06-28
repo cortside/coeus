@@ -1,0 +1,9 @@
+{
+  "Build": {
+    "version": "1.32.0",
+    "timestamp": "2021-11-26 22:22:19Z",
+    "tag": "1.32-local",
+    "suffix": "local",
+    "octopusPrefix": "IDS"
+  }
+}

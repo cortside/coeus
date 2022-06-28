@@ -1,0 +1,58 @@
+﻿@model LoginViewModel
+<link href="~/css/login.css" rel="stylesheet" type="text/css" />
+<title>Cortside USA</title>
+<div class="login-page">
+    @section scripts {
+        <script type="text/javascript" src="~/scripts/login-page.js"></script>
+    }
+    <div class="login-form">
+        <form asp-route="Login">
+            <input type="hidden" asp-for="ReturnUrl" />
+            <h1 class="h2">Login</h1>
+            <fieldset>
+                <legend class="visually-hidden">Login</legend>
+                <div class="form-group">
+                    <label asp-for="Username"></label>
+                    <div class="input-box-wrapper">
+                        <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
+                    </div>
+                </div>
+                <div class="form-group password">
+                    <label asp-for="Password"></label>
+                    <div class="input-box-wrapper">
+                        <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
+                    </div>
+                </div>
+                <div class="warning-reveal-container">
+                    <div><span id="capsWarning" class="warning hidden">Capslock is on</span></div>
+                    <button id="revealPassword" type="button" class="btn btn-link">Show</button>
+                </div>
+                <div class="form-group login">
+                    <button id="loginBtn" class="btn btn-primary" name="button" value="login">Sign In</button>
+                </div>
+                @if (ViewContext.ModelState.IsValid == false)
+                {
+                    @Html.ValidationMessage("loginerror")
+                }
+            </fieldset>
+        </form>
+        <div class="bottom-links">
+            <a href="@Model.ForgotPasswordAddress">Forgot Password/Username?</a>
+            @if (Model.VisibleExternalProviders.Any())
+            {
+                @foreach (var provider in Model.VisibleExternalProviders)
+                {
+                    <a asp-action="ExternalLogin"
+                       asp-route-provider="@provider.AuthenticationScheme"
+                       asp-route-returnUrl="@Model.ReturnUrl">
+                        Cortside Employee Sign in
+                    </a>
+                }
+            }
+            <a href="https://cortside.com/contact-us" target="_blank">Contact Us</a>
+            <div>
+                Site questions? Call PartnerPortal Support at <a href="tel:+1-888-700-9610">1-888-700-9610</a>.
+            </div>
+        </div>
+    </div>
+</div>

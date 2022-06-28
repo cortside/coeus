@@ -1,0 +1,39 @@
+﻿{
+    "ConnectionStrings": {
+        "AuthConnString": "Server=localhost;Database=identityserver;integrated security=True;MultipleActiveResultSets=true;"
+    },
+    "publicOrigin": "http://localhost:5004",
+    "ServiceBus": {
+        "Protocol": "amqps",
+        "Namespace": "cortside-test.servicebus.windows.net",
+        "Policy": "SendListen",
+        "Key": "secret",
+        "AppName": "identityserver.receiver",
+        "Queue": "identityserver.queue",
+        "Exchange": "identityserver."
+    },
+    "forgotPasswordAddress": "",
+    "authentication": {
+        "authority": "http://localhost:5004",
+        "apiResource": "identity",
+        "apiResourceSecret": "secret",
+        "requireHttpsMetadata": false
+    },
+    "azureActiveDirectory": {
+        "authority": "https://login.microsoftonline.com/common",
+        "clientId": "aad-client-id"
+    },
+    "RestrictedEmailDomains": [
+        "cortside.com",
+        "cortsideusa.com"
+    ],
+    "GoogleRecaptchaV3": {
+        "ApiUrl": "https://www.google.com/recaptcha/api/siteverify"
+    },
+    "HtmlTemplateLocation": "./Static/HtmlTemplates/",
+    "ClientSecretRequest": {
+        "ExpirationInHours": "24",
+        "VerificationExpirationInMinutes": "15",
+        "VerificationAttempts": "3"
+    }
+}

@@ -1,0 +1,5 @@
+﻿{
+    "ConnectionStrings": {
+        "xAuthConnString": "Data Source=sqltestonlineapp.cortside.local;initial catalog=IdentityServerTools;user id=IdentityServerTools;password=aCBuJdg2Xqv9c64A;MultipleActiveResultSets=True;App=identityserver;Pooling=true;Max Pool Size=1024"
+    }
+}
