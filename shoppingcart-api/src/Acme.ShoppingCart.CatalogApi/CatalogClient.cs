@@ -24,14 +24,12 @@ namespace Acme.ShoppingCart.UserClient {
                 Serializer = new JsonNetSerializer(),
                 Cache = new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions()))
             };
-            client = new RestApiClient(logger, options) {
-            };
+            client = new RestApiClient(logger, options);
         }
 
         public CatalogClient(CatalogClientConfiguration userClientConfiguration, ILogger<CatalogClient> logger, RestApiClientOptions options) {
             this.logger = logger;
-            client = new RestApiClient(logger, options) {
-            };
+            client = new RestApiClient(logger, options);
         }
 
         public async Task<CatalogItem> GetItemAsync(string sku) {
