@@ -8,10 +8,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="1.0.33" />
-    <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="1.0.33" />
-    <PackageReference Include="Cortside.Common.Security" Version="1.1.226" />
-    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="1.1.194" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="1.0.45-usecustomsubject" />
+    <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="1.0.45-usecustomsubject" />
+    <PackageReference Include="Cortside.Common.Security" Version="1.1.231" />
+    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="1.1.220" />
     <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.6" />

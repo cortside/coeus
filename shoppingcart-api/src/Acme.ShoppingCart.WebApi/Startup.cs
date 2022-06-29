@@ -7,6 +7,7 @@ using Cortside.AspNetCore;
 using Cortside.AspNetCore.AccessControl;
 using Cortside.AspNetCore.ApplicationInsights;
 using Cortside.AspNetCore.Auditable;
+using Cortside.AspNetCore.Auditable.Entities;
 using Cortside.AspNetCore.Auditable.Middleware;
 using Cortside.AspNetCore.Builder;
 using Cortside.AspNetCore.Filters;
@@ -64,6 +65,7 @@ namespace Acme.ShoppingCart.WebApi {
 
             // add SubjectPrincipal for auditing
             services.AddSubjectPrincipal();
+            services.AddTransient<ISubjectFactory<Subject>, DefaultSubjectFactory>();
 
             services.AddResponseCaching();
             services.AddMemoryCache();

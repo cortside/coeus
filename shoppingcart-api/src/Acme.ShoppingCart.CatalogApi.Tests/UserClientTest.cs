@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.UserClient.Models.Responses;
 using Acme.ShoppingCart.UserClient.Tests.Mock;
@@ -22,7 +21,7 @@ namespace Acme.ShoppingCart.UserClient.Tests {
 
         public UserClientTest() {
             UserWireMock userMock = new UserWireMock();
-            var wiremockurl = userMock.server.Urls.First();
+            var wiremockurl = userMock.server.Urls[0];
             var request = new TokenRequest {
                 AuthorityUrl = wiremockurl,
                 ClientId = "clientid",
@@ -58,7 +57,7 @@ namespace Acme.ShoppingCart.UserClient.Tests {
             };
             var json = JsonConvert.SerializeObject(user);
 
-            string url = "http://localhost:1234";
+            const string url = "http://localhost:1234";
             var mockHttp = new MockHttpMessageHandler();
             mockHttp.When($"{url}/api/v1/items/*")
                     .Respond("application/json", json);
