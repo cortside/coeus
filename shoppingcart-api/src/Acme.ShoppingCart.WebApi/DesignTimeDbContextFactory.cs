@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Security.Claims;
 using Acme.ShoppingCart.Data;
+using Cortside.AspNetCore.Auditable;
 using Cortside.Common.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -30,7 +31,7 @@ namespace Acme.ShoppingCart.WebApi {
             builder.UseSqlServer(connectionString);
 
             var principal = new SubjectPrincipal(new List<Claim>() { new Claim("sub", Guid.Empty.ToString()) });
-            return new DatabaseContext(builder.Options, principal);
+            return new DatabaseContext(builder.Options, principal, new DefaultSubjectFactory());
         }
     }
 }
