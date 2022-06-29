@@ -56,7 +56,7 @@ if ($exists.Length -eq 0) {
 	git checkout develop
 	git merge $branch
 	./update-version.ps1
-	git commit -m "update version" .\src\version.json
+	git commit -m "update version" ./src/version.json
 	git push
 } else {
 	echo "release branch already exists"
