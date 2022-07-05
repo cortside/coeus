@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO.Compression;
+using System.Net.Mime;
 using System.Reflection;
 using Acme.ShoppingCart.BootStrap;
 using Acme.ShoppingCart.WebApi.Installers;
@@ -15,6 +16,7 @@ using Cortside.AspNetCore.Swagger;
 using Cortside.Common.Correlation;
 using Cortside.Common.Json;
 using Cortside.Common.Messages.Filters;
+using Cortside.Common.Messages.Results;
 using Cortside.Health.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -80,6 +82,13 @@ namespace Acme.ShoppingCart.WebApi {
                 });
                 options.Filters.Add<MessageExceptionResponseFilter>();
                 options.Conventions.Add(new ApiControllerVersionConvention());
+            })
+            .ConfigureApiBehaviorOptions(options => {
+                options.InvalidModelStateResponseFactory = context => {
+                    var result = new ValidationFailedResult(context.ModelState);
+                    result.ContentTypes.Add(MediaTypeNames.Application.Json);
+                    return result;
+                };
             })
             .AddNewtonsoftJson(options => {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
