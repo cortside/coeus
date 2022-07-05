@@ -25,59 +25,52 @@ using Newtonsoft.Json;
 using Serilog;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests {
-    public static class WireMockSetup {
-        public static string WireMockUrl { get; set; }
-        public static string RoutePrefix { get; set; }
-        public static bool IsStarted { get; set; } = false;
-        public static MockHttpServer Server { get; set; }
-    }
-
     public class IntegrationTestFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class {
         // dbname is created outside of the options so that it's constant and not reevaluated at instance creation time
         private readonly string dbName = Guid.NewGuid().ToString();
         private Subjects subjects;
-        public MockHttpServer Server { get; private set; }
+        public MockHttpServer MockServer { get; private set; }
         private IConfiguration Configuration { get; set; }
 
         protected override IHostBuilder CreateHostBuilder() {
             SetupConfiguration();
             SetupLogger();
 
-            Server = new MockHttpServer(dbName)
+            MockServer = new MockHttpServer(dbName)
                 .ConfigureBuilder<CommonMock>()
                 .ConfigureBuilder(new IdentityServerMock("./Data/discovery.json", "./Data/jwks.json"))
                 .ConfigureBuilder(new SubjectMock("./Data/subjects.json"))
                 .ConfigureBuilder<CatalogMock>();
 
             var section = Configuration.GetSection("HealthCheckHostedService");
-            section["Checks:1:Value"] = $"{Server.Url}/api/health";
-            section["Checks:2:Value"] = $"{Server.Url}/api/health";
-            section["Checks:4:Value"] = $"{Server.Url}/api/health";
+            section["Checks:1:Value"] = $"{MockServer.Url}/api/health";
+            section["Checks:2:Value"] = $"{MockServer.Url}/api/health";
+            section["Checks:4:Value"] = $"{MockServer.Url}/api/health";
 
             var authConfig = Configuration.GetSection("IdentityServer");
-            authConfig["Authority"] = Server.Url;
-            authConfig["BaseUrl"] = $"{Server.Url}/connect/token";
+            authConfig["Authority"] = MockServer.Url;
+            authConfig["BaseUrl"] = $"{MockServer.Url}/connect/token";
             authConfig["RequireHttpsMetadata"] = "false";
 
             var policyServerConfig = Configuration.GetSection("PolicyServer");
             var policyserverTokenClient = policyServerConfig.GetSection("TokenClient");
-            policyserverTokenClient["Authority"] = Server.Url;
-            policyServerConfig["PolicyServerUrl"] = Server.Url;
+            policyserverTokenClient["Authority"] = MockServer.Url;
+            policyServerConfig["PolicyServerUrl"] = MockServer.Url;
 
             var distributedLockConfig = Configuration.GetSection("DistributedLock");
             distributedLockConfig["UseRedisLockProvider"] = "false";
 
             var loanservicingConfig = Configuration.GetSection("LoanServicingApi");
-            loanservicingConfig["BaseUrl"] = Server.Url;
+            loanservicingConfig["BaseUrl"] = MockServer.Url;
             var loanservicingAuthConfig = loanservicingConfig.GetSection("Authentication");
-            loanservicingAuthConfig["Url"] = $"{Server.Url}/connect/token";
+            loanservicingAuthConfig["Url"] = $"{MockServer.Url}/connect/token";
 
             var userConfig = Configuration.GetSection("CatalogApi");
-            userConfig["ServiceUrl"] = $"{Server.Url}";
+            userConfig["ServiceUrl"] = $"{MockServer.Url}";
             var userAuthConfig = userConfig.GetSection("Authentication");
-            userAuthConfig["Url"] = $"{Server.Url}/connect/token";
+            userAuthConfig["Url"] = $"{MockServer.Url}/connect/token";
 
-            Server.WaitForStart();
+            MockServer.WaitForStart();
 
             return Host.CreateDefaultBuilder()
                 .ConfigureAppConfiguration(builder => builder.AddConfiguration(Configuration))
