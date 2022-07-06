@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthorizationService } from 'src/app/auth/authorization.service';
+import { OrderService } from '../order.service';
 
 @Component({
   selector: 'app-order-list',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service: OrderService) { }
 
   ngOnInit(): void {
+  }
+
+  authorize() {
+    this.service.debug();
   }
 
 }

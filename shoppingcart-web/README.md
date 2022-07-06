@@ -12,9 +12,8 @@
 -   [ ] schematics
 -   [ ] cypress
 -   [ ] analytics
--   [ ] authentication
+-   [x] authentication
 -   [ ] authorization
--   [ ] module initialization
 -   [ ] error pages
 -   [ ] forms
 -   [ ] component styles
