@@ -91,3 +91,4 @@ TODONE:
 * add async analyzers to update-nugetpackages.ps1
 	* https://www.nuget.org/packages/Microsoft.VisualStudio.Threading.Analyzers/
 * remove guards from cortside.domainevent
+* juan's dbcontext changes

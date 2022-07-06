@@ -1,5 +1,14 @@
 {
     "application": {
         "name": "shoppingcart-web"
+    },
+    "identity": {
+        "authority": "https://identityserver",
+        "client_id": "shoppingcart-web",
+        "scope": "openid",
+        "redirect_uri": "http://localhost:4200/login-redirect",
+        "silent_redirect_uri": "http://localhost:4200/silent-redirect",
+        "postLogoutRedirectUri": "http://localhost:4200/logout",
+        "accessTokenExpiringNotificationTime": 60
     }
 }
