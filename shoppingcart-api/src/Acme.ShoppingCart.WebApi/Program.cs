@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using WebApiHost = Cortside.AspNetCore.Builder.WebApi;
+using Cortside.AspNetCore.Builder;
 
 namespace Acme.ShoppingCart.WebApi {
     /// <summary>
