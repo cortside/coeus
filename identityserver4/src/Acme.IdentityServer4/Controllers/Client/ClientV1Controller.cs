@@ -62,7 +62,7 @@ namespace EnerBank.IdentityServer.WebApi.Controllers.Client {
             } catch (Exception e) {
                 return BadRequest(e.Message);
             }
-               
+
         }
 
         /// <summary>

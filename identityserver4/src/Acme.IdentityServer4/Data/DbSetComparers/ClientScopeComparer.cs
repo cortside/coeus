@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EnerBank.IdentityServer.WebApi.Data;
+﻿using System.Collections.Generic;
 
 namespace EnerBank.IdentityServer.WebApi.Data {
     public class ClientScopeComparer : IEqualityComparer<ClientScope> {

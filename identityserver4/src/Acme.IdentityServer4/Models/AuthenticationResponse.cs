@@ -1,5 +1,4 @@
-﻿using System;
-using EnerBank.IdentityServer.Data;
+﻿using EnerBank.IdentityServer.Data;
 
 namespace EnerBank.IdentityServer.WebApi.Models {
     public class AuthenticationResponse {

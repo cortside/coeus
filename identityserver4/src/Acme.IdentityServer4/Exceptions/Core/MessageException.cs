@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace EnerBank.IdentityServer.Exceptions.Core {
     public abstract class MessageException : Exception {

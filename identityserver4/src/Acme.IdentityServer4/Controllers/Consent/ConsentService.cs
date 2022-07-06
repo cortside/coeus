@@ -100,7 +100,7 @@ namespace EnerBank.IdentityServer.Controllers.Consent {
         }
 
         private ConsentViewModel CreateConsentViewModel(
-            ConsentInputModel model, 
+            ConsentInputModel model,
             string returnUrl,
             Client client, Resources resources) {
             var vm = new ConsentViewModel {

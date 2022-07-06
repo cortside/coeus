@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EnerBank.IdentityServer.WebApi.Models.Input {
+﻿namespace EnerBank.IdentityServer.WebApi.Models.Input {
     public class SendVerificationCodeModel {
         public string TokenHash { get; set; }
     }

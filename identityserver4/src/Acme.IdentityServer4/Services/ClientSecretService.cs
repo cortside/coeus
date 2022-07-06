@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using EnerBank.IdentityServer.Data;
-using EnerBank.IdentityServer.WebApi.Exceptions;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
-using EnerBank.IdentityServer.WebApi.Helpers;
-using Microsoft.Extensions.Configuration;
-using EnerBank.IdentityServer.Services;
 using System.Text;
-using EnerBank.IdentityServer.WebApi.Models;
+using System.Threading.Tasks;
+using Cortside.DomainEvent;
 using EnerBank.DomainEvent.Events;
+using EnerBank.IdentityServer.Data;
+using EnerBank.IdentityServer.Services;
 using EnerBank.IdentityServer.WebApi.Data;
+using EnerBank.IdentityServer.WebApi.Exceptions;
+using EnerBank.IdentityServer.WebApi.Helpers;
+using EnerBank.IdentityServer.WebApi.Models;
 using EnerBank.IdentityServer.WebApi.Models.Input;
 using EnerBank.IdentityServer.WebApi.Models.Output;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using static IdentityServer4.IdentityServerConstants;
-using Cortside.DomainEvent;
 
 namespace EnerBank.IdentityServer.WebApi.Services {
     public class ClientSecretService : IClientSecretService {
@@ -159,7 +159,7 @@ namespace EnerBank.IdentityServer.WebApi.Services {
             var phoneNumberClaim = db.ClientClaims.FirstOrDefault(x => x.ClientId == client.Id && x.Type == "phone_number");
             if (phoneNumberClaim == null) {
                 throw new BadRequestException($"ClientId: {client.ClientId} cannot send verification code because a phone number claim doesn't exist.");
-            } 
+            }
 
             var code = GenerateCode();
             clientSecretRequest.SmsVerificationCode = code;
@@ -312,7 +312,7 @@ namespace EnerBank.IdentityServer.WebApi.Services {
                 RequestId = Guid.Parse(requestId),
                 TokenHash = tokenHash
             };
-            
+
             return response;
         }
 
@@ -375,8 +375,7 @@ namespace EnerBank.IdentityServer.WebApi.Services {
                     Created = DateTime.UtcNow,
                     Value = secretHash
                 });
-            }
-            else {
+            } else {
                 clientSecret.Value = secretHash;
                 clientSecret.Created = DateTime.UtcNow;
             }
@@ -399,7 +398,7 @@ namespace EnerBank.IdentityServer.WebApi.Services {
             var random = new Random();
 
             var sb = new StringBuilder();
-  
+
             int size = random.Next(16, 20);
             int i = 0;
             while (i < size) {

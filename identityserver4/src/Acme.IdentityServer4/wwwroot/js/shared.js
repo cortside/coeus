@@ -15,5 +15,5 @@ function isCodeValid() {
     }
     else {
         element.style.display = 'none';
-    }  
+    }
 }

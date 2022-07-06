@@ -1,6 +1,5 @@
-﻿using EnerBank.IdentityServer.WebApi.Models;
-using EnerBank.IdentityServer.WebApi.Data;
-using System;
+﻿using EnerBank.IdentityServer.WebApi.Data;
+using EnerBank.IdentityServer.WebApi.Models;
 using EnerBank.IdentityServer.WebApi.Models.Input;
 
 namespace EnerBank.IdentityServer.Services {
