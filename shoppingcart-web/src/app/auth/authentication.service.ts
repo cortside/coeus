@@ -14,7 +14,7 @@ export class AuthenticationService {
         userManagerSettings: UserManagerSettings,
         private router: Router
     ) {
-        const defaults = <UserManagerSettings>{
+    const defaults = <UserManagerSettings>{
             checkSessionInterval: 10000,
             monitorSession: true,
             automaticSilentRenew: true,
