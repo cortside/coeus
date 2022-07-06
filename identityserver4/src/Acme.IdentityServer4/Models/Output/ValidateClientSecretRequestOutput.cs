@@ -4,6 +4,6 @@
 
         public ClientSecretRequestDecodedOutput DecodedOutput { get; set; }
 
-        public string Last4PhoneNumber { get; set; } 
+        public string Last4PhoneNumber { get; set; }
     }
 }

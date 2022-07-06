@@ -3,17 +3,16 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cortside.IdentityServer.WebApi.Data {
-    public class Client
-    {
+    public class Client {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int AbsoluteRefreshTokenLifetime { get; set; }
         public int AccessTokenLifetime { get; set; }
         public int AccessTokenType { get; set; }
-        public bool AllowAccessTokensViaBrowser { get; set; }  
-        public bool AllowOfflineAccess { get; set; } 
-        public bool AllowPlainTextPkce { get; set; }  
+        public bool AllowAccessTokensViaBrowser { get; set; }
+        public bool AllowOfflineAccess { get; set; }
+        public bool AllowPlainTextPkce { get; set; }
         public bool AllowRememberConsent { get; set; }
         public bool AlwaysIncludeUserClaimsInIdToken { get; set; }
         public string AllowedIdentityTokenSigningAlgorithms { get; set; }
@@ -23,26 +22,26 @@ namespace Cortside.IdentityServer.WebApi.Data {
         public string BackChannelLogoutUri { get; set; }
         public string ClientClaimsPrefix { get; set; }
         public string ClientId { get; set; } = ""; // default value not null
-        public string ClientName { get; set; }  
-        public string ClientUri { get; set; }  
-        public int? ConsentLifetime { get; set; }  
-        public string Description { get; set; }  
-        public bool EnableLocalLogin { get; set; }  
+        public string ClientName { get; set; }
+        public string ClientUri { get; set; }
+        public int? ConsentLifetime { get; set; }
+        public string Description { get; set; }
+        public bool EnableLocalLogin { get; set; }
         public bool Enabled { get; set; } = true;
         public bool FrontChannelLogoutSessionRequired { get; set; }
-        public string FrontChannelLogoutUri { get; set; } 
+        public string FrontChannelLogoutUri { get; set; }
         public int IdentityTokenLifetime { get; set; }
-        public bool IncludeJwtId { get; set; } 
-        public string LogoUri { get; set; } 
-        public string PairWiseSubjectSalt { get; set; }  
-        public bool LogoutSessionRequired { get; set; }  
-        public string LogoutUri { get; set; } 
+        public bool IncludeJwtId { get; set; }
+        public string LogoUri { get; set; }
+        public string PairWiseSubjectSalt { get; set; }
+        public bool LogoutSessionRequired { get; set; }
+        public string LogoutUri { get; set; }
         public bool NonEditable { get; set; }
         public string ProtocolType { get; set; }
         public int RefreshTokenExpiration { get; set; }
         public int RefreshTokenUsage { get; set; }
         public bool RequireClientSecret { get; set; }
-        public bool RequireConsent { get; set; } 
+        public bool RequireConsent { get; set; }
         public bool RequirePkce { get; set; }
         public bool RequireRequestObject { get; set; }
         public int SlidingRefreshTokenLifetime { get; set; }

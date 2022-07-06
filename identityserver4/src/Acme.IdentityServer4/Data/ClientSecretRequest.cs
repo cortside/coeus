@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Cortside.IdentityServer.WebApi.Data {
-    public class ClientSecretRequest: AuditableEntity {
+    public class ClientSecretRequest : AuditableEntity {
 
         public Guid ClientSecretRequestId { get; set; }
         public int ClientId { get; set; }

@@ -23,6 +23,11 @@
         "authority": "https://login.microsoftonline.com/common",
         "clientId": "aad-client-id"
     },
+    "Okta": {
+        "Authority": "https://dev-1303959-admin.okta.com",
+        "ClientId": "0oa5kzepxsyyNljDy5d7",
+        "CallbackPath": "/signin-oidc-okta"
+    },
     "RestrictedEmailDomains": [
         "cortside.com",
         "cortsideusa.com"

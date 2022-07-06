@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
 using Cortside.IdentityServer.Exceptions.Core;
 
 namespace Cortside.IdentityServer.Exceptions {

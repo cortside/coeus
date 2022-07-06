@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Cortside.IdentityServer.WebApi.Models
-{
-    public class UpdateClientRequest
-    {
+﻿namespace Cortside.IdentityServer.WebApi.Models {
+    public class UpdateClientRequest {
         public int AccessTokenType { get; set; }
 
         public string ClientName { get; set; }

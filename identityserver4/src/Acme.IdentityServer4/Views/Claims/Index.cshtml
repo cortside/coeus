@@ -7,7 +7,7 @@
         </div>
     </div>
     <div>
-        @foreach (var claim in User.Claims)
+        @foreach (var claim in User.Claims.OrderBy(x => x.Type).ToList())
         {
             <div>
                 @claim.Type = @claim.Value

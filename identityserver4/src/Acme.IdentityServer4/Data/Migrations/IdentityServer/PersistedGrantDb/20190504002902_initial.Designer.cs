@@ -7,14 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Cortside.IdentityServer.Data.Migrations.IdentityServer.PersistedGrantDb
-{
+namespace Cortside.IdentityServer.Data.Migrations.IdentityServer.PersistedGrantDb {
     [DbContext(typeof(PersistedGrantDbContext))]
     [Migration("20190504002902_initial")]
-    partial class initial
-    {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
-        {
+    partial class initial {
+        protected override void BuildTargetModel(ModelBuilder modelBuilder) {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("auth")
@@ -22,70 +19,68 @@ namespace Cortside.IdentityServer.Data.Migrations.IdentityServer.PersistedGrantD
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
-                {
-                    b.Property<string>("UserCode")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(200);
+            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b => {
+                b.Property<string>("UserCode")
+                    .ValueGeneratedOnAdd()
+                    .HasMaxLength(200);
 
-                    b.Property<string>("ClientId")
-                        .IsRequired()
-                        .HasMaxLength(200);
+                b.Property<string>("ClientId")
+                    .IsRequired()
+                    .HasMaxLength(200);
 
-                    b.Property<DateTime>("CreationTime");
+                b.Property<DateTime>("CreationTime");
 
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasMaxLength(50000);
+                b.Property<string>("Data")
+                    .IsRequired()
+                    .HasMaxLength(50000);
 
-                    b.Property<string>("DeviceCode")
-                        .IsRequired()
-                        .HasMaxLength(200);
+                b.Property<string>("DeviceCode")
+                    .IsRequired()
+                    .HasMaxLength(200);
 
-                    b.Property<DateTime?>("Expiration")
-                        .IsRequired();
+                b.Property<DateTime?>("Expiration")
+                    .IsRequired();
 
-                    b.Property<string>("SubjectId")
-                        .HasMaxLength(200);
+                b.Property<string>("SubjectId")
+                    .HasMaxLength(200);
 
-                    b.HasKey("UserCode");
+                b.HasKey("UserCode");
 
-                    b.HasIndex("DeviceCode")
-                        .IsUnique();
+                b.HasIndex("DeviceCode")
+                    .IsUnique();
 
-                    b.ToTable("DeviceCodes");
-                });
+                b.ToTable("DeviceCodes");
+            });
 
-            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.PersistedGrant", b =>
-                {
-                    b.Property<string>("Key")
-                        .HasMaxLength(200);
+            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.PersistedGrant", b => {
+                b.Property<string>("Key")
+                    .HasMaxLength(200);
 
-                    b.Property<string>("ClientId")
-                        .IsRequired()
-                        .HasMaxLength(200);
+                b.Property<string>("ClientId")
+                    .IsRequired()
+                    .HasMaxLength(200);
 
-                    b.Property<DateTime>("CreationTime");
+                b.Property<DateTime>("CreationTime");
 
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasMaxLength(50000);
+                b.Property<string>("Data")
+                    .IsRequired()
+                    .HasMaxLength(50000);
 
-                    b.Property<DateTime?>("Expiration");
+                b.Property<DateTime?>("Expiration");
 
-                    b.Property<string>("SubjectId")
-                        .HasMaxLength(200);
+                b.Property<string>("SubjectId")
+                    .HasMaxLength(200);
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                b.Property<string>("Type")
+                    .IsRequired()
+                    .HasMaxLength(50);
 
-                    b.HasKey("Key");
+                b.HasKey("Key");
 
-                    b.HasIndex("SubjectId", "ClientId", "Type");
+                b.HasIndex("SubjectId", "ClientId", "Type");
 
-                    b.ToTable("PersistedGrants");
-                });
+                b.ToTable("PersistedGrants");
+            });
 #pragma warning restore 612, 618
         }
     }

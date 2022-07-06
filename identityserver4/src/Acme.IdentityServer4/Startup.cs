@@ -36,6 +36,7 @@ using IdentityServer4.Extensions;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
@@ -236,6 +237,11 @@ namespace Cortside.IdentityServer.WebApi {
         }
 
         private void ConfigureIdentityServer(IServiceCollection services) {
+            services.Configure<OpenIdConnectOptions>("okta", options => {
+                options.Scope.Add("openid");
+                options.Scope.Add("profile");
+            });
+
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             var authConnString = Configuration.GetConnectionString("AuthConnString");
@@ -284,8 +290,10 @@ namespace Cortside.IdentityServer.WebApi {
                 .AddExtensionGrantValidator<DelegationGrantValidator>();
 
 
-            services.AddAuthentication()
-                .AddOpenIdConnect("AAD", "Azure Active Directory", options => {
+            var authenticationBuilder = services.AddAuthentication();
+
+            if (Configuration.GetSection("azureActiveDirectory").Exists()) {
+                authenticationBuilder.AddOpenIdConnect("AAD", "Azure Active Directory", options => {
                     options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
                     options.SignOutScheme = IdentityServerConstants.SignoutScheme;
                     options.Authority = Configuration["azureActiveDirectory:authority"];
@@ -296,19 +304,38 @@ namespace Cortside.IdentityServer.WebApi {
                         ValidateIssuer = false
                     };
                     options.GetClaimsFromUserInfoEndpoint = true;
-                })
-                .AddIdentityServerAuthentication(options => {
-                    // configure authentication for non-openid endpoints
-                    options.SupportedTokens = SupportedTokens.Both;
-                    options.RequireHttpsMetadata = bool.Parse(Configuration["authentication:requireHttpsMetadata"]);
-                    options.Authority = Configuration["authentication:authority"];
-                    options.ApiName = Configuration["authentication:apiResource"];
-                    // for reference tokens to work correctly, secret needs to match with a SharedSecret in db
-                    // actual secret value in the db needs to be a matching base64 string of the SHA256/SHA512 hash, see HashedSharedSecretValidator.ValidateAsync() in ids source code
-                    options.ApiSecret = Configuration["authentication:apiResourceSecret"];
-                    //These 3 handlers were added so that TestServer in the Integration tests project would work
-                    options.JwtBackChannelHandler = Handler;
                 });
+            }
+
+            if (Configuration.GetSection("Okta").Exists()) {
+                authenticationBuilder.AddOpenIdConnect("okta", "Okta", options => {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                    options.SignOutScheme = IdentityServerConstants.SignoutScheme;
+                    options.Authority = Configuration["Okta:Authority"];
+                    options.ClientId = Configuration["Okta:ClientId"];
+                    options.CallbackPath = Configuration["Okta:CallbackPath"];
+                    options.Scope.Add("openid");
+                    options.Scope.Add("profile");
+                    options.TokenValidationParameters = new TokenValidationParameters {
+                        ValidateIssuer = false
+                    };
+                    options.GetClaimsFromUserInfoEndpoint = true;
+                    options.RequireHttpsMetadata = false;
+                });
+            }
+
+            authenticationBuilder.AddIdentityServerAuthentication(options => {
+                // configure authentication for non-openid endpoints
+                options.SupportedTokens = SupportedTokens.Both;
+                options.RequireHttpsMetadata = bool.Parse(Configuration["authentication:requireHttpsMetadata"]);
+                options.Authority = Configuration["authentication:authority"];
+                options.ApiName = Configuration["authentication:apiResource"];
+                // for reference tokens to work correctly, secret needs to match with a SharedSecret in db
+                // actual secret value in the db needs to be a matching base64 string of the SHA256/SHA512 hash, see HashedSharedSecretValidator.ValidateAsync() in ids source code
+                options.ApiSecret = Configuration["authentication:apiResourceSecret"];
+                //These 3 handlers were added so that TestServer in the Integration tests project would work
+                options.JwtBackChannelHandler = Handler;
+            });
 
             services.AddMvc();
 
@@ -320,6 +347,11 @@ namespace Cortside.IdentityServer.WebApi {
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory) {
+            // added for okta -- not sure if it's needed
+            app.UseCookiePolicy(new CookiePolicyOptions {
+                Secure = CookieSecurePolicy.Always
+            });
+
             app.UseSerilogRequestLogging();
             var logger = loggerFactory.CreateLogger<Startup>();
             if (env.IsDevelopment()) {
@@ -355,8 +387,7 @@ namespace Cortside.IdentityServer.WebApi {
 
             app.UseForwardedHeaders(fordwardedHeaderOptions);
 
-            app
-                .UseStaticFiles()
+            app.UseStaticFiles()
                 .UseIdentityServer();
 
             // TODO: https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/background-tasks-with-ihostedservice

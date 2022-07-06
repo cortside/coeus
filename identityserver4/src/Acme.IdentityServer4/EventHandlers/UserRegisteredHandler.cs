@@ -66,8 +66,7 @@ namespace Cortside.IdentityServer.EventHandlers {
             }
         }
 
-        public async Task<HandlerResult> HandleAsync(DomainEventMessage<UserRegisteredEvent> @event) 
-        {
+        public async Task<HandlerResult> HandleAsync(DomainEventMessage<UserRegisteredEvent> @event) {
             await Handle(@event.Data);
             return HandlerResult.Success;
         }

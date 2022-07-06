@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Cortside.IdentityServer.WebApi.Data
-{
+﻿namespace Cortside.IdentityServer.WebApi.Data {
     public class ClientScope {
         public int Id { get; set; }
 

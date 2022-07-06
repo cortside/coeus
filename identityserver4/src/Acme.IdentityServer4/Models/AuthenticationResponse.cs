@@ -1,5 +1,4 @@
-﻿using System;
-using Cortside.IdentityServer.Data;
+﻿using Cortside.IdentityServer.Data;
 
 namespace Cortside.IdentityServer.WebApi.Models {
     public class AuthenticationResponse {

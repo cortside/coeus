@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Cortside.IdentityServer.WebApi.Data;
+﻿using System.Collections.Generic;
 
 namespace Cortside.IdentityServer.WebApi.Data {
     public class ClientRedirectUriComparer : IEqualityComparer<ClientRedirectUri> {

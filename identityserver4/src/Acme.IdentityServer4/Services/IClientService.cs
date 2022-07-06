@@ -1,6 +1,5 @@
-﻿using Cortside.IdentityServer.WebApi.Models;
-using Cortside.IdentityServer.WebApi.Data;
-using System;
+﻿using Cortside.IdentityServer.WebApi.Data;
+using Cortside.IdentityServer.WebApi.Models;
 using Cortside.IdentityServer.WebApi.Models.Input;
 
 namespace Cortside.IdentityServer.Services {

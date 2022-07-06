@@ -3,7 +3,7 @@
 <title>Cortside USA</title>
 <div class="login-page">
     @section scripts {
-        <script type="text/javascript" src="~/scripts/login-page.js"></script>
+    <script type="text/javascript" src="~/scripts/login-page.js"></script>
     }
     <div class="login-form">
         <form asp-route="Login">
@@ -43,9 +43,9 @@
                 @foreach (var provider in Model.VisibleExternalProviders)
                 {
                     <a asp-action="ExternalLogin"
-                       asp-route-provider="@provider.AuthenticationScheme"
-                       asp-route-returnUrl="@Model.ReturnUrl">
-                        Cortside Employee Sign in
+               asp-route-provider="@provider.AuthenticationScheme"
+               asp-route-returnUrl="@Model.ReturnUrl">
+                        Cortside Employee Sign in (@provider.DisplayName)
                     </a>
                 }
             }

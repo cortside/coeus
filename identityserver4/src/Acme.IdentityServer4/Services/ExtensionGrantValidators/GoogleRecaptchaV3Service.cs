@@ -130,8 +130,7 @@ namespace Cortside.IdentityServer.WebApi.Services.ExtensionGrantValidators {
                 //only returning bool. It is ultimately up to the calling procedure
                 //to decide what data it wants from the Service.
                 return false;
-            } catch (CaptchaRequestException ex) {
-
+            } catch (CaptchaRequestException) {
                 //Business-level error... values are accessible in error-codes array.
                 //this catch block mainly serves for logging purposes. 
 

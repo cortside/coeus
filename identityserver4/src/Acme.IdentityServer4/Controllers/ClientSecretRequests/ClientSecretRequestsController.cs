@@ -17,7 +17,7 @@ namespace Cortside.IdentityServer.WebApi.Controllers.ClientSecretRequests {
         [HttpPost]
         [Route("{clientSecretRequestId}/SendVerificationCode")]
         [ProducesResponseType(204)]
-        public async Task<ActionResult> SendVerificationCode(Guid clientSecretRequestId, [FromBody] SendVerificationCodeModel sendVerificationCodeModel ) {
+        public async Task<ActionResult> SendVerificationCode(Guid clientSecretRequestId, [FromBody] SendVerificationCodeModel sendVerificationCodeModel) {
             if (clientSecretRequestId == Guid.Empty) {
                 return BadRequest("ClientSecretRequestId cannot be null or empty.");
             }

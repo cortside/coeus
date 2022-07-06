@@ -267,7 +267,7 @@ namespace Cortside.IdentityServer.Controllers.Account {
                 // another common approach is to start a registrations workflow first
                 logger.LogDebug($"Creating new external user: {userId}");
                 user = await userService.AutoProvisionUser(provider, userId, claims);
-                
+
             } else {
                 // update the existing user claims that we "cache"
                 logger.LogDebug($"Updating existing user: {userId}");
