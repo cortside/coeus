@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { User } from 'oidc-client';
 import { AppConfig } from 'src/environments/app-config';
+import { AuthenticationService } from './auth/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +10,9 @@ import { AppConfig } from 'src/environments/app-config';
 })
 export class AppComponent {
   title = 'shoppingcart-web';
-
-  constructor(private config: AppConfig) {
+    user: User | undefined;
+  constructor(private config: AppConfig, private authenticationService: AuthenticationService) {
     console.log(config);
+    this.user = authenticationService.user;
   }
 }

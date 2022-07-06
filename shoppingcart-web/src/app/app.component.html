@@ -1,1 +1,15 @@
+<header class="py-10">
+    <nav>
+        <ul>
+            <li><a routerLink="/catalog">Catalog</a></li>
+            <li><a routerLink="/orders">Orders</a></li>
+        </ul>
+    </nav>
+</header>
 <h1>Shopping Cart</h1>
+<div>
+    name: {{this.user?.profile?.name}}
+</div>
+<div>
+    <router-outlet></router-outlet>
+</div>
