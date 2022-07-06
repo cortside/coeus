@@ -24,7 +24,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             var request = new Models.Requests.CreateCustomerModel() {
                 FirstName = Guid.NewGuid().ToString(),
                 LastName = "last",
-                Email = "email"
+                Email = "email@gmail.com"
             };
 
             var requestBody = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
