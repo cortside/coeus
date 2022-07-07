@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { AuthenticationService } from '@muziehdesign/auth';
 import { User } from 'oidc-client';
 import { AppConfig } from 'src/environments/app-config';
-import { AuthenticationService } from './auth/authentication.service';
 
 @Component({
   selector: 'app-root',

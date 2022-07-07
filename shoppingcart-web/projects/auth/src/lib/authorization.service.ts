@@ -1,13 +1,13 @@
 import { inject, Inject, Injectable, Injector } from '@angular/core';
 import { AuthorizationData } from './authorization-data';
-import { AuthorizationRule, AUTHORIZATION_RULE, TempAuthorizationRule } from './authorization-rule';
+import { AuthorizationPolicy, AUTHORIZATION_POLICY } from './authorization-policy';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthorizationService {
     private authorizations: Map<string, AuthorizationData>;
-    constructor(private injector: Injector) {
+    constructor(@Inject(AUTHORIZATION_POLICY) private policies: AuthorizationPolicy[]) {
         this.authorizations = new Map<string, AuthorizationData>();
     }
 
@@ -15,9 +15,9 @@ export class AuthorizationService {
         this.authorizations.set(serviceName, authorizationData);
     }
 
-    authorize() {
-        console.log('running authorization rules');
-        //this.authorizationRules.forEach(a=>a.authorize());'
-        this.injector.get<TempAuthorizationRule>(TempAuthorizationRule).authorize();
+    authorize(policyName: string): boolean {
+        const data = [...this.authorizations.values()];
+        const policy = this.policies.find((a) => a.authorize(policyName, { authorizationData: data }) == false);
+        return policy == undefined;
     }
 }
