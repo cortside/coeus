@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrderRoutingModule } from './order-routing.module';
 import { OrderListComponent } from './order-list/order-list.component';
-import { OrderService } from './order.service';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 
 
@@ -16,7 +15,6 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
     OrderRoutingModule
   ],
   providers: [
-    OrderService
   ]
 })
 export class OrderModule { }

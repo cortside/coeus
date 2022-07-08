@@ -10,7 +10,7 @@ import { AppConfig } from 'src/environments/app-config';
 })
 export class AppComponent {
   title = 'shoppingcart-web';
-    user: User | undefined;
+    user: User | null = null;
   constructor(private config: AppConfig, private authenticationService: AuthenticationService) {
     console.log(config);
     this.user = authenticationService.user;
