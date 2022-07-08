@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from '@muziehdesign/auth';
 import { Observable } from 'rxjs';
 import { ListResult } from 'src/app/common/list-result';
-import { ItemService } from '../item.service';
+import { ItemService } from '../../core/item.service';
 import { ItemModel } from '../models/item.model';
 
 @Component({
