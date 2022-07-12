@@ -21,7 +21,9 @@ namespace Acme.ShoppingCart.DomainService.Tests {
         public async Task ShouldCreateCustomerAsync() {
             // Arrange
             var dto = new CustomerDto() {
-                FirstName = Guid.NewGuid().ToString()
+                FirstName = Guid.NewGuid().ToString(),
+                LastName = Guid.NewGuid().ToString(),
+                Email = Guid.NewGuid().ToString() + "@gmail.com"
             };
 
             var publisher = new Mock<IDomainEventOutboxPublisher>();
