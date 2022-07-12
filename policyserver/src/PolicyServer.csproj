@@ -17,7 +17,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Cortside.Common.Json" Version="1.1.272" />
-		<PackageReference Include="Cortside.MockServer.AccessControl" Version="1.0.8-for-template" />
+		<PackageReference Include="Cortside.MockServer.AccessControl" Version="1.0.10" />
 		<PackageReference Include="Serilog" Version="2.11.0" />
 		<PackageReference Include="Serilog.Settings.Configuration" Version="3.3.0" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
