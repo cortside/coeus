@@ -12,4 +12,7 @@ export class OrderListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  authorize() {
+  }
+
 }

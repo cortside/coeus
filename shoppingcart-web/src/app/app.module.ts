@@ -1,35 +1,33 @@
-import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { AuthenticationService, AuthenticationTokenInterceptor, AuthorizationData, AuthorizationService } from '@muziehdesign/auth';
+import { firstValueFrom } from 'rxjs';
 import { AppConfig } from 'src/environments/app-config';
+import { ShoppingCartClient } from './api/shopping-cart/shopping-cart.client';
+import { initializeApplication } from './app-initializer';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthModule } from './auth/auth.module';
-import { authenticationIntializerProvider } from './auth/authentication-initializer.provider';
-import { USER_MANAGER_SETTINGS_TOKEN } from './auth/user-manager-settings.token';
+import { CoreModule } from './core/core.module';
 import { ItemModule } from './item/item.module';
-import { OrderModule } from './order/order.module';
+
 
 @NgModule({
     declarations: [AppComponent],
     imports: [
         BrowserModule,
         HttpClientModule,
+        CoreModule,
 
-        // features
-        AuthModule,
         ItemModule,
 
         // route
         AppRoutingModule,
     ],
     providers: [
-        // auth
-        { provide: USER_MANAGER_SETTINGS_TOKEN, useFactory: (config: AppConfig) => config.identity, deps: [AppConfig] },
-
-        // app init
-        authenticationIntializerProvider,
+        { provide: APP_INITIALIZER, useFactory: initializeApplication, deps: [AuthenticationService, ShoppingCartClient, AuthorizationService], multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: AuthenticationTokenInterceptor, multi: true}
     ],
     bootstrap: [AppComponent],
 })
