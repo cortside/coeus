@@ -10,21 +10,21 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Cortside.AspNetCore" Version="1.0.46-usecustomsubject" />
-    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="1.0.46-usecustomsubject" />
-    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="1.0.46-usecustomsubject" />
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="1.0.46-usecustomsubject" />
-    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="1.0.46-usecustomsubject" />
-    <PackageReference Include="Cortside.Common.BootStrap" Version="1.1.231" />
-    <PackageReference Include="Cortside.Common.Correlation" Version="1.1.231" />
-    <PackageReference Include="Cortside.Common.Hosting" Version="1.1.231" />
-    <PackageReference Include="Cortside.Common.Json" Version="1.1.231" />
+    <PackageReference Include="Cortside.AspNetCore" Version="1.0.59" />
+    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="1.0.59" />
+    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="1.0.59" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="1.0.59" />
+    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="1.0.59" />
+    <PackageReference Include="Cortside.Common.BootStrap" Version="1.1.272" />
+    <PackageReference Include="Cortside.Common.Correlation" Version="1.1.272" />
+    <PackageReference Include="Cortside.Common.Hosting" Version="1.1.272" />
+    <PackageReference Include="Cortside.Common.Json" Version="1.1.272" />
     <PackageReference Include="Cortside.Health" Version="1.0.51" />
 
     <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.6">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -75,5 +75,8 @@
     <Content Update="appsettings.json">
       <TransformOnBuild>true</TransformOnBuild>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Filters\" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,4 @@
-#pragma warning disable CS1591
-
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Acme.ShoppingCart.WebApi.Models.Requests {
@@ -23,6 +22,7 @@ namespace Acme.ShoppingCart.WebApi.Models.Requests {
         /// </value>
         [Required]
         public string LastName { get; set; }
+
         /// <summary>
         /// Gets or sets the email.
         /// </summary>
@@ -31,5 +31,14 @@ namespace Acme.ShoppingCart.WebApi.Models.Requests {
         /// </value>
         [Required]
         public string Email { get; set; }
+
+        /// <summary>
+        /// Gets or sets the email.
+        /// </summary>
+        /// <value>
+        /// The email.
+        /// </value>
+        [Required]
+        public DateOnly BirthDate { get; set; }
     }
 }
