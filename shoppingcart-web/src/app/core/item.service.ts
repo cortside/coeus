@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { forkJoin, map, Observable } from 'rxjs';
 import { CatalogClient } from '../api/catalog/catalog.client';
 import { ListResult } from '../common/list-result';
-import { ItemModel } from './models/item.model';
+import { ItemModel } from '../item/models/item.model';
 
 @Injectable({
   providedIn: 'root'
