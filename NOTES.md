@@ -67,6 +67,9 @@ REST file api:
 * https://github.com/skazantsev/WebDavClient
 * https://github.com/saguiitay/WebDAVClient
 
+REST file api ideas
+* https://docs.microsoft.com/en-us/rest/api/storageservices/data-lake-storage-gen2
+
 https://andrewlock.net/exploring-dotnet-6-part-3-exploring-the-code-behind-webapplicationbuilder/
 https://github.com/andrewlock
 
