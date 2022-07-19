@@ -1,8 +1,10 @@
 <h1>Catalog items</h1>
 
 <div *ngIf="(items$ | async) as items">
-    <div *ngFor="let item of items.results">
+    <div *ngFor="let item of items.results" class="p-5">
         {{item | json}}
+
+        <button (click)="addItem(item.itemId)">add</button>
     </div>
 </div>
 
