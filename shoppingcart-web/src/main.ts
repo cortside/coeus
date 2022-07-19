@@ -41,7 +41,7 @@ loadSettings(environment.configurations)
                 // validate user existence
                 const currentUser = await userManager.signinSilent().catch(() => null);
                 if (currentUser == null) {
-                    // TODO: move this logic
+                    // TODO: move this logic, user can be authenticated
                     return userManager.signinRedirect({ state: window.location.href });
                 }
             }

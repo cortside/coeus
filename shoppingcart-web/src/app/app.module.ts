@@ -11,10 +11,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { ItemModule } from './item/item.module';
+import { NavigationComponent } from './navigation/navigation.component';
 
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, NavigationComponent],
     imports: [
         BrowserModule,
         HttpClientModule,
