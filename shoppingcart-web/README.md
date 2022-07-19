@@ -1,5 +1,8 @@
 # ShoppingcartWeb
 
+## Setup
+1. create file `config.user.json` in `/src` with `{}` as body
+
 ## Todo
 
 -   [ ] css framework
