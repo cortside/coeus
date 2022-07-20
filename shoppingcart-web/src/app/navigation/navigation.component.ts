@@ -11,7 +11,7 @@ import { ShoppingCartService } from '../core/shopping-cart.service';
 export class NavigationComponent implements OnInit {
 
   items$: Observable<CartItemModel[]>;
-  constructor(private service: ShoppingCartService) { 
+  constructor(private service: ShoppingCartService) {
     this.items$ = this.service.getItems();
   }
 

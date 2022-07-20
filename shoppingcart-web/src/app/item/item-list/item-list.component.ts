@@ -21,7 +21,7 @@ export class ItemListComponent implements OnInit {
 
     authorize() {}
 
-    addItem(itemId: string) {
-        this.shoppingCartService.addItem(itemId, 1);
+    addItem(item: ItemModel) {
+        this.shoppingCartService.addItem(item.sku, 1);
     }
 }

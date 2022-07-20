@@ -72,6 +72,9 @@
     <Content Update="appsettings.local.json">
       <TransformOnBuild>true</TransformOnBuild>
     </Content>
+    <Content Update="appsettings.local.json">
+      <TransformOnBuild>true</TransformOnBuild>
+    </Content>
     <Content Update="appsettings.json">
       <TransformOnBuild>true</TransformOnBuild>
     </Content>
