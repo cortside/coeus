@@ -4,7 +4,7 @@
     <div *ngFor="let item of items.results" class="p-5">
         {{item | json}}
 
-        <button (click)="addItem(item.itemId)">add</button>
+        <button (click)="addItem(item)">add</button>
     </div>
 </div>
 

@@ -15,7 +15,13 @@ export class ShoppingCartService {
       return this.items$;
     }
 
-    addItem(itemId: string, quantity: number) {
-        this.items.next([...this.items.value, { itemId: itemId, quantity: quantity }]);
+    addItem(itemSku: string, quantity: number) {
+        const item = this.items.value.find(i=>i.sku == itemSku);
+        if(item) {
+            item.quantity += quantity;
+            return;
+        }
+
+        this.items.next([...this.items.value, { sku: itemSku, quantity: quantity }]);
     }
 }

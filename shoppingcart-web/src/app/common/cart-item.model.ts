@@ -1,4 +1,4 @@
 export interface CartItemModel {
-    itemId: string;
+    sku: string;
     quantity: number;
 }
