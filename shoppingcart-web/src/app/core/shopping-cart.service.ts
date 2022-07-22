@@ -11,17 +11,19 @@ export class ShoppingCartService {
     private items$ = this.items.asObservable();
     constructor() {}
 
-    getItems(): Observable<CartItemModel[]> {
+    getCartItems(): Observable<CartItemModel[]> {
       return this.items$;
     }
 
     addItem(itemSku: string, quantity: number) {
-        const item = this.items.value.find(i=>i.sku == itemSku);
+        const list = [...this.items.value];
+        const item = list.find(i=>i.sku == itemSku);
         if(item) {
             item.quantity += quantity;
-            return;
+        } else {
+            list.push({ sku: itemSku, quantity: quantity });
         }
 
-        this.items.next([...this.items.value, { sku: itemSku, quantity: quantity }]);
+        this.items.next(list);
     }
 }
