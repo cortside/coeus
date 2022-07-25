@@ -1,22 +1,31 @@
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { User, UserManager, UserManagerSettings } from 'oidc-client';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { USER_MANAGER_SETTINGS_TOKEN } from './user-manager-settings.token';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AuthenticationService {
+    private userSubject = new BehaviorSubject<User | null>(null);
     public user: User | null = null;
     constructor(private userManager: UserManager, private router: Router) {
         this.userManager.events.addUserLoaded((u: User) => {
-            this.user = u;
+
+            this.user = u;// TODO
             console.log('addUserLoaded: ', this.user);
         });
     }
 
-    initialize(): Promise<void> {
+    initialize(): Promise<User | null> {
         return this.userManager.getUser().then((u) => {
-            this.user = u;
+            this.userSubject.next(u);
+            this.user = u; // TODO
+            return u;
         });
+    }
+
+    getUser(): Observable<User | null> {
+        return this.userSubject.asObservable();
     }
 
     isAuthenticated(): boolean {

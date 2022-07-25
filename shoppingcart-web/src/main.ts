@@ -31,20 +31,20 @@ loadSettings(environment.configurations)
             const userManager = new UserManager(Object.assign({}, identityDefaults, appConfig.identity));
             // intercept silent redirect and halt actual bootstrap
             if (userManager.settings.silent_redirect_uri && window.location.href.indexOf(userManager.settings.silent_redirect_uri) > -1) {
-                return userManager.signinSilentCallback();
+                return userManager.signinSilentCallback().then(() => {});
             }
             //handle signin callback
             if (userManager.settings.redirect_uri && window.location.href.indexOf(userManager.settings.redirect_uri) > -1) {
                 currentUser = await userManager.signinRedirectCallback();
                 window.history.replaceState({}, window.document.title, currentUser.state);
-            } else {
+            } /*else {
                 // validate user existence
                 const currentUser = await userManager.signinSilent().catch(() => null);
                 if (currentUser == null) {
                     // TODO: move this logic, user can be authenticated
                     return userManager.signinRedirect({ state: window.location.href });
                 }
-            }
+            } */
 
             // bootstrap
             const extraProviders = [
