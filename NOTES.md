@@ -1,5 +1,6 @@
 TODO:
 
+* read slave aware dbcontext
 * extension methods in cortside.health for services setup
 * extension methods in cortisde.domainevent for services setup
 * extension method to make registering client easier in restsharpclient
