@@ -30,7 +30,7 @@ assembly_info:
   assembly_informational_version: '{version}'
 
 before_build:
-- appveyor-retry dotnet restore shoppingcart-api -v Minimal
+- appveyor-retry dotnet restore shoppingcart-api/src -v Minimal
 - set DNX_BUILD_VERSION=%APPVEYOR_BUILD_NUMBER%
 - dotnet --info
 
@@ -69,8 +69,8 @@ build_script:
 - dotnet tool install --global dotnet-sonarscanner
 - echo "%SONAR_TOKEN%"
 - dotnet sonarscanner begin /o:"cortside" /k:"%SONAR_PROJECT%" /v:"%APPVEYOR_BUILD_VERSION%" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="%SONAR_TOKEN%" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" %SONAR_ARGUMENTS%
-- dotnet build shoppingcart-api --no-restore --configuration %Configuration% /property:"Version=%APPVEYOR_BUILD_VERSION%"
-- dotnet test shoppingcart-api --no-restore --no-build --collect:"XPlat Code Coverage" --settings ./shoppingcart-api/src/coverlet.runsettings.xml /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+- dotnet build shoppingcart-api/src --no-restore --configuration %Configuration% /property:"Version=%APPVEYOR_BUILD_VERSION%"
+- dotnet test shoppingcart-api/src --no-restore --no-build --collect:"XPlat Code Coverage" --settings ./shoppingcart-api/src/coverlet.runsettings.xml /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 - dotnet sonarscanner end /d:sonar.login="%SONAR_TOKEN%"
 
 cache:
