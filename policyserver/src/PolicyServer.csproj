@@ -16,7 +16,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Cortside.Common.Json" Version="1.1.285" />
+		<PackageReference Include="Cortside.Common.Json" Version="1.1.298-correlationtests" />
 		<PackageReference Include="Cortside.MockServer.AccessControl" Version="1.0.15-develop" />
 		<PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.2.32">
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
