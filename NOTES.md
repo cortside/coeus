@@ -81,6 +81,7 @@ https://docs.microsoft.com/en-us/aspnet/core/migration/50-to-60?view=aspnetcore-
 https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new-install
 https://blog.markvincze.com/overriding-configuration-in-asp-net-core-integration-tests/
 
+https://github.com/stevejgordon/CorrelationId
 
 
 TODONE:
