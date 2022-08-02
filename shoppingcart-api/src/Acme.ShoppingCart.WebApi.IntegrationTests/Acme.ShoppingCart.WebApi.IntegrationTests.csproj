@@ -5,14 +5,8 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Acme.ShoppingCart.WebApi.IntegrationTests.v3.ncrunchproject" />
-    <None Remove="appsettings.local.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="appsettings.local.json">
-      <TransformOnBuild>true</TransformOnBuild>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
     <Content Include="appsettings.integration.json">
       <TransformOnBuild>true</TransformOnBuild>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
