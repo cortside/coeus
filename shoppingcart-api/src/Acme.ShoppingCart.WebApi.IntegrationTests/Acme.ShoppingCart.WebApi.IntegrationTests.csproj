@@ -5,8 +5,14 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Acme.ShoppingCart.WebApi.IntegrationTests.v3.ncrunchproject" />
+    <None Remove="appsettings.local.json" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="appsettings.local.json">
+      <TransformOnBuild>true</TransformOnBuild>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="appsettings.integration.json">
       <TransformOnBuild>true</TransformOnBuild>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
@@ -19,7 +25,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Cortside.DomainEvent.Stub" Version="1.1.227" />
-    <PackageReference Include="Cortside.MockServer.AccessControl" Version="1.0.10" />
+    <PackageReference Include="Cortside.MockServer.AccessControl" Version="1.0.15-develop" />
     <PackageReference Include="coverlet.collector" Version="3.1.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

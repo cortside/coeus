@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.Facade;
@@ -65,7 +66,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
 
             string encryptedString = encryptionService.EncryptObject(search);
             string reqUrl = HttpHelper.BuildUriFromRequest(Request);
-            reqUrl += "?encryptedParams=" + encryptedString;
+            reqUrl += "?encryptedParams=" + HttpUtility.UrlEncode(encryptedString);
 
             Response.Headers.Add("Location", reqUrl);
             return StatusCode((int)HttpStatusCode.SeeOther);
