@@ -8,8 +8,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="1.1.225" />
-    <PackageReference Include="Cortside.RestApiClient" Version="1.0.63" />
+    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="1.1.227" />
+    <PackageReference Include="Cortside.RestApiClient" Version="1.0.75-develop" />
     <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.2.32">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

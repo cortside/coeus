@@ -6,8 +6,10 @@ using Acme.ShoppingCart.Domain.Enumerations;
 using Acme.ShoppingCart.UserClient.Models.Responses;
 using Cortside.AspNetCore.Auditable.Entities;
 using Cortside.Common.Validation;
+using Microsoft.EntityFrameworkCore;
 
 namespace Acme.ShoppingCart.Domain.Entities {
+    [Index(nameof(OrderResourceId), IsUnique = true)]
     [Table("Order")]
     public class Order : AuditableEntity {
         protected Order() {

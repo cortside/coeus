@@ -1,5 +1,6 @@
 TODO:
 
+* read slave aware dbcontext
 * extension methods in cortside.health for services setup
 * extension methods in cortisde.domainevent for services setup
 * extension method to make registering client easier in restsharpclient
@@ -80,6 +81,7 @@ https://docs.microsoft.com/en-us/aspnet/core/migration/50-to-60?view=aspnetcore-
 https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new-install
 https://blog.markvincze.com/overriding-configuration-in-asp-net-core-integration-tests/
 
+https://github.com/stevejgordon/CorrelationId
 
 
 TODONE:
