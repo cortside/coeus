@@ -11,14 +11,14 @@ import { ShoppingCartService } from '../core/shopping-cart.service';
 export class CheckoutComponent implements OnInit {
 
   items$: Observable<CartItemModel[]>;
-  constructor(private service: ShoppingCartService) { 
-    this.items$ = this.service.getItems();
+  constructor(private service: ShoppingCartService) {
+    this.items$ = this.service.getCartItems();
   }
 
   ngOnInit(): void {
   }
 
   checkout() {
-    
+
   }
 }

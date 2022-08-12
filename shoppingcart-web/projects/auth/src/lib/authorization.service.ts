@@ -11,8 +11,15 @@ export class AuthorizationService {
         this.authorizations = new Map<string, AuthorizationData>();
     }
 
-    register(serviceName: string, authorizationData: AuthorizationData) {
-        this.authorizations.set(serviceName, authorizationData);
+    set(data: Map<string, AuthorizationData>){
+        this.authorizations = data;
+    }
+
+    /**
+     * Resets all authorization data stored in the service.
+     */
+    reset() {
+        this.authorizations = new Map<string, AuthorizationData>();
     }
 
     authorize(policyName: string): boolean {
