@@ -13,3 +13,8 @@
 @import 'node_modules/muzieh-ngcomponents/design/_alert';
 @import 'node_modules/muzieh-ngcomponents/design/_date-picker';
 @import 'tailwindcss/utilities';
+
+// TODO:
+.text-block {
+    max-width: 100ch;
+}
