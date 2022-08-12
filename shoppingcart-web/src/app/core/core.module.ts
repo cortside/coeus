@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { authenticationIntializerProvider, AuthenticationTokenInterceptor, AuthModule, AUTHORIZATION_POLICY, PermissionAuthorizationPolicy, USER_MANAGER_SETTINGS_TOKEN } from '@muziehdesign/auth';
+import { AuthenticationTokenInterceptor, AuthModule, AUTHORIZATION_POLICY, PermissionAuthorizationPolicy, USER_MANAGER_SETTINGS_TOKEN } from '@muziehdesign/auth';
 import { AppConfig } from 'src/environments/app-config';
 
 @NgModule({
@@ -9,7 +9,7 @@ import { AppConfig } from 'src/environments/app-config';
     providers: [
         // auth
         { provide: USER_MANAGER_SETTINGS_TOKEN, useFactory: (config: AppConfig) => config.identity, deps: [AppConfig] },
-        authenticationIntializerProvider,
+        //authenticationIntializerProvider,
         {provide: AUTHORIZATION_POLICY, useClass: PermissionAuthorizationPolicy, multi: true},
         AuthenticationTokenInterceptor
     ],
