@@ -71,6 +71,14 @@ Request/Response logging:
 * https://elanderson.net/2017/02/log-requests-and-responses-in-asp-net-core/
 * https://github.com/exceptionnotfound/AspNetCoreRequestResponseMiddlewareDemo/blob/master/RequestResponseLoggingDemo.Web/Middleware/RequestResponseLoggingMiddleware.cs
 * https://github.com/xsoheilalizadeh/raccoonLog
+* https://github.com/salslab/AspNetCoreApiLoggingSample/blob/master/AspNetCoreApiLoggingSample/Middleware/ApiLoggingMiddleware.cs
+* https://salslab.com/a/safely-logging-api-requests-and-responses-in-asp-net-core/
+* https://blog.elmah.io/asp-net-core-request-logging-middleware/
+
+Logging:
+* https://benfoster.io/blog/serilog-best-practices/#event-type-enricher
+* https://nblumhardt.com/2020/10/bootstrap-logger/
+* https://esg.dev/posts/serilog-dos-and-donts/
 
 IdentityServer:
 * https://www.ashleyhollis.com/how-to-configure-azure-active-directory-with-identityserver4
@@ -94,6 +102,9 @@ REST file api:
 REST file api ideas
 * https://docs.microsoft.com/en-us/rest/api/storageservices/data-lake-storage-gen2
 
+RESTApi client:
+* https://github.com/collector-bank/common-restclient/blob/master/src/Collector.Common.RestClient/RestApiClient.cs
+
 https://andrewlock.net/exploring-dotnet-6-part-3-exploring-the-code-behind-webapplicationbuilder/
 https://github.com/andrewlock
 
@@ -105,9 +116,14 @@ https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new-install
 https://blog.markvincze.com/overriding-configuration-in-asp-net-core-integration-tests/
 
 https://github.com/stevejgordon/CorrelationId
+https://github.com/collector-bank/common-correlation
 
 https://www.singular.co.nz/2007/12/shortguid-a-shorter-and-url-friendly-guid-in-c-sharp/
+https://zogface.blog/2017/08/03/using-the-tryget-pattern-in-c-to-clean-up-your-code/
 
+https://github.com/collector-bank/backuptogit/tree/master/BackupToGit
+
+https://github.com/collector-bank/common-swagger-extensions
 
 TODONE:
 
