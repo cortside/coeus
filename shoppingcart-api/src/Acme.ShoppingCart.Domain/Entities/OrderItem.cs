@@ -37,5 +37,11 @@ namespace Acme.ShoppingCart.Domain.Entities {
 
             Quantity += quantity;
         }
+
+        internal void UpdateQuantity(int quantity) {
+            Guard.Against(() => quantity < 0, () => throw new ArgumentException($"Quantity of {quantity} is invalid"));
+
+            Quantity = quantity;
+        }
     }
 }
