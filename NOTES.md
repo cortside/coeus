@@ -61,7 +61,21 @@ TODO:
 	* https://github.com/mrjamiebowman-blog/kubernetes-tutorial-configmap/tree/main/KubernetesTutorial
 	* https://www.mrjamiebowman.com/software-development/dotnet/kubernetes-configmaps-with-net-core/
 	* https://github.com/anthonychu/aspnet-core-secrets-kubernetes/
+
+IdentityServer:
+* https://www.ashleyhollis.com/how-to-configure-azure-active-directory-with-identityserver4
 	
+WebApplicationFactory for integration tests:
+* https://andrewlock.net/exploring-dotnet-6-part-6-supporting-integration-tests-with-webapplicationfactory-in-dotnet-6/
+* https://andrewlock.net/exploring-dotnet-6-part-2-comparing-webapplicationbuilder-to-the-generic-host/	
+	
+PATCH:
+* https://docs.microsoft.com/en-us/aspnet/core/web-api/jsonpatch?view=aspnetcore-6.0
+
+
+HttpClient:
+* https://josef.codes/you-are-probably-still-using-httpclient-wrong-and-it-is-destabilizing-your-software/
+* https://github.com/joseftw/JOS.HttpClient
 
 REST file api:
 * https://hub.docker.com/r/ugeek/webdav
@@ -82,6 +96,8 @@ https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new-install
 https://blog.markvincze.com/overriding-configuration-in-asp-net-core-integration-tests/
 
 https://github.com/stevejgordon/CorrelationId
+
+https://www.singular.co.nz/2007/12/shortguid-a-shorter-and-url-friendly-guid-in-c-sharp/
 
 
 TODONE:
