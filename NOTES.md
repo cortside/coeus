@@ -62,6 +62,16 @@ TODO:
 	* https://www.mrjamiebowman.com/software-development/dotnet/kubernetes-configmaps-with-net-core/
 	* https://github.com/anthonychu/aspnet-core-secrets-kubernetes/
 
+DomainEvent:
+* https://github.com/Havret/dotnet-activemq-artemis-client/blob/master/src/ArtemisNetClient/Consumer.cs#L33
+* https://github.com/Havret/dotnet-activemq-artemis-client/blob/master/src/ArtemisNetClient/ProducerBase.cs
+
+Request/Response logging:
+* https://github.com/dotnet/aspnetcore/issues/3700
+* https://elanderson.net/2017/02/log-requests-and-responses-in-asp-net-core/
+* https://github.com/exceptionnotfound/AspNetCoreRequestResponseMiddlewareDemo/blob/master/RequestResponseLoggingDemo.Web/Middleware/RequestResponseLoggingMiddleware.cs
+* https://github.com/xsoheilalizadeh/raccoonLog
+
 IdentityServer:
 * https://www.ashleyhollis.com/how-to-configure-azure-active-directory-with-identityserver4
 	
@@ -71,7 +81,6 @@ WebApplicationFactory for integration tests:
 	
 PATCH:
 * https://docs.microsoft.com/en-us/aspnet/core/web-api/jsonpatch?view=aspnetcore-6.0
-
 
 HttpClient:
 * https://josef.codes/you-are-probably-still-using-httpclient-wrong-and-it-is-destabilizing-your-software/
