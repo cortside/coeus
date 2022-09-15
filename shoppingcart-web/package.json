@@ -19,7 +19,7 @@
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
     "@tailwindcss/forms": "^0.5.2",
-    "muzieh-ngcomponents": "0.0.7-830",
+    "muzieh-ngcomponents": "^0.0.7",
     "oidc-client": "^1.11.5",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
