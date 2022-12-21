@@ -1,5 +1,6 @@
 TODO:
 
+* dotnet new options for picking features in api template
 * read slave aware dbcontext
 * extension methods in cortside.health for services setup
 * extension methods in cortisde.domainevent for services setup

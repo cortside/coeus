@@ -1,5 +1,5 @@
 {
-  "id": "c228c1e9-5001-4918-abdf-73b5718e7900",
+  "id": "126f466e-248e-44f3-8c86-d19ed4e34bc4",
   "name": "My Visual Studio extensions",
   "description": "A collection of my Visual Studio extensions",
   "version": "1.0",
@@ -111,6 +111,10 @@
     {
       "name": "Productivity Power Tools Options Page 2022",
       "vsixId": "PPTOptionsPage2022.666715a6-3ac4-4bb7-b538-4d7625f99666"
+    },
+    {
+      "name": "Rainbow Braces",
+      "vsixId": "RainbowBraces.1dff1bc5-a8e4-477b-9054-2b9ec6bb88d1"
     },
     {
       "name": "Roslynator 2022",
