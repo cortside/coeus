@@ -16,8 +16,8 @@ try {
 	# ErrorAction must be Stop in order to trigger catch
 	Import-Module SqlServer -ErrorAction Stop
 } catch {
-	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-	Install-PackageProvider -Name NuGet -Force
+	#[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+	#Install-PackageProvider -Name NuGet -Force
 	Install-Module -Name SqlServer -AllowClobber -Force
 	Import-Module SqlServer
 }
