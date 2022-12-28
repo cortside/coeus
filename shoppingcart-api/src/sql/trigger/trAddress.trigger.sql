@@ -42,7 +42,7 @@ CREATE TRIGGER trAddress
 		SUSER_SNAME(), GETDATE(), @ROWS_COUNT, db_name(), @UserName, CURRENT_TRANSACTION_ID()
 	)
 	Set @AuditLogTransactionId = SCOPE_IDENTITY()
-	
+
 	-- [AddressId]
 	IF UPDATE([AddressId]) OR @action in ('INSERT', 'DELETE')      
 		BEGIN       

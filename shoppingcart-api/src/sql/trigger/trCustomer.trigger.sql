@@ -42,7 +42,7 @@ CREATE TRIGGER trCustomer
 		SUSER_SNAME(), GETDATE(), @ROWS_COUNT, db_name(), @UserName, CURRENT_TRANSACTION_ID()
 	)
 	Set @AuditLogTransactionId = SCOPE_IDENTITY()
-	
+
 	-- [CustomerId]
 	IF UPDATE([CustomerId]) OR @action in ('INSERT', 'DELETE')      
 		BEGIN       

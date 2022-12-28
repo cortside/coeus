@@ -124,7 +124,7 @@ CREATE TRIGGER {{triggerName}}
 		SUSER_SNAME(), GETDATE(), @ROWS_COUNT, db_name(), @UserName, CURRENT_TRANSACTION_ID()
 	)
 	Set @AuditLogTransactionId = SCOPE_IDENTITY()
-	{{columns}}
+{{columns}}
 END
 GO
 "@
