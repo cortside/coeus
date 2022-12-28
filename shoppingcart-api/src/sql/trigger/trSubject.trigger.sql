@@ -33,7 +33,7 @@ CREATE TRIGGER trSubject
 
 	-- determine username
 	DECLARE @UserName nvarchar(200);
-	SET @UserName = CURRENT_USER
+	set @username = current_user
 
 	-- insert parent transaction
 	INSERT INTO audit.AuditLogTransaction (TableName, TableSchema, Action, HostName, ApplicationName, AuditLogin, AuditDate, AffectedRows, DatabaseName, UserId, TransactionId)
@@ -42,8 +42,8 @@ CREATE TRIGGER trSubject
 		SUSER_SNAME(), GETDATE(), @ROWS_COUNT, db_name(), @UserName, CURRENT_TRANSACTION_ID()
 	)
 	Set @AuditLogTransactionId = SCOPE_IDENTITY()
-
-		-- [SubjectId]
+	
+	-- [SubjectId]
 	IF UPDATE([SubjectId]) OR @action in ('INSERT', 'DELETE')      
 		BEGIN       
 			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
@@ -157,12 +157,5 @@ CREATE TRIGGER trSubject
 			set @inserted = @inserted + @@ROWCOUNT
 		END
 
-
-
-	--IF @Inserted = 0
-	--	BEGIN
-	--	    -- believed to be contributing to deadlocks
-	--		-- DELETE FROM audit.AuditLogTransaction WHERE AuditLogTransactionId = @AuditLogTransactionId
-	--	END
 END
 GO
