@@ -166,7 +166,7 @@ left join (
 	JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE ccu ON tc.CONSTRAINT_NAME = ccu.Constraint_name
 	WHERE tc.CONSTRAINT_TYPE = 'Primary Key' 
 ) pk on pk.TABLE_NAME=t.TABLE_NAME and pk.TABLE_SCHEMA=t.TABLE_SCHEMA
-WHERE t.TABLE_NAME NOT IN ('__EFMigrationsHistory', 'Audit', 'AuditLog', 'AuditLogs', 'AuditLogTransaction', 'sysdiagrams', 'DiagnosticLog')
+WHERE t.TABLE_NAME NOT IN ('__EFMigrationsHistory', 'Audit', 'AuditLog', 'AuditLogs', 'AuditLogTransaction', 'sysdiagrams', 'DiagnosticLog', 'Outbox')
 "@
 
 if ($username -eq "") {
