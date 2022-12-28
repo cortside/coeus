@@ -32,15 +32,13 @@ echo "starting rabbit"
 docker run --name rabbitmq -d --restart unless-stopped -v /srv/rabbitmq:/etc/rabbitmq --hostname rabbitmq -p 15672:15672 -p 5672:5672 -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=password rabbitmq:3-management-alpine
 echo "starting seq"
 docker run --name seq -d --restart unless-stopped -e ACCEPT_EULA=Y -p 5341:80 datalust/seq:latest
-
-
+echo "starting portainer"
 docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
-
+echo "starting redis"
 #docker run --name redis -d --net redis-net -v /srv/redis/data:/data -p 6379:6379 redis:7-alpine redis-server --save 60 1 --loglevel warning
 docker run --name redis -d --net redis-net -v /srv/redislabs/data:/data -p 6379:6379 redislabs/redismod
+echo "starting redisinsight"
 docker run -d --name redisinsight --net redis-net -v /srv/redisinsight/db:/db -p 8001:8001 redislabs/redisinsight:latest
-
-docker ps
 
 do {
     write-host "Waiting for RabbitMQ web portal to start..."
@@ -56,3 +54,5 @@ do {
 Write-Host "Sending rabbit configuration"
 $jsonBody = Get-Content -Raw -Path (Join-Path (Get-ChildItem -filter "rabbitmq").fullname "rabbit_configuration.json")
 Invoke-RestMethod -Method Post -Uri "http://$($env:DOCKER_HOST)`:15672/api/definitions" -Headers @{Authorization = "Basic YWRtaW46cGFzc3dvcmQ=" } -ContentType "application/json" -Body $jsonBody
+
+echo "containers started"
