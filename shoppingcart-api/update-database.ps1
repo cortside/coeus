@@ -1,6 +1,6 @@
 Param
 (
-	[Parameter(Mandatory = $false)][string]$server = "localhost",
+	[Parameter(Mandatory = $false)][string]$server = "(LocalDB)\MSSQLLocalDB",
 	[Parameter(Mandatory=$false)][string]$database = "ShoppingCart",
 	[Parameter(Mandatory = $false)][string]$username = "",
 	[Parameter(Mandatory = $false)][string]$password = "",
@@ -10,14 +10,27 @@ Param
 	[Parameter(Mandatory = $false)][switch]$RebuildDatabase
 )
 
+if ((Test-Path 'env:MSSQL_SERVER') -and $server -eq "(LocalDB)\MSSQLLocalDB") {
+	$server = $env:MSSQL_SERVER
+
+	if ((Test-Path 'env:MSSQL_USER')) {
+		$username = $env:MSSQL_USER
+	}
+	if ((Test-Path 'env:MSSQL_PASSWORD')) {
+		$password = $env:MSSQL_PASSWORD
+	}
+}
+
+echo "Server: $server"
+
 $ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';
 
 try {
 	# ErrorAction must be Stop in order to trigger catch
 	Import-Module SqlServer -ErrorAction Stop
 } catch {
-	#[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-	#Install-PackageProvider -Name NuGet -Force
+	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+	Install-PackageProvider -Name PowershellGet -Force
 	Install-Module -Name SqlServer -AllowClobber -Force
 	Import-Module SqlServer
 }
