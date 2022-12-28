@@ -30,10 +30,8 @@ Write-Output @("
 ##########
 # 1. Refresh database named $triggergenDbName so that all migrations are applied for pristine state
 # 2. Generate new trigger sql scripts
-# 3. Convert encoding on updated scripts to UTF-8
 ##########
 ")
-start-sleep -Seconds 3
 
 if ($PSScriptRoot.Contains(' ')) { 
     throw "Your working directory has a space in the path, which is not supported.  Wise up and move to C:\work\Acme.ShoppingCart! And have a wonderful work day!"
@@ -42,8 +40,7 @@ if ($PSScriptRoot.Contains(' ')) {
 
 try {
     Import-Module SqlServer -ErrorAction Stop
-}
-catch {
+}  catch {
     Write-Output "Installing SqlServer module for powershell"
     Install-PackageProvider -Name NuGet -Force
     Install-Module -Name SqlServer -AllowClobber -Force
@@ -58,8 +55,7 @@ try {
 		Write-Output "Verifying SqlServer accessible at $server with user $username"
 		invoke-sqlcmd -ServerInstance $server -username $username -password $password -Query "select 'invoke-sqlcmd successful' AS SqlServerStatus" -QueryTimeout 5 -ConnectionTimeout 5 -ErrorAction Stop
 	}
-}
-catch {
+} catch {
     throw "Problem connecting to SqlServer at $server. Please confirm up and running and try again."
 }
 
@@ -82,16 +78,6 @@ if ($username -eq "") {
 
 Write-Host "creating $triggergenDbName and applying all migrations"
 & "$PSScriptRoot/update-database.ps1" -CreateDatabase -database $triggergenDbName
-
-Write-Output "update trigger scripts"
-# $generateTriggersPath = (Get-ChildItem -Path $PSScriptRoot -Recurse -Filter "GenerateTriggers.sql").FullName
-# Write-Output $generateTriggersPath
-# $outputPathVariable = "sqlcmdPath=$PSScriptRoot\src\sql\trigger"
-# if ($username -eq "") {
-	# invoke-sqlcmd -Variable $outputPathVariable -ServerInstance $server -inputFile $generateTriggersPath -Database $triggergenDbName -QueryTimeout 240 -ConnectionTimeout 240 -ErrorAction Stop
-# } else {
-	# invoke-sqlcmd -Variable $outputPathVariable -ServerInstance $server -username $username -password $password -inputFile $generateTriggersPath -Database $triggergenDbName -QueryTimeout 240 -ConnectionTimeout 240 -ErrorAction Stop	
-# }
 
 $triggerTemplate = @"
 DROP TRIGGER IF EXISTS {{triggerName}}
@@ -165,6 +151,7 @@ $columnTemplate = @"
 
 "@
 
+Write-Output "generate trigger scripts"
 $sql = @"
 SELECT QUOTENAME(t.TABLE_SCHEMA)+'.'+QUOTENAME(t.TABLE_NAME) QualifiedName, t.TABLE_SCHEMA TableSchema, t.TABLE_NAME TableName, coalesce(c.COLUMN_NAME, '') LastModifiedUserColumn, pk.COLUMN_NAME PrimaryKeyColumn
 FROM INFORMATION_SCHEMA.TABLES t
@@ -232,10 +219,6 @@ ORDER BY ORDINAL_POSITION
 	$filename = "src/sql/trigger/tr$($table.TableName).trigger.sql"
 	$content | Out-File -encoding UTF8 $filename
 }
-
-
-#Write-Output "convert encoding"
-#& "$PSScriptRoot\Convert-Encoding.ps1" -filePaths ((gci -Path $PSScriptRoot -Filter "*.trigger.sql" -Recurse) | % { $_.FullName })
 
 git status
 
