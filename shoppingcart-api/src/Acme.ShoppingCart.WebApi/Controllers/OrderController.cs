@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Data.Searches;
@@ -96,27 +95,25 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [HttpPost("/api/v{version:apiVersion}/customers/{resourceId}/orders")]
         [Authorize(Constants.Authorization.Permissions.CreateOrder)]
         [ProducesResponseType(typeof(OrderModel), StatusCodes.Status201Created)]
-        public async Task<IActionResult> CreateOrderAsync([FromBody] CreateCustomerOrderModel input, Guid resourceId) {
-            var dto = new OrderDto() {
-                Customer = new CustomerDto() {
-                    CustomerResourceId = resourceId,
-                },
-                Address = new AddressDto() {
-                    Street = input.Address.Street,
-                    City = input.Address.City,
-                    State = input.Address.State,
-                    Country = input.Address.Country,
-                    ZipCode = input.Address.ZipCode
-                },
-                Items = input.Items?.ConvertAll(x => new OrderItemDto() { Sku = x.Sku, Quantity = x.Quantity })
-            };
-            // convertall
-            foreach (var item in input.Items ?? new List<CreateOrderItemModel>()) {
-                dto.Items.Add(new OrderItemDto() { Sku = item.Sku, Quantity = item.Quantity });
-            }
+        public async Task<IActionResult> CreateCustomerOrderAsync([FromBody] CreateCustomerOrderModel input, Guid resourceId) {
+            using (LogContext.PushProperty("CustomerResourceId", resourceId)) {
+                var dto = new OrderDto() {
+                    Customer = new CustomerDto() {
+                        CustomerResourceId = resourceId,
+                    },
+                    Address = new AddressDto() {
+                        Street = input.Address.Street,
+                        City = input.Address.City,
+                        State = input.Address.State,
+                        Country = input.Address.Country,
+                        ZipCode = input.Address.ZipCode
+                    },
+                    Items = input.Items?.ConvertAll(x => new OrderItemDto() { Sku = x.Sku, Quantity = x.Quantity })
+                };
 
-            var order = await facade.CreateOrderAsync(dto).ConfigureAwait(false);
-            return CreatedAtAction(nameof(GetOrderAsync), new { id = order.OrderResourceId }, orderMapper.Map(order));
+                var order = await facade.CreateOrderAsync(dto).ConfigureAwait(false);
+                return CreatedAtAction(nameof(GetOrderAsync), new { id = order.OrderResourceId }, orderMapper.Map(order));
+            }
         }
 
         /// <summary>
@@ -134,13 +131,19 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                     Address = new AddressDto() {
                         Street = input.Address.Street,
                         City = input.Address.City,
-                        Country = input.Address.Country,
                         State = input.Address.State,
+                        Country = input.Address.Country,
                         ZipCode = input.Address.ZipCode
-                    }
+                    },
+                    Items = input.Items?.ConvertAll(x => new OrderItemDto() { Sku = x.Sku, Quantity = x.Quantity })
                 };
 
-                var result = await facade.UpdateOrderAsync(dto).ConfigureAwait(false);
+                OrderDto result;
+                try {
+                    result = await facade.UpdateOrderAsync(dto).ConfigureAwait(false);
+                } catch (Exception ex) {
+                    throw ex;
+                }
                 return Ok(orderMapper.Map(result));
             }
         }
@@ -164,7 +167,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// </summary>
         /// <param name="id"></param>
         /// <param name="input"></param>
-        [HttpPut("{id}/items")]
+        [HttpPost("{id}/items")]
         [Authorize(Constants.Authorization.Permissions.UpdateOrder)]
         [ProducesResponseType(typeof(OrderModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> AddOrderItemAsync(Guid id, CreateOrderItemModel input) {

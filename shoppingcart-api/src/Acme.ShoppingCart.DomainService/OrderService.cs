@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
 using Acme.ShoppingCart.Data.Repositories;
@@ -58,6 +60,27 @@ namespace Acme.ShoppingCart.DomainService {
         public async Task<Order> UpdateOrderAsync(OrderDto dto) {
             var entity = await orderRepository.GetAsync(dto.OrderResourceId).ConfigureAwait(false);
             entity.UpdateAddress(dto.Address.Street, dto.Address.City, dto.Address.State, dto.Address.Country, dto.Address.ZipCode);
+
+            // remove items not in dto
+            var itemsToRemove = new List<OrderItem>();
+            foreach (var item in entity.Items.Where(x => !dto.Items.Any(i => i.Sku == x.Sku))) {
+                itemsToRemove.Add(item);
+            }
+            entity.RemoveItems(itemsToRemove);
+
+            // add items not already on order
+            foreach (var item in dto.Items.Where(x => !entity.Items.Any(i => i.Sku == x.Sku))) {
+                var catalogItem = await catalog.GetItemAsync(item.Sku).ConfigureAwait(false);
+                entity.AddItem(catalogItem, item.Quantity);
+            }
+
+            // update any existing items with quantity changed
+            foreach (var item in dto.Items.Where(x => entity.Items.Any(i => i.Sku == x.Sku))) {
+                var i = entity.Items.First(i => i.Sku != item.Sku);
+                if (i.Quantity != item.Quantity) {
+                    entity.UpdateItem(i, item.Quantity);
+                }
+            }
 
             var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = DateTime.UtcNow };
             await publisher.PublishAsync(@event).ConfigureAwait(false);
