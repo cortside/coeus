@@ -167,7 +167,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// </summary>
         /// <param name="id"></param>
         /// <param name="input"></param>
-        [HttpPut("{id}/items")]
+        [HttpPost("{id}/items")]
         [Authorize(Constants.Authorization.Permissions.UpdateOrder)]
         [ProducesResponseType(typeof(OrderModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> AddOrderItemAsync(Guid id, CreateOrderItemModel input) {

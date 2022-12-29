@@ -69,6 +69,7 @@ namespace Acme.ShoppingCart.Domain.Entities {
 
             items.Remove(item);
         }
+
         public void RemoveItems(List<OrderItem> itemsToRemove) {
             AssertOpenOrder();
             Guard.Against(() => itemsToRemove == null || itemsToRemove.Count == 0, () => throw new InvalidOperationException("Items to remove must not be null and have items"));

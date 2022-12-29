@@ -112,6 +112,50 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         }
 
         [Fact]
+        public async Task ShouldAddOrderItemAsync() {
+            //arrange
+            var db = fixture.NewScopedDbContext();
+            var customer = db.Customers.First();
+            var orderRequest = new Order(customer, "", "", "", "", "");
+            db.Orders.Add(orderRequest);
+            await db.SaveChangesAsync().ConfigureAwait(false);
+
+            //act
+            var orderResponse = await client.GetAsync($"api/v1/orders/{orderRequest.OrderResourceId}").ConfigureAwait(false);
+
+            //assert
+            var orderContent = await orderResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+            orderResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+            var order = JsonConvert.DeserializeObject<OrderModel>(orderContent);
+            order.Customer.CustomerResourceId.Should().NotBeEmpty();
+            order.OrderResourceId.Should().NotBeEmpty();
+            order.Items.Count.Should().Be(0);
+            order.Status.Should().Be(Models.Enumerations.OrderStatus.Created);
+
+            // act
+            var itemRequest = new CreateOrderItemModel() { Sku = "123", Quantity = 1 };
+            var orderBody = new StringContent(JsonConvert.SerializeObject(itemRequest), Encoding.UTF8, "application/json");
+            orderResponse = await client.PostAsync($"api/v1/orders/{orderRequest.OrderResourceId}/items", orderBody).ConfigureAwait(false);
+
+            //assert
+            orderContent = await orderResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+            orderResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            //act
+            orderResponse = await client.GetAsync($"api/v1/orders/{orderRequest.OrderResourceId}").ConfigureAwait(false);
+
+            //assert
+            orderContent = await orderResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+            orderResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+            order = JsonConvert.DeserializeObject<OrderModel>(orderContent);
+            order.Customer.CustomerResourceId.Should().NotBeEmpty();
+            order.OrderResourceId.Should().NotBeEmpty();
+            order.Items.Count.Should().Be(1);
+            order.Status.Should().Be(Models.Enumerations.OrderStatus.Created);
+        }
+
+
+        [Fact]
         public async Task ShouldGetPagedOrdersAsync() {
             //arrange
             var db = fixture.NewScopedDbContext();
