@@ -76,12 +76,11 @@ namespace Acme.ShoppingCart.DomainService {
 
             // update any existing items with quantity changed
             foreach (var item in dto.Items.Where(x => entity.Items.Any(i => i.Sku == x.Sku))) {
-                var i = entity.Items.FirstOrDefault(i => i.Sku != item.Sku);
+                var i = entity.Items.First(i => i.Sku != item.Sku);
                 if (i.Quantity != item.Quantity) {
                     entity.UpdateItem(i, item.Quantity);
                 }
             }
-
 
             var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = DateTime.UtcNow };
             await publisher.PublishAsync(@event).ConfigureAwait(false);
