@@ -8,7 +8,6 @@ namespace Acme.ShoppingCart.BootStrap {
             installers = new List<IInstaller> {
                 new DomainEventInstaller(),
                 new ExampleHostedServiceInstaller(),
-                new HealthInstaller(),
                 new DbContextInstaller(),
                 new RepositoryInstaller(),
                 new DomainServiceInstaller(),

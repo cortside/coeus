@@ -10,16 +10,16 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Cortside.AspNetCore" Version="1.0.69-develop" />
-    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="1.0.69-develop" />
-    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="1.0.69-develop" />
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="1.0.69-develop" />
-    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="1.0.69-develop" />
-    <PackageReference Include="Cortside.Common.BootStrap" Version="1.1.298-correlationtests" />
-    <PackageReference Include="Cortside.Common.Correlation" Version="1.1.298-correlationtests" />
-    <PackageReference Include="Cortside.Common.Hosting" Version="1.1.298-correlationtests" />
-    <PackageReference Include="Cortside.Common.Json" Version="1.1.298-correlationtests" />
-    <PackageReference Include="Cortside.Health" Version="1.0.55-develop" />
+    <PackageReference Include="Cortside.AspNetCore" Version="1.1.80-develop" />
+    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="1.1.80-develop" />
+    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="1.1.80-develop" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="1.1.80-develop" />
+    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="1.1.80-develop" />
+    <PackageReference Include="Cortside.Common.BootStrap" Version="1.1.309-develop" />
+    <PackageReference Include="Cortside.Common.Correlation" Version="1.1.309-develop" />
+    <PackageReference Include="Cortside.Common.Hosting" Version="1.1.309-develop" />
+    <PackageReference Include="Cortside.Common.Json" Version="1.1.309-develop" />
+    <PackageReference Include="Cortside.Health" Version="1.0.60-develop" />
 
     <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
@@ -48,7 +48,7 @@
     <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
     <PackageReference Include="Serilog.Extensions.Hosting" Version="5.0.1" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="3.4.0" />
-    <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="3.1.0" />
+    <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
     <PackageReference Include="Serilog.Sinks.AzureEventHub" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
@@ -65,6 +65,9 @@
     <ProjectReference Include="..\Acme.ShoppingCart.Facade\Acme.ShoppingCart.Facade.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Content Update="appsettings.local.json">
+      <TransformOnBuild>true</TransformOnBuild>
+    </Content>
     <Content Update="appsettings.local.json">
       <TransformOnBuild>true</TransformOnBuild>
     </Content>
