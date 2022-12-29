@@ -41,7 +41,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             //assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            var respObj = JsonConvert.DeserializeObject<HealthModel>(content);
+            var respObj = JsonConvert.DeserializeObject<HealthModel>(content, fixture.SerializerSettings);
             Assert.True(respObj.Healthy, content);
         }
     }

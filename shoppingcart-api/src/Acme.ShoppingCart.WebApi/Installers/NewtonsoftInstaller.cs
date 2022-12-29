@@ -1,5 +1,6 @@
+#pragma warning disable S125 // Sections of code should not be commented out
+
 using Cortside.Common.BootStrap;
-using Cortside.Common.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -15,7 +16,9 @@ namespace Acme.ShoppingCart.WebApi.Installers {
                 settings.Converters.Add(new IsoDateTimeConverter {
                     DateTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
                 });
-                settings.Converters.Add(new IsoTimeSpanConverter());
+                // intentionally commented out because of conflict with
+                // Microsoft.AspNetCore.Mvc.Testing > 6.0.7 and Microsoft.NET.Test.Sdk > 17.2.0
+                //settings.Converters.Add(new IsoTimeSpanConverter());
                 return settings;
             };
         }
