@@ -19,7 +19,7 @@
     <PackageReference Include="Cortside.Common.Correlation" Version="1.1.309-develop" />
     <PackageReference Include="Cortside.Common.Hosting" Version="1.1.309-develop" />
     <PackageReference Include="Cortside.Common.Json" Version="1.1.309-develop" />
-    <PackageReference Include="Cortside.Health" Version="1.0.60-develop" />
+    <PackageReference Include="Cortside.Health" Version="1.0.61-develop" />
 
     <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
