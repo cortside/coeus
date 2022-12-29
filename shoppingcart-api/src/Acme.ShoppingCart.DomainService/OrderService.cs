@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
@@ -61,9 +62,11 @@ namespace Acme.ShoppingCart.DomainService {
             entity.UpdateAddress(dto.Address.Street, dto.Address.City, dto.Address.State, dto.Address.Country, dto.Address.ZipCode);
 
             // remove items not in dto
+            var itemsToRemove = new List<OrderItem>();
             foreach (var item in entity.Items.Where(x => !dto.Items.Any(i => i.Sku == x.Sku))) {
-                entity.RemoveItem(item);
+                itemsToRemove.Add(item);
             }
+            entity.RemoveItems(itemsToRemove);
 
             // add items not already on order
             foreach (var item in dto.Items.Where(x => !entity.Items.Any(i => i.Sku == x.Sku))) {

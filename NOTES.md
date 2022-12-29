@@ -1,5 +1,6 @@
 TODO:
-
+* updating using PATCH
+	* https://docs.microsoft.com/en-us/aspnet/core/web-api/jsonpatch?view=aspnetcore-6.0
 * dotnet new options for picking features in api template
 * read slave aware dbcontext
 * extension methods in cortside.health for services setup

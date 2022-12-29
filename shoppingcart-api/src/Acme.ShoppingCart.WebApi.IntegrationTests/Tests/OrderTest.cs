@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.WebApi.Models.Requests;
 using Acme.ShoppingCart.WebApi.Models.Responses;
+using FluentAssertions;
+using Newtonsoft.Json;
+using Xunit;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
     public class OrderTest : IClassFixture<IntegrationTestFactory<Startup>> {
@@ -49,6 +52,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             orderResponse.StatusCode.Should().Be(HttpStatusCode.Created);
             var order = JsonConvert.DeserializeObject<OrderModel>(orderContent);
             order.Customer.CustomerResourceId.Should().NotBeEmpty();
+            order.Items.Count.Should().Be(1);
         }
 
         [Fact]
@@ -88,6 +92,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             orderResponse.StatusCode.Should().Be(HttpStatusCode.Created);
             var order = JsonConvert.DeserializeObject<OrderModel>(orderContent);
             order.Customer.CustomerResourceId.Should().Be(customer.CustomerResourceId);
+            order.Items.Count.Should().Be(1);
         }
 
         [Fact]
@@ -141,7 +146,8 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
                     ZipCode = "84009"
                 },
                 Items = new System.Collections.Generic.List<CreateOrderItemModel>() {
-                     new CreateOrderItemModel() { Sku = "123", Quantity= 1 }
+                     new CreateOrderItemModel() { Sku = "123", Quantity= 1 },
+                     new CreateOrderItemModel() { Sku = "456", Quantity= 2 }
                  }
             };
 
@@ -154,8 +160,20 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             orderResponse.StatusCode.Should().Be(HttpStatusCode.Created);
             var order = JsonConvert.DeserializeObject<OrderModel>(orderContent);
             order.Customer.CustomerResourceId.Should().NotBeEmpty();
+            order.OrderResourceId.Should().NotBeEmpty();
+            order.Items.Count.Should().Be(2);
 
-        https://docs.microsoft.com/en-us/aspnet/core/web-api/jsonpatch?view=aspnetcore-6.0
+            // act
+            orderRequest.Items.RemoveAt(0);
+            orderRequest.Items.Add(new CreateOrderItemModel() { Sku = "789", Quantity = 3 });
+            orderBody = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");
+            orderResponse = await client.PutAsync($"/api/v1/orders/{order.OrderResourceId}", orderBody).ConfigureAwait(false);
+            orderContent = await orderResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+            orderResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+            order = JsonConvert.DeserializeObject<OrderModel>(orderContent);
+            order.Customer.CustomerResourceId.Should().NotBeEmpty();
+            order.Items.Count.Should().Be(2);
+            order.Items.Where(x => x.Sku == "789").Should().NotBeEmpty();
         }
     }
 }
