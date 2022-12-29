@@ -40,6 +40,18 @@ Before you run this for the first time you will need to run powershell script `.
 This will create the `build.json` file in:
 src\Acme.ShoppingCart.WebApi\build.json
 
+## Database location
+
+You can override the default expected location of the database using environment variables.  The easiest way to set these is to set them up in your powershell profile (`notepad $PROFILE`):
+
+```powershell
+$env:MSSQL_SERVER="kehlstein"
+$env:MSSQL_USER="sa"
+$env:MSSQL_PASSWORD="password1@"
+```
+
+The default will be to use Sql Express if `$env:MSSQL_SERVER` is not set.  The default to be to use logged in user with trusted connection if `$env:MSSQL_USER` is not set.  The above example shows how to use a remote host with sql authentication enabled.
+
 ## Create database locally
 
 Run powershell script `.\update-database.ps1 -CreateDatabase`
@@ -86,3 +98,40 @@ Database changes are deployed to shared environments when Octopus runs `update-d
 - you may need to run rabbitmq in docker locally, when working with domain event message publication and consumption
   - run `start-rabbitmq.ps1` - this will start a container and configure queues and subscriptions per the config in the cloned repo
     - admin UI can be accessed at http://localhost:15672/ with admin/password as credentials
+
+## Known problems
+I came across this today while updating some of the microsoft libraries and it took me way to long to figure out -- i only noticed this from command line, which was also noticed by the docker build -- i did not see this with ncrunch but with vstest it would just show the tests as not run and no error.
+The solution that i came up with was to keep Microsoft.AspNetCore.Mvc.Testing at 6.0.7 and Microsoft.NET.Test.Sdk at 17.2.0.  I tried these individually and singly the did not fix the problem but both of them together did.
+Pinning to old version is not the solution, but it is an immediate fix until i can see better what is going on.
+```csharp
+The active test run was aborted. Reason: Error converting value "P0Y0M0DT0H0M3S" to type 'System.TimeSpan'. Path 'Payload.TestRunCompleteArgs.ElapsedTimeInRunningTests', line 1, position 289.
+
+Test Run Aborted with error System.Exception: One or more errors occurred.
+ ---> System.Exception: Error converting value "P0Y0M0DT0H0M3S" to type 'System.TimeSpan'. Path 'Payload.TestRunCompleteArgs.ElapsedTimeInRunningTests', line 1, position 289.
+ ---> System.Exception: Could not cast or convert from System.String to System.TimeSpan.
+   at Newtonsoft.Json.Utilities.ConvertUtils.EnsureTypeAssignable(Object value, Type initialType, Type targetType)
+   at Newtonsoft.Json.Utilities.ConvertUtils.ConvertOrCast(Object initialValue, CultureInfo culture, Type targetType)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.EnsureType(JsonReader reader, Object value, CultureInfo culture, JsonContract contract, Type targetType)
+   --- End of inner exception stack trace ---
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.EnsureType(JsonReader reader, Object value, CultureInfo culture, JsonContract contract, Type targetType)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.CreateValueInternal(JsonReader reader, Type objectType, JsonContract contract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerMember, Object existingValue)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.SetPropertyValue(JsonProperty property, JsonConverter propertyConverter, JsonContainerContract containerContract, JsonProperty containerProperty, JsonReader reader, Object target)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.PopulateObject(Object newObject, JsonReader reader, JsonObjectContract contract, JsonProperty member, String id)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.CreateObject(JsonReader reader, Type objectType, JsonContract contract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerMember, Object existingValue)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.CreateValueInternal(JsonReader reader, Type objectType, JsonContract contract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerMember, Object existingValue)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.SetPropertyValue(JsonProperty property, JsonConverter propertyConverter, JsonContainerContract containerContract, JsonProperty containerProperty, JsonReader reader, Object target)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.PopulateObject(Object newObject, JsonReader reader, JsonObjectContract contract, JsonProperty member, String id)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.CreateObject(JsonReader reader, Type objectType, JsonContract contract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerMember, Object existingValue)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.CreateValueInternal(JsonReader reader, Type objectType, JsonContract contract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerMember, Object existingValue)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.SetPropertyValue(JsonProperty property, JsonConverter propertyConverter, JsonContainerContract containerContract, JsonProperty containerProperty, JsonReader reader, Object target)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.PopulateObject(Object newObject, JsonReader reader, JsonObjectContract contract, JsonProperty member, String id)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.CreateObject(JsonReader reader, Type objectType, JsonContract contract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerMember, Object existingValue)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.CreateValueInternal(JsonReader reader, Type objectType, JsonContract contract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerMember, Object existingValue)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.JsonDataSerializer.DeserializePayload[T](Message message)
+   at Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.TestRequestSender.OnExecutionMessageReceived(MessageReceivedEventArgs messageReceived, IInternalTestRunEventsHandler testRunEventsHandler)
+   --- End of inner exception stack trace ---.
+```

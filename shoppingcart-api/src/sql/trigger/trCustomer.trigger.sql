@@ -43,7 +43,7 @@ CREATE TRIGGER trCustomer
 	)
 	Set @AuditLogTransactionId = SCOPE_IDENTITY()
 
-		-- [CustomerId]
+	-- [CustomerId]
 	IF UPDATE([CustomerId]) OR @action in ('INSERT', 'DELETE')      
 		BEGIN       
 			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
@@ -214,12 +214,5 @@ CREATE TRIGGER trCustomer
 			set @inserted = @inserted + @@ROWCOUNT
 		END
 
-
-
-	--IF @Inserted = 0
-	--	BEGIN
-	--	    -- believed to be contributing to deadlocks
-	--		-- DELETE FROM audit.AuditLogTransaction WHERE AuditLogTransactionId = @AuditLogTransactionId
-	--	END
 END
 GO

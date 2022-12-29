@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Acme.ShoppingCart.BootStrap;
+using Acme.ShoppingCart.Health;
 using Acme.ShoppingCart.WebApi.Installers;
 using Cortside.AspNetCore;
 using Cortside.AspNetCore.AccessControl;
@@ -9,6 +10,8 @@ using Cortside.AspNetCore.Auditable;
 using Cortside.AspNetCore.Auditable.Entities;
 using Cortside.AspNetCore.Builder;
 using Cortside.AspNetCore.Swagger;
+using Cortside.Health;
+using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -42,9 +45,16 @@ namespace Acme.ShoppingCart.WebApi {
         /// </summary>
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services) {
+            // add ApplicationInsights telemetry
             var serviceName = Configuration["Service:Name"];
-            var instrumentationKey = Configuration["ApplicationInsights:InstrumentationKey"];
-            services.AddApplicationInsights(serviceName, instrumentationKey);
+            var config = Configuration.GetSection("ApplicationInsights").Get<ApplicationInsightsServiceOptions>();
+            services.AddApplicationInsights(serviceName, config);
+
+            // add health services
+            services.AddHealth(o => {
+                o.UseConfiguration(Configuration);
+                o.AddCustomCheck("example", typeof(ExampleCheck));
+            });
 
             // add controllers and all of the api defaults
             services.AddApiDefaults();
