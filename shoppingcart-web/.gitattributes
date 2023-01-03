@@ -15,7 +15,6 @@
 ##   text and leave all files detected as binary untouched.
 ##   This will handle all files NOT defined below.
 *                 text=auto
-*                 text eol=lf
 
 # Source code
 *.bash            text eol=lf
