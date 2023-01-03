@@ -10,7 +10,7 @@
     </PackageReference>
     <PackageReference Include="Cortside.AspNetCore.Common" Version="1.1.80-develop" />
     <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="1.1.80-develop" />
-    <PackageReference Include="Cortside.Common.Security" Version="1.1.309-develop" />
+    <PackageReference Include="Cortside.Common.Security" Version="1.2.318" />
     <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="1.1.243-develop" />
     <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
