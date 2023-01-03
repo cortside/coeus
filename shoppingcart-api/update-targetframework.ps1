@@ -1,19 +1,38 @@
 using namespace System.Collections.Generic # for List<T> 
 
+Param
+(
+	[Parameter(Mandatory = $false)][string]$targetVersion = "net7.0"
+)
+
+function Print-Version-Statistics([List[object]] $projsWithVersion) {
+    $numberOfProjectsByVersion = @{}
+
+    foreach($proj in $projsWithVersion)
+    {
+        if($numberOfProjectsByVersion.ContainsKey($proj.Version))
+        {
+            $numberOfProjectsByVersion[$proj.Version] = $numberOfProjectsByVersion[$proj.Version] + 1
+        }
+        else
+        {
+            $numberOfProjectsByVersion[$proj.Version] = 1
+        }
+    }
+    
+    Write-Host "`nCurrent version distribution:"
+    $numberOfProjectsByVersion
+}
+
 $dir = "." # points to "repository root"
-$targetVersion = "net6.0"
-
 $projFiles = Get-ChildItem $dir -Recurse -Filter *.csproj
-
 $projsWithVersion = [List[object]]::new()
 
-foreach($file in $projFiles)
-{
+foreach($file in $projFiles) {
     $content = [xml](Get-Content $file.FullName)
     $versionNodes = $content.GetElementsByTagName("TargetFramework");
         
-    switch($versionNodes.Count)
-    {
+    switch($versionNodes.Count) {
         0 {
             Write-Host "The project has no framework version: $file.FullName"
             break;
@@ -35,26 +54,6 @@ foreach($file in $projFiles)
             break;
         }
     }
-}
-
-function Print-Version-Statistics([List[object]] $projsWithVersion)
-{
-    $numberOfProjectsByVersion = @{}
-
-    foreach($proj in $projsWithVersion)
-    {
-        if($numberOfProjectsByVersion.ContainsKey($proj.Version))
-        {
-            $numberOfProjectsByVersion[$proj.Version] = $numberOfProjectsByVersion[$proj.Version] + 1
-        }
-        else
-        {
-            $numberOfProjectsByVersion[$proj.Version] = 1
-        }
-    }
-    
-    Write-Host "`nCurrent version distribution:"
-    $numberOfProjectsByVersion
 }
 
 Print-Version-Statistics($projsWithVersion)
