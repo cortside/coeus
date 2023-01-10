@@ -10,21 +10,21 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Cortside.AspNetCore" Version="1.1.80-develop" />
-    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="1.1.80-develop" />
-    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="1.1.80-develop" />
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="1.1.80-develop" />
-    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="1.1.80-develop" />
-    <PackageReference Include="Cortside.Common.BootStrap" Version="1.2.328" />
-    <PackageReference Include="Cortside.Common.Correlation" Version="1.2.328" />
-    <PackageReference Include="Cortside.Common.Hosting" Version="1.2.328" />
-    <PackageReference Include="Cortside.Common.Json" Version="1.2.328" />
-    <PackageReference Include="Cortside.Health" Version="1.0.61-develop" />
+    <PackageReference Include="Cortside.AspNetCore" Version="1.2.90" />
+    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="1.2.90" />
+    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="1.2.90" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="1.2.90" />
+    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="1.2.90" />
+    <PackageReference Include="Cortside.Common.BootStrap" Version="1.2.332" />
+    <PackageReference Include="Cortside.Common.Correlation" Version="1.2.332" />
+    <PackageReference Include="Cortside.Common.Hosting" Version="1.2.332" />
+    <PackageReference Include="Cortside.Common.Json" Version="1.2.332" />
+    <PackageReference Include="Cortside.Health" Version="1.1.75" />
 
     <PackageReference Include="Lindhart.Analyser.MissingAwaitWarning" Version="2.0.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.12">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.13">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
