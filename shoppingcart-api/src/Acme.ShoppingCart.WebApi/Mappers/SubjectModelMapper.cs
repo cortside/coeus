@@ -1,5 +1,5 @@
-using Acme.ShoppingCart.Dto;
-using Acme.ShoppingCart.WebApi.Models;
+using Cortside.AspNetCore.Common.Dtos;
+using Cortside.AspNetCore.Common.Models;
 
 namespace Acme.ShoppingCart.WebApi.Mappers {
     public class SubjectModelMapper {

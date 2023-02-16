@@ -8,7 +8,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="1.2.90" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="1.2.95" />
     <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="1.2.90" />
     <PackageReference Include="Cortside.Common.Security" Version="1.2.332" />
     <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="1.3.256" />

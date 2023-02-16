@@ -1,4 +1,5 @@
 using System;
+using Cortside.AspNetCore.Common.Models;
 
 namespace Acme.ShoppingCart.WebApi.Models.Responses {
     public class OrderItemModel : AuditableEntityModel {

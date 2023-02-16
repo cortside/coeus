@@ -13,7 +13,7 @@
     <PackageReference Include="Cortside.AspNetCore" Version="1.2.90" />
     <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="1.2.90" />
     <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="1.2.90" />
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="1.2.90" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="1.2.95" />
     <PackageReference Include="Cortside.AspNetCore.Swagger" Version="1.2.90" />
     <PackageReference Include="Cortside.Common.BootStrap" Version="1.2.332" />
     <PackageReference Include="Cortside.Common.Correlation" Version="1.2.332" />
