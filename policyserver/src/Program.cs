@@ -5,6 +5,7 @@ using System.Threading;
 using Cortside.Common.Json;
 using Cortside.MockServer;
 using Cortside.MockServer.AccessControl;
+using Cortside.MockServer.AccessControl.Models;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -50,7 +51,7 @@ namespace PolicyServer
                 .ConfigureBuilder<CommonMock>()
                 .ConfigureBuilder(new IdentityServerMock("./Data/discovery.json", "./Data/jwks.json"))
                 .ConfigureBuilder(new SubjectMock("./Data/subjects.json"))
-                .ConfigureBuilder<CatalogMock>();
+                .ConfigureBuilder(new CatalogMock("./Data/subjects.json"));
 
             Log.Logger.Debug($"Server is listening at {server.Url}");
 

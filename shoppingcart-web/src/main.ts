@@ -27,6 +27,8 @@ loadSettings(environment.configurations)
                 monitorSession: true,
                 automaticSilentRenew: true,
                 response_type: 'id_token token',
+                filterProtocolClaims: true,
+                loadUserInfo: true,                
             };
             const userManager = new UserManager(Object.assign({}, identityDefaults, appConfig.identity));
             // intercept silent redirect and halt actual bootstrap
