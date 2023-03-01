@@ -63,6 +63,70 @@
           }
         }
       ]
+    },
+    {
+      "clientId": "shoppingcart-web",
+      "subjectId": "shoppingcart-web",
+      "claims": [
+        {
+          "type": "active",
+          "value": "true"
+        }
+      ],
+      "userType": "service",
+      "referenceToken": "107d225e3ea706bbbceb83593daf5c73c1347a89eaa89f253ca845beffb3e3f9",
+      "policies": [
+        {
+          "policyName": "ShoppingCart*",
+          "authorization": {
+            "roles": [
+              "Internal"
+            ],
+            "permissions": [
+              "GetOrders",
+              "GetOrder",
+              "CreateOrder",
+              "UpdateOrder",
+              "GetCustomers",
+              "GetCustomer",
+              "CreateCustomer",
+              "UpdateCustomer"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "shoppingcart-service",
+      "subjectId": "shoppingcart-service",
+      "claims": [
+        {
+          "type": "active",
+          "value": "true"
+        }
+      ],
+      "userType": "service",
+      "referenceToken": "107d225e3ea706bbbceb83593daf5c73c1347a89eaa89f253ca845beffb5e3f9",
+      "policies": [
+        {
+          "policyName": "ShoppingCart*",
+          "authorization": {
+            "roles": [
+              "Internal"
+            ],
+            "permissions": [
+              "GetOrders",
+              "GetOrder",
+              "CreateOrder",
+              "UpdateOrder",
+              "GetCustomers",
+              "GetCustomer",
+              "CreateCustomer",
+              "UpdateCustomer"
+            ]
+          }
+        }
+      ]
     }
   ]
 }

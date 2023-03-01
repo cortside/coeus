@@ -39,18 +39,16 @@ namespace PolicyServer.Mocks
                             UnitPrice = new decimal(rnd.Next(10000) / 100.0)
                         }))
                 );
-            server
-                .Given(
-                    Request.Create().WithPath("/runtime/policy/Shopping*")
-                        .UsingPost()
-                )
-                .RespondWith(
-                    Response.Create()
-                        .WithStatusCode(200)
-                        .WithHeader("Content-Type", "application/json")
-                        .WithBody((Func<IRequestMessage, string>)(_ => JsonConvert.SerializeObject((object)this.subjects.SubjectsList.First().Policies[0].Authorization))));
-                        //.WithBody(r => this.subjects.SubjectsList.First().ToJson())
-                
+            // server
+            //     .Given(
+            //         Request.Create().WithPath("/runtime/policy/Shopping*")
+            //             .UsingPost()
+            //     )
+            //     .RespondWith(
+            //         Response.Create()
+            //             .WithStatusCode(200)
+            //             .WithHeader("Content-Type", "application/json")
+            //             .WithBody((Func<IRequestMessage, string>)(_ => JsonConvert.SerializeObject((object)this.subjects.SubjectsList.First().Policies[0].Authorization))));
         }
     }
 }
