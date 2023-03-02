@@ -1,6 +1,6 @@
 using System;
 
-namespace Acme.ShoppingCart.UserClient.Models.Responses {
+namespace Acme.ShoppingCart.CatalogApi.Models.Responses {
     public class CatalogItem {
         public Guid ItemId { get; set; }
         public string Name { get; set; }

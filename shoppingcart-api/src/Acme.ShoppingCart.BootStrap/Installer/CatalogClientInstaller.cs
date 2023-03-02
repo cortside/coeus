@@ -1,5 +1,5 @@
+using Acme.ShoppingCart.CatalogApi;
 using Acme.ShoppingCart.Configuration;
-using Acme.ShoppingCart.UserClient;
 using Cortside.Common.BootStrap;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;

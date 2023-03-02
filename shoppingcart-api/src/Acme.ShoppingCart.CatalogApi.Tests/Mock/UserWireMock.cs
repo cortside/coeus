@@ -1,13 +1,13 @@
 using System;
 using System.Text.RegularExpressions;
-using Acme.ShoppingCart.UserClient.Models.Responses;
+using Acme.ShoppingCart.CatalogApi.Models.Responses;
 using Cortside.RestApiClient.Authenticators.OpenIDConnect;
 using Newtonsoft.Json;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
 using WireMock.Server;
 
-namespace Acme.ShoppingCart.UserClient.Tests.Mock {
+namespace Acme.ShoppingCart.CatalogApi.Tests.Mock {
     public class UserWireMock {
         public WireMockServer server { get; }
 

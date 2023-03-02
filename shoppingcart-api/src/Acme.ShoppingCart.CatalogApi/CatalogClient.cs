@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
+using Acme.ShoppingCart.CatalogApi.Models.Responses;
 using Acme.ShoppingCart.Exceptions;
-using Acme.ShoppingCart.UserClient.Models.Responses;
 using Cortside.RestApiClient;
 using Cortside.RestApiClient.Authenticators.OpenIDConnect;
 using Microsoft.Extensions.Caching.Distributed;
@@ -10,24 +10,24 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RestSharp;
 
-namespace Acme.ShoppingCart.UserClient {
+namespace Acme.ShoppingCart.CatalogApi {
     public class CatalogClient : IDisposable, ICatalogClient {
         private readonly RestApiClient client;
         private readonly ILogger<CatalogClient> logger;
 
-        public CatalogClient(CatalogClientConfiguration userClientConfiguration, ILogger<CatalogClient> logger) {
+        public CatalogClient(CatalogClientConfiguration catalogClientConfiguration, ILogger<CatalogClient> logger) {
             this.logger = logger;
             var options = new RestApiClientOptions {
-                BaseUrl = new Uri(userClientConfiguration.ServiceUrl),
+                BaseUrl = new Uri(catalogClientConfiguration.ServiceUrl),
                 FollowRedirects = true,
-                Authenticator = new OpenIDConnectAuthenticator(userClientConfiguration.Authentication),
+                Authenticator = new OpenIDConnectAuthenticator(catalogClientConfiguration.Authentication),
                 Serializer = new JsonNetSerializer(),
                 Cache = new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions()))
             };
             client = new RestApiClient(logger, options);
         }
 
-        public CatalogClient(CatalogClientConfiguration userClientConfiguration, ILogger<CatalogClient> logger, RestApiClientOptions options) {
+        public CatalogClient(CatalogClientConfiguration catalogClientConfiguration, ILogger<CatalogClient> logger, RestApiClientOptions options) {
             this.logger = logger;
             client = new RestApiClient(logger, options);
         }
