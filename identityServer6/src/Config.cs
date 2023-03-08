@@ -43,7 +43,6 @@ public static class Config
     public static IEnumerable<Client> Clients =>
         new List<Client> 
         {
-            // machine-to-machine client (from quickstart 1)
             new Client
             {
                 ClientId = "shoppingcart-web",
@@ -64,7 +63,6 @@ public static class Config
                     "shoppingcart-service"
                 },
             },
-            // interactive ASP.NET Core Web App
             new Client
             {
                 ClientId = "shoppingcart-service",
