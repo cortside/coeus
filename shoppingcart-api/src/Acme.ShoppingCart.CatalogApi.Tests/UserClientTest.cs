@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using Acme.ShoppingCart.UserClient.Models.Responses;
-using Acme.ShoppingCart.UserClient.Tests.Mock;
+using Acme.ShoppingCart.CatalogApi.Models.Responses;
+using Acme.ShoppingCart.CatalogApi.Tests.Mock;
 using Cortside.RestApiClient;
 using Cortside.RestApiClient.Authenticators.OpenIDConnect;
 using FluentAssertions;
@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 using RichardSzalay.MockHttp;
 using Xunit;
 
-namespace Acme.ShoppingCart.UserClient.Tests {
+namespace Acme.ShoppingCart.CatalogApi.Tests {
     public class UserClientTest {
         private readonly ICatalogClient userClient;
         private readonly CatalogClientConfiguration config;
