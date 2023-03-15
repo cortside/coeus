@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Security.Claims;
 using Acme.ShoppingCart.Data;
+using Acme.ShoppingCart.Data.Generators;
 using Cortside.AspNetCore.Auditable;
 using Cortside.Common.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 
 namespace Acme.ShoppingCart.WebApi {
@@ -27,8 +29,9 @@ namespace Acme.ShoppingCart.WebApi {
 
             var connectionString = configuration.GetSection("Database").GetValue<string>("ConnectionString");
 
-            var builder = new DbContextOptionsBuilder<DatabaseContext>();
-            builder.UseSqlServer(connectionString);
+            var builder = new DbContextOptionsBuilder<DatabaseContext>()
+                .UseSqlServer(connectionString)
+                .ReplaceService<IMigrationsSqlGenerator, DescriptionMigrationSqlGenerator>();
 
             var principal = new SubjectPrincipal(new List<Claim>() { new Claim("sub", Guid.Empty.ToString()) });
             return new DatabaseContext(builder.Options, principal, new DefaultSubjectFactory());

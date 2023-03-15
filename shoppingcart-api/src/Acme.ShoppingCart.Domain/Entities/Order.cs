@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Acme.ShoppingCart.Domain.Entities {
     [Index(nameof(OrderResourceId), IsUnique = true)]
     [Table("Order")]
+    [Comment("Orders")]
     public class Order : AuditableEntity {
         protected Order() {
             // Required by EF as it doesn't know about Customer
@@ -25,11 +26,14 @@ namespace Acme.ShoppingCart.Domain.Entities {
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Comment("Primary Key")]
         public int OrderId { get; private set; }
 
+        [Comment("Public unique identifier")]
         public Guid OrderResourceId { get; private set; }
 
         [Column(TypeName = "nvarchar(20)")]
+        [Comment("Order status (created, paid, shipped, cancelled)")]
         public OrderStatus Status { get; private set; }
 
         [ForeignKey("CustomerId")]
