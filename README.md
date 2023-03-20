@@ -16,5 +16,6 @@
 
 ## Getting started
 1. Run policyserver 
-1. Run shoppingcart-api
-1. Run shoppingcart-web
+2. Run identityServer6
+3. Run shoppingcart-api
+4. Run shoppingcart-web
