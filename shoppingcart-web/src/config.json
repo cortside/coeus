@@ -2,8 +2,11 @@
     "application": {
         "name": "shoppingcart-web"
     },
+    "shoppingCartApi": {
+        "url": "http://shoppingcart-api"
+    },
     "identity": {
-        "authority": "https://identityserver",
+        "authority": "http://identityserver",
         "client_id": "shoppingcart-web",
         "scope": "openid",
         "redirect_uri": "http://localhost:4200/login-redirect",

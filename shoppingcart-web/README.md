@@ -1,7 +1,12 @@
 # ShoppingcartWeb
 
 ## Setup
-1. create file `config.user.json` in `/src` with `{}` as body
+1. create file `config.user.json` in `/src`. Body example:
+    ```
+    {
+
+    }
+    ```
 
 ## Extensions
 1. Angular Language Service
