@@ -351,3 +351,6 @@ MigrationBackup/
 
 *.ncrunchsolution
 *.local.json
+
+*.db-shm
+*.db-wal
