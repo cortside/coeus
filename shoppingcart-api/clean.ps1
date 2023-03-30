@@ -21,7 +21,10 @@ Function Invoke-Cleanup {
 	}
 
 	# clean package, bin and obj folders
-	Get-ChildItem .\ -include packages,bin,obj,node_modules -Recurse | Where-Object {$_.FullName -NotMatch "BuildScripts"} | foreach ($_) { Write-Host "Removing $($_.fullname)"; remove-item $_.fullname -Force -Recurse }
+	Get-ChildItem .\ -include packages,bin,obj,node_modules -Recurse | Where-Object {$_.FullName -NotMatch "BuildScripts"} | %{ 
+		Write-Host "Removing $($_.fullname)"; 
+		remove-item $_.fullname -Force -Recurse 
+	}
 
 	#Find nunit files
 	Get-ChildItem -include *.nunit -Recurse |
@@ -37,6 +40,15 @@ Function Invoke-Cleanup {
 				}
 				Remove-Item $results
 		}
+	}
+	
+	#delete dist folder in directories that have package.json
+	gci -Recurse package.json | %{ 
+		$dir = $_.DirectoryName; 
+		If (Test-Path "$dir/dist" ){ 
+			Write-Output "$dir/dist"; 
+			rm "$dir/dist" -force -recurse  
+		} 
 	}
 
 	remove "TestResults"
