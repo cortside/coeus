@@ -44,10 +44,10 @@ Function Invoke-Cleanup {
 	
 	#delete dist folder in directories that have package.json
 	gci -Recurse package.json | %{ 
-		$dir = $_.DirectoryName; 
-		If (Test-Path "$dir/dist" ){ 
-			Write-Output "$dir/dist"; 
-			rm "$dir/dist" -force -recurse  
+		$dir = "$($_.DirectoryName)\dist"; 
+		If (Test-Path $dir ){ 
+			Write-Output "Removing $dir"; 
+			rm $dir -force -recurse  
 		} 
 	}
 

@@ -82,7 +82,9 @@ public static class Config {
                     "shoppingcart-api",
                     "catalog-api"
                 },
-                //ClientClaimsPrefix = null,
+                // ids6 handles sub explicitly as user in token validation for introspection and without prefix sees this and tries to lookup user
+                // https://github.com/DuendeSoftware/IdentityServer/blob/b05f8fb3bb3abb9a6e83329537f3ac2b527ed5fd/src/IdentityServer/Validation/Default/TokenValidator.cs#L200
+                ClientClaimsPrefix = "client_",
                 Claims = {
                     new ClientClaim("sub", "15dc38a9-e9a0-4d44-8244-c7e28b20c558")
                 }
