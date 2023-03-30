@@ -5,7 +5,7 @@
     "identity": {
         "authority": "https://localhost:5002",
         "client_id": "shoppingcart-web",
-        "scope": "openid shoppingcart-service",
+        "scope": "openid shoppingcart-api",
         "redirect_uri": "http://localhost:4200/login-redirect",
         "silent_redirect_uri": "http://localhost:4200/silent-redirect",
         "postLogoutRedirectUri": "http://localhost:4200/logout",

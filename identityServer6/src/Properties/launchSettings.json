@@ -1,11 +1,11 @@
 {
-  "profiles": {
-    "SelfHost": {
-      "commandName": "Project",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:5002"
+    "profiles": {
+        "IdentityServer": {
+            "commandName": "Project",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "applicationUrl": "https://localhost:5002"
+        }
     }
-  }
 }

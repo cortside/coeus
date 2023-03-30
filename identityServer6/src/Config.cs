@@ -1,50 +1,49 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
-using IdentityModel;
 
 namespace IdentityServer;
 
-public static class Config
-{
+public static class Config {
     public static IEnumerable<IdentityResource> IdentityResources =>
-        new List<IdentityResource>
-        { 
+        new List<IdentityResource> {
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
             new IdentityResources.Email(),
         };
 
     public static IEnumerable<ApiScope> ApiScopes =>
-        new List<ApiScope>
-        {
-            new ApiScope()
-            {
-                Name = "shoppingcart-service",
-                Description = "shoppingcart-service",
-                DisplayName = "shoppingcart-service",
+        new List<ApiScope> {
+            new ApiScope() {
+                Name = "shoppingcart-api",
+                Description = "shoppingcart-api",
+                DisplayName = "shoppingcart-api",
+                Required = false,
+                ShowInDiscoveryDocument = true
+            },
+            new ApiScope() {
+                Name = "catalog-api",
+                Description = "catalog-api",
+                DisplayName = "catalog-api",
                 Required = false,
                 ShowInDiscoveryDocument = true
             }
         };
 
     public static IEnumerable<ApiResource> ApiResources =>
-        new List<ApiResource>
-        {
-            new ApiResource("shoppingcart-service","shoppingcart-service")
-            {
-                ApiSecrets = new List<Secret>
-                {
+        new List<ApiResource> {
+            new ApiResource("shoppingcart-api", "ShoppingCart Api") {
+                ApiSecrets = new List<Secret> {
                     new Secret("secret".Sha256())
                 },
-                Scopes = new List<string>() { "shoppingcart-service" },
+                Scopes = new List<string>() {
+                    "shoppingcart-api"
+                }
             }
         };
 
     public static IEnumerable<Client> Clients =>
-        new List<Client> 
-        {
-            new Client
-            {
+        new List<Client> {
+            new Client {
                 ClientId = "shoppingcart-web",
                 ClientName = "shoppingcart-web",
                 AllowedGrantTypes = GrantTypes.ImplicitAndClientCredentials,
@@ -55,24 +54,38 @@ public static class Config
                 PostLogoutRedirectUris = { "http://localhost:4200/" },
                 FrontChannelLogoutUri = "http://localhost:4200/signout-oidc",
 
-                AllowedScopes =
-                {
+                AllowedScopes = {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     IdentityServerConstants.StandardScopes.Email,
-                    "shoppingcart-service"
+                    "shoppingcart-api",
+                    "catalog-api"
                 },
             },
-            new Client
-            {
+            new Client {
                 ClientId = "shoppingcart-service",
                 ClientName = "shoppingcart-service",
+                Description = "The client that shoppingcart-api uses to call other services",
                 ClientSecrets = { new Secret("secret".Sha256()) },
                 AllowedGrantTypes = GrantTypes.ClientCredentials,
-                AllowedScopes =
-                {
-                    "shoppingcart-service"
+                AllowedScopes = {
+                    "catalog-api"
+                }
+            },
+            new Client {
+                ClientId = "admin",
+                ClientName = "admin",
+                Description = "client for testing that represents admin user",
+                ClientSecrets = { new Secret("secret".Sha256()) },
+                AllowedGrantTypes = GrantTypes.ClientCredentials,
+                AllowedScopes = {
+                    "shoppingcart-api",
+                    "catalog-api"
                 },
+                //ClientClaimsPrefix = null,
+                Claims = {
+                    new ClientClaim("sub", "15dc38a9-e9a0-4d44-8244-c7e28b20c558")
+                }
             }
         };
 }
