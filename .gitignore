@@ -350,6 +350,7 @@ MigrationBackup/
 .ionide/
 
 *.ncrunchsolution
+*.user.json
 *.local.json
 
 *.db-shm

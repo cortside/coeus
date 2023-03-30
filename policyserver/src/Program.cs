@@ -1,17 +1,16 @@
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading;
 using Cortside.Common.Json;
 using Cortside.MockServer;
 using Cortside.MockServer.AccessControl;
-using Cortside.MockServer.AccessControl.Models;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using PolicyServer.Mocks;
 using Serilog;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading;
 
 namespace PolicyServer
 {
@@ -51,7 +50,7 @@ namespace PolicyServer
                 .ConfigureBuilder<CommonMock>()
                 .ConfigureBuilder(new IdentityServerMock("./Data/discovery.json", "./Data/jwks.json"))
                 .ConfigureBuilder(new SubjectMock("./Data/subjects.json"))
-                .ConfigureBuilder(new CatalogMock("./Data/subjects.json"));
+                .ConfigureBuilder(new CatalogMock("./Data/items.json"));
 
             Log.Logger.Debug($"Server is listening at {server.Url}");
 
