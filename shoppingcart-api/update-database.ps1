@@ -1,13 +1,14 @@
 Param
 (
 	[Parameter(Mandatory = $false)][string]$server = "",
-	[Parameter(Mandatory=$false)][string]$database = "ShoppingCart",
+	[Parameter(Mandatory = $false)][string]$database = "ShoppingCart",
 	[Parameter(Mandatory = $false)][string]$username = "",
 	[Parameter(Mandatory = $false)][string]$password = "",
 	[Parameter(Mandatory = $false)][string]$ConnectionString = "",
 	[Parameter(Mandatory = $false)][switch]$UseIntegratedSecurity,
 	[Parameter(Mandatory = $false)][switch]$CreateDatabase,
-	[Parameter(Mandatory = $false)][switch]$RebuildDatabase
+	[Parameter(Mandatory = $false)][switch]$RebuildDatabase,
+	[Parameter(Mandatory = $false)][switch]$TestData
 )
 
 if ((Test-Path 'env:MSSQL_SERVER') -and $server -eq "") {
@@ -122,6 +123,11 @@ if (Test-Path -path ".\src\sql\data\*.sql") {
 }
 if (Test-Path -path ".\src\sql\release\*.sql") {
 	gci -Recurse @(".\src\sql\release\*.sql") | % {
+		$scripts += $_.FullName
+	}
+}
+if ($TestData.IsPresent -and (Test-Path -path ".\src\sql\testdata\*.sql")) {
+	gci -Recurse @(".\src\sql\testdata\*.sql") | % {
 		$scripts += $_.FullName
 	}
 }

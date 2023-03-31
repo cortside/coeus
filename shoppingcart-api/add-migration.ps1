@@ -1,12 +1,9 @@
 [cmdletbinding()]
 param(
-	[parameter(Mandatory=$true)][string]$migration
+	[parameter(Mandatory = $true)][string]$migration
 )
 
-$repo = "Acme.ShoppingCart"
-$project = "src/$repo.Data"
-$startup = "src/$repo.WebApi"
-$context = "DatabaseContext"
+. .\repository.ps1
 
 echo "creating new migration $migration for $context context in project $project"
 dotnet tool update --global dotnet-ef

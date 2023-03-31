@@ -1,0 +1,7 @@
+{
+  "database": {
+    "triggers": {
+      "excludeTables": ["__EFMigrationsHistory", "AuditLog", "AuditLogTransaction", "Outbox"]
+    }
+  }
+}
