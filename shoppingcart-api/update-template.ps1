@@ -8,6 +8,6 @@ dotnet new cortside-api-powershell --force --output ./ --name Acme.ShoppingCart 
 dotnet new cortside-api-editorconfig --force --output ./ --name Acme.ShoppingCart --company Acme --product ShoppingCart
 
 # update dockerfile and supporting shell and powershell scripts
-if (Test-Path -path "deploy") {
-	dotnet new cortside-api-deploy --force --output ./ --name Acme.ShoppingCart --company Acme --product ShoppingCart
-}
+# if (Test-Path -path "deploy") {
+# 	dotnet new cortside-api-deploy --force --output ./ --name Acme.ShoppingCart --company Acme --product ShoppingCart
+# }

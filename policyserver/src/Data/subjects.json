@@ -1,68 +1,164 @@
 {
-  "subjects": [
-    {
-      "clientId": "foo",
-      "subjectId": "132953b2-f6a7-4c1d-8da1-2b3c3dafe1c5",
-      "claims": [
+    "subjects": [
         {
-          "type": "active",
-          "value": "true"
-        }
-      ],
-      "userType": "service",
-      "referenceToken": "107d225e3ea706bbbceb83593daf5c73c1347a89eaa89f253ca845beffb2e3f9",
-      "policies": [
-        {
-          "policyName": "ShoppingCart*",
-          "authorization": {
-            "roles": [
-              "Internal"
+            "clientId": "alice",
+            "subjectId": "132953b2-f6a7-4c1d-8da1-2b3c3dafe1c5",
+            "claims": [
+                {
+                    "type": "active",
+                    "value": "true"
+                }
             ],
-            "permissions": [
-              "GetOrders",
-              "GetOrder",
-              "CreateOrder",
-              "UpdateOrder",
-              "GetCustomers",
-              "GetCustomer",
-              "CreateCustomer",
-              "UpdateCustomer"
+            "userType": "service",
+            "referenceToken": "107d225e3ea706bbbceb83593daf5c73c1347a89eaa89f253ca845beffb2e3f9",
+            "policies": [
+                {
+                    "policyName": "ShoppingCart*",
+                    "authorization": {
+                        "roles": [
+                            "Internal"
+                        ],
+                        "permissions": [
+                            "GetOrders",
+                            "GetOrder",
+                            "CreateOrder",
+                            "UpdateOrder",
+                            "GetCustomers",
+                            "GetCustomer",
+                            "CreateCustomer",
+                            "UpdateCustomer"
+                        ]
+                    }
+                }
             ]
-          }
-        }
-      ]
-    },
-    {
-      "clientId": "cort",
-      "subjectId": "15dc38a9-e9a0-4d44-8244-c7e28b20c558",
-      "claims": [
+        },
         {
-          "type": "active",
-          "value": "true"
-        }
-      ],
-      "userType": "service",
-      "referenceToken": "32335B921D74BC0C15951CBB60DC640284FBB6DA61BCE160AE621033CA9FA62D",
-      "policies": [
-        {
-          "policyName": "ShoppingCart*",
-          "authorization": {
-            "roles": [
-              "Internal"
+            "clientId": "bob",
+            "subjectId": "66572a98-5f06-4bd1-86b1-0875436c73c7",
+            "claims": [
+                {
+                    "type": "active",
+                    "value": "true"
+                }
             ],
-            "permissions": [
-              "GetOrders",
-              "GetOrder",
-              "CreateOrder",
-              "UpdateOrder",
-              "GetCustomers",
-              "GetCustomer",
-              "CreateCustomer",
-              "UpdateCustomer"
+            "userType": "service",
+            "referenceToken": "107d225e3ea706bbbceb83593daf5c73c1347a89eaa89f253ca845beffb2e3f9",
+            "policies": [
+                {
+                    "policyName": "ShoppingCart*",
+                    "authorization": {
+                        "roles": [
+                            "Internal"
+                        ],
+                        "permissions": [
+                            "GetOrders",
+                            "GetOrder",
+                            "CreateOrder",
+                            "UpdateOrder",
+                            "GetCustomers",
+                            "GetCustomer",
+                            "CreateCustomer",
+                            "UpdateCustomer"
+                        ]
+                    }
+                }
             ]
-          }
+        },
+        {
+            "clientId": "admin",
+            "subjectId": "15dc38a9-e9a0-4d44-8244-c7e28b20c558",
+            "claims": [
+                {
+                    "type": "active",
+                    "value": "true"
+                }
+            ],
+            "userType": "service",
+            "referenceToken": "32335B921D74BC0C15951CBB60DC640284FBB6DA61BCE160AE621033CA9FA62D",
+            "policies": [
+                {
+                    "policyName": "ShoppingCart*",
+                    "authorization": {
+                        "roles": [
+                            "Internal"
+                        ],
+                        "permissions": [
+                            "GetOrders",
+                            "GetOrder",
+                            "CreateOrder",
+                            "UpdateOrder",
+                            "GetCustomers",
+                            "GetCustomer",
+                            "CreateCustomer",
+                            "UpdateCustomer"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "clientId": "shoppingcart-web",
+            "subjectId": "shoppingcart-web",
+            "claims": [
+                {
+                    "type": "active",
+                    "value": "true"
+                }
+            ],
+            "userType": "service",
+            "referenceToken": "107d225e3ea706bbbceb83593daf5c73c1347a89eaa89f253ca845beffb3e3f9",
+            "policies": [
+                {
+                    "policyName": "ShoppingCart*",
+                    "authorization": {
+                        "roles": [
+                            "Internal"
+                        ],
+                        "permissions": [
+                            "GetOrders",
+                            "GetOrder",
+                            "CreateOrder",
+                            "UpdateOrder",
+                            "GetCustomers",
+                            "GetCustomer",
+                            "CreateCustomer",
+                            "UpdateCustomer"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "clientId": "shoppingcart-service",
+            "subjectId": "shoppingcart-service",
+            "claims": [
+                {
+                    "type": "active",
+                    "value": "true"
+                }
+            ],
+            "userType": "service",
+            "referenceToken": "107d225e3ea706bbbceb83593daf5c73c1347a89eaa89f253ca845beffb5e3f9",
+            "policies": [
+                {
+                    "policyName": "ShoppingCart*",
+                    "authorization": {
+                        "roles": [
+                            "Internal"
+                        ],
+                        "permissions": [
+                            "GetOrders",
+                            "GetOrder",
+                            "CreateOrder",
+                            "UpdateOrder",
+                            "GetCustomers",
+                            "GetCustomer",
+                            "CreateCustomer",
+                            "UpdateCustomer"
+                        ]
+                    }
+                }
+            ]
         }
-      ]
-    }
-  ]
+    ]
 }

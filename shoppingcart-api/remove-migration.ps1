@@ -2,10 +2,7 @@
 param(
 )
 
-$repo = "Acme.ShoppingCart"
-$project = "src/$repo.Data"
-$startup = "src/$repo.WebApi"
-$context = "DatabaseContext"
+. .\repository.ps1
 
 echo "removing last migration from $context context in project $project"
 
