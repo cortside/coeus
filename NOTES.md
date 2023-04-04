@@ -1,4 +1,28 @@
-TODO:
+* api template switches/flags for -- i want to receive messages, i want to publish messages, i want a db, i want example domain, auth and auth, etc
+* modular templates that build on each other to create full set of possiblities
+	* i.e. powershell scripts, deployment scripts
+* adding update-database and/or tsqlt to build-push in deployment scripts
+* logging in entity classes
+	* protected Order() {
+	 // protected Order(DatabaseContext db) {
+	 // logger = db.LoggerFactory?.CreateLogger<Order>();
+	 // Required by EF as it doesn't know about Customer
+     }
+* ids mfa
+	* https://github.com/damienbod/AspNetCoreHybridFlowWithApi
+	* https://github.com/chsakell/aspnet-core-identity/tree/master/IdentityServer
+	* https://github.com/Deblokt/IdentityServer4Demos.NETCore31/tree/master/07.%20IdentityServer4%20MFA%20%E2%80%93%20TOTP/src/IdentityServer
+* logging error handling, logging of ip
+	* https://mcguirev10.com/2018/02/07/serilog-dependency-injection-easy-ip-logging.html
+* add link to ids readme for hashing and encoding values
+	* https://dotnetfiddle.net/h3aeqd
+* add example of queued work with polling for completion
+	* i.e. queue some longer work, creating of some export data, that can then be checked on until it's ready
+	* https://www.abhinavpandey.dev/blog/polling
+	* https://farazdagi.com/posts/2014-10-16-rest-long-running-jobs/
+	* https://restcookbook.com/Resources/asynchroneous-operations/
+* add example of resilent handling of external async process
+	* i.e. update shipping estimate on an order or creating shipment(s) from order
 * updating using PATCH
 	* https://docs.microsoft.com/en-us/aspnet/core/web-api/jsonpatch?view=aspnetcore-6.0
 * dotnet new options for picking features in api template
