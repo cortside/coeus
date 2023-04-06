@@ -80,7 +80,7 @@ $databases = Execute-Sql -database $database -sql $sql
 
 $databases | measure-object
 
-$filename = "DataDictionary.csv"
+$filename = "$PSScriptRoot\DataDictionary.csv"
 Write-Output "exporting $filename"
 "Database,Schema,Table Name,Table Description,Column Name,Position,Column Description,Data Type, Nullable" | Out-File $filename -Encoding utf8
 
