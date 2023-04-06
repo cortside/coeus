@@ -19,8 +19,10 @@ Function Execute-Sql {
 	$error.clear(); 
 	$result = "";
 	if ($ConnectionString -ne "") {
-		echo "using connectionstring"
-		$result = invoke-sqlcmd -ConnectionString $ConnectionString -Query $sql -OutputSqlErrors $true
+		$conn = New-Object System.Data.SqlClient.SqlConnectionStringBuilder
+		$conn.set_ConnectionString($ConnectionString)	
+		$conn.Database = $database;	
+		$result = invoke-sqlcmd -ConnectionString $conn.ConnectionString -Query $sql -OutputSqlErrors $true
 	} elseif ($username -eq "") {
 		$result = invoke-sqlcmd -Server "$server" -Database $database -Query $sql -OutputSqlErrors $true
 	} else {
