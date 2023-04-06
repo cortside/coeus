@@ -1,6 +1,6 @@
 Param (
 	[Parameter(Mandatory = $false)][string]$server = "",
-	[Parameter(Mandatory = $false)][string]$database = "ShoppingCart",
+	[Parameter(Mandatory = $false)][string]$database = "master",
 	[Parameter(Mandatory = $false)][string]$username = "",
 	[Parameter(Mandatory = $false)][string]$password = "",
 	[Parameter(Mandatory = $false)][string]$ConnectionString = "",
