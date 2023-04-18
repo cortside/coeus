@@ -356,3 +356,4 @@ MigrationBackup/
 *.db-shm
 *.db-wal
 *.db
+shoppingcart-api/DataDictionary.csv

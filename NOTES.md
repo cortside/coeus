@@ -1,3 +1,8 @@
+TODO:
+
+* middleware to log client ip
+	* see ids4 GetUserIp method
+	* https://stackoverflow.com/questions/49611704/application-insights-and-net-core-0-0-0-0-ip
 * api template switches/flags for -- i want to receive messages, i want to publish messages, i want a db, i want example domain, auth and auth, etc
 * modular templates that build on each other to create full set of possiblities
 	* i.e. powershell scripts, deployment scripts
