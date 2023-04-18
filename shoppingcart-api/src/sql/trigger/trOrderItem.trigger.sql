@@ -29,6 +29,7 @@ CREATE TRIGGER trOrderItem
                 WHEN EXISTS(SELECT 1 FROM INSERTED) THEN 'UPDATE'
                 ELSE 'DELETE'
             END
+        SELECT @ROWS_COUNT=count(*) from deleted
     END
 
 	-- determine username
