@@ -1,0 +1,98 @@
+ARG dotnetsdk
+ARG dotnetframework
+
+# use the sdk to build/test, but later we'll use runtime for published image
+FROM mcr.microsoft.com/dotnet/sdk:$dotnetsdk-alpine3.15 AS build
+ARG buildconfiguration
+ARG nugetfeed
+ARG sonarscannerversion
+
+RUN dotnet --info
+
+#COPY ./certs/* /usr/local/share/ca-certificates/
+RUN sed -i 's/https/http/g' /etc/apk/repositories && \
+    apk update && \
+    apk add --no-cache ca-certificates bash openjdk11 nss && \
+    update-ca-certificates
+
+## install additional dotnet tools
+RUN dotnet tool install --global dotnet-sonarscanner --version $sonarscannerversion
+ENV PATH="${PATH}:/root/.dotnet/tools"
+
+COPY src/ /app/src/
+WORKDIR /app/src
+
+RUN dotnet restore --source $nugetfeed --source https://api.nuget.org/v3/index.json
+
+# Run all tests
+ARG branch
+ARG imageversion
+ARG sonarhost
+ARG sonartoken
+ARG sonarkey
+ARG projectname
+ARG analysisArgs
+ARG organization
+ARG publishableProject
+
+# set to use teamcity messaging for test logger
+#ENV TEAMCITY_VERSION="1.1" 
+
+RUN export SONAR_SCANNER_OPTS="-Xmx4096m" && \
+    echo "analysisArgs=$analysisArgs" && \
+    dotnet sonarscanner begin \
+    /k:"$(echo $sonarkey | tr '[:upper:]' '[:lower:]')" \
+    /o:"$organization" \
+    /d:sonar.host.url="$sonarhost" \
+    /d:sonar.login="$sonartoken" \
+    /v:"$imageversion" \
+    /d:sonar.cs.opencover.reportsPaths="**/*.opencover.xml" \
+    /d:sonar.coverage.exclusions="**/*Test*.cs,**/Migrations/*" \
+    /d:sonar.exclusions="**/*Test*.cs,**/Migrations/*,**/*Api.xml" \
+    $analysisArgs && \
+    dotnet build --no-restore && \
+    dotnet test --no-build --no-restore /p:Exclude="[xunit*]*" /p:ParallelizeTestCollections=false --collect:"XPlat Code Coverage" --settings coverlet.runsettings.xml && \
+	#--logger:"teamcity;verbosity=normal" && \
+    dotnet sonarscanner end /d:sonar.login="$sonartoken" && \
+    dotnet publish "$publishableProject" -p:Version=$(echo $imageversion | cut -f 1 -d '-') -o out -r linux-musl-x64
+
+## Build the runtime environment
+FROM mcr.microsoft.com/dotnet/runtime:$dotnetframework-alpine3.15 AS runtime
+ARG projectname
+ARG publishableProject
+
+ENV configpath /app/appsettings.json
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+ENV ASPNETCORE_URLS=http://+:5000
+ENV ASPNETCORE_ENVIRONMENT=Deployment
+
+COPY ./deploy/sh/startup.sh /startup.sh
+#COPY ./certs/* /usr/local/share/ca-certificates/
+COPY ./src/sql /sql
+COPY ./update-database.ps1 /sql
+
+RUN sed -i 's/https/http/g' /etc/apk/repositories && \
+    addgroup -S -g 2001 ebuser && adduser -S -u 2001 -s /bin/bash -G ebuser ebuser && \
+    apk update && \
+    apk add --no-cache jq bash curl ca-certificates tzdata icu-libs openssl \
+    # powershell extra dependencies
+    less ncurses-terminfo-base krb5-libs libgcc libintl libssl1.1 libstdc++ userspace-rcu zlib && \
+    # product-api expects running timezone to be MT for now
+    ln -sf /usr/share/zoneinfo/US/Mountain /etc/localtime && \
+    update-ca-certificates && \
+    chmod a+x /startup.sh
+
+# install powershell
+RUN curl -L https://github.com/PowerShell/PowerShell/releases/download/v7.2.10/powershell-7.2.10-linux-alpine-x64.tar.gz -o /tmp/powershell.tar.gz && \
+    mkdir -p /opt/microsoft/powershell/7 && \
+    tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7 && \
+    chmod +x /opt/microsoft/powershell/7/pwsh && \
+    ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
+
+WORKDIR /app
+COPY --from=build /app/src/out ./
+COPY --from=build /app/src/"$publishableProject"/build.json ./
+
+USER ebuser
+EXPOSE 5000/tcp
+CMD ["/startup.sh"]
