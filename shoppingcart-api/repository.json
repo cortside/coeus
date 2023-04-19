@@ -1,7 +1,14 @@
 {
+  "repository": {
+    "name": "Acme.ShoppingCart"
+  },
   "database": {
+    "name": "ShoppingCart",
+    "dbContext": "DatabaseContext",
+    "dbContextProject": "src/Acme.ShoppingCart.Data",
+    "startupProject": "src/Acme.ShoppingCart.WebApi",
     "triggers": {
-      "excludeTables": ["__EFMigrationsHistory", "AuditLog", "AuditLogTransaction", "Outbox"]
+      "excludeTables": [ "__EFMigrationsHistory", "AuditLog", "AuditLogTransaction", "Outbox" ]
     }
   }
 }

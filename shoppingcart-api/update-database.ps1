@@ -1,6 +1,6 @@
 Param (
 	[Parameter(Mandatory = $false)][string]$server = "",
-	[Parameter(Mandatory = $false)][string]$database = "ShoppingCart",
+	[Parameter(Mandatory = $false)][string]$database = "",
 	[Parameter(Mandatory = $false)][string]$username = "",
 	[Parameter(Mandatory = $false)][string]$password = "",
 	[Parameter(Mandatory = $false)][string]$ConnectionString = "",
@@ -9,6 +9,21 @@ Param (
 	[Parameter(Mandatory = $false)][switch]$RebuildDatabase,
 	[Parameter(Mandatory = $false)][switch]$TestData
 )
+
+$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';
+# common repository functions
+Import-Module .\Repository.psm1
+
+# module to execute sql statements
+try {
+	# ErrorAction must be Stop in order to trigger catch
+	Import-Module SqlServer -ErrorAction Stop
+} catch {
+	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+	Install-PackageProvider -Name PowershellGet -Force
+	Install-Module -Name SqlServer -AllowClobber -Force
+	Import-Module SqlServer
+}
 
 Function Execute-Sql {
 	Param (
@@ -49,6 +64,8 @@ Function Get-Files($path) {
 	return $files
 }
 
+$config = Get-RepositoryConfiguration
+
 if ((Test-Path 'env:MSSQL_SERVER') -and $server -eq "") {
 	$server = $env:MSSQL_SERVER
 
@@ -62,22 +79,13 @@ if ((Test-Path 'env:MSSQL_SERVER') -and $server -eq "") {
 if ($server -eq "") {
 	$server = "(LocalDB)\MSSQLLocalDB"
 }
+if ($database -eq "" -and $connectionString -eq "") {
+	$database = $config.database.name
+}
 
 echo "Server:   $server"
 echo "Database: $database"
 echo "User:     $username"
-
-$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';
-
-try {
-	# ErrorAction must be Stop in order to trigger catch
-	Import-Module SqlServer -ErrorAction Stop
-} catch {
-	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-	Install-PackageProvider -Name PowershellGet -Force
-	Install-Module -Name SqlServer -AllowClobber -Force
-	Import-Module SqlServer
-}
 
 if ($RebuildDatabase.IsPresent) {
 	Write-Output "Rebuilding database..."

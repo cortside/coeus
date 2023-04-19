@@ -13,7 +13,15 @@ Param
 
 $ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';
 
-. .\repository.ps1
+# common repository functions
+Import-Module .\Repository.psm1
+$config = Get-RepositoryConfiguration
+
+#set variables
+$repo = $config.repository.name
+$project = $config.database.dbContextProject
+$startup = $config.database.startupProject
+$context = $config.database.dbContext
 
 if ((Test-Path 'env:MSSQL_SERVER') -and $server -eq "") {
 	$server = $env:MSSQL_SERVER
@@ -97,26 +105,6 @@ try {
 	throw "Problem connecting to SqlServer at $server. Please confirm up and running and try again."
 }
 
-#Write-Host "creating $triggergenDbName and applying all migrations"
-
-# try {   
-	# if ($username -eq "") {
-		# Write-Output "Verifying SqlServer accessible at $server"
-		# invoke-sqlcmd -ServerInstance "$server" -Query "IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = '$triggergenDbName') BEGIN CREATE database [$triggergenDbName] END" -QueryTimeout 5 -ConnectionTimeout 5 -ErrorAction Stop
-	# } else {
-		# Write-Output "Verifying SqlServer accessible at $server with user $username"
-		# invoke-sqlcmd -ServerInstance $server -username $username -password $password -Query "IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = '$triggergenDbName') BEGIN CREATE database [$triggergenDbName] END" -ErrorAction Stop
-	# }
-# } catch {
-	# throw "Problem connecting to SqlServer at $server. Please confirm up and running and try again."
-# }
-
-$projectExcludeTables = ""
-if ($repoConfig.database.triggers.excludeTables.length -gt 0) { 
-	$tables = "'$($repoConfig.database.triggers.excludeTables -join "','")'"
-	$projectExcludeTables = " AND t.TABLE_NAME NOT IN ($tables)"
-}
-
 $schemafile = "triggerschema.sql"
 dotnet ef dbcontext script -p $project -s $startup -c $context --no-build -o $schemafile
 
@@ -136,6 +124,12 @@ try {
 } catch {
 	Write-Output($error)
 	throw "Problem executing schema file"
+}
+
+$projectExcludeTables = ""
+if ($config.database.triggers.excludeTables.length -gt 0) { 
+	$tables = "'$($config.database.triggers.excludeTables -join "','")'"
+	$projectExcludeTables = " AND t.TABLE_NAME NOT IN ($tables)"
 }
 
 $triggerTemplate = @"
@@ -170,6 +164,7 @@ CREATE TRIGGER {{triggerName}}
                 WHEN EXISTS(SELECT 1 FROM INSERTED) THEN 'UPDATE'
                 ELSE 'DELETE'
             END
+        SELECT @ROWS_COUNT=count(*) from deleted
     END
 
 	-- determine username
@@ -280,7 +275,7 @@ ORDER BY ORDINAL_POSITION
 	$content | Out-File -encoding UTF8 $filename
 }
 
-git status
+git status *.sql
 
 Write-Output @("
 ##########
