@@ -5,7 +5,7 @@ Param
 	[Parameter(Mandatory = $false)][string]$buildCounter = "0",
 	[Parameter(Mandatory = $false)][string]$msbuildconfig = "Debug",
 	[Parameter(Mandatory = $false)][string]$dockerpath = "Dockerfile.*",
-	[Parameter(Mandatory = $true)][string]$dockercontext = ".",
+	[Parameter(Mandatory = $false)][string]$dockercontext = ".",
 	[Parameter(Mandatory = $false)][string]$buildconfiguration = "Debug",
 	[Parameter(Mandatory = $false)][ValidateSet("true", "false")][string]$local = "true",
 	[Parameter(Mandatory = $false)][string]$OctopusEndpoint,
@@ -119,7 +119,6 @@ Write-Output "npmversion=$npmversion"
 Write-Output "dotnetsdk=$dotnetsdk"
 Write-Output "dotnetframework=$dotnetframework"
 Write-Output "image:$image"
-Write-Output "containerregistry=$acr"
 
 #Run Build for all Dockerfiles in /Docker path
 $dockerFiles = Get-ChildItem -Path $dockercontext -Filter $dockerpath -Recurse
@@ -132,27 +131,22 @@ foreach ($dockerfile in $dockerFiles) {
 	Write-Output "Building $dockerFileName"
 	$imageversion = "$buildNumber-$branchTag-$HostOS"
 
-	$sonarArgs = "--build-arg `"analysisArgs=$analysisArgs`" --build-arg `"sonarhost=$($SonarHost)`" --build-arg `"sonartoken=$($SonarToken)`" --build-arg `"sonarscannerversion=$($sonarscannerversion)`" --build-arg `"sonarkey=$($sonarkey)`""
+	$sonarArgs = "--build-arg `"analysisArgs=$analysisArgs`" --build-arg `"sonarhost=$($SonarHost)`" --build-arg `"sonartoken=$($SonarToken)`" --build-arg `"sonarkey=$($sonarkey)`""
 
-	$dockerbuildargs = "build --rm --add-host=proget.local:10.10.10.10 --build-arg `"organization=$organization`" --build-arg `"publishableProject=$publishableProject`" --build-arg `"buildconfiguration=$buildconfiguration`" --build-arg `"nugetfeed=$nugetfeed`" --build-arg `"dotnetsdk=$dotnetsdk`" --build-arg `"dotnetframework=$dotnetframework`" --build-arg `"branch=$branch`" --build-arg `"imageversion=$imageversion`" --build-arg `"projectname=$($projectname)`" $sonarArgs -t ${acr}/${image}:${branchTag} -t ${acr}/${image}:${imageversion} -f deploy/docker/$dockerFileName $dockercontext"
+	$dockerbuildargs = "build --rm --add-host=proget.local:10.10.10.10 --build-arg `"organization=$organization`" --build-arg `"publishableProject=$publishableProject`" --build-arg `"buildconfiguration=$buildconfiguration`" --build-arg `"nugetfeed=$nugetfeed`" --build-arg `"sdkimage=$sdkimage`" --build-arg `"runtimeimage=$runtimeimage`" --build-arg `"branch=$branch`" --build-arg `"imageversion=$imageversion`" --build-arg `"projectname=$($projectname)`" $sonarArgs -t ${image}:${branchTag} -t ${image}:${imageversion} -f deploy/docker/$dockerFileName $dockercontext"
 	Invoke-Exe -cmd docker -args $dockerbuildargs
 
 	#Docker push images to repo
 	if ($pushImage.IsPresent) {	
-		write-output "pushing ${acr}/${image}:${imageversion}"
-		$dockerpushargs = "push --all-tags ${acr}/${image}"
+		write-output "pushing ${image}:${imageversion}"
+		$dockerpushargs = "push --all-tags ${image}"
 		Invoke-Exe -cmd docker -args $dockerpushargs
-
-		#$imageId = Invoke-Exe -cmd docker -args "images ${acr}/${image}:${imageversion} --format `"{{.ID}}`""
-		#write-output "cleaning up ${acr}/${image}:${imageversion}"
-		#$dockerrmiargs = "rmi $imageId -f"
-		#Invoke-Exe -cmd docker -args $dockerrmiargs
 	} else {
 		write-output "This is a local build and will not need to push."
 	}
 
 	#List images for the current tag
-	Write-Output "Docker Just successfully built - ${acr}/${image}:${imageversion}"
-	Write-Output "`tPlease run with any additional flags to test locally:`n`n docker run -d ${acr}/${image}:${imageversion}"
+	Write-Output "Docker Just successfully built - ${image}:${imageversion}"
+	Write-Output "`tPlease run with any additional flags to test locally:`n`n docker run -d ${image}:${imageversion}"
 	Write-Output "`t --------------- `t Docker run reference if needed:`n https://docs.docker.com/engine/reference/run/`n"
 }
