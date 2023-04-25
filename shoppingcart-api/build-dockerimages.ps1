@@ -15,6 +15,7 @@ Param
 	[Parameter(Mandatory = $false)][string]$username,
 	[Parameter(Mandatory = $false)][string]$password,
 	[Parameter(Mandatory = $false)][switch]$skipDbTest,
+	[Parameter(Mandatory = $false)][switch]$systemprune,
 	[Parameter(Mandatory = $false)][switch]$pushImage,
 	[Parameter(Mandatory = $false)][string]$BuildCommitHash = $env:CommitHash,
 	[Parameter(Mandatory = $false)][string]$RepositorySlug = $env:RepositorySlug
@@ -100,6 +101,10 @@ Function New-BuildJson {
 	$buildobject | ConvertTo-Json -Depth 5 | Out-File $buildjsonpath -force
 
 	return $buildobject
+}
+
+if ($systemprune.IsPresent) {	
+	Invoke-Exe -cmd docker -args "system prune --force"
 }
 
 $BuildNumber = (New-BuildJson -versionJsonPath $PSScriptRoot\repository.json -BuildJsonPath $PSScriptRoot\src\$publishableProject\build.json -buildCounter $buildCounter).build.version

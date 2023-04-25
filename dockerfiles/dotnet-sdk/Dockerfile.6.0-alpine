@@ -13,7 +13,7 @@ RUN sed -i 's/https/http/g' /etc/apk/repositories && \
     update-ca-certificates
 
 ## install additional dotnet tools
-RUN dotnet tool install --global dotnet-sonarscanner --version 5.5.3
+RUN dotnet tool install --global dotnet-sonarscanner --version 5.13.0
 ENV PATH="${PATH}:/root/.dotnet/tools"
 
 WORKDIR /app/src

@@ -9,16 +9,17 @@ $runtimeimage = "cortside/dotnet-runtime:6.0-alpine"
 #Build variables
 $projectname = "Acme.ShoppingCart" # needed for sln files
 #$image = $projectname.ToLower() # needs to be lowercase
+
 $image = "cortside/shoppingcart-api"
 $sqlserver = "2019-latest"
-$acr = "cortside"
+#$acr = "cortside"
 #$v = "${version}"
 
 #SonarQube
 #$sonarscannerversion = "5.5.3"
 $sonarkey = "acme_shoppingcart-api"
-$localsonartoken = "123"
-$localsonarhost = "https://sonarcloud.io"
+#$localsonartoken = "123"
+#$localsonarhost = "https://sonarcloud.io"
 $RepositorySlug = "shoppingcart-api"
 
 $organization = "cortside"
