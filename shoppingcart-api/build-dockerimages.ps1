@@ -65,7 +65,7 @@ Function Get-BranchTag {
 	elseif ($branchName -like "bugfix/*" -or $branchName -like "hotfix/*" -or $branchName -like "feature/*") {
 		# extract jira key, i.e. CFG-123
 		($branchName | Select-String -Pattern '((?<!([A-Z]{1,10})-?)[A-Z]+-\d+)' | % matches).value
-	} else { "Invalid" }
+	} else { $branchName }
 	
 	if ($tagPart -eq "Invalid") {
 		Write-Error "##teamcity[buildStatus status='No valid branch tag could be created. Check branch name.']"
