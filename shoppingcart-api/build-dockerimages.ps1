@@ -123,8 +123,8 @@ Write-Output "nugetfeed: $nugetfeed"
 Write-Output "OctopusVersion: $OctopusVersion"
 Write-Output "ngversion=$ngversion"
 Write-Output "npmversion=$npmversion"
-Write-Output "dotnetsdk=$dotnetsdk"
-Write-Output "dotnetframework=$dotnetframework"
+Write-Output "sdkimage=$sdkimage"
+Write-Output "runtimeimage=$runtimeimage"
 Write-Output "image:$image"
 
 #Run Build for all Dockerfiles in /Docker path
