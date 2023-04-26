@@ -2,7 +2,7 @@ ARG sdkimage
 ARG runtimeimage
 
 # use the sdk to build/test, but later we'll use runtime for published image
-FROM $sdkimage AS build
+FROM ${sdkimage} AS build
 ARG buildconfiguration
 ARG nugetfeed
 ARG sonarscannerversion
@@ -11,7 +11,7 @@ COPY src/ /app/src/
 WORKDIR /app/src
 
 RUN echo $nugetfeed
-RUN dotnet restore --source $nugetfeed --source https://api.nuget.org/v3/index.json
+RUN dotnet restore --source ${nugetfeed} --source https://api.nuget.org/v3/index.json
 
 # Run all tests
 ARG branch
