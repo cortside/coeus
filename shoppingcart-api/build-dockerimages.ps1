@@ -3,30 +3,31 @@ Param
 (
 	[Parameter(Mandatory = $false)][string]$branch = "local",
 	[Parameter(Mandatory = $false)][string]$buildCounter = "0",
-	[Parameter(Mandatory = $false)][string]$msbuildconfig = "Debug",
-	[Parameter(Mandatory = $false)][string]$dockerpath = "Dockerfile.*",
-	[Parameter(Mandatory = $false)][string]$dockercontext = ".",
-	[Parameter(Mandatory = $false)][string]$buildconfiguration = "Debug",
+#	[Parameter(Mandatory = $false)][string]$msbuildconfig = "Debug",
+#	[Parameter(Mandatory = $false)][string]$buildconfiguration = "Debug",
 	[Parameter(Mandatory = $false)][ValidateSet("true", "false")][string]$local = "true",
-	[Parameter(Mandatory = $false)][string]$OctopusEndpoint,
-	[Parameter(Mandatory = $false)][string]$OctopusApiKey,
-	[Parameter(Mandatory = $false)][string]$nugetfeed = "https://api.nuget.org/v3/index.json",
-	[Parameter(Mandatory = $false)][string]$OctopusVersion, 
-	[Parameter(Mandatory = $false)][string]$username,
-	[Parameter(Mandatory = $false)][string]$password,
-	[Parameter(Mandatory = $false)][switch]$skipDbTest,
+#	[Parameter(Mandatory = $false)][string]$OctopusEndpoint,
+#	[Parameter(Mandatory = $false)][string]$OctopusApiKey,
+#	[Parameter(Mandatory = $false)][string]$nugetfeed = "https://api.nuget.org/v3/index.json",
+#	[Parameter(Mandatory = $false)][string]$OctopusVersion, 
+#	[Parameter(Mandatory = $false)][string]$username,
+#	[Parameter(Mandatory = $false)][string]$password,
+#	[Parameter(Mandatory = $false)][switch]$skipDbTest,
+#	[Parameter(Mandatory = $false)][string]$BuildCommitHash = $env:CommitHash,
+#	[Parameter(Mandatory = $false)][string]$RepositorySlug = $env:RepositorySlug,
+#	[Parameter(Mandatory = $false)][string]$sdkimage = "cortside/dotnet-sdk:6.0-alpine",
+#	[Parameter(Mandatory = $false)][string]$runtimeimage = "cortside/dotnet-runtime:6.0-alpine"
 	[Parameter(Mandatory = $false)][switch]$systemprune,
-	[Parameter(Mandatory = $false)][switch]$pushImage,
-	[Parameter(Mandatory = $false)][string]$BuildCommitHash = $env:CommitHash,
-	[Parameter(Mandatory = $false)][string]$RepositorySlug = $env:RepositorySlug,
-	[Parameter(Mandatory = $false)][string]$sdkimage = "cortside/dotnet-sdk:6.0-alpine",
-	[Parameter(Mandatory = $false)][string]$runtimeimage = "cortside/dotnet-runtime:6.0-alpine"
+	[Parameter(Mandatory = $false)][switch]$pushImage
 )
 
 $ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';
 
+# common repository functions
+Import-Module .\Repository.psm1
+
 #Load environment variables from PS folder
-. $PSScriptRoot\deploy\ps\version.ps1
+#. $PSScriptRoot\deploy\ps\version.ps1
 
 Function Get-Result {
 	if ($LastExitCode -ne 0) {
@@ -41,7 +42,6 @@ Function Invoke-Exe {
 	Param(
 		[parameter(Mandatory = $true)][string] $cmd,
 		[parameter(Mandatory = $true)][string] $args
-
 	)
 	if ($env:DOCKER_HOST -and $local -eq 'true') {
 		Write-Host "Executing: `"$cmd`" $args"
@@ -60,19 +60,19 @@ Function Get-BranchTag {
 		[string]$branchName
 	)
 
-	$tagPart = 
-	if ($branchName -eq "master") { "master" }
-	elseif ($branchName -eq "develop") { "develop" }
-	elseif ($branchName -like "release/*") { "release" }
-	elseif ($branchName -like "bugfix/*" -or $branchName -like "hotfix/*" -or $branchName -like "feature/*") {
+	if ($branchName -eq "master") { 
+		$tagPart = "master" 
+	} elseif ($branchName -eq "develop") { 
+		$tagPart = "develop" 
+	} elseif ($branchName -like "release/*") { 
+		$tagPart = "release" 
+	} elseif ($branchName -like "bugfix/*" -or $branchName -like "hotfix/*" -or $branchName -like "feature/*") {
 		# extract jira key, i.e. CFG-123
-		($branchName | Select-String -Pattern '((?<!([A-Z]{1,10})-?)[A-Z]+-\d+)' | % matches).value
-	} else { $branchName }
-	
-	if ($tagPart -eq "Invalid") {
-		Write-Error "##teamcity[buildStatus status='No valid branch tag could be created. Check branch name.']"
+		$tagPart = ($branchName | Select-String -Pattern '((?<!([A-Z]{1,10})-?)[A-Z]+-\d+)' | % matches).value
+	} else { 
+		$tagPart = $branchName 
 	}
-
+	
 	$tagPart
 }
 
@@ -109,7 +109,11 @@ if ($systemprune.IsPresent) {
 	Invoke-Exe -cmd docker -args "system prune --force"
 }
 
-$BuildNumber = (New-BuildJson -versionJsonPath $PSScriptRoot\repository.json -BuildJsonPath $PSScriptRoot\src\$publishableProject\build.json -buildCounter $buildCounter).build.version
+$BuildNumber = (New-BuildJson -versionJsonPath $PSScriptRoot\repository.json -BuildJsonPath $PSScriptRoot\src\$($config.build.publishableProject)\build.json -buildCounter $buildCounter).build.version
+$config = Get-RepositoryConfiguration
+
+$dockerpath = "Dockerfile.*"
+$dockercontext = "."
 
 Write-Output $version
 Write-Output "buildNumber: $buildNumber"
@@ -118,14 +122,10 @@ Write-Output "dockerpath: $dockerpath"
 Write-Output "dockercontext: $dockercontext"
 Write-Output "buildconfiguration: $buildconfiguration"
 Write-Output "local: $local"
-Write-Output "OctopusEndpoint: $OctopusEndpoint"
-Write-Output "nugetfeed: $nugetfeed"
-Write-Output "OctopusVersion: $OctopusVersion"
-Write-Output "ngversion=$ngversion"
-Write-Output "npmversion=$npmversion"
-Write-Output "sdkimage=$sdkimage"
-Write-Output "runtimeimage=$runtimeimage"
-Write-Output "image:$image"
+Write-Output "nugetfeed: $($config.nuget.feed)"
+Write-Output "sdkimage=$($config.docker.sdkimage)"
+Write-Output "runtimeimage=$($config.docker.runtimeimage)"
+Write-Output "image:$($config.docker.image)"
 
 #Run Build for all Dockerfiles in /Docker path
 $dockerFiles = Get-ChildItem -Path $dockercontext -Filter $dockerpath -Recurse
@@ -138,9 +138,9 @@ foreach ($dockerfile in $dockerFiles) {
 	Write-Output "Building $dockerFileName"
 	$imageversion = "$buildNumber-$branchTag-$HostOS"
 
-	$sonarArgs = "--build-arg `"analysisArgs=$analysisArgs`" --build-arg `"sonarhost=$($SonarHost)`" --build-arg `"sonartoken=$($SonarToken)`" --build-arg `"sonarkey=$($sonarkey)`""
+	$sonarArgs = "--build-arg `"analysisArgs=$analysisArgs`" --build-arg `"sonarhost=$($config.sonar.host)`" --build-arg `"sonartoken=$($config.sonar.token)`" --build-arg `"sonarkey=$($config.sonar.key)`""
 
-	$dockerbuildargs = "--log-level debug build --rm --add-host=proget.local:10.10.10.10 --build-arg `"organization=$organization`" --build-arg `"publishableProject=$publishableProject`" --build-arg `"buildconfiguration=$buildconfiguration`" --build-arg `"nugetfeed=$nugetfeed`" --build-arg `"sdkimage=$sdkimage`" --build-arg `"runtimeimage=$runtimeimage`" --build-arg `"branch=$branch`" --build-arg `"imageversion=$imageversion`" --build-arg `"projectname=$($projectname)`" $sonarArgs -t ${image}:${branchTag} -t ${image}:${imageversion} -f deploy/docker/$dockerFileName $dockercontext"
+	$dockerbuildargs = "--log-level debug build --rm --add-host=proget.local:10.10.10.10 --build-arg `"organization=$($config.sonar.organization)`" --build-arg `"publishableProject=$($config.build.publishableProject)`" --build-arg `"buildconfiguration=$($config.build.configuration)`" --build-arg `"nugetfeed=$($config.build.nugetfeed)`" --build-arg `"sdkimage=$($config.docker.sdkimage)`" --build-arg `"runtimeimage=$($config.docker.runtimeimage)`" --build-arg `"branch=$branch`" --build-arg `"imageversion=$imageversion`" --build-arg `"projectname=$($config.repository.name)`" $sonarArgs -t $($config.docker.image):${branchTag} -t $($config.docker.image):${imageversion} -f deploy/docker/$dockerFileName $dockercontext"
 	Invoke-Exe -cmd docker -args $dockerbuildargs
 
 	#Docker push images to repo

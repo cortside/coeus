@@ -11,7 +11,7 @@ COPY src/ /app/src/
 WORKDIR /app/src
 
 RUN echo $nugetfeed
-RUN dotnet restore --source ${nugetfeed} --source https://api.nuget.org/v3/index.json
+RUN dotnet restore --source ${nugetfeed}
 
 # Run all tests
 ARG branch
