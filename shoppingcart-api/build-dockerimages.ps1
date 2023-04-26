@@ -140,7 +140,7 @@ foreach ($dockerfile in $dockerFiles) {
 
 	$sonarArgs = "--build-arg `"analysisArgs=$analysisArgs`" --build-arg `"sonarhost=$($SonarHost)`" --build-arg `"sonartoken=$($SonarToken)`" --build-arg `"sonarkey=$($sonarkey)`""
 
-	$dockerbuildargs = "--log-level `"debug`" build --rm --add-host=proget.local:10.10.10.10 --build-arg `"organization=$organization`" --build-arg `"publishableProject=$publishableProject`" --build-arg `"buildconfiguration=$buildconfiguration`" --build-arg `"nugetfeed=$nugetfeed`" --build-arg `"sdkimage=$sdkimage`" --build-arg `"runtimeimage=$runtimeimage`" --build-arg `"branch=$branch`" --build-arg `"imageversion=$imageversion`" --build-arg `"projectname=$($projectname)`" $sonarArgs -t ${image}:${branchTag} -t ${image}:${imageversion} -f deploy/docker/$dockerFileName $dockercontext"
+	$dockerbuildargs = "--log-level debug build --rm --add-host=proget.local:10.10.10.10 --build-arg `"organization=$organization`" --build-arg `"publishableProject=$publishableProject`" --build-arg `"buildconfiguration=$buildconfiguration`" --build-arg `"nugetfeed=$nugetfeed`" --build-arg `"sdkimage=$sdkimage`" --build-arg `"runtimeimage=$runtimeimage`" --build-arg `"branch=$branch`" --build-arg `"imageversion=$imageversion`" --build-arg `"projectname=$($projectname)`" $sonarArgs -t ${image}:${branchTag} -t ${image}:${imageversion} -f deploy/docker/$dockerFileName $dockercontext"
 	Invoke-Exe -cmd docker -args $dockerbuildargs
 
 	#Docker push images to repo
