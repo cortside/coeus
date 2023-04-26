@@ -18,7 +18,9 @@ Param
 	[Parameter(Mandatory = $false)][switch]$systemprune,
 	[Parameter(Mandatory = $false)][switch]$pushImage,
 	[Parameter(Mandatory = $false)][string]$BuildCommitHash = $env:CommitHash,
-	[Parameter(Mandatory = $false)][string]$RepositorySlug = $env:RepositorySlug
+	[Parameter(Mandatory = $false)][string]$RepositorySlug = $env:RepositorySlug,
+	[Parameter(Mandatory = $false)][string]$sdkimage = "cortside/dotnet-sdk:6.0-alpine",
+	[Parameter(Mandatory = $false)][string]$runtimeimage = "cortside/dotnet-runtime:6.0-alpine"
 )
 
 $ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';
