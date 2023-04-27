@@ -9,7 +9,28 @@
     "dbContextProject": "src/Acme.ShoppingCart.Data",
     "startupProject": "src/Acme.ShoppingCart.WebApi",
     "triggers": {
-      "excludeTables": [ "__EFMigrationsHistory", "AuditLog", "AuditLogTransaction", "Outbox" ]
+      "excludeTables": [
+        "__EFMigrationsHistory",
+        "AuditLog",
+        "AuditLogTransaction",
+        "Outbox"
+      ]
     }
+  },
+  "docker": {
+    "sdkImage": "cortside/dotnet-sdk:6.0-alpine",
+    "runtimeImage": "cortside/dotnet-runtime:6.0-alpine",
+    "image": "cortside/shoppingcart-api"
+  },
+  "build": {
+    "configuration": "Debug",
+    "publishableProject": "Acme.ShoppingCart.WebApi",
+    "nugetfeed": "https://api.nuget.org/v3/index.json"
+  },
+  "sonar": {
+    "organization": "cortside",
+    "key": "acme_shoppingcart-api",
+    "host": "https://sonarcloud.io",
+    "token": ""
   }
 }

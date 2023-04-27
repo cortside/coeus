@@ -81,7 +81,7 @@ foreach ($dockerfile in $dockerFiles) {
 
 	$image = Split-Path -Path $dockerfile.DirectoryName -Leaf -Resolve
 	$imageversion = $dockerfile.Name.replace('Dockerfile.','')
-	$dockerbuildargs = "build --rm -t ${acr}/${image}:${BuildNumber}-${imageversion} -t ${acr}/${image}:${imageversion} -f $($dockerfile.FullName) ."
+	$dockerbuildargs = "build --rm -t ${acr}/${image}:${BuildNumber}-${imageversion} -t ${acr}/${image}:${imageversion} -f $($dockerfile.FullName) $($dockerfile.DirectoryName)"
 	Invoke-Exe -cmd docker -args $dockerbuildargs
 
 	#Docker push images to repo

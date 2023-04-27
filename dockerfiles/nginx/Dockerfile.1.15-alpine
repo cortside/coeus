@@ -1,0 +1,25 @@
+# Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
+FROM nginx:1.15.1-alpine as publish
+ENV configpath /usr/share/nginx/html/config.json
+
+#COPY ./certs/* /usr/local/share/ca-certificates/
+
+COPY ./startup.sh /startup.sh
+COPY ./nginx.conf.example /etc/nginx/conf.d/default.conf
+
+RUN sed -i 's/https/http/g' /etc/apk/repositories && \
+    apk update && \
+    apk add --no-cache ca-certificates jq bash curl && \
+    update-ca-certificates && \
+    adduser -S -u 2001 -s /bin/bash user && \
+    addgroup -S -g 2001 user && addgroup -S nginx && \
+    addgroup user user; addgroup user nginx && \
+    mkdir -p /var/lib/nginx/ /run/nginx/ /var/cache/nginx/client_temp /var/cache/nginx/proxy_temp && \
+    touch /var/run/nginx.pid && \
+    chown -R nginx:nginx /var/lib/nginx/ /run/nginx/ /var/cache/nginx/ /var/run/nginx.pid && \
+    chmod -R g+rwx /var/lib/nginx /run/nginx /var/cache/nginx/ /var/log/nginx /var/run/nginx.pid && \
+    chmod a+x /startup.sh
+
+USER user
+EXPOSE 8080/tcp
+CMD ["/startup.sh"]

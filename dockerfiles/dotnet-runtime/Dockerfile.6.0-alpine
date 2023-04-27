@@ -6,7 +6,7 @@ ENV ASPNETCORE_URLS=http://+:5000
 ENV ASPNETCORE_ENVIRONMENT=Deployment
 
 RUN sed -i 's/https/http/g' /etc/apk/repositories && \
-    addgroup -S -g 2001 ebuser && adduser -S -u 2001 -s /bin/bash -G ebuser ebuser && \
+    addgroup -S -g 2001 user && adduser -S -u 2001 -s /bin/bash -G user user && \
     apk update && \
     apk add --no-cache jq bash curl ca-certificates tzdata icu-libs openssl \
     # powershell extra dependencies
@@ -24,6 +24,6 @@ RUN curl -L https://github.com/PowerShell/PowerShell/releases/download/v7.2.10/p
 
 WORKDIR /app
 
-USER ebuser
+USER user
 EXPOSE 5000/tcp
 CMD ["/startup.sh"]

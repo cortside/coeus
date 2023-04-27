@@ -1,0 +1,62 @@
+server {
+    listen       8080;
+    server_name  localhost;
+    root /usr/share/nginx/html/;
+    location / {
+      try_files $uri $uri/ /index.html =404;
+      add_header Cache-Control "no-store, no-cache, must-revalidate";
+      add_header Pragma "no-cache";
+      add_header Expires "0";
+      gzip  on;
+      gzip_types
+          text/css
+          text/plain
+          text/javascript
+          application/javascript
+          application/json
+          application/x-javascript
+          application/xml
+          application/xml+rss
+          application/xhtml+xml
+          application/x-font-ttf
+          application/x-font-opentype
+          application/vnd.ms-fontobject
+          image/svg+xml
+          image/x-icon
+          application/rss+xml
+          application/atom_xml;
+      gzip_proxied    any;
+      gzip_min_length 50;
+    }
+
+    #error_page   500 502 503 504  /50x.html;
+    #location = /50x.html {
+    #    root   html;
+    #}
+
+    location /api {
+      return 503;
+    }
+
+    # static health check to validate nginx server is up
+    location /health {
+
+        set $cors '';
+        if ($http_origin ~ '(^(https|http)?://([^/]+\.)*(localhost:(\d*)\/?(.*)|cortside.com|cortsideconsulting.com))$') {
+            set $cors 'true';
+        }
+
+        if ($cors = 'true') {
+            add_header Access-Control-Allow-Origin      $http_origin;
+            add_header Access-Control-Allow-Credentials true;
+            add_header Access-Control-Allow-Headers     $http_access_control_request_headers;
+            add_header Access-Control-Allow-Methods     $http_access_control_request_method;
+        }
+
+        add_header Content-Type application/json;
+
+        access_log off;
+        return 200 '{"service":"shoppingcart-web","status":"OK","healthy":true,"timestamp":"null","build":{"timestamp":"null","version":"null","tag":"null","suffix":"null"}}\n';
+    }
+
+}
