@@ -102,7 +102,7 @@ Write-Output "dockercontext: $dockercontext"
 Write-Output "buildconfiguration: $buildconfiguration"
 Write-Output "local: $local"
 Write-Output "nugetfeed: $($config.nuget.feed)"
-Write-Output "sdkimage=$($config.docker.sdkimage)"
+Write-Output "buildimage=$($config.docker.buildimage)"
 Write-Output "runtimeimage=$($config.docker.runtimeimage)"
 Write-Output "image:$($config.docker.image)"
 
@@ -119,7 +119,7 @@ foreach ($dockerfile in $dockerFiles) {
 
 	$sonarArgs = "--build-arg `"analysisArgs=$analysisArgs`" --build-arg `"sonarhost=$($config.sonar.host)`" --build-arg `"sonartoken=$($config.sonar.token)`" --build-arg `"sonarkey=$($config.sonar.key)`""
 
-	$dockerbuildargs = "build --rm --progress=plain --add-host=proget.local:10.10.10.10 --build-arg `"organization=$($config.sonar.organization)`" --build-arg `"publishableProject=$($config.build.publishableProject)`" --build-arg `"buildconfiguration=$($config.build.configuration)`" --build-arg `"nugetfeed=$($config.build.nugetfeed)`" --build-arg `"sdkimage=$($config.docker.sdkimage)`" --build-arg `"runtimeimage=$($config.docker.runtimeimage)`" --build-arg `"branch=$branch`" --build-arg `"imageversion=$imageversion`" --build-arg `"projectname=$($config.repository.name)`" $sonarArgs -t $($config.docker.image):${branchTag} -t $($config.docker.image):${imageversion} -f deploy/docker/$dockerFileName $dockercontext"
+	$dockerbuildargs = "build --rm --progress=plain --add-host=proget.local:10.10.10.10 --build-arg `"organization=$($config.sonar.organization)`" --build-arg `"publishableProject=$($config.build.publishableProject)`" --build-arg `"buildconfiguration=$($config.build.configuration)`" --build-arg `"nugetfeed=$($config.build.nugetfeed)`" --build-arg `"buildimage=$($config.docker.buildimage)`" --build-arg `"runtimeimage=$($config.docker.runtimeimage)`" --build-arg `"branch=$branch`" --build-arg `"imageversion=$imageversion`" --build-arg `"projectname=$($config.repository.name)`" $sonarArgs -t $($config.docker.image):${branchTag} -t $($config.docker.image):${imageversion} -f deploy/docker/$dockerFileName $dockercontext"
 	Invoke-Exe -cmd docker -args $dockerbuildargs
 
 	#Docker push images to repo

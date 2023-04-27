@@ -1,8 +1,8 @@
-ARG sdkimage
+ARG buildimage
 ARG runtimeimage
 
 # use the sdk to build/test, but later we'll use runtime for published image
-FROM ${sdkimage} AS build
+FROM ${buildimage} AS build
 ARG buildconfiguration
 ARG nugetfeed
 ARG sonarscannerversion
