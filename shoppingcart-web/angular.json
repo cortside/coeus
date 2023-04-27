@@ -28,9 +28,9 @@
               "src/assets",
               "src/config.json",
               {
-                  "glob": "config.*.json",
-                  "input": "src/",
-                  "output": "/"
+                "glob": "config.*.json",
+                "input": "src/",
+                "output": "/"
               }
             ],
             "styles": [
@@ -38,7 +38,9 @@
               "src/styles.scss"
             ],
             "scripts": [],
-            "allowedCommonJsDependencies": ["oidc-client"]
+            "allowedCommonJsDependencies": [
+              "oidc-client"
+            ]
           },
           "configurations": {
             "production": {
@@ -104,9 +106,9 @@
               "src/assets",
               "src/config.json",
               {
-                  "glob": "config.*.json",
-                  "input": "src/",
-                  "output": "/"
+                "glob": "config.*.json",
+                "input": "src/",
+                "output": "/"
               }
             ],
             "styles": [
@@ -114,6 +116,15 @@
               "src/styles.scss"
             ],
             "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
@@ -145,6 +156,15 @@
             "main": "projects/auth/src/test.ts",
             "tsConfig": "projects/auth/tsconfig.spec.json",
             "karmaConfig": "projects/auth/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/auth/**/*.ts",
+              "projects/auth/**/*.html"
+            ]
           }
         }
       }
