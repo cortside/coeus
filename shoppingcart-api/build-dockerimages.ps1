@@ -3,20 +3,7 @@ Param
 (
 	[Parameter(Mandatory = $false)][string]$branch = "local",
 	[Parameter(Mandatory = $false)][string]$buildCounter = "0",
-#	[Parameter(Mandatory = $false)][string]$msbuildconfig = "Debug",
-#	[Parameter(Mandatory = $false)][string]$buildconfiguration = "Debug",
 	[Parameter(Mandatory = $false)][ValidateSet("true", "false")][string]$local = "true",
-#	[Parameter(Mandatory = $false)][string]$OctopusEndpoint,
-#	[Parameter(Mandatory = $false)][string]$OctopusApiKey,
-#	[Parameter(Mandatory = $false)][string]$nugetfeed = "https://api.nuget.org/v3/index.json",
-#	[Parameter(Mandatory = $false)][string]$OctopusVersion, 
-#	[Parameter(Mandatory = $false)][string]$username,
-#	[Parameter(Mandatory = $false)][string]$password,
-#	[Parameter(Mandatory = $false)][switch]$skipDbTest,
-#	[Parameter(Mandatory = $false)][string]$BuildCommitHash = $env:CommitHash,
-#	[Parameter(Mandatory = $false)][string]$RepositorySlug = $env:RepositorySlug,
-#	[Parameter(Mandatory = $false)][string]$sdkimage = "cortside/dotnet-sdk:6.0-alpine",
-#	[Parameter(Mandatory = $false)][string]$runtimeimage = "cortside/dotnet-runtime:6.0-alpine"
 	[Parameter(Mandatory = $false)][switch]$systemprune,
 	[Parameter(Mandatory = $false)][switch]$pushImage
 )
@@ -24,10 +11,7 @@ Param
 $ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';
 
 # common repository functions
-Import-Module .\repository.psm1
-
-#Load environment variables from PS folder
-#. $PSScriptRoot\deploy\ps\version.ps1
+Import-Module .\repository.psm1 -Force
 
 Function Get-Result {
 	if ($LastExitCode -ne 0) {
@@ -106,6 +90,9 @@ if ($systemprune.IsPresent) {
 
 $BuildNumber = (New-BuildJson -versionJsonPath $PSScriptRoot\repository.json -BuildJsonPath $PSScriptRoot\src\$($config.build.publishableProject)\build.json -buildCounter $buildCounter).build.version
 $config = Get-RepositoryConfiguration
+
+echo $config
+exit 0
 
 $dockerpath = "Dockerfile.*"
 $dockercontext = "."
