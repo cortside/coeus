@@ -43,13 +43,8 @@ Function Invoke-Exe {
 		[parameter(Mandatory = $true)][string] $cmd,
 		[parameter(Mandatory = $true)][string] $args
 	)
-	if ($env:DOCKER_HOST -and $local -eq 'true') {
-		Write-Host "Executing: `"$cmd`" $args"
-		Invoke-Expression "& `"$cmd`" $args"
-	} else {
-		Write-Host "Executing: `"$cmd`" --% $args"
-		Invoke-Expression "& `"$cmd`" --% $args"
-	}
+	Write-Host "Executing: `"$cmd`" $args"
+	Invoke-Expression "& `"$cmd`" $args"
 	$result = Get-Result
 }
 
