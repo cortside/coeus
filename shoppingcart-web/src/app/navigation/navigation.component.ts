@@ -8,11 +8,9 @@ import { ShoppingCartService } from '../core/shopping-cart.service';
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss'],
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent {
     quantity$: Observable<number>;
     constructor(private service: ShoppingCartService) {
         this.quantity$ = this.service.getCartItems().pipe(map((items) => items.map((i) => i.quantity).reduce((i, j) => i + j, 0)));
     }
-
-    ngOnInit(): void {}
 }
