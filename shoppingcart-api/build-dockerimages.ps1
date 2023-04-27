@@ -91,9 +91,6 @@ if ($systemprune.IsPresent) {
 $BuildNumber = (New-BuildJson -versionJsonPath $PSScriptRoot\repository.json -BuildJsonPath $PSScriptRoot\src\$($config.build.publishableProject)\build.json -buildCounter $buildCounter).build.version
 $config = Get-RepositoryConfiguration
 
-echo $config
-exit 0
-
 $dockerpath = "Dockerfile.*"
 $dockercontext = "."
 
