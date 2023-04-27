@@ -24,7 +24,7 @@ Param
 $ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';
 
 # common repository functions
-Import-Module .\Repository.psm1
+Import-Module .\repository.psm1
 
 #Load environment variables from PS folder
 #. $PSScriptRoot\deploy\ps\version.ps1
