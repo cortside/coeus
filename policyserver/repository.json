@@ -1,0 +1,36 @@
+{
+  "version": "1.0",
+  "repository": {
+    "name": "Acme.IdentityServer6"
+  },
+  "database": {
+    "name": "IdentityServer",
+    "dbContext": "DatabaseContext",
+    "dbContextProject": "src/Acme.IdentityServer",
+    "startupProject": "src/Acme.IdentityServer",
+    "triggers": {
+      "excludeTables": [
+        "__EFMigrationsHistory",
+        "AuditLog",
+        "AuditLogTransaction",
+        "Outbox"
+      ]
+    }
+  },
+  "docker": {
+    "sdkImage": "cortside/dotnet-sdk:6.0-alpine",
+    "runtimeImage": "cortside/dotnet-runtime:6.0-alpine",
+    "image": "cortside/policyserver"
+  },
+  "build": {
+    "configuration": "Debug",
+    "publishableProject": "",
+    "nugetfeed": "https://api.nuget.org/v3/index.json"
+  },
+  "sonar": {
+    "organization": "cortside",
+    "key": "acme_policyserver",
+    "host": "https://sonarcloud.io",
+    "token": ""
+  }
+}
