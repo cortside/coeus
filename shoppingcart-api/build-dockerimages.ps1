@@ -88,8 +88,13 @@ if ($systemprune.IsPresent) {
 	Invoke-Exe -cmd docker -args "system prune --force"
 }
 
-$BuildNumber = (New-BuildJson -versionJsonPath $PSScriptRoot\repository.json -BuildJsonPath $PSScriptRoot\src\$($config.build.publishableProject)\build.json -buildCounter $buildCounter).build.version
 $config = Get-RepositoryConfiguration
+$BuildNumber = (New-BuildJson -versionJsonPath $PSScriptRoot\repository.json -BuildJsonPath $PSScriptRoot\src\$($config.build.publishableProject)\build.json -buildCounter $buildCounter).build.version
+
+gci build.json -Recurse
+
+exit 0
+
 
 $dockerpath = "Dockerfile.*"
 $dockercontext = "."
