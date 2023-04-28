@@ -20,6 +20,5 @@ RUN sed -i 's/https/http/g' /etc/apk/repositories && \
     chmod -R g+rwx /var/lib/nginx /run/nginx /var/cache/nginx/ /var/log/nginx /var/run/nginx.pid && \
     chmod a+x /startup.sh
 
-USER user
 EXPOSE 8080/tcp
 CMD ["/startup.sh"]

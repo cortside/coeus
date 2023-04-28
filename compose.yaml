@@ -10,7 +10,15 @@ services:
   policyserver:
     image: cortside/policyserver:develop
     ports:
-      - 5001:5000
+      - 5001:5001
+  shoppingcart-api:
+    image: cortside/shoppingcart-api:develop
+    ports:
+      - 5000:5000
+  shoppingcart-web:
+    image: cortside/shoppingcart-web:develop
+    ports:
+      - 4200:8080
   db:
     environment:
       ACCEPT_EULA: "Y"
@@ -23,5 +31,4 @@ services:
         retries: 10
         start_period: 10s
         timeout: 3s     
-         
-       
+      

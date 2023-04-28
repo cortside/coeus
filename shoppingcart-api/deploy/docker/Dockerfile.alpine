@@ -43,8 +43,7 @@ RUN export SONAR_SCANNER_OPTS="-Xmx4096m" && \
     dotnet test --no-build --no-restore /p:Exclude="[xunit*]*" /p:ParallelizeTestCollections=false --collect:"XPlat Code Coverage" --settings coverlet.runsettings.xml && \
 	#--logger:"teamcity;verbosity=normal" && \
     dotnet sonarscanner end /d:sonar.login="$sonartoken" && \
-    dotnet publish --no-build --no-restore "$publishableProject" -p:Version=$(echo $imageversion | cut -f 1 -d '-') -o out
-	##	-r linux-musl-x64
+    dotnet publish "$publishableProject" -p:Version=$(echo $imageversion | cut -f 1 -d '-') -o out -r linux-musl-x64
 
 ## Build the runtime environment
 FROM $runtimeimage AS runtime

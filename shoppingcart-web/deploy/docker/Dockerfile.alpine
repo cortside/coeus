@@ -71,7 +71,7 @@ COPY --from=build /app/"$artifactDirectory"/ /usr/share/nginx/html
 #TODO: waiting for cypress tests
 #COPY --from=test /cypress-artifacts /cypress-artifacts
 
-#COPY ./deploy/sh/startup.sh /startup.sh
+COPY ./deploy/sh/startup.sh /startup.sh
 #COPY ./nginx.conf.example /etc/nginx/conf.d/default.conf
 
 #RUN sed -i 's/https/http/g' /etc/apk/repositories && \
@@ -86,6 +86,8 @@ COPY --from=build /app/"$artifactDirectory"/ /usr/share/nginx/html
 #    chown -R nginx:nginx /var/lib/nginx/ /run/nginx/ /var/cache/nginx/ /var/run/nginx.pid && \
 #    chmod -R g+rwx /var/lib/nginx /run/nginx /var/cache/nginx/ /var/log/nginx /var/run/nginx.pid && \
 #    chmod a+x /startup.sh
+
+RUN chmod a+x /startup.sh
 
 USER user
 EXPOSE 8080/tcp
