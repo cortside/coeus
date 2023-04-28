@@ -65,7 +65,7 @@ WORKDIR /app
 COPY --from=build /app/src/out ./
 COPY --from=build /app/src/"$publishableProject"/build.json ./
 
-RUN chmod a+rwx *.db
+#RUN chmod a+rwx *.db
 RUN chmod a+rw /app
 
 #TODO uncomment when not using sqllite db
