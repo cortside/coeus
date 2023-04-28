@@ -18,7 +18,7 @@ environment:
   SONAR_TOKEN:
     secure: EQT+mZIVdiZT+nP78HyRuYDYvqVseBohm6Q4vBBkZMnSj/itnOpPfBZIUXonfBsJ
   BUILDKIT_PROGRESS: plain
-  DOCKER_PASS: corts
+  DOCKER_USER: corts
   DOCKER_PASS:
     secure: 0rxw6OrmXRqB3UuBZFbC/w==
 
