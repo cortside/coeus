@@ -11,13 +11,11 @@ import { ItemModel } from '../models/item.model';
     templateUrl: './item-list.component.html',
     styleUrls: ['./item-list.component.scss'],
 })
-export class ItemListComponent implements OnInit {
+export class ItemListComponent {
     items$: Observable<ListResult<ItemModel>>;
     constructor(private service: ItemService, private shoppingCartService: ShoppingCartService) {
         this.items$ = service.getItems();
     }
-
-    ngOnInit(): void {}
 
     authorize() {}
 
