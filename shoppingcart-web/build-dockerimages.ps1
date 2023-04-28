@@ -3,20 +3,7 @@ Param
 (
 	[Parameter(Mandatory = $false)][string]$branch = "local",
 	[Parameter(Mandatory = $false)][string]$buildCounter = "0",
-#	[Parameter(Mandatory = $false)][string]$msbuildconfig = "Debug",
-#	[Parameter(Mandatory = $false)][string]$buildconfiguration = "Debug",
 	[Parameter(Mandatory = $false)][ValidateSet("true", "false")][string]$local = "true",
-#	[Parameter(Mandatory = $false)][string]$OctopusEndpoint,
-#	[Parameter(Mandatory = $false)][string]$OctopusApiKey,
-#	[Parameter(Mandatory = $false)][string]$nugetfeed = "https://api.nuget.org/v3/index.json",
-#	[Parameter(Mandatory = $false)][string]$OctopusVersion, 
-#	[Parameter(Mandatory = $false)][string]$username,
-#	[Parameter(Mandatory = $false)][string]$password,
-#	[Parameter(Mandatory = $false)][switch]$skipDbTest,
-#	[Parameter(Mandatory = $false)][string]$BuildCommitHash = $env:CommitHash,
-#	[Parameter(Mandatory = $false)][string]$RepositorySlug = $env:RepositorySlug,
-#	[Parameter(Mandatory = $false)][string]$sdkimage = "cortside/dotnet-sdk:6.0-alpine",
-#	[Parameter(Mandatory = $false)][string]$runtimeimage = "cortside/dotnet-runtime:6.0-alpine"
 	[Parameter(Mandatory = $false)][switch]$systemprune,
 	[Parameter(Mandatory = $false)][switch]$pushImage
 )
@@ -24,10 +11,7 @@ Param
 $ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';
 
 # common repository functions
-Import-Module .\Repository.psm1
-
-#Load environment variables from PS folder
-#. $PSScriptRoot\deploy\ps\version.ps1
+Import-Module .\repository.psm1 -Force
 
 Function Get-Result {
 	if ($LastExitCode -ne 0) {
@@ -43,13 +27,8 @@ Function Invoke-Exe {
 		[parameter(Mandatory = $true)][string] $cmd,
 		[parameter(Mandatory = $true)][string] $args
 	)
-	if ($env:DOCKER_HOST -and $local -eq 'true') {
-		Write-Host "Executing: `"$cmd`" $args"
-		Invoke-Expression "& `"$cmd`" $args"
-	} else {
-		Write-Host "Executing: `"$cmd`" --% $args"
-		Invoke-Expression "& `"$cmd`" --% $args"
-	}
+	Write-Host "Executing: `"$cmd`" $args"
+	Invoke-Expression "& `"$cmd`" $args"
 	$result = Get-Result
 }
 
@@ -109,8 +88,8 @@ if ($systemprune.IsPresent) {
 	Invoke-Exe -cmd docker -args "system prune --force"
 }
 
-$BuildNumber = (New-BuildJson -versionJsonPath $PSScriptRoot\repository.json -BuildJsonPath $PSScriptRoot\src\$($config.build.publishableProject)\build.json -buildCounter $buildCounter).build.version
 $config = Get-RepositoryConfiguration
+$BuildNumber = (New-BuildJson -versionJsonPath $PSScriptRoot\repository.json -BuildJsonPath $PSScriptRoot\src\$($config.build.publishableProject)\build.json -buildCounter $buildCounter).build.version
 
 $dockerpath = "Dockerfile.*"
 $dockercontext = "."
@@ -123,8 +102,8 @@ Write-Output "dockercontext: $dockercontext"
 Write-Output "buildconfiguration: $buildconfiguration"
 Write-Output "local: $local"
 Write-Output "nugetfeed: $($config.nuget.feed)"
-Write-Output "buildimage=$($config.docker.buildImage)"
-Write-Output "runtimeimage=$($config.docker.runtimeImage)"
+Write-Output "buildimage=$($config.docker.buildimage)"
+Write-Output "runtimeimage=$($config.docker.runtimeimage)"
 Write-Output "image:$($config.docker.image)"
 
 #Run Build for all Dockerfiles in /Docker path
@@ -140,7 +119,7 @@ foreach ($dockerfile in $dockerFiles) {
 
 	$sonarArgs = "--build-arg `"analysisArgs=$analysisArgs`" --build-arg `"sonarhost=$($config.sonar.host)`" --build-arg `"sonartoken=$($config.sonar.token)`" --build-arg `"sonarkey=$($config.sonar.key)`""
 
-	$dockerbuildargs = "--log-level debug build --rm --add-host=proget.local:10.10.10.10 --build-arg `"organization=$($config.sonar.organization)`" --build-arg `"publishableProject=$($config.build.publishableProject)`" --build-arg `"buildconfiguration=$($config.build.configuration)`" --build-arg `"nugetfeed=$($config.build.nugetfeed)`" --build-arg `"buildimage=$($config.docker.buildimage)`" --build-arg `"runtimeimage=$($config.docker.runtimeimage)`" --build-arg `"branch=$branch`" --build-arg `"imageversion=$imageversion`" --build-arg `"projectname=$($config.repository.name)`" $sonarArgs -t $($config.docker.image):${branchTag} -t $($config.docker.image):${imageversion} -f deploy/docker/$dockerFileName $dockercontext"
+	$dockerbuildargs = "build --rm --progress=plain --add-host=proget.local:10.10.10.10 --build-arg `"artifactDirectory=$($config.docker.artifactDirectory)`" --build-arg `"organization=$($config.sonar.organization)`" --build-arg `"publishableProject=$($config.build.publishableProject)`" --build-arg `"buildconfiguration=$($config.build.configuration)`" --build-arg `"nugetfeed=$($config.build.nugetfeed)`" --build-arg `"buildimage=$($config.docker.buildimage)`" --build-arg `"runtimeimage=$($config.docker.runtimeimage)`" --build-arg `"branch=$branch`" --build-arg `"imageversion=$imageversion`" --build-arg `"projectname=$($config.repository.name)`" $sonarArgs -t $($config.docker.image):${branchTag} -t $($config.docker.image):${imageversion} -f deploy/docker/$dockerFileName $dockercontext"
 	Invoke-Exe -cmd docker -args $dockerbuildargs
 
 	#Docker push images to repo

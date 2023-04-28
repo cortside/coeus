@@ -2,4 +2,4 @@
 
 ifconfig
 
-./Acme.ShoppingCart.WebApi
+./PolicyServer

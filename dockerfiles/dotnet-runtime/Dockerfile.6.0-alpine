@@ -24,6 +24,5 @@ RUN curl -L https://github.com/PowerShell/PowerShell/releases/download/v7.2.10/p
 
 WORKDIR /app
 
-USER user
 EXPOSE 5000/tcp
 CMD ["/startup.sh"]

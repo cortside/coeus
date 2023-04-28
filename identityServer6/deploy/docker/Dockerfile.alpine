@@ -1,8 +1,8 @@
-ARG sdkimage
+ARG buildimage
 ARG runtimeimage
 
 # use the sdk to build/test, but later we'll use runtime for published image
-FROM ${sdkimage} AS build
+FROM ${buildimage} AS build
 ARG buildconfiguration
 ARG nugetfeed
 ARG sonarscannerversion
@@ -43,8 +43,7 @@ RUN export SONAR_SCANNER_OPTS="-Xmx4096m" && \
     dotnet test --no-build --no-restore /p:Exclude="[xunit*]*" /p:ParallelizeTestCollections=false --collect:"XPlat Code Coverage" --settings coverlet.runsettings.xml && \
 	#--logger:"teamcity;verbosity=normal" && \
     dotnet sonarscanner end /d:sonar.login="$sonartoken" && \
-    dotnet publish --no-build --no-restore "$publishableProject" -p:Version=$(echo $imageversion | cut -f 1 -d '-') -o out
-	##	-r linux-musl-x64
+    dotnet publish "$publishableProject" -p:Version=$(echo $imageversion | cut -f 1 -d '-') -o out -r linux-musl-x64
 
 ## Build the runtime environment
 FROM $runtimeimage AS runtime
@@ -60,11 +59,16 @@ COPY ./deploy/sh/startup.sh /startup.sh
 #COPY ./certs/* /usr/local/share/ca-certificates/
 COPY ./src/sql /sql
 COPY ./update-database.ps1 /sql
+COPY ./src/*.db /app/
 
 WORKDIR /app
 COPY --from=build /app/src/out ./
 COPY --from=build /app/src/"$publishableProject"/build.json ./
 
-USER ebuser
+RUN chmod a+rwx *.db
+RUN chmod a+rw /app
+
+#TODO uncomment when not using sqllite db
+#USER user
 EXPOSE 5000/tcp
 CMD ["/startup.sh"]

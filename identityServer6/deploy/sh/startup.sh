@@ -1,5 +1,7 @@
 #!/bin/bash
 
 ifconfig
+find . -maxdepth 1 -type f -executable
+ls -Al
 
-./Acme.ShoppingCart.WebApi
+./Acme.IdentityServer

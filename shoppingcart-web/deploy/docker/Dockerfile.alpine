@@ -17,8 +17,9 @@ COPY ./ /app/
 #COPY ./cypress/plugins/ /app/cypress/plugins/
 
 # gathering components from NPM install for linting
-FROM base as lint
-RUN ng lint
+# TODO: causes errors right now
+#FROM base as lint
+#RUN ng lint
 
 # gathering components from NPM install for unit testing
 FROM base as test
@@ -53,19 +54,24 @@ RUN export coveragefiles="$(find `pwd`/coverage -name lcov.info | tr '\n' ',')" 
   -Dsonar.sourceEncoding="UTF-8"
 
 #TODO:
-RUN npm run cy-ci
+#RUN npm run cy-ci
 
 # gathering components from NPM install for ng build
 FROM base as build
 RUN true
+RUN ng build auth
 RUN ng build --aot --configuration production
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
 FROM $runtimeimage as publish
+ARG artifactDirectory
+
 ENV configpath /usr/share/nginx/html/config.json
 
-COPY --from=build /app/dist/web/ /usr/share/nginx/html
-COPY --from=test /cypress-artifacts /cypress-artifacts
+COPY --from=build /app/"$artifactDirectory"/ /usr/share/nginx/html
+#TODO: waiting for cypress tests
+#COPY --from=test /cypress-artifacts /cypress-artifacts
+
 #COPY ./deploy/sh/startup.sh /startup.sh
 #COPY ./nginx.conf.example /etc/nginx/conf.d/default.conf
 

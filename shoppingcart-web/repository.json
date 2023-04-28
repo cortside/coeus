@@ -6,11 +6,12 @@
   "docker": {
     "buildImage": "cortside/ng-cli:14-alpine",
     "runtimeImage": "cortside/nginx:1.15-alpine",
-    "image": "cortside/shoppingcart-web"
+    "image": "cortside/shoppingcart-web",
+	"artifactDirectory": "dist/shoppingcart-web"
   },
   "build": {
     "configuration": "Debug",
-    "publishableProject": "Acme.ShoppingCart.WebApi",
+    "publishableProject": "",
     "nugetfeed": "https://api.nuget.org/v3/index.json"
   },
   "sonar": {

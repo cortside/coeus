@@ -17,10 +17,15 @@ environment:
   JAVA_HOME: C:\Program Files\Java\jdk15
   SONAR_TOKEN:
     secure: EQT+mZIVdiZT+nP78HyRuYDYvqVseBohm6Q4vBBkZMnSj/itnOpPfBZIUXonfBsJ
+  BUILDKIT_PROGRESS: plain
+  DOCKER_PASS: corts
+  DOCKER_PASS:
+    secure: 0rxw6OrmXRqB3UuBZFbC/w==
 
 init:
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 - ps: Get-ChildItem "Env:"
+- ps: docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
 
 assembly_info:
   patch: true
@@ -44,7 +49,13 @@ build_script:
 - ps: >-
     $buildNumber = $env:APPVEYOR_BUILD_NUMBER;
     $branch = $env:APPVEYOR_REPO_BRANCH;
-    cd shoppingcart-api;
+    cd $PSScriptRoot\shoppingcart-api;
+    .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber;
+    cd $PSScriptRoot\shoppingcart-web;
+    .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber;
+    cd $PSScriptRoot\identityServer6;
+    .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber;
+    cd $PSScriptRoot\policyserver;
     .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber;
     #-pushImage -systemprune
     echo "building version $version from branch $branch targeting $target with analysis arguments of $analysisArgs";
