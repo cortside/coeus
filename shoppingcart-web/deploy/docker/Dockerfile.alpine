@@ -17,9 +17,8 @@ COPY ./ /app/
 #COPY ./cypress/plugins/ /app/cypress/plugins/
 
 # gathering components from NPM install for linting
-# TODO: causes errors right now
-#FROM base as lint
-#RUN ng lint
+FROM base as lint
+RUN ng lint
 
 # gathering components from NPM install for unit testing
 FROM base as test
