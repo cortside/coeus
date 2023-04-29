@@ -43,3 +43,4 @@ Thumbs.db
 
 # User files
 src/config.user.json
+cypress/videos
