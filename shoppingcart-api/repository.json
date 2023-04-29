@@ -1,5 +1,6 @@
 {
   "version": "1.0",
+  "service": "shoppingcart-api",
   "repository": {
     "name": "Acme.ShoppingCart"
   },
@@ -20,7 +21,8 @@
   "docker": {
     "buildImage": "cortside/dotnet-sdk:6.0-alpine",
     "runtimeImage": "cortside/dotnet-runtime:6.0-alpine",
-    "image": "cortside/shoppingcart-api"
+    "image": "cortside/shoppingcart-api",
+    "executable": "Acme.ShoppingCart.WebApi"
   },
   "build": {
     "configuration": "Debug",

@@ -1,5 +1,6 @@
 {
   "version": "1.0",
+  "service": "policyserver",
   "repository": {
     "name": "Acme.IdentityServer6"
   },
@@ -20,7 +21,8 @@
   "docker": {
     "buildImage": "cortside/dotnet-sdk:6.0-alpine",
     "runtimeImage": "cortside/dotnet-runtime:6.0-alpine",
-    "image": "cortside/policyserver"
+    "image": "cortside/policyserver",
+    "executable": "PolicyServer"
   },
   "build": {
     "configuration": "Debug",

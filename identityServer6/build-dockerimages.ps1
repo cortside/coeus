@@ -119,13 +119,32 @@ foreach ($dockerfile in $dockerFiles) {
 
 	$sonarArgs = "--build-arg `"analysisArgs=$analysisArgs`" --build-arg `"sonarhost=$($config.sonar.host)`" --build-arg `"sonartoken=$($config.sonar.token)`" --build-arg `"sonarkey=$($config.sonar.key)`""
 
-	$dockerbuildargs = "build --rm --progress=plain --add-host=proget.local:10.10.10.10 --build-arg `"artifactDirectory=$($config.docker.artifactDirectory)`" --build-arg `"organization=$($config.sonar.organization)`" --build-arg `"publishableProject=$($config.build.publishableProject)`" --build-arg `"buildconfiguration=$($config.build.configuration)`" --build-arg `"nugetfeed=$($config.build.nugetfeed)`" --build-arg `"buildimage=$($config.docker.buildimage)`" --build-arg `"runtimeimage=$($config.docker.runtimeimage)`" --build-arg `"branch=$branch`" --build-arg `"imageversion=$imageversion`" --build-arg `"projectname=$($config.repository.name)`" $sonarArgs -t $($config.docker.image):${branchTag} -t $($config.docker.image):${imageversion} -f deploy/docker/$dockerFileName $dockercontext"
+	$dockerbuildargs = @()
+	$dockerbuildargs +="build"
+	$dockerbuildargs +="--rm"
+	$dockerbuildargs +="--progress=plain"
+	$dockerbuildargs +="--add-host=proget.local:10.10.10.10"
+	$dockerbuildargs +="--build-arg `"service_name=$($config.service)`""
+	$dockerbuildargs +="--build-arg `"service_executable=$($config.docker.executable)`""
+	$dockerbuildargs +="--build-arg `"artifactDirectory=$($config.docker.artifactDirectory)`""
+	$dockerbuildargs +="--build-arg `"organization=$($config.sonar.organization)`""
+	$dockerbuildargs +="--build-arg `"publishableProject=$($config.build.publishableProject)`""
+	$dockerbuildargs +="--build-arg `"buildconfiguration=$($config.build.configuration)`""
+	$dockerbuildargs +="--build-arg `"nugetfeed=$($config.build.nugetfeed)`""
+	$dockerbuildargs +="--build-arg `"buildimage=$($config.docker.buildimage)`""
+	$dockerbuildargs +="--build-arg `"runtimeimage=$($config.docker.runtimeimage)`""
+	$dockerbuildargs +="--build-arg `"branch=$branch`""
+	$dockerbuildargs +="--build-arg `"imageversion=$imageversion`""
+	$dockerbuildargs +="--build-arg `"projectname=$($config.repository.name)`" $sonarArgs -t $($config.docker.image):${branchTag} -t $($config.docker.image):${imageversion} -f deploy/docker/$dockerFileName $dockercontext"
+
+	$dockerbuildargs = $dockerbuildargs -join " "
+	
 	Invoke-Exe -cmd docker -args $dockerbuildargs
 
 	#Docker push images to repo
 	if ($pushImage.IsPresent) {	
-		write-output "pushing ${image}:${imageversion}"
-		$dockerpushargs = "push --all-tags ${image}"
+		write-output "pushing $($config.docker.image):${imageversion}"
+		$dockerpushargs = "push --all-tags $($config.docker.image)"
 		Invoke-Exe -cmd docker -args $dockerpushargs
 	} else {
 		write-output "This is a local build and will not need to push."

@@ -1,8 +1,35 @@
 services:
-#5002 - ids
+#5005 - healthmonitor-api
+#5002 - identityserver
 #5001 - policyserver
 #5000 - shoppingcart-api
 #4200 - shoppingcart-web
+#docker run --user root --name mssql -d --restart unless-stopped -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=password1@" -p 1433:1433 --hostname localhost -v /srv/mssql:/var/opt/mssql --detach mcr.microsoft.com/mssql/server:2022-latest /opt/mssql/bin/sqlservr -T 1800
+  rabbitmq:
+    environment:
+      ACCEPT_EULA: "Y"
+      RABBITMQ_DEFAULT_USER: "admin"
+      RABBITMQ_DEFAULT_PASS: "password"
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 15672:15672
+      - 5672:5672
+  seq:
+    environment:
+      ACCEPT_EULA: "Y"
+    image: datalust/seq:latest
+    ports:
+      - 5341:80
+  redis:
+    image: redislabs/redismod
+    ports:
+      - 6379:6379
+  healthmonitor-api:
+    image: cortside/healthmonitor-api:develop
+    ports:
+      - 5005:5000
+    volumes:
+      - coeus-data:/settings
   identityserver:
     image: cortside/identityserver6:develop
     ports:
@@ -31,4 +58,6 @@ services:
         retries: 10
         start_period: 10s
         timeout: 3s     
-      
+volumes:
+  coeus-data:
+    external: true

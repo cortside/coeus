@@ -49,24 +49,30 @@ RUN export SONAR_SCANNER_OPTS="-Xmx4096m" && \
 FROM $runtimeimage AS runtime
 ARG projectname
 ARG publishableProject
+ARG service_executable
+ARG service_name
 
 ENV configpath /app/appsettings.json
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 ENV ASPNETCORE_URLS=http://+:5000
 ENV ASPNETCORE_ENVIRONMENT=Deployment
+ENV SERVICE_NAME=$service_name
+ENV SERVICE_EXECUTABLE=$service_executable
 
-COPY ./deploy/sh/startup.sh /startup.sh
+#COPY ./deploy/sh/startup.sh /startup.sh
 #COPY ./certs/* /usr/local/share/ca-certificates/
 COPY ./src/sql /sql
 COPY ./update-database.ps1 /sql
 COPY ./src/*.db /app/
+#RUN chmod a+x /startup.sh
+#RUN chmod a+rw /app
 
 WORKDIR /app
 COPY --from=build /app/src/out ./
 COPY --from=build /app/src/"$publishableProject"/build.json ./
 
-#RUN chmod a+rwx *.db
-RUN chmod a+rw /app
+#RUN echo "{}" > /app/appsettings.local.json
+#RUN chmod a+rw /app/appsettings.local.json
 
 #TODO uncomment when not using sqllite db
 #USER user
