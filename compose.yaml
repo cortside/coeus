@@ -34,18 +34,38 @@ services:
     image: cortside/identityserver6:develop
     ports:
       - 5002:5000
+    depends_on:
+      - db
+    volumes:
+      - coeus-data:/settings
   policyserver:
     image: cortside/policyserver:develop
     ports:
       - 5001:5001
+    depends_on:
+      - db
+      - identityserver
+    volumes:
+      - coeus-data:/settings
+# (get-content /app/appsettings.local.json | ConvertFrom-Json).database.connectionstring; ./update-database.ps1 -ConnectionString $connectionstring     
   shoppingcart-api:
     image: cortside/shoppingcart-api:develop
     ports:
       - 5000:5000
+    depends_on:
+      - db
+      - policyserver
+      - identityserver
+    volumes:
+      - coeus-data:/settings
   shoppingcart-web:
     image: cortside/shoppingcart-web:develop
     ports:
       - 4200:8080
+    depends_on:
+      - shoppingcart-api
+    volumes:
+      - coeus-data:/settings
   db:
     environment:
       ACCEPT_EULA: "Y"

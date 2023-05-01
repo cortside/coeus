@@ -61,8 +61,13 @@ ENV SERVICE_EXECUTABLE=$service_executable
 
 #COPY ./deploy/sh/startup.sh /startup.sh
 #COPY ./certs/* /usr/local/share/ca-certificates/
-COPY ./src/sql /sql
+COPY ./src/sql /sql/src/sql
 COPY ./update-database.ps1 /sql
+COPY ./repository.psm1 /sql
+COPY ./repository.json /sql
+
+#RUN pwsh [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Install-PackageProvider -Name PowershellGet -Force; Install-Module -Name SqlServer -AllowClobber -Force; Import-Module SqlServer
+RUN echo "(get-content /app/appsettings.local.json | ConvertFrom-Json).database.connectionstring; ./update-database.ps1 -ConnectionString $connectionstring" > /sql/update.ps1
 
 #RUN chmod a+x /startup.sh
 #RUN chmod a+rw /app
