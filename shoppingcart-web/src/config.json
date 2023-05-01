@@ -2,6 +2,12 @@
     "application": {
         "name": "shoppingcart-web"
     },
+    "catalogApi": {
+        "url": "http://localhost:5001"
+    },
+    "shoppingCartApi": {
+        "url": "http://localhost:5000"
+    },
     "identity": {
         "authority": "https://localhost:5002",
         "client_id": "shoppingcart-web",

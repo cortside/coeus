@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin, map, Observable } from 'rxjs';
 import { ItemResponse } from './models/responses/item.response';
+import { AppConfig } from 'src/environments/app-config';
 
 @Injectable({
     providedIn: 'root',
@@ -41,11 +42,11 @@ export class CatalogClient {
             name: 'Fireball Cinnamon Whisky',
         }
     ];
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private config: AppConfig) {}
 
     getItem(sku: string): Observable<ItemResponse> {
         const item = this.items.find((i) => i.sku == sku);
-        return this.http.get<ItemResponse>(`http://localhost:5001/api/v1/items/${sku}`).pipe(map((x) => Object.assign({}, x, item)));
+        return this.http.get<ItemResponse>(`${this.config.catalogApi?.url}/api/v1/items/${sku}`).pipe(map((x) => Object.assign({}, x, item)));
     }
 
     getItems(): Observable<ItemResponse[]> {
