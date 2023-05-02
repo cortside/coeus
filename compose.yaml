@@ -54,7 +54,7 @@ services:
         condition: "service_healthy"
     volumes:
       - coeus-data:/settings
-    command: ["/bin/sh", "-c", "cd /sql; cp -R /settings/shoppingcart-api/* /app; pwsh ./update.ps1"]   
+    command: ["/bin/sh", "-c", "cd /sql; pwsh ./update-database.ps1 -CreateDatabase -appsettings /settings/shoppingcart-api/appsettings.local.json"]   
   shoppingcart-api:
     image: cortside/shoppingcart-api:1.0.10-develop-alpine
     ports:
