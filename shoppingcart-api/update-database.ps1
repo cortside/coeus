@@ -12,7 +12,7 @@ Param (
 
 $ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';
 # common repository functions
-Import-Module .\Repository.psm1
+Import-Module .\repository.psm1
 
 # module to execute sql statements
 try {
@@ -75,6 +75,12 @@ if ((Test-Path 'env:MSSQL_SERVER') -and $server -eq "") {
 	if ((Test-Path 'env:MSSQL_PASSWORD')) {
 		$password = $env:MSSQL_PASSWORD
 	}
+}
+if ($connectionString -ne "") {
+	$conn = New-Object System.Data.SqlClient.SqlConnectionStringBuilder
+	$conn.set_ConnectionString($ConnectionString)	
+	$database = $conn.Database;	
+	$server = $conn.Server
 }
 if ($server -eq "") {
 	$server = "(LocalDB)\MSSQLLocalDB"

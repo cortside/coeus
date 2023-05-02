@@ -6,7 +6,7 @@ docker create -v coeus-data:/settings --name helper busybox true
 docker cp ./settings helper:/
 docker rm helper
 
-docker compose pull
+#docker compose pull
 docker compose up -d
 
 #docker exec -it coeus-healthmonitor-api-1 ls -R /settings

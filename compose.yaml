@@ -47,15 +47,23 @@ services:
       - identityserver
     volumes:
       - coeus-data:/settings
-# (get-content /app/appsettings.local.json | ConvertFrom-Json).database.connectionstring; ./update-database.ps1 -ConnectionString $connectionstring     
+  shoppingcart-bootstrap:
+    image: cortside/shoppingcart-api:1.0.10-develop-alpine
+    depends_on:
+      db:
+        condition: "service_healthy"
+    volumes:
+      - coeus-data:/settings
+    command: ["/bin/sh", "-c", "cd /sql; cp -R /settings/shoppingcart-api/* /app; pwsh ./update.ps1"]   
   shoppingcart-api:
-    image: cortside/shoppingcart-api:develop
+    image: cortside/shoppingcart-api:1.0.10-develop-alpine
     ports:
       - 5000:5000
     depends_on:
       - db
       - policyserver
       - identityserver
+      - shoppingcart-bootstrap
     volumes:
       - coeus-data:/settings
   shoppingcart-web:
@@ -72,6 +80,8 @@ services:
       SA_PASSWORD: password1@
     image: mcr.microsoft.com/mssql/server:2022-latest
     restart: always
+    ports:
+      - 1434:1433
     healthcheck:
         test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P password1@ -Q 'SELECT 1' || exit 1"]
         interval: 10s
