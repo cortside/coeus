@@ -14,7 +14,9 @@ export class ShoppingCartClient {
     constructor(private http: HttpClient, private config: AppConfig) {}
 
     getAuthorization(): Observable<AuthorizationResponse> {
-        return this.http.get<AuthorizationResponse>(`${this.config.shoppingCartApi?.url}/api/v1/authorization`, { context: new HttpContext().set(AUTHENTICATED_REQUEST, true) });
+        return this.http.get<AuthorizationResponse>(`${this.config.shoppingCartApi?.url}/api/v1/authorization`, {
+            context: new HttpContext().set(AUTHENTICATED_REQUEST, true),
+        });
     }
 
     createOrders(order: OrderRequest): Observable<OrderReponse> {

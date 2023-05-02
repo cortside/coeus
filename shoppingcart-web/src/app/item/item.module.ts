@@ -14,8 +14,7 @@ import { PageHeaderComponent } from 'muzieh-ngcomponents';
   ],
   imports: [
     CommonModule,
-    ItemRoutingModule,
-    PageHeaderComponent
+    ItemRoutingModule
   ]
 })
 export class ItemModule { }
