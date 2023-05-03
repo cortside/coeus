@@ -1,5 +1,7 @@
 TODO:
 
+* validate sonar branching and prs work
+	* https://www.jetbrains.com/help/teamcity/pull-requests.html#Bitbucket+Cloud+Pull+Requests
 * PAC file for browswer for local or remote docker host name resolution (local developmnent)
 * copy config.json as config.local.json to settings/shoppingcart-web
 	* update nginx startup.sh to be more like dotnet-runtime startup.sh
