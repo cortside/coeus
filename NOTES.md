@@ -1,5 +1,8 @@
 TODO:
 
+* PAC file for browswer for local or remote docker host name resolution (local developmnent)
+* copy config.json as config.local.json to settings/shoppingcart-web
+	* update nginx startup.sh to be more like dotnet-runtime startup.sh
 * middleware to log client ip
 	* see ids4 GetUserIp method
 	* https://stackoverflow.com/questions/49611704/application-insights-and-net-core-0-0-0-0-ip
