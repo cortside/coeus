@@ -29,15 +29,4 @@ Param(
 }
 
 # recursively find test assemblies and invoke them
-write-verbose "outside gci"
-gci -Recurse @("*.Tests.csproj") | % {
-	write-verbose "before if"
-	if ($_.Directory.FullName -like "*Tests") {
-		write-verbose "in the if"
-		$directory = Resolve-Path -path $_.Directory.FullName -Relative
-		write-verbose $directory
-		$args = "test $directory --no-build --no-restore"
-		write-verbose $args
-		Invoke-Exe -cmd dotnet -args $args
-	}
-}
+dotnet test ./src --no-restore

@@ -35,7 +35,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <span class="navbar-left">
-                        <img src="~/images/pp-logo.svg" class="icon-banner" alt="Partner Portal Logo">
+                        <img src="~/images/logo.svg" class="icon-banner" alt="Logo">
                     </span>
                 </div>
                 @if (!string.IsNullOrWhiteSpace(name))
@@ -56,30 +56,9 @@
         </div>
     </div>
     <footer>
-        <div class="footer-row">
-            <ul class="footer-links">
-                <li>
-                    <a href="@configuration["PrivacyStatementUrl"]"> Privacy Statement</a>
-                </li>
-                <li>
-                    <a href="@configuration["TermsOfUseUrl"]">Terms of Use</a>
-                </li>
-            </ul>
-        </div>
-        <div class="footer-row">
-            <img src="~/footer-logo.svg" title="Regions | AcmeUSA Logo" class="footer-logo" alt="Regions | AcmeUSA Logo" />
-        </div>
-        <div class="footer-row">
-            <img src="~/fdic-logo.svg" title="Member FDIC Logo" class="footer-logo" alt="Member FDIC Logo" />
-        </div>
         <div class="footer-row footer-row-text">
             <span>
-                &copy; @DateTime.UtcNow.Year Regions Bank. All Rights Reserved. | Regions, the Regions logo, and Acme are registered trademarks of Regions Bank. The LifeGreen color is a trademark of Regions Bank.
-            </span>
-        </div>
-        <div class="footer-row footer-row-text">
-            <span>
-                This site is directed at, and made available to, persons in the continental U.S., Alaska and Hawaii only.
+                &copy; @DateTime.UtcNow.Year
             </span>
         </div>
     </footer>

@@ -22,21 +22,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Logs\**" />
-    <Compile Remove="publish\**" />
-    <Content Remove="Logs\**" />
-    <Content Remove="publish\**" />
-    <EmbeddedResource Remove="Logs\**" />
-    <EmbeddedResource Remove="publish\**" />
-    <None Remove="Logs\**" />
-    <None Remove="publish\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="build.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="wwwroot\**\*">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </None>
@@ -105,10 +90,6 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.4.337" />
-    <!--
-	<DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
-	<DotNetCliToolReference Include="dotnet-version" Version="1.1.0" />
-	-->
   </ItemGroup>
 
   <ItemGroup>
@@ -128,17 +109,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <WCFMetadata Include="Connected Services" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="build.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Static\HtmlTemplates\ClientSecretEmailHtmlTemplate.html">

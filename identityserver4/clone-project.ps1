@@ -3,7 +3,7 @@ Param (
         [Parameter(Mandatory = $false)][string]$new = "Acme"
 )
 
-$myExtensions = @("*.cs", "*.csproj", "*.sln", "*.ps1 -exclude clone-project.ps1", "*.sh", "*.json", "*.xml", "*.ncrunchsolution", "*.user", "*.toml", "*.cshtml")
+$myExtensions = @("*.cs", "*.csproj", "*.sln", "*.ps1 -exclude clone-project.ps1", "*.sh", "*.json", "*.xml", "*.ncrunchsolution", "*.user", "*.toml", "*.cshtml", "*.sql", "*.md", "*.html")
 
 foreach ($extension in $myExtensions) {
   # Replace the names in the files and the files
