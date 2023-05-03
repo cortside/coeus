@@ -1,0 +1,49 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32602.201
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F4979FB-110E-4C9E-AD4C-2A6469893634}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		..\deploy\docker\docker-compose.yml = ..\deploy\docker\docker-compose.yml
+		version.json = version.json
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.IdentityServer.WebApi", "Acme.IdentityServer.WebApi\Acme.IdentityServer.WebApi.csproj", "{D8F76830-757F-4767-BDC3-748A58AB40F5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.IdentityServer.WebApi.Tests", "Acme.IdentityServer.WebApi.Tests\Acme.IdentityServer.WebApi.Tests.csproj", "{7C20C065-CBED-4D0F-9E82-34F68BBABC8D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.IdentityServer.WebApi.IntegrationTests", "Acme.IdentityServer.WebApi.IntegrationTests\Acme.IdentityServer.WebApi.IntegrationTests.csproj", "{4AE8F243-FAFA-463B-8BA7-AD855C71B078}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.DomainEvent.Events", "Acme.DomainEvent.Events\Acme.DomainEvent.Events.csproj", "{031BF4DC-8D8B-4ED5-9554-D893EAB4F330}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D8F76830-757F-4767-BDC3-748A58AB40F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8F76830-757F-4767-BDC3-748A58AB40F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8F76830-757F-4767-BDC3-748A58AB40F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8F76830-757F-4767-BDC3-748A58AB40F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C20C065-CBED-4D0F-9E82-34F68BBABC8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C20C065-CBED-4D0F-9E82-34F68BBABC8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C20C065-CBED-4D0F-9E82-34F68BBABC8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C20C065-CBED-4D0F-9E82-34F68BBABC8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AE8F243-FAFA-463B-8BA7-AD855C71B078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AE8F243-FAFA-463B-8BA7-AD855C71B078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AE8F243-FAFA-463B-8BA7-AD855C71B078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AE8F243-FAFA-463B-8BA7-AD855C71B078}.Release|Any CPU.Build.0 = Release|Any CPU
+		{031BF4DC-8D8B-4ED5-9554-D893EAB4F330}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{031BF4DC-8D8B-4ED5-9554-D893EAB4F330}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{031BF4DC-8D8B-4ED5-9554-D893EAB4F330}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{031BF4DC-8D8B-4ED5-9554-D893EAB4F330}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8D2AA434-A5A9-4EBF-A047-87D95B49DE7A}
+	EndGlobalSection
+EndGlobal
