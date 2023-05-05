@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthorizationService } from '@muziehdesign/auth';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PagedModel } from 'src/app/common/paged.model';
 import { ShoppingCartService } from 'src/app/core/shopping-cart.service';

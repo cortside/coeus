@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ItemModel } from '../models/item.model';
 
 @Component({
   selector: 'app-item-card',
@@ -7,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ItemCardComponent {
 
+  @Input() 
+  item!: ItemModel;
+  
   constructor() { }
 
 }

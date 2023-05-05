@@ -32,5 +32,6 @@ export const assembleItemModel = (response: ItemResponse): ItemModel => {
         name: response.name,
         sku: response.sku,
         unitPrice: response.unitPrice,
+        imageUrl: response.imageUrl
     } as ItemResponse;
 };

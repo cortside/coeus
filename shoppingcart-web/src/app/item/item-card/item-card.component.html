@@ -1,1 +1,7 @@
-<p>item-card works!</p>
+<div class="inline-block max-w-xs">
+    <img src="{{item.imageUrl}}" alt="{{item.name}}" class="h-48 w-full object-cover" />
+</div>
+<div class="block">
+    <a routerLink="'/'">{{item.name}}</a>
+    {{item.unitPrice | currency}}
+</div>
