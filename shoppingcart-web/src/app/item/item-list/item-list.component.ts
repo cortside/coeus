@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from '@muziehdesign/auth';
 import { Observable } from 'rxjs';
-import { ListResult } from 'src/app/common/list-result';
+import { PagedModel } from 'src/app/common/paged.model';
 import { ShoppingCartService } from 'src/app/core/shopping-cart.service';
 import { ItemService } from '../../core/item.service';
 import { ItemModel } from '../models/item.model';
@@ -12,7 +12,7 @@ import { ItemModel } from '../models/item.model';
     styleUrls: ['./item-list.component.scss'],
 })
 export class ItemListComponent {
-    items$: Observable<ListResult<ItemModel>>;
+    items$: Observable<PagedModel<ItemModel>>;
     constructor(private service: ItemService, private shoppingCartService: ShoppingCartService) {
         this.items$ = service.getItems();
     }

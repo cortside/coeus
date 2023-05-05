@@ -2,7 +2,7 @@
 <!--<mz-page-header pageTitle="Catalog"></mz-page-header>-->
 
 <div *ngIf="(items$ | async) as items">
-    <div *ngFor="let item of items.results" class="p-5">
+    <div *ngFor="let item of items.items" class="p-5">
         {{item | json}}
 
         <button (click)="addItem(item)">add</button>

@@ -3,4 +3,5 @@ export interface ItemResponse {
     name: string;
     sku: string;
     unitPrice: number;
+    imageUrl: string;
 }
