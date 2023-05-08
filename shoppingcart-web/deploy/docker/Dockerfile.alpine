@@ -64,7 +64,9 @@ RUN ng build --aot --configuration production
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
 FROM $runtimeimage as publish
 ARG artifactDirectory
+ARG service_name
 
+ENV SERVICE_NAME=$service_name
 ENV configpath /usr/share/nginx/html/config.json
 
 COPY --from=build /app/"$artifactDirectory"/ /usr/share/nginx/html
@@ -88,6 +90,7 @@ COPY ./deploy/sh/startup.sh /startup.sh
 #    chmod a+x /startup.sh
 
 RUN chmod a+x /startup.sh
+RUN chmod -R a+rw /usr/share/nginx/html
 
 USER user
 EXPOSE 8080/tcp
