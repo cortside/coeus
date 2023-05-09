@@ -74,6 +74,8 @@ services:
       - shoppingcart-api
     volumes:
       - coeus-data:/settings
+    environment:
+      EXTERNAL_HOST: ${DOCKER_HOST}
   db:
     environment:
       ACCEPT_EULA: "Y"
