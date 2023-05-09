@@ -48,7 +48,6 @@ build:
 build_script:
 - ps: >-
     $buildNumber = $env:APPVEYOR_BUILD_NUMBER;
-
     #figure out pull request an branching info    
     if (-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
         $branch = $Env:APPVEYOR_REPO_BRANCH;
@@ -64,7 +63,7 @@ build_script:
         $commit = $Env:APPVEYOR_PULL_REQUEST_HEAD_COMMIT;
         $pullRequestId = $Env:APPVEYOR_PULL_REQUEST_NUMBER;
     }
-    
+    echo "building version $version from branch $branch targeting $target (pullRequestId=$pullRequestId, commit=$commit)";
     cd shoppingcart-api;
     .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
     cd ..;
@@ -77,7 +76,6 @@ build_script:
     cd policyserver;
     .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
     cd ..;
-    echo "building version $version from branch $branch targeting $target (pullRequestId=$pullRequestId, commit=$commit)";
 
 cache:
 - '%USERPROFILE%\.nuget\packages'
