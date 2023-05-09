@@ -31,9 +31,9 @@ ARG sonarscannerversion
 ARG imageversion
 ARG analysisArgs
 
-RUN echo "{}" > ./src/config.user.json
+RUN echo "{}" > ./src/config.local.json
 # TODO:
-#RUN npm run test-ci
+RUN npm run test:ci
 
 RUN export coveragefiles="$(find `pwd`/coverage -name lcov.info | tr '\n' ',')" && echo $coveragefiles \
   && echo "analysisArgs=$analysisArgs" \
