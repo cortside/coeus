@@ -117,10 +117,10 @@ foreach ($dockerfile in $dockerFiles) {
 	Write-Output "Building $dockerFileName"
 	$imageversion = "$buildNumber-$branchTag-$HostOS"
 
-    $analysisArgs = "";
+    $analysisArgs = "/d:sonar.scm.provider=git";
     if (-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
         $branch = $Env:APPVEYOR_REPO_BRANCH;
-        $analysisArgs = "/d:sonar.branch.name=$branch";
+        $analysisArgs += " /d:sonar.branch.name=$branch";
         if ($branch -ne "master") {
             $target = "develop";
             if ($branch -eq "develop" -or $branch -like "release/*" -or $branch -like "hotfix/*") {
