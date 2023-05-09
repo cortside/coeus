@@ -48,7 +48,6 @@ build:
 build_script:
 - ps: >-
     $buildNumber = $env:APPVEYOR_BUILD_NUMBER;
-    #figure out pull request an branching info    
     if (-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
         $branch = $Env:APPVEYOR_REPO_BRANCH;
         if ($branch -ne "master") {
