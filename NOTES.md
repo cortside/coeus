@@ -1,5 +1,8 @@
 TODO:
 
+* dead code detector
+	* https://github.com/jason-ge/DeadCodeRemover
+	* https://jason-ge.medium.com/detect-and-remove-dead-code-with-roslyn-26e741b20d3c
 * validate sonar branching and prs work
 	* https://www.jetbrains.com/help/teamcity/pull-requests.html#Bitbucket+Cloud+Pull+Requests
 * PAC file for browswer for local or remote docker host name resolution (local developmnent)
