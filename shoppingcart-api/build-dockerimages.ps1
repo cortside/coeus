@@ -117,6 +117,25 @@ foreach ($dockerfile in $dockerFiles) {
 	Write-Output "Building $dockerFileName"
 	$imageversion = "$buildNumber-$branchTag-$HostOS"
 
+    $analysisArgs = "";
+    if (-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
+        $branch = $Env:APPVEYOR_REPO_BRANCH;
+        $analysisArgs = "/d:sonar.branch.name=""$branch""";
+        if ($branch -ne "master") {
+            $target = "develop";
+            if ($branch -eq "develop" -or $branch -like "release/*" -or $branch -like "hotfix/*") {
+                $target = "master";
+            }
+            $analysisArgs += " /d:sonar.newCode.referenceBranch=""$target""";
+        }
+    } else {
+        $branch = $Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH;
+        $target = $Env:APPVEYOR_REPO_BRANCH;
+        $commit = $Env:APPVEYOR_PULL_REQUEST_HEAD_COMMIT;
+        $pullRequestId = $Env:APPVEYOR_PULL_REQUEST_NUMBER;
+        $analysisArgs = "/d:sonar.scm.revision=""$commit"" /d:sonar.pullrequest.key=""$pullRequestId"" /d:sonar.pullrequest.base=""$target"" /d:sonar.pullrequest.branch=""$branch""";
+    }
+
 	$sonarArgs = "--build-arg `"analysisArgs=$analysisArgs`" --build-arg `"sonarhost=$($config.sonar.host)`" --build-arg `"sonartoken=$($config.sonar.token)`" --build-arg `"sonarkey=$($config.sonar.key)`""
 
 	$dockerbuildargs = @()
