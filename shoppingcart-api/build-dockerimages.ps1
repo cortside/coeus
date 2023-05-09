@@ -120,23 +120,23 @@ foreach ($dockerfile in $dockerFiles) {
     $analysisArgs = "";
     if (-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
         $branch = $Env:APPVEYOR_REPO_BRANCH;
-        $analysisArgs = "/d:sonar.branch.name=""$branch""";
+        $analysisArgs = "/d:sonar.branch.name=$branch";
         if ($branch -ne "master") {
             $target = "develop";
             if ($branch -eq "develop" -or $branch -like "release/*" -or $branch -like "hotfix/*") {
                 $target = "master";
             }
-            $analysisArgs += " /d:sonar.newCode.referenceBranch=""$target""";
+            $analysisArgs += " /d:sonar.newCode.referenceBranch=$target";
         }
     } else {
         $branch = $Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH;
         $target = $Env:APPVEYOR_REPO_BRANCH;
         $commit = $Env:APPVEYOR_PULL_REQUEST_HEAD_COMMIT;
         $pullRequestId = $Env:APPVEYOR_PULL_REQUEST_NUMBER;
-        $analysisArgs = "/d:sonar.scm.revision=""$commit"" /d:sonar.pullrequest.key=""$pullRequestId"" /d:sonar.pullrequest.base=""$target"" /d:sonar.pullrequest.branch=""$branch""";
+        $analysisArgs = "/d:sonar.scm.revision=$commit /d:sonar.pullrequest.key=$pullRequestId /d:sonar.pullrequest.base=$target /d:sonar.pullrequest.branch=$branch";
     }
 
-	$sonarArgs = "--build-arg `"analysisArgs=$analysisArgs`" --build-arg `"sonarhost=$($config.sonar.host)`" --build-arg `"sonartoken=$($config.sonar.token)`" --build-arg `"sonarkey=$($config.sonar.key)`""
+	#$sonarArgs = "--build-arg `"analysisArgs=$analysisArgs`" --build-arg `"sonarhost=$($config.sonar.host)`" --build-arg `"sonartoken=$($config.sonar.token)`" --build-arg `"sonarkey=$($config.sonar.key)`""
 
 	$dockerbuildargs = @()
 	$dockerbuildargs +="build"
@@ -154,7 +154,14 @@ foreach ($dockerfile in $dockerFiles) {
 	$dockerbuildargs +="--build-arg `"runtimeimage=$($config.docker.runtimeimage)`""
 	$dockerbuildargs +="--build-arg `"branch=$branch`""
 	$dockerbuildargs +="--build-arg `"imageversion=$imageversion`""
-	$dockerbuildargs +="--build-arg `"projectname=$($config.repository.name)`" $sonarArgs -t $($config.docker.image):${branchTag} -t $($config.docker.image):${imageversion} -f deploy/docker/$dockerFileName $dockercontext"
+	$dockerbuildargs +="--build-arg `"projectname=$($config.repository.name)`""
+	$dockerbuildargs +="--build-arg `"analysisArgs=$analysisArgs`""
+	$dockerbuildargs +="--build-arg `"sonarhost=$($config.sonar.host)`""
+	$dockerbuildargs +="--build-arg `"sonartoken=$($config.sonar.token)`""
+	$dockerbuildargs +="--build-arg `"sonarkey=$($config.sonar.key)`""
+	$dockerbuildargs +="-t $($config.docker.image):${branchTag}"
+	$dockerbuildargs +="-t $($config.docker.image):${imageversion}"
+	$dockerbuildargs +="-f deploy/docker/$dockerFileName $dockercontext"
 
 	$dockerbuildargs = $dockerbuildargs -join " "
 	
