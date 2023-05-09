@@ -2,6 +2,9 @@
 Param 
 (
 	[Parameter(Mandatory = $false)][string]$branch = "local",
+	[Parameter(Mandatory = $false)][string]$target = "develop",
+	[Parameter(Mandatory = $false)][string]$commit = "",
+	[Parameter(Mandatory = $false)][string]$pullRequestId = "",
 	[Parameter(Mandatory = $false)][string]$buildCounter = "0",
 	[Parameter(Mandatory = $false)][ValidateSet("true", "false")][string]$local = "true",
 	[Parameter(Mandatory = $false)][switch]$systemprune,
@@ -39,18 +42,21 @@ Function Get-BranchTag {
 		[string]$branchName
 	)
 
-	if ($branchName -eq "master") { 
-		$tagPart = "master" 
-	} elseif ($branchName -eq "develop") { 
-		$tagPart = "develop" 
-	} elseif ($branchName -like "release/*") { 
+	$tagPart = $branchName 
+	# if ($branchName -eq "master") { 
+		# $tagPart = "master" 
+	# } elseif ($branchName -eq "develop") { 
+		# $tagPart = "develop" 
+	# } else
+	if ($branchName -like "release/*") { 
 		$tagPart = "release" 
 	} elseif ($branchName -like "bugfix/*" -or $branchName -like "hotfix/*" -or $branchName -like "feature/*") {
 		# extract jira key, i.e. CFG-123
 		$tagPart = ($branchName | Select-String -Pattern '((?<!([A-Z]{1,10})-?)[A-Z]+-\d+)' | % matches).value
-	} else { 
-		$tagPart = $branchName 
 	}
+	# else { 
+		# $tagPart = $branchName 
+	# }
 	
 	$tagPart
 }
@@ -100,7 +106,6 @@ Write-Output "branch: $branch"
 Write-Output "dockerpath: $dockerpath"
 Write-Output "dockercontext: $dockercontext"
 Write-Output "buildconfiguration: $buildconfiguration"
-Write-Output "local: $local"
 Write-Output "nugetfeed: $($config.nuget.feed)"
 Write-Output "buildimage=$($config.docker.buildimage)"
 Write-Output "runtimeimage=$($config.docker.runtimeimage)"
@@ -117,7 +122,27 @@ foreach ($dockerfile in $dockerFiles) {
 	Write-Output "Building $dockerFileName"
 	$imageversion = "$buildNumber-$branchTag-$HostOS"
 
-	$sonarArgs = "--build-arg `"analysisArgs=$analysisArgs`" --build-arg `"sonarhost=$($config.sonar.host)`" --build-arg `"sonartoken=$($config.sonar.token)`" --build-arg `"sonarkey=$($config.sonar.key)`""
+    $analysisArgs = "/d:sonar.scm.disabled=true";
+	#if (-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
+    if ($pullRequestId -eq "") {
+        #$branch = $Env:APPVEYOR_REPO_BRANCH;
+        $analysisArgs += " /d:sonar.branch.name=$branch";
+        if ($branch -ne "master") {
+            #$target = "develop";
+            #if ($branch -eq "develop" -or $branch -like "release/*" -or $branch -like "hotfix/*") {
+            #    $target = "master";
+            #}
+            $analysisArgs += " /d:sonar.newCode.referenceBranch=$target";
+        }
+    } else {
+        #$branch = $Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH;
+        #$target = $Env:APPVEYOR_REPO_BRANCH;
+        #$commit = $Env:APPVEYOR_PULL_REQUEST_HEAD_COMMIT;
+        #$pullRequestId = $Env:APPVEYOR_PULL_REQUEST_NUMBER;
+        $analysisArgs = "/d:sonar.scm.revision=$commit /d:sonar.pullrequest.key=$pullRequestId /d:sonar.pullrequest.base=$target /d:sonar.pullrequest.branch=$branch";
+    }
+
+	#$sonarArgs = "--build-arg `"analysisArgs=$analysisArgs`" --build-arg `"sonarhost=$($config.sonar.host)`" --build-arg `"sonartoken=$($config.sonar.token)`" --build-arg `"sonarkey=$($config.sonar.key)`""
 
 	$dockerbuildargs = @()
 	$dockerbuildargs +="build"
@@ -135,7 +160,14 @@ foreach ($dockerfile in $dockerFiles) {
 	$dockerbuildargs +="--build-arg `"runtimeimage=$($config.docker.runtimeimage)`""
 	$dockerbuildargs +="--build-arg `"branch=$branch`""
 	$dockerbuildargs +="--build-arg `"imageversion=$imageversion`""
-	$dockerbuildargs +="--build-arg `"projectname=$($config.repository.name)`" $sonarArgs -t $($config.docker.image):${branchTag} -t $($config.docker.image):${imageversion} -f deploy/docker/$dockerFileName $dockercontext"
+	$dockerbuildargs +="--build-arg `"projectname=$($config.repository.name)`""
+	$dockerbuildargs +="--build-arg `"analysisArgs=$analysisArgs`""
+	$dockerbuildargs +="--build-arg `"sonarhost=$($config.sonar.host)`""
+	$dockerbuildargs +="--build-arg `"sonartoken=$($config.sonar.token)`""
+	$dockerbuildargs +="--build-arg `"sonarkey=$($config.sonar.key)`""
+	$dockerbuildargs +="-t $($config.docker.image):${branchTag}"
+	$dockerbuildargs +="-t $($config.docker.image):${imageversion}"
+	$dockerbuildargs +="-f deploy/docker/$dockerFileName $dockercontext"
 
 	$dockerbuildargs = $dockerbuildargs -join " "
 	

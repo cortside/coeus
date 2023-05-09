@@ -2,6 +2,9 @@
 Param 
 (
 	[Parameter(Mandatory = $false)][string]$branch = "local",
+	[Parameter(Mandatory = $false)][string]$target = "develop",
+	[Parameter(Mandatory = $false)][string]$commit = "",
+	[Parameter(Mandatory = $false)][string]$pullRequestId = "",
 	[Parameter(Mandatory = $false)][string]$buildCounter = "0",
 	[Parameter(Mandatory = $false)][ValidateSet("true", "false")][string]$local = "true",
 	[Parameter(Mandatory = $false)][switch]$systemprune,
@@ -39,18 +42,21 @@ Function Get-BranchTag {
 		[string]$branchName
 	)
 
-	if ($branchName -eq "master") { 
-		$tagPart = "master" 
-	} elseif ($branchName -eq "develop") { 
-		$tagPart = "develop" 
-	} elseif ($branchName -like "release/*") { 
+	$tagPart = $branchName 
+	# if ($branchName -eq "master") { 
+		# $tagPart = "master" 
+	# } elseif ($branchName -eq "develop") { 
+		# $tagPart = "develop" 
+	# } else
+	if ($branchName -like "release/*") { 
 		$tagPart = "release" 
 	} elseif ($branchName -like "bugfix/*" -or $branchName -like "hotfix/*" -or $branchName -like "feature/*") {
 		# extract jira key, i.e. CFG-123
 		$tagPart = ($branchName | Select-String -Pattern '((?<!([A-Z]{1,10})-?)[A-Z]+-\d+)' | % matches).value
-	} else { 
-		$tagPart = $branchName 
 	}
+	# else { 
+		# $tagPart = $branchName 
+	# }
 	
 	$tagPart
 }
@@ -100,7 +106,6 @@ Write-Output "branch: $branch"
 Write-Output "dockerpath: $dockerpath"
 Write-Output "dockercontext: $dockercontext"
 Write-Output "buildconfiguration: $buildconfiguration"
-Write-Output "local: $local"
 Write-Output "nugetfeed: $($config.nuget.feed)"
 Write-Output "buildimage=$($config.docker.buildimage)"
 Write-Output "runtimeimage=$($config.docker.runtimeimage)"
@@ -118,21 +123,22 @@ foreach ($dockerfile in $dockerFiles) {
 	$imageversion = "$buildNumber-$branchTag-$HostOS"
 
     $analysisArgs = "/d:sonar.scm.disabled=true";
-    if (-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
-        $branch = $Env:APPVEYOR_REPO_BRANCH;
+	#if (-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
+    if ($pullRequestId -eq "") {
+        #$branch = $Env:APPVEYOR_REPO_BRANCH;
         $analysisArgs += " /d:sonar.branch.name=$branch";
         if ($branch -ne "master") {
-            $target = "develop";
-            if ($branch -eq "develop" -or $branch -like "release/*" -or $branch -like "hotfix/*") {
-                $target = "master";
-            }
+            #$target = "develop";
+            #if ($branch -eq "develop" -or $branch -like "release/*" -or $branch -like "hotfix/*") {
+            #    $target = "master";
+            #}
             $analysisArgs += " /d:sonar.newCode.referenceBranch=$target";
         }
     } else {
-        $branch = $Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH;
-        $target = $Env:APPVEYOR_REPO_BRANCH;
-        $commit = $Env:APPVEYOR_PULL_REQUEST_HEAD_COMMIT;
-        $pullRequestId = $Env:APPVEYOR_PULL_REQUEST_NUMBER;
+        #$branch = $Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH;
+        #$target = $Env:APPVEYOR_REPO_BRANCH;
+        #$commit = $Env:APPVEYOR_PULL_REQUEST_HEAD_COMMIT;
+        #$pullRequestId = $Env:APPVEYOR_PULL_REQUEST_NUMBER;
         $analysisArgs = "/d:sonar.scm.revision=$commit /d:sonar.pullrequest.key=$pullRequestId /d:sonar.pullrequest.base=$target /d:sonar.pullrequest.branch=$branch";
     }
 

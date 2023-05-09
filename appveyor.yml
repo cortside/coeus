@@ -48,20 +48,36 @@ build:
 build_script:
 - ps: >-
     $buildNumber = $env:APPVEYOR_BUILD_NUMBER;
-    $branch = $env:APPVEYOR_REPO_BRANCH;
+
+    #figure out pull request an branching info    
+    if (-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
+        $branch = $Env:APPVEYOR_REPO_BRANCH;
+        if ($branch -ne "master") {
+            $target = "develop";
+            if ($branch -eq "develop" -or $branch -like "release/*" -or $branch -like "hotfix/*") {
+                $target = "master";
+            }
+        }
+    } else {
+        $branch = $Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH;
+        $target = $Env:APPVEYOR_REPO_BRANCH;
+        $commit = $Env:APPVEYOR_PULL_REQUEST_HEAD_COMMIT;
+        $pullRequestId = $Env:APPVEYOR_PULL_REQUEST_NUMBER;
+    }
+    
     cd shoppingcart-api;
-    .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage;
+    .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
     cd ..;
     cd shoppingcart-web;
-    .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage;
+    .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
     cd ..;
     cd identityServer6;
-    .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage;
+    .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
     cd ..;
     cd policyserver;
-    .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage;
+    .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
     cd ..;
-    echo "building version $version from branch $branch targeting $target with analysis arguments of $analysisArgs";
+    echo "building version $version from branch $branch targeting $target (pullRequestId=$pullRequestId, commit=$commit)";
 
 cache:
 - '%USERPROFILE%\.nuget\packages'
