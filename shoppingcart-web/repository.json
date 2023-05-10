@@ -20,6 +20,6 @@
     "key": "acme_shoppingcart-web",
     "host": "https://sonarcloud.io",
     "token": "",
-	"propertyPrefix":"-D"
+    "propertyPrefix":"-D"
   }
 }

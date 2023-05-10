@@ -33,6 +33,7 @@
     "organization": "cortside",
     "key": "acme_identityserver",
     "host": "https://sonarcloud.io",
-    "token": ""
+    "token": "",
+    "propertyPrefix":"/d:"
   }
 }

@@ -122,24 +122,24 @@ foreach ($dockerfile in $dockerFiles) {
 	Write-Output "Building $dockerFileName"
 	$imageversion = "$buildNumber-$branchTag-$HostOS"
 
-    $analysisArgs = "/d:sonar.scm.disabled=true";
+    $analysisArgs = "$($config.sonar.propertyPrefix)sonar.scm.disabled=true";
 	#if (-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
     if ($pullRequestId -eq "") {
         #$branch = $Env:APPVEYOR_REPO_BRANCH;
-        $analysisArgs += " /d:sonar.branch.name=$branch";
+        $analysisArgs += " $($config.sonar.propertyPrefix)sonar.branch.name=$branch";
         if ($branch -ne "master") {
             #$target = "develop";
             #if ($branch -eq "develop" -or $branch -like "release/*" -or $branch -like "hotfix/*") {
             #    $target = "master";
             #}
-            $analysisArgs += " /d:sonar.newCode.referenceBranch=$target";
+            $analysisArgs += " $($config.sonar.propertyPrefix)sonar.newCode.referenceBranch=$target";
         }
     } else {
         #$branch = $Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH;
         #$target = $Env:APPVEYOR_REPO_BRANCH;
         #$commit = $Env:APPVEYOR_PULL_REQUEST_HEAD_COMMIT;
         #$pullRequestId = $Env:APPVEYOR_PULL_REQUEST_NUMBER;
-        $analysisArgs = "/d:sonar.scm.revision=$commit /d:sonar.pullrequest.key=$pullRequestId /d:sonar.pullrequest.base=$target /d:sonar.pullrequest.branch=$branch";
+        $analysisArgs = " $($config.sonar.propertyPrefix)sonar.scm.revision=$commit $($config.sonar.propertyPrefix)sonar.pullrequest.key=$pullRequestId $($config.sonar.propertyPrefix)sonar.pullrequest.base=$target $($config.sonar.propertyPrefix)sonar.pullrequest.branch=$branch";
     }
 
 	#$sonarArgs = "--build-arg `"analysisArgs=$analysisArgs`" --build-arg `"sonarhost=$($config.sonar.host)`" --build-arg `"sonartoken=$($config.sonar.token)`" --build-arg `"sonarkey=$($config.sonar.key)`""
@@ -183,7 +183,7 @@ foreach ($dockerfile in $dockerFiles) {
 	}
 
 	#List images for the current tag
-	Write-Output "Docker Just successfully built - ${image}:${imageversion}"
-	Write-Output "`tPlease run with any additional flags to test locally:`n`n docker run -d ${image}:${imageversion}"
+	Write-Output "Docker Just successfully built - $($config.docker.image):${imageversion}"
+	Write-Output "`tPlease run with any additional flags to test locally:`n`n docker run -d $($config.docker.image):${imageversion}"
 	Write-Output "`t --------------- `t Docker run reference if needed:`n https://docs.docker.com/engine/reference/run/`n"
 }
