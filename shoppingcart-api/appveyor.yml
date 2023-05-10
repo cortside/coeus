@@ -1,6 +1,6 @@
 ## https://www.appveyor.com/docs/appveyor-yml/
 image: Visual Studio 2022
-version: 1.0.{build}
+version: 1.1.{build}
 
 configuration:
 - Debug
