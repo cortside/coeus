@@ -1,7 +1,7 @@
 <div class="inline-block max-w-xs">
-    <img src="{{item.imageUrl}}" alt="{{item.name}}" class="h-48 w-full object-cover" />
+    <img src="{{ item.imageUrl }}" alt="{{ item.name }}" class="h-72 w-full object-contain" />
 </div>
 <div class="block">
-    <a routerLink="'/'">{{item.name}}</a>
-    {{item.unitPrice | currency}}
+    <a routerLink="'/'">{{ item.name }}</a>
+    {{ item.unitPrice | currency }}
 </div>

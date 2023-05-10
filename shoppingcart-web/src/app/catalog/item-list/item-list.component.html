@@ -1,7 +1,5 @@
-<h1>Catalog items</h1>
+<h1 class="invisible">Catalog items</h1>
 
-<div *ngIf="(items$ | async) as items">
-    <div *ngFor="let item of items.items">
-        <app-item-card [item]="item"></app-item-card>
-    </div>
+<div *ngIf="(items$ | async) as items" class="grid grid-cols-1">
+    <app-item-card [item]="item" *ngFor="let item of items.items"></app-item-card>
 </div>

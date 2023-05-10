@@ -15,10 +15,6 @@
         "imageUrl": "https://www.oldripvanwinkle.com/app/uploads/2016/09/15_year.jpg"
     },
     {
-        "sku": "PAPPY-18",
-        "name": "Pappy Van Winkle 18 Year"
-    },
-    {
         "sku": "PAPPY-20",
         "name": "Pappy Van Winkle 20 Year",
         "imageUrl": "https://www.oldripvanwinkle.com/app/uploads/2016/09/bourbon-bg-20year-1.jpg"
@@ -30,6 +26,7 @@
     },
     {
         "sku": "PAPPY-25",
-        "name": "Pappy Van Winkle 25 Year"
+        "name": "Pappy Van Winkle 25 Year",
+        "imageUrl": "https://products3.imgix.drizly.com/ci-old-rip-van-winkle-pappys-family-reserve-25-year-9e72f3758f3ecba5.png?auto=format%2Ccompress&ch=Width%2CDPR&fm=jpg&q=20"
     }
 ]
