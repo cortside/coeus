@@ -1,14 +1,14 @@
 {
   "version": "1.0",
-  "service": "shoppingcart-api",
+  "service": "identityserver",
   "repository": {
-    "name": "Acme.ShoppingCart"
+    "name": "Acme.IdentityServer6"
   },
   "database": {
-    "name": "ShoppingCart",
+    "name": "IdentityServer",
     "dbContext": "DatabaseContext",
-    "dbContextProject": "src/Acme.ShoppingCart.Data",
-    "startupProject": "src/Acme.ShoppingCart.WebApi",
+    "dbContextProject": "src/Acme.IdentityServer",
+    "startupProject": "src/Acme.IdentityServer",
     "triggers": {
       "excludeTables": [
         "__EFMigrationsHistory",
@@ -21,19 +21,19 @@
   "docker": {
     "buildImage": "cortside/dotnet-sdk:6.0-alpine",
     "runtimeImage": "cortside/dotnet-runtime:6.0-alpine",
-    "image": "cortside/shoppingcart-api",
-    "executable": "Acme.ShoppingCart.WebApi"
+    "image": "cortside/identityserver6",
+    "executable": "Acme.IdentityServer"
   },
   "build": {
     "configuration": "Debug",
-    "publishableProject": "Acme.ShoppingCart.WebApi",
+    "publishableProject": "",
     "nugetfeed": "https://api.nuget.org/v3/index.json"
   },
   "sonar": {
     "organization": "cortside",
-    "key": "acme_shoppingcart-api",
+    "key": "acme_identityserver",
     "host": "https://sonarcloud.io",
     "token": "",
-    "propertyPrefix": "/d:"
+    "propertyPrefix":"/d:"
   }
 }

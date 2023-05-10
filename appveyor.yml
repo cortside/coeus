@@ -1,5 +1,6 @@
 ## https://www.appveyor.com/docs/appveyor-yml/
-image: Visual Studio 2022
+#image: Visual Studio 2022
+image: Ubuntu2004
 version: 1.0.{build}
 
 configuration:
@@ -8,19 +9,32 @@ configuration:
 platform: Any CPU
 
 pull_requests:  
-  do_not_increment_build_number: true
+  do_not_increment_build_number: false
+  
+# Do not build feature branch with open Pull Requests
+skip_branch_with_pr: true  
 
 environment:
   # Don't report back to the mothership
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
   JAVA_HOME: C:\Program Files\Java\jdk15
-  SONAR_TOKEN:
-    secure: VMUGKEi/mT8mtUxWiKwt5j0kSyrKBBPXm58Qq8kFWbEGT7eN2+eeHLGkVjfBRtmS
-  SONAR_PROJECT: cortside_coeus
+  SHOPPINGCART_API_TOKEN:
+    secure: EQT+mZIVdiZT+nP78HyRuYDYvqVseBohm6Q4vBBkZMnSj/itnOpPfBZIUXonfBsJ
+  SHOPPINGCART_WEB_TOKEN:
+    secure: xC1fiMQ8OPKK5kd4EYHDH05yl2S5yeiRyJSo1RhzBFB3GoUrGzRlNkucqWEiNSK7
+  IDENTITYSERVER6_TOKEN:
+    secure: SEgGxXS0/X4CQmy72WIUSZLhgjoYZaES9UFyWQE/SPqnNv33XJjhFIh6ksXHHK7z
+  POLICYSERVER_TOKEN:
+    secure: JgrMEuJlbBSM3SPoTPNL9v7e725M7/l3e9DLe6kHT9giL7japwBFykmqbyABZvLj
+  BUILDKIT_PROGRESS: plain
+  DOCKER_USER: corts
+  DOCKER_PASS:
+    secure: 0rxw6OrmXRqB3UuBZFbC/w==
 
 init:
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 - ps: Get-ChildItem "Env:"
+- ps: docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
 
 assembly_info:
   patch: true
@@ -30,7 +44,6 @@ assembly_info:
   assembly_informational_version: '{version}'
 
 before_build:
-- appveyor-retry dotnet restore shoppingcart-api/src -v Minimal
 - set DNX_BUILD_VERSION=%APPVEYOR_BUILD_NUMBER%
 - dotnet --info
 
@@ -43,35 +56,38 @@ build:
 
 build_script:
 - ps: >-
-    $version = $env:APPVEYOR_BUILD_VERSION;
-    $analysisArgs = "";
+    $buildNumber = $env:APPVEYOR_BUILD_NUMBER;
     if (-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
         $branch = $Env:APPVEYOR_REPO_BRANCH;
-        $analysisArgs = "/d:sonar.branch.name=""$branch""";
         if ($branch -ne "master") {
             $target = "develop";
             if ($branch -eq "develop" -or $branch -like "release/*" -or $branch -like "hotfix/*") {
                 $target = "master";
             }
-            $analysisArgs += " /d:sonar.newCode.referenceBranch=""$target""";
         }
     } else {
         $branch = $Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH;
         $target = $Env:APPVEYOR_REPO_BRANCH;
         $commit = $Env:APPVEYOR_PULL_REQUEST_HEAD_COMMIT;
         $pullRequestId = $Env:APPVEYOR_PULL_REQUEST_NUMBER;
-        $analysisArgs = "/d:sonar.scm.revision=""$commit"" /d:sonar.pullrequest.key=""$pullRequestId"" /d:sonar.pullrequest.base=""$target"" /d:sonar.pullrequest.branch=""$branch""";
-    }   
-    $env:SOURCE_BRANCH="$branch";
-    $env:TARGET_BRANCH="$target";
-    $env:SONAR_ARGUMENTS="$analysisArgs";
-    echo "building version $version from branch $branch targeting $target with analysis arguments of $analysisArgs";
-- dotnet tool install --global dotnet-sonarscanner
-- echo "%SONAR_TOKEN%"
-- dotnet sonarscanner begin /o:"cortside" /k:"%SONAR_PROJECT%" /v:"%APPVEYOR_BUILD_VERSION%" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="%SONAR_TOKEN%" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" %SONAR_ARGUMENTS%
-- dotnet build shoppingcart-api/src --no-restore --configuration %Configuration% /property:"Version=%APPVEYOR_BUILD_VERSION%"
-- dotnet test shoppingcart-api/src --no-restore --no-build --collect:"XPlat Code Coverage" --settings ./shoppingcart-api/src/coverlet.runsettings.xml /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-- dotnet sonarscanner end /d:sonar.login="%SONAR_TOKEN%"
+    }
+    echo "building version $version from branch $branch targeting $target (pullRequestId=$pullRequestId, commit=$commit)";
+    cd shoppingcart-api;
+    $env:SONAR_TOKEN = $env:SHOPPINGCART_API_TOKEN;
+    .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
+    cd ..;
+    cd shoppingcart-web;
+    $env:SONAR_TOKEN = $env:SHOPPINGCART_WEB_TOKEN;
+    .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
+    cd ..;
+    cd identityServer6;
+    $env:SONAR_TOKEN = $env:IDENTITYSERVER6_TOKEN;
+    .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
+    cd ..;
+    cd policyserver;
+    $env:SONAR_TOKEN = $env:POLICYSERVER_TOKEN;
+    .\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
+    cd ..;
 
 cache:
 - '%USERPROFILE%\.nuget\packages'

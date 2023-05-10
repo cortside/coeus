@@ -1,5 +1,9 @@
 TODO:
 
+* dead code detector
+	* https://github.com/jason-ge/DeadCodeRemover
+	* https://jason-ge.medium.com/detect-and-remove-dead-code-with-roslyn-26e741b20d3c
+* PAC file for browswer for local or remote docker host name resolution (local developmnent)
 * middleware to log client ip
 	* see ids4 GetUserIp method
 	* https://stackoverflow.com/questions/49611704/application-insights-and-net-core-0-0-0-0-ip
@@ -170,3 +174,7 @@ TODONE:
 	* https://www.nuget.org/packages/Microsoft.VisualStudio.Threading.Analyzers/
 * remove guards from cortside.domainevent
 * juan's dbcontext changes
+* copy config.json as config.local.json to settings/shoppingcart-web
+	* update nginx startup.sh to be more like dotnet-runtime startup.sh
+* validate sonar branching and prs work
+	* https://www.jetbrains.com/help/teamcity/pull-requests.html#Bitbucket+Cloud+Pull+Requests

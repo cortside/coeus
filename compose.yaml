@@ -1,0 +1,95 @@
+services:
+#5005 - healthmonitor-api
+#5002 - identityserver
+#5001 - policyserver
+#5000 - shoppingcart-api
+#4200 - shoppingcart-web
+#docker run --user root --name mssql -d --restart unless-stopped -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=password1@" -p 1433:1433 --hostname localhost -v /srv/mssql:/var/opt/mssql --detach mcr.microsoft.com/mssql/server:2022-latest /opt/mssql/bin/sqlservr -T 1800
+  rabbitmq:
+    environment:
+      ACCEPT_EULA: "Y"
+      RABBITMQ_DEFAULT_USER: "admin"
+      RABBITMQ_DEFAULT_PASS: "password"
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 15672:15672
+      - 5672:5672
+  seq:
+    environment:
+      ACCEPT_EULA: "Y"
+    image: datalust/seq:latest
+    ports:
+      - 5341:80
+  redis:
+    image: redislabs/redismod
+    ports:
+      - 6379:6379
+  healthmonitor-api:
+    image: cortside/healthmonitor-api:develop
+    ports:
+      - 5005:5000
+    volumes:
+      - coeus-data:/settings
+  identityserver:
+    image: cortside/identityserver6:develop
+    ports:
+      - 5002:5000
+    depends_on:
+      - db
+    volumes:
+      - coeus-data:/settings
+  policyserver:
+    image: cortside/policyserver:develop
+    ports:
+      - 5001:5001
+    depends_on:
+      - db
+      - identityserver
+    volumes:
+      - coeus-data:/settings
+  shoppingcart-bootstrap:
+    image: cortside/shoppingcart-api:1.0.10-develop-alpine
+    depends_on:
+      db:
+        condition: "service_healthy"
+    volumes:
+      - coeus-data:/settings
+    command: ["/bin/sh", "-c", "cd /sql; pwsh ./update-database.ps1 -CreateDatabase -appsettings /settings/shoppingcart-api/appsettings.local.json"]   
+  shoppingcart-api:
+    image: cortside/shoppingcart-api:1.0.10-develop-alpine
+    ports:
+      - 5000:5000
+    depends_on:
+      - db
+      - policyserver
+      - identityserver
+      - shoppingcart-bootstrap
+    volumes:
+      - coeus-data:/settings
+  shoppingcart-web:
+    image: cortside/shoppingcart-web:develop
+    ports:
+      - 4200:8080
+    depends_on:
+      - shoppingcart-api
+    volumes:
+      - coeus-data:/settings
+    environment:
+      EXTERNAL_HOST: ${DOCKER_HOST}
+  db:
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: password1@
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: always
+    ports:
+      - 1434:1433
+    healthcheck:
+        test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P password1@ -Q 'SELECT 1' || exit 1"]
+        interval: 10s
+        retries: 10
+        start_period: 10s
+        timeout: 3s     
+volumes:
+  coeus-data:
+    external: true

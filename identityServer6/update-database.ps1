@@ -4,7 +4,6 @@ Param (
 	[Parameter(Mandatory = $false)][string]$username = "",
 	[Parameter(Mandatory = $false)][string]$password = "",
 	[Parameter(Mandatory = $false)][string]$ConnectionString = "",
-	[Parameter(Mandatory = $false)][string]$appsettings = "",
 	[Parameter(Mandatory = $false)][switch]$UseIntegratedSecurity,
 	[Parameter(Mandatory = $false)][switch]$CreateDatabase,
 	[Parameter(Mandatory = $false)][switch]$RebuildDatabase,
@@ -13,7 +12,7 @@ Param (
 
 $ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';
 # common repository functions
-Import-Module .\repository.psm1
+Import-Module .\Repository.psm1
 
 # module to execute sql statements
 try {
@@ -76,15 +75,6 @@ if ((Test-Path 'env:MSSQL_SERVER') -and $server -eq "") {
 	if ((Test-Path 'env:MSSQL_PASSWORD')) {
 		$password = $env:MSSQL_PASSWORD
 	}
-}
-if ($appsettings -ne "") {
-	$connectionString = (get-content $appsettings | ConvertFrom-Json).Database.ConnectionString
-}
-if ($connectionString -ne "") {
-	$conn = New-Object System.Data.SqlClient.SqlConnectionStringBuilder
-	$conn.set_ConnectionString($ConnectionString)	
-	$database = $conn.Database;	
-	$server = $conn.Server
 }
 if ($server -eq "") {
 	$server = "(LocalDB)\MSSQLLocalDB"
