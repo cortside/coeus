@@ -19,6 +19,7 @@
     "organization": "cortside",
     "key": "acme_shoppingcart-web",
     "host": "https://sonarcloud.io",
-    "token": ""
+    "token": "",
+	"propertyPrefix":"-D"
   }
 }

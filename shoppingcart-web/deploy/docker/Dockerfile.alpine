@@ -17,11 +17,11 @@ COPY ./ /app/
 #COPY ./cypress/plugins/ /app/cypress/plugins/
 
 # gathering components from NPM install for linting
-FROM base as lint
+#FROM base as lint
 RUN ng lint
 
 # gathering components from NPM install for unit testing
-FROM base as test
+#FROM base as test
 ARG branch
 ARG organization
 ARG sonarhost
@@ -32,7 +32,7 @@ ARG imageversion
 ARG analysisArgs
 
 RUN echo "{}" > ./src/config.local.json
-# TODO:
+RUN npm run build
 RUN npm run test:ci
 
 RUN export coveragefiles="$(find `pwd`/coverage -name lcov.info | tr '\n' ',')" && echo $coveragefiles \
@@ -57,7 +57,7 @@ RUN export coveragefiles="$(find `pwd`/coverage -name lcov.info | tr '\n' ',')" 
 
 # gathering components from NPM install for ng build
 FROM base as build
-RUN true
+#RUN true
 RUN ng build auth
 RUN ng build --aot --configuration production
 
