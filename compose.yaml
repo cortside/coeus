@@ -4,20 +4,26 @@ services:
 #5001 - policyserver
 #5000 - shoppingcart-api
 #4200 - shoppingcart-web
-#docker run --user root --name mssql -d --restart unless-stopped -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=password1@" -p 1433:1433 --hostname localhost -v /srv/mssql:/var/opt/mssql --detach mcr.microsoft.com/mssql/server:2022-latest /opt/mssql/bin/sqlservr -T 1800
   rabbitmq:
     environment:
       ACCEPT_EULA: "Y"
       RABBITMQ_DEFAULT_USER: "admin"
       RABBITMQ_DEFAULT_PASS: "password"
     image: rabbitmq:3-management-alpine
+    restart: unless-stopped
     ports:
       - 15672:15672
       - 5672:5672
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
   seq:
     environment:
       ACCEPT_EULA: "Y"
     image: datalust/seq:latest
+    restart: unless-stopped
     ports:
       - 5341:80
   redis:
@@ -26,20 +32,35 @@ services:
       - 6379:6379
   healthmonitor-api:
     image: cortside/healthmonitor-api:develop
+    restart: unless-stopped
     ports:
       - 5005:5000
     volumes:
       - coeus-data:/settings
+    healthcheck:
+      test: curl --fail http://localhost:5000/api/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s      
   identityserver:
     image: cortside/identityserver6:develop
+    restart: unless-stopped
     ports:
       - 5002:5000
     depends_on:
       - db
     volumes:
       - coeus-data:/settings
+    # healthcheck:
+      # test: curl --fail http://localhost:5000/api/health || exit 1
+      # interval: 60s
+      # retries: 5
+      # start_period: 20s
+      # timeout: 10s      
   policyserver:
     image: cortside/policyserver:develop
+    restart: unless-stopped
     ports:
       - 5001:5001
     depends_on:
@@ -47,6 +68,12 @@ services:
       - identityserver
     volumes:
       - coeus-data:/settings
+    healthcheck:
+      test: curl --fail http://localhost:5001/api/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s      
   shoppingcart-bootstrap:
     image: cortside/shoppingcart-api:1.0.10-develop-alpine
     depends_on:
@@ -57,6 +84,7 @@ services:
     command: ["/bin/sh", "-c", "cd /sql; pwsh ./update-database.ps1 -CreateDatabase -appsettings /settings/shoppingcart-api/appsettings.local.json"]   
   shoppingcart-api:
     image: cortside/shoppingcart-api:1.0.10-develop-alpine
+    restart: unless-stopped
     ports:
       - 5000:5000
     depends_on:
@@ -66,8 +94,15 @@ services:
       - shoppingcart-bootstrap
     volumes:
       - coeus-data:/settings
+    healthcheck:
+      test: curl --fail http://localhost:5000/api/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s      
   shoppingcart-web:
     image: cortside/shoppingcart-web:develop
+    restart: unless-stopped
     ports:
       - 4200:8080
     depends_on:
@@ -76,12 +111,18 @@ services:
       - coeus-data:/settings
     environment:
       EXTERNAL_HOST: ${DOCKER_HOST}
+    healthcheck:
+      test: curl --fail http://localhost:8080/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s      
   db:
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: password1@
     image: mcr.microsoft.com/mssql/server:2022-latest
-    restart: always
+    restart: unless-stopped
     ports:
       - 1434:1433
     healthcheck:
