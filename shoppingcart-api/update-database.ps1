@@ -21,8 +21,8 @@ try {
 	Import-Module SqlServer -ErrorAction Stop
 } catch {
 	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-	Install-PackageProvider -Name PowershellGet -Force
-	Install-Module -Name SqlServer -AllowClobber -Force
+	Install-PackageProvider -Name PowershellGet -Force -Scope CurrentUser
+	Install-Module -Name SqlServer -AllowClobber -Force -Scope CurrentUser
 	Import-Module SqlServer
 }
 
