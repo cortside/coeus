@@ -84,7 +84,7 @@ Function Update-Version {
 
 		$a | ConvertTo-Json -depth 32| set-content './repository.json'
 		
-		git commit -m "update version" ./src/version.json
+		git commit -m "update version" ./repository.json
 	}
 }
 
