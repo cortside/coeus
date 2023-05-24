@@ -2,6 +2,6 @@
     <img src="{{ item.imageUrl }}" alt="{{ item.name }}" class="h-72 w-full object-contain" />
 </div>
 <div class="block">
-    <a routerLink="'/'">{{ item.name }}</a>
+    <a [routerLink]="[item.itemId]">{{ item.name }}</a>
     {{ item.unitPrice | currency }}
 </div>
