@@ -1,12 +1,23 @@
 TODO:
 
+* add more logging to message receiver to help diagnose when queued messages are not being received and restarting service resolves issues/3700
+	* https://github.com/Azure/amqpnetlite/issues/366
+	* https://github.com/Azure/amqpnetlite/issues/237
+	* https://github.com/Azure/amqpnetlite/issues/490  <<-- this one has good blocking information
+	* https://github.com/Azure/amqpnetlite/pull/491/files <<-- updated docs
+* send batch amqp messages
+	* https://github.com/Azure/amqpnetlite/commit/ff3ea9ea4653076c0d8e21e374f2df410952bd3d
+* dead code detector
+	* https://github.com/jason-ge/DeadCodeRemover
+	* https://jason-ge.medium.com/detect-and-remove-dead-code-with-roslyn-26e741b20d3c
+* PAC file for browswer for local or remote docker host name resolution (local developmnent)
 * middleware to log client ip
 	* see ids4 GetUserIp method
 	* https://stackoverflow.com/questions/49611704/application-insights-and-net-core-0-0-0-0-ip
 * api template switches/flags for -- i want to receive messages, i want to publish messages, i want a db, i want example domain, auth and auth, etc
 * modular templates that build on each other to create full set of possiblities
 	* i.e. powershell scripts, deployment scripts
-* adding update-database and/or tsqlt to build-push in deployment scripts
+* adding update-database and/or tsqlt to build-push in deployment scripts 
 * logging in entity classes
 	* protected Order() {
 	 // protected Order(DatabaseContext db) {
@@ -170,3 +181,7 @@ TODONE:
 	* https://www.nuget.org/packages/Microsoft.VisualStudio.Threading.Analyzers/
 * remove guards from cortside.domainevent
 * juan's dbcontext changes
+* copy config.json as config.local.json to settings/shoppingcart-web
+	* update nginx startup.sh to be more like dotnet-runtime startup.sh
+* validate sonar branching and prs work
+	* https://www.jetbrains.com/help/teamcity/pull-requests.html#Bitbucket+Cloud+Pull+Requests

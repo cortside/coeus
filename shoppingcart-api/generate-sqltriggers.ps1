@@ -58,8 +58,8 @@ try {
 	Import-Module SqlServer -ErrorAction Stop
 } catch {
 	Write-Output "Installing SqlServer module for powershell"
-	Install-PackageProvider -Name NuGet -Force
-	Install-Module -Name SqlServer -AllowClobber -Force
+	Install-PackageProvider -Name NuGet -Force -Scope CurrentUser
+	Install-Module -Name SqlServer -AllowClobber -Force -Scope CurrentUser
 	Import-Module SqlServer
 }
 

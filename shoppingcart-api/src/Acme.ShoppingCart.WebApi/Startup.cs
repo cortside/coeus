@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Acme.ShoppingCart.BootStrap;
+using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.Health;
 using Acme.ShoppingCart.WebApi.Installers;
 using Cortside.AspNetCore;
@@ -9,6 +10,7 @@ using Cortside.AspNetCore.ApplicationInsights;
 using Cortside.AspNetCore.Auditable;
 using Cortside.AspNetCore.Auditable.Entities;
 using Cortside.AspNetCore.Builder;
+using Cortside.AspNetCore.EntityFramework;
 using Cortside.AspNetCore.Swagger;
 using Cortside.Health;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
@@ -49,6 +51,9 @@ namespace Acme.ShoppingCart.WebApi {
             var serviceName = Configuration["Service:Name"];
             var config = Configuration.GetSection("ApplicationInsights").Get<ApplicationInsightsServiceOptions>();
             services.AddApplicationInsights(serviceName, config);
+
+            // add database context with interfaces
+            services.AddDatabaseContext<IDatabaseContext, DatabaseContext>(Configuration);
 
             // add health services
             services.AddHealth(o => {

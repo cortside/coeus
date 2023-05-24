@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build auth && ng build shoppingcart-web",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "ng test --project=shoppingcart-web",
+    "test:ci": "ng test --project=shoppingcart-web --watch=false",
     "lint": "ng lint",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
