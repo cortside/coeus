@@ -2,6 +2,10 @@ nav a {
     @apply p-1 uppercase py-4 px-8 hover:border-b-4 hover:border-b-gray-900 hover:no-underline hover:text-gray-700;
 }
 
+nav a.active {
+    @apply border-b-4 border-b-gray-900 text-gray-700;
+}
+
 nav li {
     @apply inline-block mx-2 my-4;
 }

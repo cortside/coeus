@@ -5,7 +5,7 @@ import { checkoutLazyLoadingRoutes } from './checkout/checkout-routing.module';
 import { orderLazyLoadingRoutes } from './order';
 
 const routes: Routes = [
-    { path: '', redirectTo: '/catalog', pathMatch: 'full' },
+    { path: '', redirectTo: '/catalog/items', pathMatch: 'full' },
     ...orderLazyLoadingRoutes,
     ...checkoutLazyLoadingRoutes,
     ...catalogLazyRoutes,
