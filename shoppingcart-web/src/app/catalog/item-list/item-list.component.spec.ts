@@ -10,7 +10,7 @@ describe('ItemListComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-      imports: [ ItemListComponent ]
+            imports: [ItemListComponent],
             providers: [{ provide: CatalogClient, useValue: { getItems: () => of(null) } }],
         }).compileComponents();
 
