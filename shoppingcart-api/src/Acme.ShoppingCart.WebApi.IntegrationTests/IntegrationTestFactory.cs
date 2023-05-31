@@ -143,8 +143,9 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
             // register test instance
             services.AddDbContext<DatabaseContext>(options => {
                 options.UseInMemoryDatabase(dbName);
-                // enable sensisitive logging for debug logging, NEVER do this in production
+                // enable sensitive logging for debug logging, NEVER do this in production
                 options.EnableSensitiveDataLogging();
+                // since in-memory database does not support transactions, ignore the warnings
                 options.ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning));
             });
             services.AddScoped<DbContext>(provider => provider.GetService<DatabaseContext>());
@@ -172,21 +173,10 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
         }
 
         private void RegisterDomainEventPublisher(IServiceCollection services) {
-            // Remove the real IDomainEventPublisher
-            var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IDomainEventPublisher));
-            if (descriptor != null) {
-                services.Remove(descriptor);
-            }
+            services.Unregister<IDomainEventPublisher>();
+            services.Unregister<IDomainEventReceiver>();
 
-            // Remove the real IDomainEventReceiver
-            descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IDomainEventReceiver));
-            if (descriptor != null) {
-                services.Remove(descriptor);
-            }
-
-            services.AddSingleton<IStubBroker, ConcurrentQueueBroker>();
-            services.AddTransient<IDomainEventPublisher, DomainEventPublisherStub>();
-            services.AddTransient<IDomainEventReceiver, DomainEventReceiverStub>();
+            services.AddDomainEventStubs();
         }
 
         private void RegisterFileSystemDistributedLock(IServiceCollection services) {

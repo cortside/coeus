@@ -1,5 +1,7 @@
 TODO:
 
+* execute sql in build
+	* run tests
 * add more logging to message receiver to help diagnose when queued messages are not being received and restarting service resolves issues/3700
 	* https://github.com/Azure/amqpnetlite/issues/366
 	* https://github.com/Azure/amqpnetlite/issues/237

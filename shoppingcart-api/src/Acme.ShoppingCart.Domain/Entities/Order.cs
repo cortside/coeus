@@ -44,6 +44,9 @@ namespace Acme.ShoppingCart.Domain.Entities {
         [ForeignKey("AddressId")]
         public Address Address { get; private set; }
 
+        [Comment("Date customer was last notified for order")]
+        public DateTime? LastNotified { get; private set; }
+
         // expose items as a read only collection so that the collection cannot be manipulated without going through order
         private readonly List<OrderItem> items = new List<OrderItem>();
         public virtual IReadOnlyList<OrderItem> Items => items;
@@ -93,6 +96,10 @@ namespace Acme.ShoppingCart.Domain.Entities {
             Guard.Against(() => item == null || !items.Contains(item), () => throw new InvalidOperationException("Item to remove must not be null and must be part of order"));
 
             item.UpdateQuantity(quantity);
+        }
+
+        public void SendNotification() {
+            LastNotified = DateTime.UtcNow;
         }
     }
 }

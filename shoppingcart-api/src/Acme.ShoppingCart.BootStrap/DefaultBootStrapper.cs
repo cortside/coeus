@@ -6,14 +6,12 @@ namespace Acme.ShoppingCart.BootStrap {
     public class DefaultApplicationBootStrapper : BootStrapper {
         public DefaultApplicationBootStrapper() {
             installers = new List<IInstaller> {
-                new DomainEventInstaller(),
                 new ExampleHostedServiceInstaller(),
                 new RepositoryInstaller(),
                 new DomainServiceInstaller(),
                 new MiniProfilerInstaller(),
                 new DistributedLockInstaller(),
-                new EncryptionInstaller(),
-                new CatalogClientInstaller(),
+                new RestApiClientInstaller(),
                 new FacadeInstaller()
             };
         }
