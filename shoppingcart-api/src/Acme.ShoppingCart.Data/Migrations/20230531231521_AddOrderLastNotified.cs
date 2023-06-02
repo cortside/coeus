@@ -3,12 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Acme.ShoppingCart.Data.Migrations
-{
-    public partial class AddOrderLastNotified : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace Acme.ShoppingCart.Data.Migrations {
+    public partial class AddOrderLastNotified : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.AlterColumn<string>(
                 name: "UserPrincipalName",
                 schema: "dbo",
@@ -170,8 +167,7 @@ namespace Acme.ShoppingCart.Data.Migrations
                 oldType: "datetime2");
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropColumn(
                 name: "LastNotified",
                 schema: "dbo",
