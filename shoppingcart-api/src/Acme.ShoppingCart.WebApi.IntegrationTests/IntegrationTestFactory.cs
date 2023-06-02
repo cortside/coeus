@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.WebApi.IntegrationTests.Mocks;
+using Cortside.AspNetCore.Builder;
 using Cortside.DomainEvent;
 using Cortside.DomainEvent.Stub;
 using Cortside.MockServer;
@@ -27,7 +28,7 @@ using Newtonsoft.Json;
 using Serilog;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests {
-    public class IntegrationTestFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class {
+    public class IntegrationTestFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class, IWebApiStartup {
         // dbname is created outside of the options so that it's constant and not reevaluated at instance creation time
         private readonly string dbName = Guid.NewGuid().ToString();
         private Subjects subjects;
@@ -45,33 +46,24 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
                 .ConfigureBuilder(new SubjectMock("./Data/subjects.json"))
                 .ConfigureBuilder<CatalogMock>();
 
-            var section = Configuration.GetSection("HealthCheckHostedService");
-            section["Checks:1:Value"] = $"{MockServer.Url}/api/health";
-            section["Checks:2:Value"] = $"{MockServer.Url}/api/health";
-            section["Checks:4:Value"] = $"{MockServer.Url}/api/health";
+            Configuration["HealthCheckHostedService:Checks:1:Value"] = $"{MockServer.Url}/api/health";
+            Configuration["HealthCheckHostedService:Checks:2:Value"] = $"{MockServer.Url}/api/health";
+            Configuration["HealthCheckHostedService:Checks:4:Value"] = $"{MockServer.Url}/api/health";
 
-            var authConfig = Configuration.GetSection("IdentityServer");
-            authConfig["Authority"] = MockServer.Url;
-            authConfig["BaseUrl"] = $"{MockServer.Url}/connect/token";
-            authConfig["RequireHttpsMetadata"] = "false";
+            Configuration["IdentityServer:Authority"] = MockServer.Url;
+            Configuration["IdentityServer:BaseUrl"] = $"{MockServer.Url}/connect/token";
+            Configuration["IdentityServer:RequireHttpsMetadata"] = "false";
 
-            var policyServerConfig = Configuration.GetSection("PolicyServer");
-            var policyserverTokenClient = policyServerConfig.GetSection("TokenClient");
-            policyserverTokenClient["Authority"] = MockServer.Url;
-            policyServerConfig["PolicyServerUrl"] = MockServer.Url;
+            Configuration["PolicyServer:TokenClient:Authority"] = MockServer.Url;
+            Configuration["PolicyServer:PolicyServerUrl"] = MockServer.Url;
 
-            var distributedLockConfig = Configuration.GetSection("DistributedLock");
-            distributedLockConfig["UseRedisLockProvider"] = "false";
+            Configuration["DistributedLock:UseRedisLockProvider"] = "false";
 
-            var loanservicingConfig = Configuration.GetSection("LoanServicingApi");
-            loanservicingConfig["BaseUrl"] = MockServer.Url;
-            var loanservicingAuthConfig = loanservicingConfig.GetSection("Authentication");
-            loanservicingAuthConfig["Url"] = $"{MockServer.Url}/connect/token";
+            Configuration["LoanServicingApi:BaseUrl"] = MockServer.Url;
+            Configuration["LoanServicingApi:Authentication:Url"] = $"{MockServer.Url}/connect/token";
 
-            var userConfig = Configuration.GetSection("CatalogApi");
-            userConfig["ServiceUrl"] = $"{MockServer.Url}";
-            var userAuthConfig = userConfig.GetSection("Authentication");
-            userAuthConfig["Url"] = $"{MockServer.Url}/connect/token";
+            Configuration["CatalogApi:ServiceUrl"] = $"{MockServer.Url}";
+            Configuration["CatalogApi:Authentication:Url"] = $"{MockServer.Url}/connect/token";
 
             MockServer.WaitForStart();
 
@@ -131,14 +123,8 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
 
         private void RegisterDbContext(IServiceCollection services) {
             // Remove the app's DbContext registration.
-            var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<DatabaseContext>));
-            if (descriptor != null) {
-                services.Remove(descriptor);
-            }
-            descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContext));
-            if (descriptor != null) {
-                services.Remove(descriptor);
-            }
+            services.Unregister<DbContextOptions<DatabaseContext>>();
+            services.Unregister<DbContext>();
 
             // register test instance
             services.AddDbContext<DatabaseContext>(options => {
@@ -180,10 +166,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
         }
 
         private void RegisterFileSystemDistributedLock(IServiceCollection services) {
-            var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IDistributedLockProvider));
-            if (descriptor != null) {
-                services.Remove(descriptor);
-            }
+            services.Unregister<IDistributedLockProvider>();
 
             // install a file system one
             services.AddSingleton<IDistributedLockProvider>(_ => {

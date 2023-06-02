@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Cortside.AspNetCore;
-using Cortside.DomainEvent;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Moq;
 using Xunit;
 
@@ -46,27 +41,6 @@ namespace Acme.ShoppingCart.WebApi.Tests {
 
             // assert
             url.Should().Be("http://localhost/big/stuff");
-        }
-
-        [Theory]
-        [InlineData("ServiceBus:Topic")]
-        [InlineData("ServiceBus:Exchange")]
-        public async Task ShouldParseTopic(string key) {
-            // arrange
-            var value = Guid.NewGuid().ToString();
-            var dictionary = new Dictionary<string, string> {
-                {key, value},
-            };
-
-            IConfiguration configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(dictionary)
-                .Build();
-
-            // act
-            var settings = configuration.GetSection("ServiceBus").Get<DomainEventPublisherSettings>();
-
-            // assert
-            Assert.Equal(value, settings.Topic);
         }
     }
 }
