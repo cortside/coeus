@@ -44,6 +44,10 @@ namespace Acme.ShoppingCart.WebApi {
         /// </summary>
         private IConfiguration Configuration { get; set; }
 
+        public void UseConfiguration(IConfiguration config) {
+            Configuration = config;
+        }
+
         /// <summary>
         /// Configure Services
         /// </summary>
@@ -114,10 +118,6 @@ namespace Acme.ShoppingCart.WebApi {
             app.UseRouting();
             app.UseAuthorization(); // intentionally set after UseRouting
             app.UseEndpoints(endpoints => endpoints.MapControllers());
-        }
-
-        public void UseConfiguration(IConfiguration config) {
-            Configuration = config;
         }
     }
 }
