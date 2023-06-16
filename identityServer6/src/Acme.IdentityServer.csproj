@@ -3,6 +3,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>38ced442-cf32-4289-bb08-57d4a78831b3</UserSecretsId>
+    <NoWarn>VSTHRD200</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Duende.IdentityServer" Version="6.3.0" />

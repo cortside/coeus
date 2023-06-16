@@ -30,8 +30,8 @@ namespace Acme.ShoppingCart.Data {
         /// </summary>
         /// <param name="updatingSubject"></param>
         /// <returns></returns>
-        protected override Task OnBeforeSaveChanges(Subject updatingSubject) {
-            return Console.Out.WriteLineAsync($"Change tracker has {ChangeTracker.Entries().Count().ToString()} entries");
+        protected override Task OnBeforeSaveChangesAsync(Subject updatingSubject) {
+            return Console.Out.WriteLineAsync($"Change tracker has {ChangeTracker.Entries().Count()} entries");
         }
     }
 }

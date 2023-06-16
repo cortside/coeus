@@ -140,6 +140,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             //assert
             orderContent = await orderResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             orderResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+            Assert.Contains(orderRequest.OrderResourceId.ToString(), orderContent);
 
             //act
             orderResponse = await client.GetAsync($"api/v1/orders/{orderRequest.OrderResourceId}").ConfigureAwait(false);
@@ -153,7 +154,6 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             order.Items.Count.Should().Be(1);
             order.Status.Should().Be(Models.Enumerations.OrderStatus.Created);
         }
-
 
         [Fact]
         public async Task ShouldGetPagedOrdersAsync() {

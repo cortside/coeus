@@ -5,6 +5,7 @@ using Acme.ShoppingCart.CatalogApi.Tests.Mock;
 using Cortside.RestApiClient;
 using Cortside.RestApiClient.Authenticators.OpenIDConnect;
 using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -31,7 +32,7 @@ namespace Acme.ShoppingCart.CatalogApi.Tests {
                 SlidingExpiration = 30
             };
             config = new CatalogClientConfiguration { ServiceUrl = wiremockurl, Authentication = request };
-            userClient = new CatalogClient(config, new Logger<CatalogClient>(new NullLoggerFactory()));
+            userClient = new CatalogClient(config, new Logger<CatalogClient>(new NullLoggerFactory()), new HttpContextAccessor());
         }
 
         [Fact]

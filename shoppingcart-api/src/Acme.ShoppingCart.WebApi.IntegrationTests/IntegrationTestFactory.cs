@@ -176,9 +176,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
 
         public HttpClient UnauthorizedClient {
             get {
-                if (_UnauthorizedClient == null) {
-                    _UnauthorizedClient = CreateDefaultClient();
-                }
+                _UnauthorizedClient ??= CreateDefaultClient();
                 return _UnauthorizedClient;
             }
         }
