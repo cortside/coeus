@@ -8,14 +8,11 @@ import { ShoppingCartService } from '../core/shopping-cart.service';
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent {
 
   items$: Observable<CartItemModel[]>;
   constructor(private service: ShoppingCartService) {
     this.items$ = this.service.getCartItems();
-  }
-
-  ngOnInit(): void {
   }
 
   checkout() {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Acme.ShoppingCart.Domain.Enumerations;
+using Cortside.AspNetCore.Common.Dtos;
 
 namespace Acme.ShoppingCart.Dto {
     public class OrderDto : AuditableEntityDto {

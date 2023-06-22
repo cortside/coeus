@@ -1,14 +1,71 @@
-Param
-(
+Param (
 	[Parameter(Mandatory = $false)][string]$server = "",
-	[Parameter(Mandatory=$false)][string]$database = "ShoppingCart",
+	[Parameter(Mandatory = $false)][string]$database = "",
 	[Parameter(Mandatory = $false)][string]$username = "",
 	[Parameter(Mandatory = $false)][string]$password = "",
 	[Parameter(Mandatory = $false)][string]$ConnectionString = "",
+	[Parameter(Mandatory = $false)][string]$appsettings = "",
 	[Parameter(Mandatory = $false)][switch]$UseIntegratedSecurity,
 	[Parameter(Mandatory = $false)][switch]$CreateDatabase,
-	[Parameter(Mandatory = $false)][switch]$RebuildDatabase
+	[Parameter(Mandatory = $false)][switch]$RebuildDatabase,
+	[Parameter(Mandatory = $false)][switch]$TestData
 )
+
+$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';
+# common repository functions
+Import-Module .\repository.psm1
+
+# module to execute sql statements
+try {
+	# ErrorAction must be Stop in order to trigger catch
+	Import-Module SqlServer -ErrorAction Stop
+} catch {
+	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+	Install-PackageProvider -Name PowershellGet -Force -Scope CurrentUser
+	Install-Module -Name SqlServer -AllowClobber -Force -Scope CurrentUser
+	Import-Module SqlServer
+}
+
+Function Execute-Sql {
+	Param (
+        [Parameter(Mandatory = $true)] [string] $database,
+        [Parameter(Mandatory = $true)] [string] $sql
+    )
+	
+	$error.clear(); 
+	$result = "";
+	if ($ConnectionString -ne "") {
+		$conn = New-Object System.Data.SqlClient.SqlConnectionStringBuilder
+		$conn.set_ConnectionString($ConnectionString)	
+		$conn.Database = $database;	
+		$result = invoke-sqlcmd -ConnectionString $conn.ConnectionString -Query $sql -OutputSqlErrors $true
+	} elseif ($username -eq "") {
+		$result = invoke-sqlcmd -Server "$server" -Database $database -Query $sql -OutputSqlErrors $true
+	} else {
+		$secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
+		$creds = New-Object System.Management.Automation.PSCredential ($username, $secpasswd)
+		$result = invoke-sqlcmd -Credential $creds -Server $server -Database $database -Query $sql -OutputSqlErrors $true
+	}
+	
+	if ($error -ne $null) {
+		Write-Error "ERROR: $error"
+		return $error
+	}
+
+	return $result
+}
+
+Function Get-Files($path) {
+	$files = @()
+	if (Test-Path -path $path) {
+		gci -Recurse @($path) | % {
+			$files += $_.FullName
+		}
+	}
+	return $files
+}
+
+$config = Get-RepositoryConfiguration
 
 if ((Test-Path 'env:MSSQL_SERVER') -and $server -eq "") {
 	$server = $env:MSSQL_SERVER
@@ -20,129 +77,56 @@ if ((Test-Path 'env:MSSQL_SERVER') -and $server -eq "") {
 		$password = $env:MSSQL_PASSWORD
 	}
 }
+if ($appsettings -ne "") {
+	$connectionString = (get-content $appsettings | ConvertFrom-Json).Database.ConnectionString
+}
+if ($connectionString -ne "") {
+	$conn = New-Object System.Data.SqlClient.SqlConnectionStringBuilder
+	$conn.set_ConnectionString($ConnectionString)	
+	$database = $conn.Database;	
+	$server = $conn.Server
+}
 if ($server -eq "") {
 	$server = "(LocalDB)\MSSQLLocalDB"
 }
-
-echo "Server: $server"
-
-$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';
-
-try {
-	# ErrorAction must be Stop in order to trigger catch
-	Import-Module SqlServer -ErrorAction Stop
-} catch {
-	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-	Install-PackageProvider -Name PowershellGet -Force
-	Install-Module -Name SqlServer -AllowClobber -Force
-	Import-Module SqlServer
+if ($database -eq "" -and $connectionString -eq "") {
+	$database = $config.database.name
 }
 
-if ($ConnectionString) {
-	# use connection string details
-	$conn = New-Object System.Data.SqlClient.SqlConnectionStringBuilder 
-	Write-Verbose "connection string: $ConnectionString"
-	$conn.set_ConnectionString($ConnectionString)
-	$server = $conn.DataSource
-	$database = $conn.InitialCatalog
-	if (!($UseIntegratedSecurity.IsPresent)) {
-		$conn.TryGetValue('User ID', [ref]$username)
-		$conn.TryGetValue('Password', [ref]$password)
-	} else {
-		Write-Output "using integrated security"
-	}
-}
+echo "Server:   $server"
+echo "Database: $database"
+echo "User:     $username"
 
 if ($RebuildDatabase.IsPresent) {
 	Write-Output "Rebuilding database..."
-	if ($username -eq "") {
-		invoke-sqlcmd -Server "$server" -Query "IF EXISTS(SELECT * FROM sys.databases WHERE name = '$database') BEGIN alter database [$database] set single_user with rollback immediate; DROP database [$database] END"
-	} else {
-		$secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
-		$creds = New-Object System.Management.Automation.PSCredential ($username, $secpasswd)
-		invoke-sqlcmd -Credential $creds -Server $server -Query "IF EXISTS(SELECT * FROM sys.databases WHERE name = '$database') BEGIN alter database [$database] set single_user with rollback immediate; DROP database [$database] END"
-	}
+	Execute-Sql -database "master" -sql "IF EXISTS(SELECT * FROM sys.databases WHERE name = '$database') BEGIN alter database [$database] set single_user with rollback immediate; DROP database [$database] END"
 }
-
 
 if ($CreateDatabase.IsPresent -OR $RebuildDatabase.IsPresent) {
 	Write-Output "Creating database..."
-	if ($username -eq "") {
-		invoke-sqlcmd -Server "$server" -Query "IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = '$database') BEGIN CREATE database [$database] END"
-	} else {
-		$secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
-		$creds = New-Object System.Management.Automation.PSCredential ($username, $secpasswd)
-		invoke-sqlcmd -Credential $creds -Server $server -Query "IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = '$database') BEGIN CREATE database [$database] END"
-	}
+	Execute-Sql -database "master" -sql "IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = '$database') BEGIN CREATE database [$database] END"
+}
+
+$scripts = @()
+$scripts += Get-Files(".\src\sql\types\*.sql")
+$scripts += Get-Files(".\src\sql\migration\*.sql")
+$scripts += Get-Files(".\src\sql\table\*.sql")
+$scripts += Get-Files(".\src\sql\view\*.sql")
+$scripts += Get-Files(".\src\sql\function\*.sql")
+$scripts += Get-Files(".\src\sql\proc\*.sql")
+$scripts += Get-Files(".\src\sql\trigger\*.sql")
+$scripts += Get-Files(".\src\sql\data\*.sql")
+$scripts += Get-Files(".\src\sql\release\*.sql")
+if ($TestData.IsPresent) {
+	$scripts += Get-Files(".\src\sql\testdata\*.sql")
 }
 
 echo "update database..."
-
-
-$scripts = @()
-if (Test-Path -path ".\src\sql\types\*.sql") {
-	gci -Recurse @(".\src\sql\types\*.sql") | % {
-		$scripts += $_.FullName
-	}
-}
-if (Test-Path -path ".\src\sql\migration\*.sql") {
-	gci -Recurse @(".\src\sql\migration\*.sql") | % {
-		$scripts += $_.FullName
-	}
-}
-if (Test-Path -path ".\src\sql\table\*.sql") {
-	gci -Recurse @(".\src\sql\table\*.sql") | % {
-		$scripts += $_.FullName
-	}
-}
-if (Test-Path -path ".\src\sql\function\*.sql") {
-	gci -Recurse @(".\src\sql\function\*.sql") | % {
-		$scripts += $_.FullName
-	}
-}
-if (Test-Path -path ".\src\sql\proc\*.sql") {
-	gci -Recurse @(".\src\sql\proc\*.sql") | % {
-		$scripts += $_.FullName
-	}
-}
-if (Test-Path -path ".\src\sql\trigger\*.sql") {
-	gci -Recurse @(".\src\sql\trigger\*.sql") | % {
-		$scripts += $_.FullName
-	}
-}
-if (Test-Path -path ".\src\sql\view\*.sql") {
-	gci -Recurse @(".\src\sql\view\*.sql") | % {
-		$scripts += $_.FullName
-	}
-}
-if (Test-Path -path ".\src\sql\data\*.sql") {
-	gci -Recurse @(".\src\sql\data\*.sql") | % {
-		$scripts += $_.FullName
-	}
-}
-if (Test-Path -path ".\src\sql\release\*.sql") {
-	gci -Recurse @(".\src\sql\release\*.sql") | % {
-		$scripts += $_.FullName
-	}
-}
-
-echo "Server: $Server"
-echo "Database: $database"
-echo "User: $username"
-
 foreach ($script in $scripts) {
 	echo "running $script"
 	$log = $script -replace "(.*).sql(.*)", '$1.log$2'
-	
-	if ($username -eq "") {
-		invoke-sqlcmd -Server "$server" -Database $database -inputFile "$script" | Out-File -FilePath "$log"
-	} else {
-		$secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
-		$creds = New-Object System.Management.Automation.PSCredential ($username, $secpasswd)
-		
-		invoke-sqlcmd -Credential $creds -Server $server -Database $database -inputFile "$script" | Out-File -FilePath "$log"
-	}
-	cat "$log"
+	$result = Execute-Sql -database $database -sql (Get-Content -Raw "$script")
+	$result | Out-File $log
 }
 
 echo "done"

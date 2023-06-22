@@ -1,5 +1,5 @@
 import { APP_INITIALIZER, Provider } from '@angular/core';
-import { defer, Observable, switchMap } from 'rxjs';
+import { defer, delay, Observable, switchMap } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import { AuthorizationData } from './authorization-data';
 import { AuthorizationService } from './authorization.service';
@@ -13,7 +13,7 @@ export const createAuthInitializationProvider = (getAuthorizationData: () => Pro
                 authenticationService.onUserSignedOut().subscribe((x) => authorizationService.reset());
                 authenticationService
                     .onUserSignedIn()
-                    .pipe(switchMap((x) => defer(() => getAuthorizationData())))
+                    .pipe(delay(100),switchMap((x) => defer(() => getAuthorizationData())))
                     .subscribe((data) => authorizationService.set(data));
 
                 await authenticationService.initialize();

@@ -1,5 +1,5 @@
-using Acme.ShoppingCart.Dto;
 using Cortside.AspNetCore.Auditable.Entities;
+using Cortside.AspNetCore.Common.Dtos;
 
 namespace Acme.ShoppingCart.Facade.Mappers {
     public class SubjectMapper {

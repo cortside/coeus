@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
-using Acme.ShoppingCart.DomainService;
+using Acme.ShoppingCart.Facade;
 using Cortside.DomainEvent;
 using Cortside.DomainEvent.Handlers;
 using Medallion.Threading;
@@ -35,25 +35,21 @@ namespace Acme.ShoppingCart.DomainEvent {
                 logger.LogDebug("Handling {EventName} for ShoppingCart {OrderResourceId}", typeof(OrderStateChangedEvent).Name, @event.Data.OrderResourceId);
 
                 using (IServiceScope scope = serviceProvider.CreateScope()) {
-                    var service = scope.ServiceProvider.GetRequiredService<IOrderService>();
+                    var facade = scope.ServiceProvider.GetRequiredService<IOrderFacade>();
                     var lockProvider = scope.ServiceProvider.GetRequiredService<IDistributedLockProvider>();
                     var lockName = $"OrderResourceId:{@event.Data.OrderResourceId}";
 
                     logger.LogDebug("Acquiring lock for {LockName}", lockName);
                     await using (await lockProvider.AcquireLockAsync(lockName).ConfigureAwait(false)) {
                         logger.LogDebug("Acquired lock for {LockName}", lockName);
-                        var entity = await service.GetOrderAsync(@event.Data.OrderResourceId).ConfigureAwait(false);
+                        var entity = await facade.SendNotificationAsync(@event.Data.OrderResourceId).ConfigureAwait(false);
                         logger.LogInformation("Emailing customer at {Email} for change to order {OrderResourceId}", entity.Customer.Email, entity.OrderResourceId);
                         logger.LogDebug("Handling change event for order {@order}", entity);
-
-                        // simulate work
-                        await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
-
                         logger.LogInformation("order was observed changing it's state with body: {body} and entity: {entity}", JsonConvert.SerializeObject(@event.Data), JsonConvert.SerializeObject(entity));
                     }
                 }
 
-                logger.LogDebug("Successfully handled {EventName} for ShoppingCart {OrderResourceId}", typeof(OrderStateChangedEvent).Name, @event.Data.OrderResourceId);
+                logger.LogDebug("Successfully handled {EventName} for ShoppingCart {OrderResourceId}", nameof(OrderStateChangedEvent), @event.Data.OrderResourceId);
                 return HandlerResult.Success;
             }
         }

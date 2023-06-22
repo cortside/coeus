@@ -1,10 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using Acme.ShoppingCart.UserClient.Models.Responses;
-using Acme.ShoppingCart.UserClient.Tests.Mock;
+using Acme.ShoppingCart.CatalogApi.Models.Responses;
+using Acme.ShoppingCart.CatalogApi.Tests.Mock;
 using Cortside.RestApiClient;
 using Cortside.RestApiClient.Authenticators.OpenIDConnect;
 using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -14,7 +15,7 @@ using Newtonsoft.Json;
 using RichardSzalay.MockHttp;
 using Xunit;
 
-namespace Acme.ShoppingCart.UserClient.Tests {
+namespace Acme.ShoppingCart.CatalogApi.Tests {
     public class UserClientTest {
         private readonly ICatalogClient userClient;
         private readonly CatalogClientConfiguration config;
@@ -31,7 +32,7 @@ namespace Acme.ShoppingCart.UserClient.Tests {
                 SlidingExpiration = 30
             };
             config = new CatalogClientConfiguration { ServiceUrl = wiremockurl, Authentication = request };
-            userClient = new CatalogClient(config, new Logger<CatalogClient>(new NullLoggerFactory()));
+            userClient = new CatalogClient(config, new Logger<CatalogClient>(new NullLoggerFactory()), new HttpContextAccessor());
         }
 
         [Fact]

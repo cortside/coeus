@@ -29,6 +29,14 @@ namespace Acme.ShoppingCart.Facade {
             return mapper.MapToDto(order);
         }
 
+        public async Task<OrderDto> SendNotificationAsync(Guid id) {
+            var order = await orderService.SendNotificationAsync(id).ConfigureAwait(false);
+            await uow.SaveChangesAsync().ConfigureAwait(false);
+
+            return mapper.MapToDto(order);
+
+        }
+
         public async Task<OrderDto> CreateOrderAsync(OrderDto input) {
             Customer customer;
             if (input.Customer.CustomerResourceId == Guid.Empty) {

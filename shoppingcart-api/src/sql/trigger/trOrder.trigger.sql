@@ -29,6 +29,7 @@ CREATE TRIGGER trOrder
                 WHEN EXISTS(SELECT 1 FROM INSERTED) THEN 'UPDATE'
                 ELSE 'DELETE'
             END
+        SELECT @ROWS_COUNT=count(*) from deleted
     END
 
 	-- determine username
@@ -135,6 +136,25 @@ CREATE TRIGGER trOrder
 			WHERE ((NEW.[AddressId] <> OLD.[AddressId]) 
 					Or (NEW.[AddressId] Is Null And OLD.[AddressId] Is Not Null)
 					Or (NEW.[AddressId] Is Not Null And OLD.[AddressId] Is Null))
+			set @inserted = @inserted + @@ROWCOUNT
+		END
+
+	-- [LastNotified]
+	IF UPDATE([LastNotified]) OR @action in ('INSERT', 'DELETE')      
+		BEGIN       
+			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
+			SELECT
+				@AuditLogTransactionId,
+				convert(nvarchar(1500), IsNull('[[OrderId]]='+CONVERT(nvarchar(4000), IsNull(OLD.[OrderId], NEW.[OrderId]), 0), '[[OrderId]] Is Null')),
+				'[LastNotified]',
+				CONVERT(nvarchar(4000), OLD.[LastNotified], 126),
+				CONVERT(nvarchar(4000), NEW.[LastNotified], 126),
+				convert(nvarchar(4000), COALESCE(OLD.[OrderId], NEW.[OrderId], null))
+			FROM deleted OLD 
+			LEFT JOIN inserted NEW On (NEW.[OrderId] = OLD.[OrderId] or (NEW.[OrderId] Is Null and OLD.[OrderId] Is Null))
+			WHERE ((NEW.[LastNotified] <> OLD.[LastNotified]) 
+					Or (NEW.[LastNotified] Is Null And OLD.[LastNotified] Is Not Null)
+					Or (NEW.[LastNotified] Is Not Null And OLD.[LastNotified] Is Null))
 			set @inserted = @inserted + @@ROWCOUNT
 		END
 

@@ -1,12 +1,14 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Acme.ShoppingCart.UserClient.Models.Responses;
+using Acme.ShoppingCart.CatalogApi.Models.Responses;
 using Cortside.AspNetCore.Auditable.Entities;
 using Cortside.Common.Validation;
+using Microsoft.EntityFrameworkCore;
 
 namespace Acme.ShoppingCart.Domain.Entities {
     [Table("OrderItem")]
+    [Comment("Items that belong to an Order")]
     public class OrderItem : AuditableEntity {
         protected OrderItem() {
             // Required by EF as it doesn't know about CatalogItem
@@ -23,12 +25,17 @@ namespace Acme.ShoppingCart.Domain.Entities {
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Comment("Primary Key")]
         public int OrderItemId { get; private set; }
+        [Comment("FK to Item in Catalog service")]
         public Guid ItemId { get; private set; }
         [StringLength(10)]
+        [Comment("Item Sku")]
         public string Sku { get; private set; }
+        [Comment("Quantity of Sku")]
         public int Quantity { get; private set; }
         [Column(TypeName = "money")]
+        [Comment("Per quantity price")]
         public decimal UnitPrice { get; private set; }
 
         internal void AddQuantity(int quantity) {

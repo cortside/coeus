@@ -1,0 +1,22 @@
+{
+    "application": {
+        "name": "shoppingcart-web"
+    },
+    "catalogApi": {
+        "url": "http://${EXTERNAL_HOST}:5001"
+    },
+    "shoppingCartApi": {
+        "url": "http://${EXTERNAL_HOST}:5000"
+    },
+    "identity": {
+        "authority": "https://${EXTERNAL_HOST}:5002",
+        "client_id": "shoppingcart-web",
+        "scope": "openid shoppingcart-api",
+        "redirect_uri": "http://${EXTERNAL_HOST}:4200/login-redirect",
+        "silent_redirect_uri": "http://${EXTERNAL_HOST}:4200/silent-redirect",
+        "postLogoutRedirectUri": "http://${EXTERNAL_HOST}:4200/logout",
+        "accessTokenExpiringNotificationTime": 60,
+        "loadUserInfo": false,
+        "automaticSilentRenew": true        
+    }
+}

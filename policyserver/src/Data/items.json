@@ -1,0 +1,34 @@
+[
+    {
+        "sku": "PAPPY-10",
+        "name": "Pappy Van Winkle 10 Year",
+        "imageUrl": "https://www.oldripvanwinkle.com/app/uploads/2016/09/bourbon-bg-10year-2.jpg"
+    },
+    {
+        "sku": "PAPPY-12",
+        "name": "Pappy Van Winkle 12 Year"
+    },
+    {
+        "sku": "PAPPY-15",
+        "name": "Pappy Van Winkle 15 Year",
+        "imageUrl": "https://www.oldripvanwinkle.com/app/uploads/2016/09/15_year.jpg"
+    },
+    {
+        "sku": "PAPPY-18",
+        "name": "Pappy Van Winkle 18 Year"
+    },
+    {
+        "sku": "PAPPY-20",
+        "name": "Pappy Van Winkle 20 Year",
+        "imageUrl": "https://www.oldripvanwinkle.com/app/uploads/2016/09/bourbon-bg-20year-1.jpg"
+    },
+    {
+        "sku": "PAPPY-23",
+        "name": "Pappy Van Winkle 23 Year",
+        "imageUrl": "https://www.oldripvanwinkle.com/app/uploads/2016/09/bourbon-bg-23year-2.jpg"
+    },
+    {
+        "sku": "PAPPY-25",
+        "name": "Pappy Van Winkle 25 Year"
+    }
+]

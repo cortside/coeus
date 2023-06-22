@@ -350,4 +350,14 @@ MigrationBackup/
 .ionide/
 
 *.ncrunchsolution
-*.local.json
+*.user.json
+
+shoppingcart-web/*.local.json
+shoppingcart-api/*.local.json
+identitserver6/*.local.json
+policyserver/*.local.json
+
+*.db-shm
+*.db-wal
+*.db
+shoppingcart-api/DataDictionary.csv

@@ -2,13 +2,21 @@
     "application": {
         "name": "shoppingcart-web"
     },
+    "catalogApi": {
+        "url": "http://localhost:5001"
+    },
+    "shoppingCartApi": {
+        "url": "http://localhost:5000"
+    },
     "identity": {
-        "authority": "https://identityserver",
+        "authority": "https://localhost:5002",
         "client_id": "shoppingcart-web",
-        "scope": "openid",
+        "scope": "openid shoppingcart-api",
         "redirect_uri": "http://localhost:4200/login-redirect",
         "silent_redirect_uri": "http://localhost:4200/silent-redirect",
         "postLogoutRedirectUri": "http://localhost:4200/logout",
-        "accessTokenExpiringNotificationTime": 60
+        "accessTokenExpiringNotificationTime": 60,
+        "loadUserInfo": false,
+        "automaticSilentRenew": true        
     }
 }

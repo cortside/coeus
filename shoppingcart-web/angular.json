@@ -28,16 +28,19 @@
               "src/assets",
               "src/config.json",
               {
-                  "glob": "config.*.json",
-                  "input": "src/",
-                  "output": "/"
+                "glob": "config.*.json",
+                "input": "src/",
+                "output": "/"
               }
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "oidc-client"
+            ]
           },
           "configurations": {
             "production": {
@@ -103,9 +106,9 @@
               "src/assets",
               "src/config.json",
               {
-                  "glob": "config.*.json",
-                  "input": "src/",
-                  "output": "/"
+                "glob": "config.*.json",
+                "input": "src/",
+                "output": "/"
               }
             ],
             "styles": [
@@ -113,6 +116,15 @@
               "src/styles.scss"
             ],
             "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
@@ -145,11 +157,28 @@
             "tsConfig": "projects/auth/tsconfig.spec.json",
             "karmaConfig": "projects/auth/karma.conf.js"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/auth/**/*.ts",
+              "projects/auth/**/*.html"
+            ]
+          }
         }
       }
     }
   },
   "cli": {
     "analytics": false
+  },
+  "schematics": {
+    "@angular-eslint/schematics:application": {
+      "setParserOptionsProject": true
+    },
+    "@angular-eslint/schematics:library": {
+      "setParserOptionsProject": true
+    }
   }
 }

@@ -1,0 +1,74 @@
+ARG buildimage
+ARG runtimeimage
+
+# use the sdk to build/test, but later we'll use runtime for published image
+FROM ${buildimage} AS build
+ARG buildconfiguration
+ARG nugetfeed
+ARG sonarscannerversion
+
+COPY src/ /app/src/
+WORKDIR /app/src
+
+RUN echo $nugetfeed
+RUN dotnet restore --source ${nugetfeed}
+
+# Run all tests
+ARG branch
+ARG imageversion
+ARG sonarhost
+ARG sonartoken
+ARG sonarkey
+ARG projectname
+ARG analysisArgs
+ARG organization
+ARG publishableProject
+
+# set to use teamcity messaging for test logger
+#ENV TEAMCITY_VERSION="1.1" 
+
+RUN export SONAR_SCANNER_OPTS="-Xmx4096m" && \
+    echo "analysisArgs=$analysisArgs" && \
+    dotnet sonarscanner begin \
+    /k:"$(echo $sonarkey | tr '[:upper:]' '[:lower:]')" \
+    /o:"$organization" \
+    /d:sonar.host.url="$sonarhost" \
+    /d:sonar.login="$sonartoken" \
+    /v:"$imageversion" \
+    /d:sonar.cs.opencover.reportsPaths="**/*.opencover.xml" \
+    /d:sonar.coverage.exclusions="**/*Test*.cs,**/Migrations/*" \
+    /d:sonar.exclusions="**/*Test*.cs,**/Migrations/*,**/*Api.xml" \
+    $analysisArgs && \
+    dotnet build --no-restore && \
+    dotnet test --no-build --no-restore /p:Exclude="[xunit*]*" /p:ParallelizeTestCollections=false --collect:"XPlat Code Coverage" --settings coverlet.runsettings.xml && \
+	#--logger:"teamcity;verbosity=normal" && \
+    dotnet sonarscanner end /d:sonar.login="$sonartoken" && \
+    dotnet publish "$publishableProject" -p:Version=$(echo $imageversion | cut -f 1 -d '-') -o out -r linux-musl-x64
+
+## Build the runtime environment
+FROM $runtimeimage AS runtime
+ARG projectname
+ARG publishableProject
+ARG service_executable
+ARG service_name
+
+ENV configpath /app/appsettings.json
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+ENV ASPNETCORE_URLS=http://+:5000
+ENV ASPNETCORE_ENVIRONMENT=Deployment
+ENV SERVICE_NAME=$service_name
+ENV SERVICE_EXECUTABLE=$service_executable
+
+COPY ./src/sql /sql/src/sql
+COPY ./update-database.ps1 /sql
+COPY ./repository.psm1 /sql
+COPY ./repository.json /sql
+RUN chmod -R a+rw /sql
+
+WORKDIR /app
+COPY --from=build /app/src/out ./
+COPY --from=build /app/src/"$publishableProject"/build.json ./
+
+USER user
+EXPOSE 5000/tcp
+CMD ["/startup.sh"]

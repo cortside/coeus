@@ -46,7 +46,8 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
             logger.LogInformation("Retrieving authorization permissions for user.");
             var authProperties = await policyClient.EvaluateAsync(User).ConfigureAwait(false);
             AuthorizationModel responseModel = new AuthorizationModel() {
-                Permissions = authProperties.Permissions.ToList()
+                Permissions = authProperties.Permissions.ToList(),
+                Roles = authProperties.Roles.ToList()
             };
             var permissionsPrefix = configuration.GetSection("PolicyServer").GetValue<string>("BasePolicyPrefix");
             responseModel.Permissions = responseModel.Permissions.Select(p => $"{permissionsPrefix}.{p}").ToList();

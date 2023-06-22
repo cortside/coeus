@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
+using Acme.ShoppingCart.CatalogApi;
 using Acme.ShoppingCart.Data.Repositories;
 using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.Exceptions;
-using Acme.ShoppingCart.UserClient;
 using Cortside.AspNetCore.Common.Paging;
 using Cortside.Common.Validation;
-using Cortside.DomainEvent;
+using Cortside.DomainEvent.EntityFramework;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
 
@@ -102,6 +102,12 @@ namespace Acme.ShoppingCart.DomainService {
             var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = DateTime.UtcNow };
             await publisher.PublishAsync(@event).ConfigureAwait(false);
 
+            return entity;
+        }
+
+        public async Task<Order> SendNotificationAsync(Guid id) {
+            var entity = await orderRepository.GetAsync(id).ConfigureAwait(false);
+            entity.SendNotification();
             return entity;
         }
     }

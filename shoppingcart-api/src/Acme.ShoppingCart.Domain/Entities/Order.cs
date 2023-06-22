@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Acme.ShoppingCart.CatalogApi.Models.Responses;
 using Acme.ShoppingCart.Domain.Enumerations;
-using Acme.ShoppingCart.UserClient.Models.Responses;
 using Cortside.AspNetCore.Auditable.Entities;
 using Cortside.Common.Validation;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Acme.ShoppingCart.Domain.Entities {
     [Index(nameof(OrderResourceId), IsUnique = true)]
     [Table("Order")]
+    [Comment("Orders")]
     public class Order : AuditableEntity {
         protected Order() {
             // Required by EF as it doesn't know about Customer
@@ -25,18 +26,26 @@ namespace Acme.ShoppingCart.Domain.Entities {
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Comment("Primary Key")]
         public int OrderId { get; private set; }
 
+        [Comment("Public unique identifier")]
         public Guid OrderResourceId { get; private set; }
 
         [Column(TypeName = "nvarchar(20)")]
+        [Comment("Order status (created, paid, shipped, cancelled)")]
         public OrderStatus Status { get; private set; }
 
         [ForeignKey("CustomerId")]
+        [Comment("FK to Customer")]
         public Customer Customer { get; private set; }
 
+        [Comment("FK to Address")]
         [ForeignKey("AddressId")]
         public Address Address { get; private set; }
+
+        [Comment("Date customer was last notified for order")]
+        public DateTime? LastNotified { get; private set; }
 
         // expose items as a read only collection so that the collection cannot be manipulated without going through order
         private readonly List<OrderItem> items = new List<OrderItem>();
@@ -87,6 +96,10 @@ namespace Acme.ShoppingCart.Domain.Entities {
             Guard.Against(() => item == null || !items.Contains(item), () => throw new InvalidOperationException("Item to remove must not be null and must be part of order"));
 
             item.UpdateQuantity(quantity);
+        }
+
+        public void SendNotification() {
+            LastNotified = DateTime.UtcNow;
         }
     }
 }

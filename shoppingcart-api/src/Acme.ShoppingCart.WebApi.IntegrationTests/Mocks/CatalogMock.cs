@@ -1,5 +1,5 @@
 using System;
-using Acme.ShoppingCart.UserClient.Models.Responses;
+using Acme.ShoppingCart.CatalogApi.Models.Responses;
 using Cortside.MockServer;
 using Newtonsoft.Json;
 using WireMock.RequestBuilders;
