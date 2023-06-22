@@ -12,12 +12,7 @@ export class ItemService {
   constructor(private client: CatalogClient) { }
 
   getItems() : Observable<ListResult<ItemModel>> {
-    return forkJoin([
-        this.client.getItem('SKU0000001'),
-        this.client.getItem('SKU0000002'),
-        this.client.getItem('SKU0000003'),
-        this.client.getItem('SKU0000004')
-    ]).pipe(
+    return this.client.getItems().pipe(
         map(x=> <ListResult<ItemModel>>{results: x as ItemModel[]})
     );
   }

@@ -40,6 +40,18 @@ Before you run this for the first time you will need to run powershell script `.
 This will create the `build.json` file in:
 src\Acme.ShoppingCart.WebApi\build.json
 
+## Database location
+
+You can override the default expected location of the database using environment variables.  The easiest way to set these is to set them up in your powershell profile (`notepad $PROFILE`):
+
+```powershell
+$env:MSSQL_SERVER="kehlstein"
+$env:MSSQL_USER="sa"
+$env:MSSQL_PASSWORD="password1@"
+```
+
+The default will be to use Sql Express if `$env:MSSQL_SERVER` is not set.  The default to be to use logged in user with trusted connection if `$env:MSSQL_USER` is not set.  The above example shows how to use a remote host with sql authentication enabled.
+
 ## Create database locally
 
 Run powershell script `.\update-database.ps1 -CreateDatabase`
@@ -86,3 +98,4 @@ Database changes are deployed to shared environments when Octopus runs `update-d
 - you may need to run rabbitmq in docker locally, when working with domain event message publication and consumption
   - run `start-rabbitmq.ps1` - this will start a container and configure queues and subscriptions per the config in the cloned repo
     - admin UI can be accessed at http://localhost:15672/ with admin/password as credentials
+

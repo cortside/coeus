@@ -1,3 +1,30 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'node_modules/muzieh-ngcomponents/design/_base';
+@import 'tailwindcss/components';
+@import 'node_modules/muzieh-ngcomponents/design/_button';
+@import 'node_modules/muzieh-ngcomponents/design/_dl';
+@import 'node_modules/muzieh-ngcomponents/design/_dropdown-menu';
+@import 'node_modules/muzieh-ngcomponents/design/_form';
+@import 'node_modules/muzieh-ngcomponents/design/_icon';
+@import 'node_modules/muzieh-ngcomponents/design/_pagination';
+@import 'node_modules/muzieh-ngcomponents/design/_table';
+@import 'node_modules/muzieh-ngcomponents/design/_tabs';
+@import 'node_modules/muzieh-ngcomponents/design/_progress-bar';
+@import 'node_modules/muzieh-ngcomponents/design/_alert';
+@import 'node_modules/muzieh-ngcomponents/design/_date-picker';
+@import 'tailwindcss/utilities';
+
+// TODO:
+.text-block {
+    max-width: 100ch;
+}
+
+a {
+    @apply text-gray-800;
+}
+
+h1 {
+    @apply mt-0.5;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -13,6 +13,7 @@ using Cortside.MockServer.AccessControl.Models;
 using Medallion.Threading;
 using Medallion.Threading.FileSystem;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Serilog;
 
@@ -31,6 +33,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
         private Subjects subjects;
         public MockHttpServer MockServer { get; private set; }
         private IConfiguration Configuration { get; set; }
+        public JsonSerializerSettings SerializerSettings { get; private set; }
 
         protected override IHostBuilder CreateHostBuilder() {
             SetupConfiguration();
@@ -85,9 +88,21 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
                             RegisterFileSystemDistributedLock(sc);
                         }
                         RegisterDomainEventPublisher(sc);
+                        ResolveSerializerSettings(sc);
                     });
                 })
                 .UseSerilog(Log.Logger);
+        }
+
+        private void ResolveSerializerSettings(IServiceCollection services) {
+            // Build the service provider.
+            var sp = services.BuildServiceProvider();
+
+            // Create a scope to obtain a reference to the database context (DbContext).
+            using var scope = sp.CreateScope();
+            var scopedServices = scope.ServiceProvider;
+            var o = scopedServices.GetRequiredService<IOptions<MvcNewtonsoftJsonOptions>>();
+            SerializerSettings = o.Value.SerializerSettings;
         }
 
         private void SetupLogger() {
@@ -110,6 +125,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
         private void SetupConfiguration() {
             Configuration = new ConfigurationBuilder()
                  .AddJsonFile("appsettings.integration.json", optional: false, reloadOnChange: true)
+                 .AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true)
                  .Build();
         }
 

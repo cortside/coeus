@@ -1,11 +1,22 @@
 import { AuthenticationService, AuthorizationData, AuthorizationService } from '@muziehdesign/auth';
-import { firstValueFrom } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
 import { ShoppingCartClient } from './api/shopping-cart/shopping-cart.client';
 
-export const initializeApplication = (authenticationService: AuthenticationService, client: ShoppingCartClient, service: AuthorizationService): (() => Promise<void>) => {
+export const initializeApplication = (
+    authenticationService: AuthenticationService,
+    client: ShoppingCartClient,
+    authorizationService: AuthorizationService
+): (() => Promise<void>) => {
     return (): Promise<void> => {
-        return authenticationService.initialize().then(() => {
-            return firstValueFrom(client.getAuthorization()).then((x) => service.register('ShoppingCart', x as AuthorizationData));
-        });
+        authenticationService.onUserSignedOut().pipe(tap((x) => authorizationService.reset()));
+        authenticationService.onUserSignedIn().pipe(
+            switchMap((x) => client.getAuthorization()),
+            tap((x) => {
+                const map = new Map<string, AuthorizationData>();
+                map.set(ShoppingCartClient.name, x as AuthorizationData);
+            })
+        ).subscribe();
+
+        return authenticationService.initialize();
     };
 };

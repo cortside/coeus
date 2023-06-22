@@ -43,7 +43,7 @@ CREATE TRIGGER trOrderItem
 	)
 	Set @AuditLogTransactionId = SCOPE_IDENTITY()
 
-		-- [OrderItemId]
+	-- [OrderItemId]
 	IF UPDATE([OrderItemId]) OR @action in ('INSERT', 'DELETE')      
 		BEGIN       
 			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
@@ -233,12 +233,5 @@ CREATE TRIGGER trOrderItem
 			set @inserted = @inserted + @@ROWCOUNT
 		END
 
-
-
-	--IF @Inserted = 0
-	--	BEGIN
-	--	    -- believed to be contributing to deadlocks
-	--		-- DELETE FROM audit.AuditLogTransaction WHERE AuditLogTransactionId = @AuditLogTransactionId
-	--	END
 END
 GO

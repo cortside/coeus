@@ -1,5 +1,5 @@
 {
-  "id": "387afc7e-c034-4d8e-af92-ad6df52900bd",
+  "id": "126f466e-248e-44f3-8c86-d19ed4e34bc4",
   "name": "My Visual Studio extensions",
   "description": "A collection of my Visual Studio extensions",
   "version": "1.0",
@@ -53,10 +53,6 @@
       "vsixId": "FixMixedTabs2022.9f1d3050-b986-4b10-ae36-97c6efc5e968"
     },
     {
-      "name": "Format document on Save",
-      "vsixId": "2f4fac85-be4e-4d7a-8c74-93cc4389b427"
-    },
-    {
       "name": "Format on Save for VS2022",
       "vsixId": "VSFormatOnSave2022.9484441C-1BE1-4481-997F-0FEDF16868C8"
     },
@@ -81,8 +77,8 @@
       "vsixId": "MappingGenerator2022"
     },
     {
-      "name": "Markdown Editor (64-bit)",
-      "vsixId": "9ca64947-e9ca-4543-bfb8-6cce9be19fd7"
+      "name": "Markdown Editor v2",
+      "vsixId": "MarkdownEditor2022.2347dc70-1875-4775-bf48-f2b9fdfee8d4"
     },
     {
       "name": "Match Margin 2022",
@@ -111,6 +107,14 @@
     {
       "name": "Productivity Power Tools 2022",
       "vsixId": "ProductivityPowerPack2022.0d5b9d71-e118-46de-a20c-555176e53900"
+    },
+    {
+      "name": "Productivity Power Tools Options Page 2022",
+      "vsixId": "PPTOptionsPage2022.666715a6-3ac4-4bb7-b538-4d7625f99666"
+    },
+    {
+      "name": "Rainbow Braces",
+      "vsixId": "RainbowBraces.1dff1bc5-a8e4-477b-9054-2b9ec6bb88d1"
     },
     {
       "name": "Roslynator 2022",

@@ -1,5 +1,13 @@
 # ShoppingcartWeb
 
+## Setup
+1. create file `config.user.json` in `/src` with `{}` as body
+
+## Extensions
+1. Angular Language Service
+1. Prettier
+1. Tailwind CSS IntelliSense
+
 ## Todo
 
 -   [ ] css framework
@@ -26,3 +34,6 @@
 -   [ ] build
 -   [ ] error handling
 -   [ ] bootstrap failure
+
+## Tasks
+- module import cleanup

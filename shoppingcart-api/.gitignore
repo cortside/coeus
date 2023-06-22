@@ -253,6 +253,3 @@ coverage.opencover.xml
 
 *.local.json
 .refsignored
-
-# don't set trigger on outbox table
-src/sql/trigger/trOutbox.trigger.sql

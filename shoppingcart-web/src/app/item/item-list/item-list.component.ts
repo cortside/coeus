@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from '@muziehdesign/auth';
 import { Observable } from 'rxjs';
 import { ListResult } from 'src/app/common/list-result';
+import { ShoppingCartService } from 'src/app/core/shopping-cart.service';
 import { ItemService } from '../../core/item.service';
 import { ItemModel } from '../models/item.model';
 
@@ -12,11 +13,15 @@ import { ItemModel } from '../models/item.model';
 })
 export class ItemListComponent implements OnInit {
     items$: Observable<ListResult<ItemModel>>;
-    constructor(private service: ItemService, private authorizationService: AuthorizationService) {
+    constructor(private service: ItemService, private shoppingCartService: ShoppingCartService) {
         this.items$ = service.getItems();
     }
 
     ngOnInit(): void {}
 
     authorize() {}
+
+    addItem(item: ItemModel) {
+        this.shoppingCartService.addItem(item.sku, 1);
+    }
 }
