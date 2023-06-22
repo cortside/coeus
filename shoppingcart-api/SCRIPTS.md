@@ -1,6 +1,6 @@
 |Script   | Arguments | Example | Description |
 |---|---|---|---|
-| add-migration.ps1 | -migration \<migration name\> | | Add an EF migration.  This will also call scripts to generate the sql script for the migration, the script to generate sql triggers and call the script to run all sql scripts to update the database.   |
+| add-migration.ps1 | -migration \<migration name\> | ./add-migration.ps1 -migration "My New Table" | Add an EF migration.  This will also call scripts to generate the sql script for the migration, the script to generate sql triggers and call the script to run all sql scripts to update the database.   |
 | build-dockerimages.ps1 |  |  | Ability to build project inside docker container and output docker image for running built project |
 | build.ps1 |  |  |  |
 | clean.ps1 |  |  | Clean build and publish artifacts, i.e. bin and obj directories.  Also cleans local package download directories and publish artifacts. |
