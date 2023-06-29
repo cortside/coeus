@@ -1,4 +1,4 @@
-DROP TRIGGER IF EXISTS trSubject
+DROP TRIGGER IF EXISTS dbo.trSubject
 GO
 
 ---

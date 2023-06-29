@@ -1,4 +1,4 @@
-DROP TRIGGER IF EXISTS trOrder
+DROP TRIGGER IF EXISTS dbo.trOrder
 GO
 
 ---

@@ -1,4 +1,4 @@
-DROP TRIGGER IF EXISTS trCustomer
+DROP TRIGGER IF EXISTS dbo.trCustomer
 GO
 
 ---
