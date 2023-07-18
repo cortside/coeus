@@ -18,7 +18,7 @@ namespace PolicyServer {
         private static MockHttpServer server;
 
         static void Main(string[] args) {
-            IConfigurationRoot configuration = SetupConfiguration();
+            IConfiguration configuration = SetupConfiguration();
             SetupLogger(configuration);
             Log.Logger.Debug("WireMock.Net server arguments [{0}]", string.Join(", ", args.Select(a => $"'{a}'")));
 
@@ -65,7 +65,7 @@ namespace PolicyServer {
             }
         }
 
-        private static void SetupLogger(IConfigurationRoot configuration) {
+        private static void SetupLogger(IConfiguration configuration) {
             var loggerConfiguration = new LoggerConfiguration()
                       .ReadFrom.Configuration(configuration)
                       .Enrich.FromLogContext();
@@ -77,7 +77,7 @@ namespace PolicyServer {
             Log.Logger = loggerConfiguration.CreateLogger();
         }
 
-        private static IConfigurationRoot SetupConfiguration() {
+        private static IConfiguration SetupConfiguration() {
             return new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
