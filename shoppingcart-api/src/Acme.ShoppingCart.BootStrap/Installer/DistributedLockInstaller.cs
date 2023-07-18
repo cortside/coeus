@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Acme.ShoppingCart.BootStrap.Installer {
     public class DistributedLockInstaller : IInstaller {
-        public void Install(IServiceCollection services, IConfigurationRoot configuration) {
+        public void Install(IServiceCollection services, IConfiguration configuration) {
             var connectionString = configuration.GetSection("Database").GetValue<string>("ConnectionString");
             IDistributedLockProvider provider = new SqlDistributedSynchronizationProvider(connectionString);
             services.AddSingleton(provider);

@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Acme.ShoppingCart.WebApi.Installers {
     public class ModelMapperInstaller : IInstaller {
-        public void Install(IServiceCollection services, IConfigurationRoot configuration) {
+        public void Install(IServiceCollection services, IConfiguration configuration) {
             typeof(OrderModelMapper).GetTypeInfo().Assembly.GetTypes()
                 .Where(x => (x.Name.EndsWith("Mapper"))
                     && x.GetTypeInfo().IsClass

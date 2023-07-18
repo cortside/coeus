@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Acme.ShoppingCart.BootStrap.Installer {
     public class RestApiClientInstaller : IInstaller {
-        public void Install(IServiceCollection services, IConfigurationRoot configuration) {
+        public void Install(IServiceCollection services, IConfiguration configuration) {
             // register clients
             services.AddRestApiClient<ICatalogClient, CatalogClient, CatalogClientConfiguration>(configuration, "CatalogApi");
 
