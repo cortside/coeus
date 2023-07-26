@@ -7,6 +7,8 @@
 
     }
     ```
+## Design System
+This project follows [Muzieh Design System](https://ruifang.github.io/designsystem)
 
 ## Extensions
 1. Angular Language Service

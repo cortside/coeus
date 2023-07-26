@@ -6,7 +6,6 @@ using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using IdentityServerHost;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Serilog;
 
 namespace IdentityServer;

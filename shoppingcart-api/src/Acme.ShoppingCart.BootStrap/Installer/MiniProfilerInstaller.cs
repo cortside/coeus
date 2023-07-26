@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Acme.ShoppingCart.BootStrap.Installer {
     public class MiniProfilerInstaller : IInstaller {
-        public void Install(IServiceCollection services, IConfigurationRoot configuration) {
+        public void Install(IServiceCollection services, IConfiguration configuration) {
             services.AddMiniProfiler(options => {
                 options.RouteBasePath = "/profiler";
 

@@ -1,3 +1,14 @@
+<#
+.SYNOPSIS
+    Find c# projects in subdirectories not included in solution
+    with all migrations applied
+#>
+[cmdletBinding()]
+Param
+(
+	[Parameter(Mandatory = $false)][string]$sln = "./src/Acme.ShoppingCart.sln"
+)
+
 Function Global:Get-ProjectInSolution {
     [CmdletBinding()] param (
         [Parameter()][string]$Solution
@@ -22,7 +33,14 @@ Function Global:Get-ProjectInSolution {
         }
 }
 
-Get-ProjectInSolution ./src/Acme.ShoppingCart.sln | select-object Fullname | sort > projects.txt
+Get-ProjectInSolution $sln | select-object Fullname | sort > projects.txt
 
-gci *.csproj -r | select-object fullname | %{ $in = Select-String -Path .\projects.txt -SimpleMatch $_.FullName; if ($in -eq $null) { echo $_ } }
+# add projects not already in solution file
+gci *.csproj -r | select-object fullname | %{ 
+	$in = Select-String -Path .\projects.txt -SimpleMatch $_.FullName; 
+	if ($in -eq $null) {
+		echo "Adding $_ to $sln"
+		dotnet sln $sln add $_.FullName
+	} 
+}
 

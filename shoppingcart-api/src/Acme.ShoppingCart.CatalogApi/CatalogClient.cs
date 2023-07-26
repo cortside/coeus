@@ -4,6 +4,7 @@ using Acme.ShoppingCart.CatalogApi.Models.Responses;
 using Acme.ShoppingCart.Exceptions;
 using Cortside.RestApiClient;
 using Cortside.RestApiClient.Authenticators.OpenIDConnect;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -15,12 +16,12 @@ namespace Acme.ShoppingCart.CatalogApi {
         private readonly RestApiClient client;
         private readonly ILogger<CatalogClient> logger;
 
-        public CatalogClient(CatalogClientConfiguration catalogClientConfiguration, ILogger<CatalogClient> logger) {
+        public CatalogClient(CatalogClientConfiguration catalogClientConfiguration, ILogger<CatalogClient> logger, IHttpContextAccessor context) {
             this.logger = logger;
             var options = new RestApiClientOptions {
                 BaseUrl = new Uri(catalogClientConfiguration.ServiceUrl),
                 FollowRedirects = true,
-                Authenticator = new OpenIDConnectAuthenticator(catalogClientConfiguration.Authentication),
+                Authenticator = new OpenIDConnectAuthenticator(context, catalogClientConfiguration.Authentication),
                 Serializer = new JsonNetSerializer(),
                 Cache = new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions()))
             };

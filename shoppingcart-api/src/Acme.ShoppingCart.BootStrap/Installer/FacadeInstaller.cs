@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Acme.ShoppingCart.BootStrap.Installer {
     public class FacadeInstaller : IInstaller {
-        public void Install(IServiceCollection services, IConfigurationRoot configuration) {
+        public void Install(IServiceCollection services, IConfiguration configuration) {
             typeof(OrderFacade).GetTypeInfo().Assembly.GetTypes()
                 .Where(x => (x.Name.EndsWith("Facade"))
                     && x.GetTypeInfo().IsClass

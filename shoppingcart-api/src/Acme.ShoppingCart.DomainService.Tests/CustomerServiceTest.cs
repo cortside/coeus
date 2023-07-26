@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.Data.Repositories;
 using Acme.ShoppingCart.Dto;
-using Cortside.DomainEvent;
+using Cortside.DomainEvent.EntityFramework;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Xunit;

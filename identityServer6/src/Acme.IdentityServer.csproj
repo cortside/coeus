@@ -3,18 +3,19 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>38ced442-cf32-4289-bb08-57d4a78831b3</UserSecretsId>
+    <NoWarn>VSTHRD200</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Duende.IdentityServer" Version="6.2.3" />
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.5.22">
+    <PackageReference Include="Duende.IdentityServer" Version="6.3.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.6.40">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.16" />
-    <PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.2.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.16" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.16">
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.20" />
+    <PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.3.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.20" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.20">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

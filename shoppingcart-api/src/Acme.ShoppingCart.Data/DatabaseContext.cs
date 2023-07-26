@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Acme.ShoppingCart.Domain.Entities;
 using Cortside.AspNetCore.Auditable;
 using Cortside.AspNetCore.Auditable.Entities;
@@ -20,6 +23,15 @@ namespace Acme.ShoppingCart.Data {
 
             SetDateTime(modelBuilder);
             SetCascadeDelete(modelBuilder);
+        }
+
+        /// <summary>
+        /// Hook to add additional logic before entities are actually saved.  Shown here for example, only override if there is actual need.
+        /// </summary>
+        /// <param name="updatingSubject"></param>
+        /// <returns></returns>
+        protected override Task OnBeforeSaveChangesAsync(Subject updatingSubject) {
+            return Console.Out.WriteLineAsync($"Change tracker has {ChangeTracker.Entries().Count()} entries");
         }
     }
 }

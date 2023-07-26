@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Acme.ShoppingCart.BootStrap.Installer {
     public class DomainServiceInstaller : IInstaller {
-        public void Install(IServiceCollection services, IConfigurationRoot configuration) {
+        public void Install(IServiceCollection services, IConfiguration configuration) {
             // register domain services
             typeof(OrderService).GetTypeInfo().Assembly.GetTypes()
                 .Where(x => (x.Name.EndsWith("Service"))

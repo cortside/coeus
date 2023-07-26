@@ -3,12 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Acme.ShoppingCart.Data.Migrations
-{
-    public partial class addcommentexamples : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace Acme.ShoppingCart.Data.Migrations {
+    public partial class addcommentexamples : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.AlterTable(
                 name: "OrderItem",
                 schema: "dbo",
@@ -125,8 +122,7 @@ namespace Acme.ShoppingCart.Data.Migrations
                 unique: true);
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropIndex(
                 name: "IX_Order_OrderResourceId",
                 schema: "dbo",

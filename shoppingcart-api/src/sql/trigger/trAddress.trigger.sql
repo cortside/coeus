@@ -1,4 +1,4 @@
-DROP TRIGGER IF EXISTS trAddress
+DROP TRIGGER IF EXISTS dbo.trAddress
 GO
 
 ---

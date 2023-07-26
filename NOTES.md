@@ -1,5 +1,17 @@
 TODO:
 
+* Add schema parameter to AddDomainEventOutbox()
+	* needed by ids
+* dotnet tool for sortprojectitems
+	* https://github.com/KirillOsenkov/CodeCleanupTools/tree/main/SortProjectItems
+	* https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools-how-to-create
+* update identityserver4 dependencies to .net6
+	* https://github.com/halloweenlv/IdentityServer4-net6
+	* https://github.com/IdentityServer/IdentityServer4
+	* https://github.com/IdentityServer/IdentityServer4.AccessTokenValidation
+	* https://github.com/IdentityServer/IdentityServer4.AccessTokenValidation/compare/main...3chum:IdentityServer4.AccessTokenValidation:main
+* execute sql in build
+	* run tests
 * add more logging to message receiver to help diagnose when queued messages are not being received and restarting service resolves issues/3700
 	* https://github.com/Azure/amqpnetlite/issues/366
 	* https://github.com/Azure/amqpnetlite/issues/237

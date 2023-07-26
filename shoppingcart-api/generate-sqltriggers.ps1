@@ -133,7 +133,7 @@ if ($config.database.triggers.excludeTables.length -gt 0) {
 }
 
 $triggerTemplate = @"
-DROP TRIGGER IF EXISTS {{triggerName}}
+DROP TRIGGER IF EXISTS {{schema}}.{{triggerName}}
 GO
 
 ---

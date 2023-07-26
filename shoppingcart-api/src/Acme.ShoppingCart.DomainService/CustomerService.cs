@@ -6,7 +6,7 @@ using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.Dto;
 using Cortside.AspNetCore.Common.Paging;
-using Cortside.DomainEvent;
+using Cortside.DomainEvent.EntityFramework;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
 

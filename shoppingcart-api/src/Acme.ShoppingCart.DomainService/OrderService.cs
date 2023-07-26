@@ -11,7 +11,7 @@ using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.Exceptions;
 using Cortside.AspNetCore.Common.Paging;
 using Cortside.Common.Validation;
-using Cortside.DomainEvent;
+using Cortside.DomainEvent.EntityFramework;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
 
@@ -102,6 +102,12 @@ namespace Acme.ShoppingCart.DomainService {
             var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = DateTime.UtcNow };
             await publisher.PublishAsync(@event).ConfigureAwait(false);
 
+            return entity;
+        }
+
+        public async Task<Order> SendNotificationAsync(Guid id) {
+            var entity = await orderRepository.GetAsync(id).ConfigureAwait(false);
+            entity.SendNotification();
             return entity;
         }
     }

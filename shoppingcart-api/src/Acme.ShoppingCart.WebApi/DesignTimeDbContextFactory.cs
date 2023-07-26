@@ -20,7 +20,7 @@ namespace Acme.ShoppingCart.WebApi {
         /// <param name="args"></param>
         /// <returns></returns>
         public DatabaseContext CreateDbContext(string[] args) {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
+            IConfiguration configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
