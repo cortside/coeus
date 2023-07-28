@@ -6,6 +6,8 @@ import { AppConfig } from 'src/environments/app-config';
 import { OrderRequest } from './models/requests/order.request';
 import { AuthorizationResponse } from './models/responses/authorization.response';
 import { OrderReponse } from './models/responses/order.response';
+import { ListResult } from 'src/app/common/list-result';
+import { CustomerResponse } from './models/responses/customer.response';
 
 @Injectable({
     providedIn: 'root',
@@ -17,6 +19,12 @@ export class ShoppingCartClient {
         return this.http.get<AuthorizationResponse>(`${this.config.shoppingCartApi?.url}/api/v1/authorization`, {
             context: new HttpContext().set(AUTHENTICATED_REQUEST, true),
         });
+    }
+
+    getCustomers() : Observable<ListResult<CustomerResponse>> {
+        return this.http.get<ListResult<CustomerResponse>>(`${this.config.shoppingCartApi?.url}/api/v1/customers`, { 
+            context: new HttpContext().set(AUTHENTICATED_REQUEST, true) 
+        });    
     }
 
     createOrders(order: OrderRequest): Observable<OrderReponse> {

@@ -19,3 +19,8 @@ BEGIN
 		VALUES ('Non-Profit','Non-Profit Customer',1,getutcdate(),'00000000-0000-0000-0000-000000000000',getutcdate(),'00000000-0000-0000-0000-000000000000')
 	END
 END
+
+IF COL_LENGTH('Customer','CustomerTypeId') IS NOT NULL
+BEGIN
+	UPDATE Customer set CustomerTypeId = (select top 1 CustomerTypeId from CustomerType) where CustomerTypeId is null
+END
