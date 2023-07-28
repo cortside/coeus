@@ -10,38 +10,30 @@ using Serilog;
 
 namespace IdentityServer;
 
-internal static class HostingExtensions
-{
-    private static void InitializeDatabase(IApplicationBuilder app)
-    {
-        using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-        {
+internal static class HostingExtensions {
+    private static void InitializeDatabase(IApplicationBuilder app) {
+        using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope()) {
+            serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.EnsureCreated();
             serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
 
             var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
             context.Database.Migrate();
-            if (!context.Clients.Any())
-            {
-                foreach (var client in Config.Clients)
-                {
+            if (!context.Clients.Any()) {
+                foreach (var client in Config.Clients) {
                     context.Clients.Add(client.ToEntity());
                 }
                 context.SaveChanges();
             }
 
-            if (!context.IdentityResources.Any())
-            {
-                foreach (var resource in Config.IdentityResources)
-                {
+            if (!context.IdentityResources.Any()) {
+                foreach (var resource in Config.IdentityResources) {
                     context.IdentityResources.Add(resource.ToEntity());
                 }
                 context.SaveChanges();
             }
 
-            if (!context.ApiScopes.Any())
-            {
-                foreach (var resource in Config.ApiScopes)
-                {
+            if (!context.ApiScopes.Any()) {
+                foreach (var resource in Config.ApiScopes) {
                     context.ApiScopes.Add(resource.ToEntity());
                 }
                 context.SaveChanges();
@@ -49,27 +41,23 @@ internal static class HostingExtensions
         }
     }
 
-    public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
-    {
+    public static WebApplication ConfigureServices(this WebApplicationBuilder builder) {
         var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
         const string connectionString = @"Data Source=IdentityServer.db";
 
         builder.Services.AddRazorPages();
-        
-        builder.Services.AddIdentityServer(options =>
-            {
-                options.Events.RaiseErrorEvents = true;
-                options.Events.RaiseInformationEvents = true;
-                options.Events.RaiseFailureEvents = true;
-                options.Events.RaiseSuccessEvents = true;
-            })
-            .AddConfigurationStore(options =>
-            {
+
+        builder.Services.AddIdentityServer(options => {
+            options.Events.RaiseErrorEvents = true;
+            options.Events.RaiseInformationEvents = true;
+            options.Events.RaiseFailureEvents = true;
+            options.Events.RaiseSuccessEvents = true;
+        })
+            .AddConfigurationStore(options => {
                 options.ConfigureDbContext = b => b.UseSqlite(connectionString,
                     sql => sql.MigrationsAssembly(migrationsAssembly));
             })
-            .AddOperationalStore(options =>
-            {
+            .AddOperationalStore(options => {
                 options.ConfigureDbContext = b => b.UseSqlite(connectionString,
                     sql => sql.MigrationsAssembly(migrationsAssembly));
             })
@@ -84,20 +72,17 @@ internal static class HostingExtensions
 
         builder.Services.AddSingleton<ICorsPolicyService>((container) => {
             var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
-            return new DefaultCorsPolicyService(logger)
-            {
+            return new DefaultCorsPolicyService(logger) {
                 AllowedOrigins = { "https://localhost:4200", "http://localhost:4200", "http://localhost:5001", "https://localhost:5001" }
             };
         });
-        
+
         return builder.Build();
     }
-    
-    public static WebApplication ConfigurePipeline(this WebApplication app)
-    { 
+
+    public static WebApplication ConfigurePipeline(this WebApplication app) {
         app.UseSerilogRequestLogging();
-        if (app.Environment.IsDevelopment())
-        {
+        if (app.Environment.IsDevelopment()) {
             app.UseDeveloperExceptionPage();
         }
 
@@ -105,7 +90,7 @@ internal static class HostingExtensions
 
         app.UseStaticFiles();
         app.UseRouting();
-            
+
         app.UseIdentityServer();
 
         app.UseAuthorization();
