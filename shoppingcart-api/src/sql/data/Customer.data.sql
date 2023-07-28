@@ -22,5 +22,5 @@ END
 
 IF COL_LENGTH('Customer','CustomerTypeId') IS NOT NULL
 BEGIN
-	UPDATE Customer set CustomerTypeId = (select top 1 CustomerTypeId from CustomerType) where CustomerTypeId is null
+	EXEC sp_executesql N'UPDATE Customer set CustomerTypeId = (select top 1 CustomerTypeId from CustomerType) where CustomerTypeId is null'	
 END
