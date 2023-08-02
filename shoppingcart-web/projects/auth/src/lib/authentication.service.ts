@@ -1,8 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { User, UserManager, UserManagerSettings } from 'oidc-client';
+import { User, UserManager } from 'oidc-client';
 import { BehaviorSubject, filter, map, Observable } from 'rxjs';
-import { USER_MANAGER_SETTINGS_TOKEN } from './user-manager-settings.token';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
