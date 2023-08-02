@@ -24,6 +24,7 @@ export class AuthenticationService {
 
     getUser(): Observable<User | null> {
         return this.userSubject.asObservable();
+        //return this.userManager.getUser()
     }
 
     isAuthenticated(): boolean {

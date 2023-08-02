@@ -14,5 +14,6 @@ export class AppConfig {
         redirect_uri: string;
         silent_redirect_uri: string;
         scope: string;
+        logLevel: number;
     }
 }

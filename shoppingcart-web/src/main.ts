@@ -1,6 +1,6 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { User, UserManager, UserManagerSettings } from 'oidc-client';
+import { Log, User, UserManager, UserManagerSettings } from 'oidc-client';
 import { forkJoin, from, map, Observable, take } from 'rxjs';
 
 import { AppModule } from './app/app.module';
@@ -12,6 +12,25 @@ const loadSettings = (urls: string[]): Observable<AppConfig> =>
         map((configs: AppConfig[]) => Object.assign({}, ...configs) as AppConfig)
     );
 
+const userManagerFactory = (config: AppConfig): UserManager => {
+    const c = config.identity!;
+    Log.level = config.identity!.logLevel;
+
+    return new UserManager({
+        authority: c.authority,
+        client_id: c.client_id,
+        redirect_uri: c.redirect_uri,
+        silent_redirect_uri: c.silent_redirect_uri,
+        post_logout_redirect_uri: '/', // TODO
+        response_type: 'id_token token',
+        scope: config.identity!.scope,
+        //automaticSilentRenew: config.identity!.automaticSilentRenew,
+        //filterProtocolClaims: config.identity!.filterProtocolClaims,
+        loadUserInfo: true,
+        monitorSession: true,
+    });
+};
+
 loadSettings(environment.configurations)
     .pipe(take(1))
     .subscribe({
@@ -20,33 +39,25 @@ loadSettings(environment.configurations)
                 enableProdMode();
             }
 
-            // authentication
-            let currentUser: User | null = null;
-            const identityDefaults = <UserManagerSettings>{
-                checkSessionInterval: 10000,
-                monitorSession: true,
-                automaticSilentRenew: true,
-                response_type: 'id_token token',
-                filterProtocolClaims: true,
-                loadUserInfo: true,                
-            };
-            const userManager = new UserManager(Object.assign({}, identityDefaults, appConfig.identity));
+            const userManager = userManagerFactory(appConfig);
+
             // intercept silent redirect and halt actual bootstrap
-            if (userManager.settings.silent_redirect_uri && window.location.href.indexOf(userManager.settings.silent_redirect_uri) > -1) {
-                return userManager.signinSilentCallback().then(() => {});
+            if (userManager.settings.silent_redirect_uri != null && window.location.href.indexOf(userManager.settings.silent_redirect_uri) > -1) {
+                return userManager.signinSilentCallback();
             }
-            //handle signin callback
-            if (userManager.settings.redirect_uri && window.location.href.indexOf(userManager.settings.redirect_uri) > -1) {
-                currentUser = await userManager.signinRedirectCallback();
-                window.history.replaceState({}, window.document.title, currentUser.state);
-            } /*else {
+
+            // handle signin callback
+            if (userManager.settings.redirect_uri != null && window.location.href.indexOf(userManager.settings.redirect_uri) > -1) {
+                const redirectedUser = await userManager.signinRedirectCallback();
+                window.history.replaceState({}, window.document.title, redirectedUser.state);
+            } else {
                 // validate user existence
-                const currentUser = await userManager.signinSilent().catch(() => null);
-                if (currentUser == null) {
-                    // TODO: move this logic, user can be authenticated
+                const user: User | null = await userManager.signinSilent().catch(() => null);
+
+                if (user == null) {
                     return userManager.signinRedirect({ state: window.location.href });
                 }
-            } */
+            }
 
             // bootstrap
             const extraProviders = [
@@ -56,7 +67,7 @@ loadSettings(environment.configurations)
 
             platformBrowserDynamic(extraProviders)
                 .bootstrapModule(AppModule)
-                .catch((e) => {
+                .catch((e: any) => {
                     document.body.innerHTML = e; // TODO
                 });
         },
