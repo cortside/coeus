@@ -2,6 +2,7 @@
  * Public API Surface of auth
  */
 
+export * from './lib/authentication-settings';
 export * from './lib/authentication.service';
 export * from './lib/authorization.service';
 export * from './lib/authentication-token.interceptor';

@@ -5,6 +5,7 @@ import { AuthorizationData } from './authorization-data';
 import { AuthorizationService } from './authorization.service';
 
 // TODO
+/*
 export const createAuthInitializationProvider = (getAuthorizationData: () => Promise<Map<string, AuthorizationData>>) =>
     <Provider>{
         provide: APP_INITIALIZER,
@@ -22,3 +23,5 @@ export const createAuthInitializationProvider = (getAuthorizationData: () => Pro
         deps: [AuthenticationService],
         multi: true,
     };
+*/
+

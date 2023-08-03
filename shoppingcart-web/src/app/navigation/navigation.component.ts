@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '@muziehdesign/auth';
+import { IdentityServerService } from '@muziehdesign/auth';
 import { User } from 'oidc-client';
 import { map, Observable } from 'rxjs';
-import { CartItemModel } from '../common/cart-item.model';
 import { ShoppingCartService } from '../core/shopping-cart.service';
 
 @Component({
@@ -10,16 +9,18 @@ import { ShoppingCartService } from '../core/shopping-cart.service';
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss'],
 })
-export class NavigationComponent {
+export class NavigationComponent implements OnInit {
     quantity$: Observable<number>;
-    user: User| undefined;
-    constructor(private service: ShoppingCartService, private auth: AuthenticationService) {
+    user: User | undefined;
+    constructor(private service: ShoppingCartService, private auth: IdentityServerService) {
         this.quantity$ = this.service.getCartItems().pipe(map((items) => items.map((i) => i.quantity).reduce((i, j) => i + j, 0)));
-        this.user = this.auth.user || undefined;
     }
 
-    signIn() : void {
-        this.auth.redirectToSignIn();
-        this.user = this.auth.user || undefined;
+    async ngOnInit() {
+        this.user = await this.auth.getUser();
+    }
+
+    async signIn() {
+        await this.auth.login();
     }
 }

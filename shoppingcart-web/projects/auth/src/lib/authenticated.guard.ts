@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, RouterStateSnapsho
 import { Observable } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 
+/*
 @Injectable({
     providedIn: 'root',
 })
@@ -24,4 +25,4 @@ export class AuthenticatedGuard implements CanLoad, CanActivate {
 
         return true;
     }
-}
+}*/
