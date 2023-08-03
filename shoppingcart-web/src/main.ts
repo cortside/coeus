@@ -1,7 +1,6 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { Log, User, UserManager, UserManagerSettings } from 'oidc-client';
-import { IdentityServerService } from '@muziehdesign/auth';
+import { AuthenticationService } from '@muziehdesign/auth';
 import { forkJoin, from, map, Observable, take } from 'rxjs';
 
 import { AppModule } from './app/app.module';
@@ -21,12 +20,12 @@ loadSettings(environment.configurations)
                 enableProdMode();
             }
 
-           const ids = new IdentityServerService(appConfig.identity!);
-           const user = await ids.bootstrap();
+           const auth = new AuthenticationService(appConfig.identity!);
+           const user = await auth.bootstrap();
 
             // bootstrap
             const extraProviders = [
-                { provide: IdentityServerService, useValue: ids },
+                { provide: AuthenticationService, useValue: auth },
                 { provide: AppConfig, useValue: Object.freeze(appConfig) },
             ];
 

@@ -47,6 +47,24 @@ export class AuthenticationService {
         return this.userManager.signinRedirect();
     }
 
+    async isAuthenticated(): Promise<boolean> {
+        return this.userManager.getUser().then((u) => {
+            if (u) {
+                return true;
+            }
+
+            return false;
+        });
+    }
+
+    async getAuthorization(): Promise<string> {
+        return this.userManager.getUser().then(u=>u?.access_token || '');
+    }
+
+    async getAuthorizationData(): Promise<string> {
+        return this.userManager.getUser().then((u) => `Bearer ${u?.access_token || ''}`);
+    }
+
     /*
     private userSubject = new BehaviorSubject<User | null>(null);
     public user: User | null = null;

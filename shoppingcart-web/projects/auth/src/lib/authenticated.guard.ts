@@ -6,7 +6,7 @@ import { AuthenticationService } from './authentication.service';
 export const canMatchIfAuthenticated: CanMatchFn = (route: Route, segments: UrlSegment[]) => {
     const auth = inject(AuthenticationService);
     if (!auth.isAuthenticated()) {
-        return auth.redirectToSignIn().then(() => false);
+        return auth.login().then(() => false);
     }
 
     return true;
