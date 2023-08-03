@@ -57,12 +57,10 @@ export class AuthenticationService {
         });
     }
 
-    async getAuthorization(): Promise<string> {
-        return this.userManager.getUser().then(u=>u?.access_token || '');
-    }
-
     async getAuthorizationData(): Promise<string> {
-        return this.userManager.getUser().then((u) => `Bearer ${u?.access_token || ''}`);
+        console.log('getting auth data');
+        return this.userManager.getUser().then(u=>u?.access_token || '');
+        //return this.userManager.getUser().then((u) => `Bearer ${u?.access_token || ''}`);
     }
 
     /*

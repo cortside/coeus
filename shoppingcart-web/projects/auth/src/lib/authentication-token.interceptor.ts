@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpContextToken } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { from, map, Observable, switchMap } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 
 export const AUTHENTICATED_REQUEST = new HttpContextToken<boolean>(() => false);
@@ -9,11 +9,17 @@ export const AUTHENTICATED_REQUEST = new HttpContextToken<boolean>(() => false);
 export class AuthenticationTokenInterceptor implements HttpInterceptor {
     constructor(private auththenticationService: AuthenticationService) {}
 
-    intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const c = request.context.get(AUTHENTICATED_REQUEST);
         if (request.context.get(AUTHENTICATED_REQUEST) === true) {
-            request= request.clone({ setHeaders: { Authorization: `${this.auththenticationService.getAuthorization()}` }});
-        }        
-         return next.handle(request);        
+            return from(this.auththenticationService.getAuthorizationData()).pipe(
+                switchMap((x) => {
+                    console.log(x);
+                    request = request.clone({ setHeaders: { Authorization: x } });
+                    return next.handle(request);
+                })
+            );
+        }
+        return next.handle(request);
     }
 }

@@ -10,10 +10,10 @@
     },
     "identity": {
         "authority": "https://localhost:5002",
-        "client_id": "shoppingcart-web",
+        "clientId": "shoppingcart-web",
         "scope": "openid profile shoppingcart-api",
-        "redirect_uri": "http://localhost:4200/login-redirect",
-        "silent_redirect_uri": "http://localhost:4200/silent-redirect",
+        "redirectUri": "http://localhost:4200/login-redirect",
+        "silentRedirectUri": "http://localhost:4200/silent-redirect",
         "postLogoutRedirectUri": "http://localhost:4200/logout",
         "accessTokenExpiringNotificationTime": 60,
         "loadUserInfo": false,
