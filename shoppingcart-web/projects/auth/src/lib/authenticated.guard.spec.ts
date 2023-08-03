@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AuthenticatedGuard } from './authenticated.guard';
+import { AuthenticatedGuard } from './authentication.guard';
 
 describe('AuthenticatedGuard', () => {
   let guard: AuthenticatedGuard;
