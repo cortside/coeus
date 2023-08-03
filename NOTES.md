@@ -1,5 +1,7 @@
 TODO:
 
+* EF concurrency example
+* ETag example
 * Add schema parameter to AddDomainEventOutbox()
 	* needed by ids
 * dotnet tool for sortprojectitems
