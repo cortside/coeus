@@ -1,5 +1,5 @@
 {
-    "application": {
+    "service": {
         "name": "shoppingcart-web"
     },
     "catalogApi": {

@@ -1,7 +1,7 @@
 import { AuthenticationSettings } from "@muziehdesign/auth";
 
 export class AppConfig {
-    application?: {
+    service?: {
         name: string;
     };
     catalogApi?: {
