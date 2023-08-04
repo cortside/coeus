@@ -17,6 +17,6 @@
         </ul>
     </nav>
 
-    <button (click)="signIn()">Sign in</button>
-    <pre>{{user | json}}</pre>
+    <button (click)="signIn()" *ngIf="!user">Sign in</button>
+    <pre>{{user?.name}}</pre>
 </header>

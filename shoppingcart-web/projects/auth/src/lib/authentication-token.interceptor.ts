@@ -14,7 +14,6 @@ export class AuthenticationTokenInterceptor implements HttpInterceptor {
         if (request.context.get(AUTHENTICATED_REQUEST) === true) {
             return from(this.auththenticationService.getAuthorizationData()).pipe(
                 switchMap((x) => {
-                    console.log(x);
                     request = request.clone({ setHeaders: { Authorization: x } });
                     return next.handle(request);
                 })

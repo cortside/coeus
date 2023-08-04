@@ -1,8 +1,11 @@
 import { User, UserManager, UserManagerSettings } from 'oidc-client';
+import { AuthenticatedUser } from './authenticated-user';
 import { AuthenticationSettings } from './authentication-settings';
 
 export class AuthenticationService {
+
     private readonly userManager: UserManager;
+
     constructor(protected settings: AuthenticationSettings) {
         this.userManager = new UserManager(<UserManagerSettings>{
             authority: settings.authority,
@@ -21,26 +24,26 @@ export class AuthenticationService {
         });
     }
 
-    async getUser(): Promise<User | undefined> {
-        return this.userManager.getUser().then((u) => u || undefined);
+    async getUser(): Promise<AuthenticatedUser | undefined> {
+        return this.userManager.getUser().then(this.mapToAuthenticatedUser);
     }
 
-    async bootstrap(): Promise<User | undefined> {
+    async bootstrap(): Promise<AuthenticatedUser | undefined> {
         // intercept silent redirect and halt actual bootstrap
         if (this.userManager.settings.silent_redirect_uri != null && window.location.href.indexOf(this.userManager.settings.silent_redirect_uri) > -1) {
-            return this.userManager.signinSilentCallback();
+            return this.userManager.signinSilentCallback().then(this.mapToAuthenticatedUser);
         }
 
         // handle signin callback
         if (this.userManager.settings.redirect_uri != null && window.location.href.indexOf(this.userManager.settings.redirect_uri) > -1) {
             const redirectedUser = await this.userManager.signinRedirectCallback();
             window.history.replaceState({}, window.document.title, redirectedUser.state);
-            return redirectedUser;
+            return this.mapToAuthenticatedUser(redirectedUser);
         }
 
         // validate user existence/renew token
         const user: User | undefined = await this.userManager.signinSilent().catch(() => undefined);
-        return Promise.resolve(user);
+        return Promise.resolve(this.mapToAuthenticatedUser(user));
     }
 
     async login(): Promise<void> {
@@ -58,11 +61,17 @@ export class AuthenticationService {
     }
 
     async getAuthorizationData(): Promise<string> {
-        console.log('getting auth data');
         return this.userManager.getUser().then(u=>u?.access_token || '');
-        //return this.userManager.getUser().then((u) => `Bearer ${u?.access_token || ''}`);
     }
 
+    private mapToAuthenticatedUser(u: User | undefined | null) {
+        console.log('mapping', u);
+        if(u) {
+            return new AuthenticatedUser(new Map<string, any>(Object.entries(u.profile)));
+        }
+
+        return undefined;
+    }
     /*
     private userSubject = new BehaviorSubject<User | null>(null);
     public user: User | null = null;
@@ -83,11 +92,6 @@ export class AuthenticationService {
     getUser(): Observable<User | null> {
         return this.userSubject.asObservable();
         //return this.userManager.getUser()
-    }
-
-    isAuthenticated(): boolean {
-        console.log('authenticated', this.user);
-        return this.user != null;
     }
 
     redirectToSignIn(): Promise<void> {
