@@ -20,8 +20,8 @@ loadSettings(environment.configurations)
                 enableProdMode();
             }
 
-           const auth = new AuthenticationService(appConfig.identity!);
-           const user = await auth.bootstrap();
+            const auth = new AuthenticationService(appConfig.identity!);
+            const user = await auth.completeSignIn();
 
             // bootstrap
             const extraProviders = [

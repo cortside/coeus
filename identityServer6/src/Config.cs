@@ -50,7 +50,7 @@ public static class Config {
                 AllowOfflineAccess = true,
                 ClientSecrets = { new Secret("secret".Sha256()) },
                 AllowAccessTokensViaBrowser = true,
-                RedirectUris = { "http://localhost:4200/login-redirect", "http://localhost:4200/signin-oidc" },
+                RedirectUris = { "http://localhost:4200/login-redirect", "http://localhost:4200/assets/signin-oidc.html" },
                 PostLogoutRedirectUris = { "http://localhost:4200/" },
                 FrontChannelLogoutUri = "http://localhost:4200/signout-oidc",
 

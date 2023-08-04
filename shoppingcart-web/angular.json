@@ -31,6 +31,11 @@
                 "glob": "config.*.json",
                 "input": "src/",
                 "output": "/"
+              },
+              {
+                "glob": "oidc-client.min.js",
+                "input": "node_modules/oidc-client/dist",
+                "output": "static/oidc-client"
               }
             ],
             "styles": [

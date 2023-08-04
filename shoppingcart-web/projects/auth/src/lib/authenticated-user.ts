@@ -1,7 +1,6 @@
 export class AuthenticatedUser {
     
     constructor(private profile: Map<string, any>) {
-        console.log('ctor user', profile);
     }
 
     get username() {
