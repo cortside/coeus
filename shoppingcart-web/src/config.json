@@ -11,12 +11,13 @@
     "identity": {
         "authority": "https://localhost:5002",
         "clientId": "shoppingcart-web",
-        "scope": "openid profile shoppingcart-api",
+        "responseType": "id_token token",
+        "scope": "openid profile shoppingcart-api catalog-api",
         "redirectUri": "http://localhost:4200/login-redirect",
-        "silentRedirectUri": "http://localhost:4200/silent-redirect",
-        "postLogoutRedirectUri": "http://localhost:4200/logout",
+        "silentRedirectUri": "http://localhost:4200/signin-oidc",
+        "postLogoutRedirectUri": "http://localhost:4200/signout-oidc",
         "accessTokenExpiringNotificationTime": 60,
-        "loadUserInfo": false,
+        "loadUserInfo": true,
         "automaticSilentRenew": true,
         "logLevel": 0    
     }

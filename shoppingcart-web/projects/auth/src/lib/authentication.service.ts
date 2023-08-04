@@ -22,6 +22,8 @@ export class AuthenticationService {
             loadUserInfo: true,
             monitorSession: true,
         });
+
+        console.log(settings);
     }
 
     async getUser(): Promise<AuthenticatedUser | undefined> {
