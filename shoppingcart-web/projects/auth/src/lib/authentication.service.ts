@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { User, UserManager, UserManagerSettings } from 'oidc-client';
 import { AuthenticatedUser } from './authenticated-user';
 import { AuthenticationSettings } from './authentication-settings';
@@ -40,17 +41,12 @@ export class AuthenticationService {
     }
 
     async login(): Promise<void> {
+        console.log('logging in');
         return this.userManager.signinRedirect();
     }
 
     async isAuthenticated(): Promise<boolean> {
-        return this.userManager.getUser().then((u) => {
-            if (u) {
-                return true;
-            }
-
-            return false;
-        });
+        return this.userManager.getUser().then((u) => u !== null && u !== undefined);
     }
 
     async getAuthorizationData(): Promise<string> {

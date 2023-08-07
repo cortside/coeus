@@ -3,11 +3,13 @@ import { CanMatchFn } from '@angular/router';
 import { Route, UrlSegment } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
 
-export const canMatchIfAuthenticated: CanMatchFn = (route: Route, segments: UrlSegment[]) => {
+export const requireAuthentication: CanMatchFn = async (route: Route, segments: UrlSegment[]): Promise<boolean> => {
     const auth = inject(AuthenticationService);
-    if (!auth.isAuthenticated()) {
-        return auth.login().then(() => false);
-    }
+    return auth.getUser().then((u) => {
+        if (u) {
+            return true;
+        }
 
-    return true;
+        return auth.login().then(() => false);
+    });
 };

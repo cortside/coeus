@@ -1,7 +1,7 @@
 <html>
     <script src="/static/oidc-client/oidc-client.min.js"></script>
     <script>
-        var mgr = new oidc.UserManager({ response_mode: 'query' });
+        var mgr = new Oidc.UserManager({ response_mode: 'query' });
         mgr.signinSilentCallback().catch((error) => {
             console.error(error);
         });
