@@ -48,6 +48,7 @@ public static class Config {
                 ClientName = "shoppingcart-web",
                 AllowedGrantTypes = GrantTypes.ImplicitAndClientCredentials,
                 AllowOfflineAccess = true,
+                AccessTokenType = AccessTokenType.Reference,
                 ClientSecrets = { new Secret("secret".Sha256()) },
                 AllowAccessTokensViaBrowser = true,
                 RedirectUris = { "http://localhost:4200/login-redirect", "http://localhost:4200/assets/signin-oidc.html" },
