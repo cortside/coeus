@@ -29,14 +29,18 @@ export class AuthenticationService {
     }
 
     async completeSignIn(): Promise<AuthenticatedUser | undefined> {
+        console.log(window.location.href);
         if (window.location.href.indexOf(this.settings.redirectUri) > -1) {
+            console.log('redirect uri handling');
             const redirectedUser = await this.userManager.signinRedirectCallback();
             window.history.replaceState({}, window.document.title, redirectedUser.state || '/');
             return Promise.resolve(this.mapToAuthenticatedUser(redirectedUser));
         }
 
+        await this.userManager.clearStaleState();
         // validate user existence/renew token
-        const user: User | undefined = await this.userManager.signinSilent().catch(() => undefined);
+        const user: User | null | undefined = await this.userManager.signinSilent().catch(() => undefined);
+        console.log(user);
         return Promise.resolve(this.mapToAuthenticatedUser(user));
     }
 
@@ -53,9 +57,9 @@ export class AuthenticationService {
         return this.userManager.getUser().then((u) => u?.access_token || '');
     }
 
-    private mapToAuthenticatedUser(u: User | undefined | null) {
-        if (u) {
-            return new AuthenticatedUser(new Map<string, any>(Object.entries(u.profile)));
+    private mapToAuthenticatedUser(user: User | undefined | null) {
+        if (user) {
+            return new AuthenticatedUser(new Map<string, any>(Object.entries(user.profile)));
         }
 
         return undefined;
