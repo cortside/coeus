@@ -14,7 +14,7 @@ namespace Acme.ShoppingCart.Facade.Tests {
             var customerService = new Mock<ICustomerService>();
             var facade = new CustomerFacade(uow.Object, customerService.Object, new Mappers.CustomerMapper(new Mappers.SubjectMapper()));
             var customerResourceId = Guid.NewGuid();
-            customerService.Setup(x => x.GetCustomerAsync(customerResourceId)).ReturnsAsync(new Domain.Entities.Customer("elmer", "fudd", "elmer.fudd@gmail.org"));
+            customerService.Setup(x => x.GetCustomerAsync(customerResourceId)).ReturnsAsync(new Domain.Entities.Customer("elmer", "fudd", "elmer.fudd@gmail.org", null));
 
             // act
             var customer = await facade.GetCustomerAsync(customerResourceId);

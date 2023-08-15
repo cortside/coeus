@@ -23,7 +23,7 @@ namespace Acme.ShoppingCart.DomainService {
         }
 
         public async Task<Customer> CreateCustomerAsync(CustomerDto dto) {
-            var entity = new Customer(dto.FirstName, dto.LastName, dto.Email);
+            var entity = new Customer(dto.FirstName, dto.LastName, dto.Email, null);
             using (LogContext.PushProperty("CustomerResourceId", entity.CustomerResourceId)) {
                 customerRepository.Add(entity);
                 logger.LogInformation("Created new customer");

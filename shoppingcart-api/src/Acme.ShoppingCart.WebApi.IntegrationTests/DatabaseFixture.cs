@@ -9,7 +9,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
             var subject = new Subject(Guid.Empty, string.Empty, string.Empty, string.Empty, "system");
             dbContext.Subjects.Add(subject);
 
-            var customer = new Customer("elmer", "fudd", "elmer.fudd@gmail.com");
+            var customer = new Customer("elmer", "fudd", "elmer.fudd@gmail.com", null);
             dbContext.Customers.Add(customer);
 
             // intentionally using this override to avoid the not implemented exception

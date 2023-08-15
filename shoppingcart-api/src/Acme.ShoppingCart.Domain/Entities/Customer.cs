@@ -5,12 +5,17 @@ using System.Text.RegularExpressions;
 using Cortside.AspNetCore.Auditable.Entities;
 using Cortside.Common.Messages;
 using Cortside.Common.Messages.MessageExceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Acme.ShoppingCart.Domain.Entities {
     [Table("Customer")]
     public class Customer : AuditableEntity {
-        public Customer(string firstName, string lastName, string email) {
-            Update(firstName, lastName, email);
+        protected Customer() {
+            // Required by EF as it doesn't know about CustomerTypes
+        }
+
+        public Customer(string firstName, string lastName, string email, CustomerType customerType) {
+            Update(firstName, lastName, email, customerType);
             CustomerResourceId = Guid.NewGuid();
         }
 
@@ -27,7 +32,11 @@ namespace Acme.ShoppingCart.Domain.Entities {
         [StringLength(250)]
         public string Email { get; private set; }
 
-        public void Update(string firstName, string lastName, string email) {
+        [Comment("FK to CustomerType")]
+        [ForeignKey("CustomersTypeId")]
+        public CustomerType CustomerType { get; private set; }
+
+        public void Update(string firstName, string lastName, string email, CustomerType customerType = null) {
             var messages = new MessageList();
             messages.Aggregate(() => string.IsNullOrWhiteSpace(firstName) || firstName.Length < 2, () => new InvalidValueError(nameof(firstName), firstName));
             messages.Aggregate(() => string.IsNullOrWhiteSpace(lastName) || lastName.Length < 2, () => new InvalidValueError(nameof(lastName), lastName));
@@ -38,6 +47,7 @@ namespace Acme.ShoppingCart.Domain.Entities {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
+            CustomerType = customerType;
         }
     }
 }
