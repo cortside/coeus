@@ -3,23 +3,41 @@
 **Getting Started**
 
 - Clone the git repo from <https://github.com/cortside/coeus.git> into a new folder in C:\Projects
+
+>> let's put the repo locally and have them clone from that, then they won't be able to pass along where the repo is publically for other applicants 
+
 - Switch your current branch to a branch named “interview”
 - From a command prompt or powershell prompt, navigate inside that directory and then one level deeper into the shoppingcart-web folder.  
 - Run npm install.  Allow this to continue to run in a window 
 - From another powershell window, navigate into the shoppingcart-api directory
-- Run the following command: .\update-database.ps1 -CreateDatabase $true -ConnectionString "<a name="ole_link1"></a>Data Source=[some server TBD];User id=sa;password=[some password];Initial Catalog=ShoppingCart"
+- Run the following command: .\update-database.ps1 -CreateDatabase $true -ConnectionString "Data Source=[some server TBD];User id=sa;password=[some password];Initial Catalog=ShoppingCart"
+
+>> i think this is good but the comment below about ensure database is created is out of place
 
 **Backend**
 
 - Open the coeus.sln local file that is in the base directory that just cloned.
 - Modify the connection string in the appsettings to “Data Source=[some server TBD];User id=sa;password=[some password];Initial Catalog=ShoppingCart”
 - Run the application and ensure the database is created.
+
+>> should have been with update-database.ps1 script above
+
 - In the Acme.ShoppingCart.Domain project, add a new domain entity with table name CustomerType.
   - Ensure this inherits from AuditableEntity.
   - `  `Following the format of the other tables, use reasonable data types and have a “CustomerTypeID” identity column, a “Name” column, a “Description” column, and a boolean column called “TaxExempt”.
   - Modify the Customer table to add a new field called CustomerTypeId to utilize this new entity and make sure any needed keys are set appropriately.  You can set this to a nullable field if desired.
+
+>> should probably make this an expectation, otherwise data will have to be updated, new value potentially scripted
+
+>> need to instruct what to do with constructor, which will have impact on tests and existing methods that create a customer
+
+>> handling of customerType in constructor, needing new protected constructor
+
   - Ensure appropriate areas are modified to be able to query this from the database context later.
   - Create a migration for these changes.
+
+>> do we want to test them on how to run dotnet ef or other method of creating and running the migration or give them instructions?
+
   - Apply the migration.
 - Create a new method in the existing customer controller and associated service to return all customer types and associated fields.
 - Write a test for the service method.
