@@ -7,8 +7,8 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[audit].[AuditLog]') AND type in (N'U'))
   BEGIN
 	CREATE TABLE [audit].[AuditLog](
-		[AuditLogId] [int] IDENTITY(1,1) NOT NULL,
-		[AuditLogTransactionId] [int] NOT NULL,
+		[AuditLogId] [bigint] IDENTITY(1,1) NOT NULL,
+		[AuditLogTransactionId] [bigint] NOT NULL,
 		[PrimaryKey] [nvarchar](1500) NOT NULL,
 		[ColumnName] [nvarchar](128) NOT NULL,
 		[OldValue] [nvarchar](max) NULL,
