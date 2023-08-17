@@ -47,6 +47,12 @@
 
 - Run the update-database method again from above to ensure Customer and CustomerType records exist in in your database.
 
+- Run shoppingcart-api -- postman
+
+- create new branch
+- commit source
+
+
 **Frontend**
 
 - In the base directory for the cloned project, run start-all.ps1 to run all the projects.  You should be able to make the rest of your changes while the app is running and see it automatically refresh as changes are made.
