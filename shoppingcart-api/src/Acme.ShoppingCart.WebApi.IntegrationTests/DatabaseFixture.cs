@@ -12,6 +12,9 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
             var customer = new Customer("elmer", "fudd", "elmer.fudd@gmail.com", null);
             dbContext.Customers.Add(customer);
 
+            var customerType = new CustomerType("employee", "employee type", false);
+            dbContext.CustomerTypes.Add(customerType);
+
             // intentionally using this override to avoid the not implemented exception
             dbContext.SaveChanges(true);
         }

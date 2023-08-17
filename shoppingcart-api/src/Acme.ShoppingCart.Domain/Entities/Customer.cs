@@ -33,14 +33,14 @@ namespace Acme.ShoppingCart.Domain.Entities {
         public string Email { get; private set; }
 
         [Comment("FK to CustomerType")]
-        [ForeignKey("CustomersTypeId")]
+        [ForeignKey("CustomerTypeId")]
         public CustomerType CustomerType { get; private set; }
 
         public void Update(string firstName, string lastName, string email, CustomerType customerType = null) {
             var messages = new MessageList();
             messages.Aggregate(() => string.IsNullOrWhiteSpace(firstName) || firstName.Length < 2, () => new InvalidValueError(nameof(firstName), firstName));
             messages.Aggregate(() => string.IsNullOrWhiteSpace(lastName) || lastName.Length < 2, () => new InvalidValueError(nameof(lastName), lastName));
-            string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
+            const string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
             messages.Aggregate(() => string.IsNullOrWhiteSpace(email) || !Regex.IsMatch(email, regex, RegexOptions.IgnoreCase), () => new InvalidValueError(nameof(email), email));
             messages.ThrowIfAny<ValidationListException>();
 

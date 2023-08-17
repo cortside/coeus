@@ -1,8 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Cortside.AspNetCore.Auditable.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Acme.ShoppingCart.Domain.Entities {
+    [Table("CustomerType")]
+    [Comment("Customer types")]
     public class CustomerType : AuditableEntity {
         protected CustomerType() { }
 

@@ -139,6 +139,25 @@ CREATE TRIGGER trCustomer
 			set @inserted = @inserted + @@ROWCOUNT
 		END
 
+	-- [CustomerTypeId]
+	IF UPDATE([CustomerTypeId]) OR @action in ('INSERT', 'DELETE')      
+		BEGIN       
+			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
+			SELECT
+				@AuditLogTransactionId,
+				convert(nvarchar(1500), IsNull('[[CustomerId]]='+CONVERT(nvarchar(4000), IsNull(OLD.[CustomerId], NEW.[CustomerId]), 0), '[[CustomerId]] Is Null')),
+				'[CustomerTypeId]',
+				CONVERT(nvarchar(4000), OLD.[CustomerTypeId], 126),
+				CONVERT(nvarchar(4000), NEW.[CustomerTypeId], 126),
+				convert(nvarchar(4000), COALESCE(OLD.[CustomerId], NEW.[CustomerId], null))
+			FROM deleted OLD 
+			LEFT JOIN inserted NEW On (NEW.[CustomerId] = OLD.[CustomerId] or (NEW.[CustomerId] Is Null and OLD.[CustomerId] Is Null))
+			WHERE ((NEW.[CustomerTypeId] <> OLD.[CustomerTypeId]) 
+					Or (NEW.[CustomerTypeId] Is Null And OLD.[CustomerTypeId] Is Not Null)
+					Or (NEW.[CustomerTypeId] Is Not Null And OLD.[CustomerTypeId] Is Null))
+			set @inserted = @inserted + @@ROWCOUNT
+		END
+
 	-- [CreatedDate]
 	IF UPDATE([CreatedDate]) OR @action in ('INSERT', 'DELETE')      
 		BEGIN       

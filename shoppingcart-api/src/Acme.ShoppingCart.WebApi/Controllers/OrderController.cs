@@ -138,12 +138,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                     Items = input.Items?.ConvertAll(x => new OrderItemDto() { Sku = x.Sku, Quantity = x.Quantity })
                 };
 
-                OrderDto result;
-                try {
-                    result = await facade.UpdateOrderAsync(dto).ConfigureAwait(false);
-                } catch (Exception ex) {
-                    throw ex;
-                }
+                var result = await facade.UpdateOrderAsync(dto).ConfigureAwait(false);
                 return Ok(orderMapper.Map(result));
             }
         }

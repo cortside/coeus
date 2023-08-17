@@ -17,7 +17,7 @@
 **Backend**
 
 - Open the coeus.sln local file that is in the base directory that just cloned.
-- Modify the connection string in the appsettings to “Data Source=[some server TBD];User id=sa;password=[some password];Initial Catalog=ShoppingCart”
+- Modify the connection string in the appsettings.json to “Data Source=[some server TBD];User id=sa;password=[some password];Initial Catalog=ShoppingCart”
 - Run the application and ensure the database is created.
 
 >> should have been with update-database.ps1 script above
@@ -39,8 +39,12 @@
 >> do we want to test them on how to run dotnet ef or other method of creating and running the migration or give them instructions?
 
   - Apply the migration.
-- Create a new method in the existing customer controller and associated service to return all customer types and associated fields.
+- Create a new method in the existing customer controller and associated layers to return all customer types with the following properties: CustomerTypeId, Name, Description, TaxExempt.
+    - GET /api/v1/customertypes
 - Write a test for the service method.
+
+>> this says service method, which i took as domain service -- but should probably ask for integration test as well
+
 - Run the update-database method again from above to ensure Customer and CustomerType records exist in in your database.
 
 **Frontend**
