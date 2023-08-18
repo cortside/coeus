@@ -5,7 +5,6 @@ using Acme.ShoppingCart.WebApi.Mappers;
 using Acme.ShoppingCart.WebApi.Models.Responses;
 using Cortside.AspNetCore.Common.Models;
 using Cortside.AspNetCore.Common.Paging;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,8 +33,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// Gets customers
         /// </summary>
         [HttpGet("")]
-        [Authorize(Constants.Authorization.Permissions.GetCustomers)]
-        [ProducesResponseType(typeof(PagedList<CustomerModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PagedList<CustomerTypeModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCustomerTypesAsync() {
             var results = await facade.GetCustomerTypesAsync().ConfigureAwait(false);
             var models = results.Results.Select(x => customerMapper.Map(x)).OrderBy(x => x.CustomerTypeId).ToList();
