@@ -37,6 +37,7 @@ namespace Acme.ShoppingCart.Data.Repositories {
 
         public Task<Customer> GetAsync(Guid id) {
             return context.Customers
+                .Include(x => x.CustomerType)
                 .Include(x => x.CreatedSubject)
                 .Include(x => x.LastModifiedSubject)
                 .FirstOrDefaultAsync(o => o.CustomerResourceId == id);

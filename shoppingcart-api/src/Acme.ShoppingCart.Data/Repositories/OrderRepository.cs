@@ -20,6 +20,11 @@ namespace Acme.ShoppingCart.Data.Repositories {
             var orders = (IQueryable<Order>)context.Orders
                 .Include(x => x.Address)
                 .Include(x => x.Customer)
+                    .ThenInclude(x => x.CustomerType)
+                .Include(x => x.Customer)
+                    .ThenInclude(x => x.LastModifiedSubject)
+                .Include(x => x.Customer)
+                    .ThenInclude(x => x.CreatedSubject)
                 .Include(x => x.CreatedSubject)
                 .Include(x => x.LastModifiedSubject)
                 .Include(x => x.Items)
