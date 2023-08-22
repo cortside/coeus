@@ -1,5 +1,9 @@
 TODO:
 
+* RandomValues class from comms
+* capture of console/log from comms-api
+* EF concurrency example
+* ETag example
 * Add schema parameter to AddDomainEventOutbox()
 	* needed by ids
 * dotnet tool for sortprojectitems

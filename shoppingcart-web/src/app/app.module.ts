@@ -8,7 +8,6 @@ import { initializeApplication } from './app-initializer';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { ItemModule } from './item/item.module';
 import { NavigationComponent } from './navigation/navigation.component';
 
 
@@ -18,8 +17,6 @@ import { NavigationComponent } from './navigation/navigation.component';
         BrowserModule,
         HttpClientModule,
         CoreModule,
-
-        ItemModule,
 
         // route
         AppRoutingModule,
