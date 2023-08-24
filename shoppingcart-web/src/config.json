@@ -14,7 +14,7 @@
         "responseType": "id_token token",
         "scope": "openid profile shoppingcart-api catalog-api",
         "redirectUri": "http://localhost:4200/login-redirect",
-        "silentRedirectUri": "http://localhost:4200/static/silent-redirect",
+        "silentRedirectUri": "http://localhost:4200/silent-redirect",
         "postLogoutRedirectUri": "http://localhost:4200/logout",
         "accessTokenExpiringNotificationTime": 60,
         "loadUserInfo": true,

@@ -7,6 +7,7 @@ export class AuthenticationService {
     private readonly userManager: UserManager;
 
     constructor(protected settings: AuthenticationSettings) {
+        Log.logger = console;
         Log.level = Log.DEBUG;
         this.userManager = new UserManager(<UserManagerSettings>{
             authority: settings.authority,
