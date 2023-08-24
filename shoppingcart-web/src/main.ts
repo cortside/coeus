@@ -21,6 +21,9 @@ loadSettings(environment.configurations)
             }
 
             const auth = new AuthenticationService(appConfig.identity!);
+            if (await auth.interceptSilentRedirect()) {
+                return;
+            }
             const user = await auth.completeSignIn();
 
             // bootstrap

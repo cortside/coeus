@@ -73,7 +73,9 @@ public class Index : PageModel
 
             // remove persisted grants from store
             var logoutContext = await _interaction.GetLogoutContextAsync(LogoutId);
-            await Task.WhenAll(logoutContext.ClientIds?.Select(c => _persistedGrantService.RemoveAllGrantsAsync(User.GetSubjectId(), clientId: c)).ToArray());
+            if(logoutContext.ClientIds?.Any() == true) {
+                await Task.WhenAll(logoutContext.ClientIds?.Select(c => _persistedGrantService.RemoveAllGrantsAsync(User.GetSubjectId(), clientId: c)).ToArray());
+            }
 
             // raise the logout event
             await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));

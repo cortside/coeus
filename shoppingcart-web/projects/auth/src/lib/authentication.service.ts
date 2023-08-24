@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User, UserManager, UserManagerSettings } from 'oidc-client';
+import { Log, User, UserManager, UserManagerSettings } from 'oidc-client';
 import { AuthenticatedUser } from './authenticated-user';
 import { AuthenticationSettings } from './authentication-settings';
 
@@ -7,6 +7,7 @@ export class AuthenticationService {
     private readonly userManager: UserManager;
 
     constructor(protected settings: AuthenticationSettings) {
+        Log.level = Log.DEBUG;
         this.userManager = new UserManager(<UserManagerSettings>{
             authority: settings.authority,
             client_id: settings.clientId,
@@ -22,14 +23,28 @@ export class AuthenticationService {
             loadUserInfo: true,
             monitorSession: true,
         });
+        this.userManager.events.addUserUnloaded(()=>{
+            console.log('user unloaded');
+        });
     }
 
     async getUser(): Promise<AuthenticatedUser | undefined> {
         return this.userManager.getUser().then(this.mapToAuthenticatedUser);
     }
 
+    async interceptSilentRedirect() : Promise<boolean> {
+        // intercept silent redirect and halt actual bootstrap
+        if(window.location.href.indexOf(this.settings.silentRedirectUri) > -1) {
+            await this.userManager.signinSilentCallback();
+            return true;
+        }
+
+        return false;
+    }
+
     async completeSignIn(): Promise<AuthenticatedUser | undefined> {
         console.log(window.location.href);
+        // handle signin callback
         if (window.location.href.indexOf(this.settings.redirectUri) > -1) {
             console.log('redirect uri handling');
             const redirectedUser = await this.userManager.signinRedirectCallback();
@@ -37,7 +52,7 @@ export class AuthenticationService {
             return Promise.resolve(this.mapToAuthenticatedUser(redirectedUser));
         }
 
-        await this.userManager.clearStaleState();
+        //await this.userManager.clearStaleState();
         // validate user existence/renew token
         const user: User | null | undefined = await this.userManager.signinSilent().catch(() => undefined);
         console.log(user);

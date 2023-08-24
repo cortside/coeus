@@ -52,9 +52,9 @@ public static class Config {
                 AccessTokenLifetime = 3600,
                 ClientSecrets = { new Secret("secret".Sha256()) },
                 AllowAccessTokensViaBrowser = true,
-                RedirectUris = { "http://localhost:4200/login-redirect", "http://localhost:4200/static/signin-oidc.html" },
+                RedirectUris = { "http://localhost:4200/login-redirect", "http://localhost:4200/static/signin-oidc" },
                 PostLogoutRedirectUris = { "http://localhost:4200/" },
-                FrontChannelLogoutUri = "http://localhost:4200/signout-oidc",
+                //FrontChannelLogoutUri = "http://localhost:4200/signout-oidc",
 
                 AllowedScopes = {
                     IdentityServerConstants.StandardScopes.OpenId,
