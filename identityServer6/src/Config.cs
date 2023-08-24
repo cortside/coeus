@@ -53,7 +53,7 @@ public static class Config {
                 ClientSecrets = { new Secret("secret".Sha256()) },
                 AllowAccessTokensViaBrowser = true,
                 RedirectUris = { "http://localhost:4200/login-redirect", "http://localhost:4200/static/signin-oidc" },
-                PostLogoutRedirectUris = { "http://localhost:4200/" },
+                PostLogoutRedirectUris = { "http://localhost:4200/logout" },
                 //FrontChannelLogoutUri = "http://localhost:4200/signout-oidc",
 
                 AllowedScopes = {

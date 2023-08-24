@@ -52,7 +52,6 @@ export class AuthenticationService {
             return Promise.resolve(this.mapToAuthenticatedUser(redirectedUser));
         }
 
-        //await this.userManager.clearStaleState();
         // validate user existence/renew token
         const user: User | null | undefined = await this.userManager.signinSilent().catch(() => undefined);
         console.log(user);
