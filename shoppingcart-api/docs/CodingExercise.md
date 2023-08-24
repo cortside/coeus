@@ -21,10 +21,11 @@
   - Modify the Customer table to add a new field called CustomerTypeId to utilize this new entity and make sure any needed keys are set appropriately.  Make this a nullable field.
   - Ensure appropriate areas are modified to be able to query this from the database context later.
   - Create and apply the migration for these changes by running the add-migration.ps1 script inside the shoppingcart-api with a name for your migration - .\add-migration.ps1 $((Get-Date -Format "yyyyMMddHHmm") + "_AddCustomerType")
-- Uncomment the code in the shoppingcart-api/src/Acme.ShoppingCart.Facade folder for files CustomerTypeFacade.cs and ICustomerTypeFacade.cs.  Also ucomment the code in CustomerTypeMapper.cs one level deeper in the Mappers folder
+- Uncomment the code in the shoppingcart-api/src/Acme.ShoppingCart.Facade folder for files CustomerTypeFacade.cs and ICustomerTypeFacade.cs.  Also ucomment the code in CustomerTypeMapper.cs one level deeper in the Mappers folder.
+- Uncomment the code in the Acme.ShoppingCart.WebApi/Mappers/CustomerTypeModelMapper.cs file
+- Create a new CustomerTypeModel.cs file in the Acme.ShoppingCart.WebApi/Responses folder with appropriate fields.
 - Create a new controller for CustomerType and create an associated service to return all customer types.
-- Write a test for the service method.
-- Run the update-database method again from above to ensure Customer and CustomerType records exist in in your database.
+- Write a test for the service method.  Ensure all tests pass.
 - Run the shoppingcart-api project and ensure it launches to a swagger page
 - Use swagger to validate that you can retrieve a list of CustomerTypes
 
