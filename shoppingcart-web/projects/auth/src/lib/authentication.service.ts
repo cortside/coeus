@@ -22,15 +22,17 @@ export class AuthenticationService {
             accessTokenExpiringNotificationTime: settings.accessTokenExpiringNotificationTime,
             filterProtocolClaims: settings.filterProtocolClaims,
             loadUserInfo: true,
-            monitorSession: true,
+            monitorSession: true
         });
-        this.userManager.events.addUserUnloaded(()=>{
-            console.log('user unloaded');
+        this.userManager.events.addUserSignedOut(async ()=>{
+            await this.userManager.signoutRedirect();
         });
     }
 
     async getUser(): Promise<AuthenticatedUser | undefined> {
-        return this.userManager.getUser().then(this.mapToAuthenticatedUser);
+        return this.userManager.getUser().then(x=>{
+            return this.mapToAuthenticatedUser(x);
+        });
     }
 
     async interceptSilentRedirect() : Promise<boolean> {
@@ -50,12 +52,13 @@ export class AuthenticationService {
             console.log('redirect uri handling');
             const redirectedUser = await this.userManager.signinRedirectCallback();
             window.history.replaceState({}, window.document.title, redirectedUser.state || '/');
-            return Promise.resolve(this.mapToAuthenticatedUser(redirectedUser));
+            //return Promise.resolve(this.mapToAuthenticatedUser(redirectedUser));
         }
 
         // validate user existence/renew token
         const user: User | null | undefined = await this.userManager.signinSilent().catch(() => undefined);
         console.log(user);
+        console.log('user expired', user?.expired);
         return Promise.resolve(this.mapToAuthenticatedUser(user));
     }
 
