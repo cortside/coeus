@@ -45,3 +45,9 @@ This project follows [Muzieh Design System](https://ruifang.github.io/designsyst
 
 ## Tasks
 - module import cleanup
+
+## Notes
+
+### authentication
+- When testing in private mode, allow third-party cookies to avoid authentication errors
+- Need to create signin-oidc.html and add output to angular.json

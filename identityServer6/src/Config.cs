@@ -47,12 +47,14 @@ public static class Config {
                 ClientId = "shoppingcart-web",
                 ClientName = "shoppingcart-web",
                 AllowedGrantTypes = GrantTypes.ImplicitAndClientCredentials,
-                AllowOfflineAccess = true,
+                AllowOfflineAccess = false,
+                AccessTokenType = AccessTokenType.Reference,
+                AccessTokenLifetime = 3600,
                 ClientSecrets = { new Secret("secret".Sha256()) },
                 AllowAccessTokensViaBrowser = true,
-                RedirectUris = { "http://localhost:4200/login-redirect", "http://localhost:4200/signin-oidc" },
-                PostLogoutRedirectUris = { "http://localhost:4200/" },
-                FrontChannelLogoutUri = "http://localhost:4200/signout-oidc",
+                RedirectUris = { "http://localhost:4200/login-redirect", "http://localhost:4200/silent-redirect" },
+                PostLogoutRedirectUris = { "http://localhost:4200/logout" },
+                FrontChannelLogoutUri = "http://localhost:4200/logout",
 
                 AllowedScopes = {
                     IdentityServerConstants.StandardScopes.OpenId,

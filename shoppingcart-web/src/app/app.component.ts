@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from '@muziehdesign/auth';
 import { User } from 'oidc-client';
 import { AppConfig } from 'src/environments/app-config';
 
@@ -11,8 +10,7 @@ import { AppConfig } from 'src/environments/app-config';
 export class AppComponent {
   title = 'shoppingcart-web';
     user: User | null = null;
-  constructor(private config: AppConfig, private authenticationService: AuthenticationService) {
+  constructor(private config: AppConfig) {
     console.log(config);
-    this.user = authenticationService.user;
   }
 }
