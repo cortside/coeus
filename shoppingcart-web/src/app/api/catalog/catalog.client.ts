@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { forkJoin, map, Observable } from 'rxjs';
 import { ItemResponse } from './models/responses/item.response';
 import { AppConfig } from 'src/environments/app-config';
 import { PagedResponse } from '../paged.response';
+import { AUTHENTICATED_REQUEST } from '@muziehdesign/auth';
 
 @Injectable({
     providedIn: 'root',
@@ -47,10 +48,10 @@ export class CatalogClient {
 
     getItem(sku: string): Observable<ItemResponse> {
         const item = this.items.find((i) => i.sku == sku);
-        return this.http.get<ItemResponse>(`${this.config.catalogApi?.url}/api/v1/items/${sku}`).pipe(map((x) => Object.assign({}, x, item)));
+        return this.http.get<ItemResponse>(`${this.config.catalogApi?.url}/api/v1/items/${sku}`, { context: new HttpContext().set(AUTHENTICATED_REQUEST, true) }).pipe(map((x) => Object.assign({}, x, item)));
     }
 
     getItems(): Observable<PagedResponse<ItemResponse>> {
-        return this.http.get<PagedResponse<ItemResponse>>(`${this.config.catalogApi?.url}/api/v1/items`);
+        return this.http.get<PagedResponse<ItemResponse>>(`${this.config.catalogApi?.url}/api/v1/items`, { context: new HttpContext().set(AUTHENTICATED_REQUEST, true) });
     }
 }

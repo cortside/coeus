@@ -1,6 +1,6 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { User, UserManager, UserManagerSettings } from 'oidc-client';
+import { AuthenticationService } from '@muziehdesign/auth';
 import { forkJoin, from, map, Observable, take } from 'rxjs';
 
 import { AppModule } from './app/app.module';
@@ -20,43 +20,21 @@ loadSettings(environment.configurations)
                 enableProdMode();
             }
 
-            // authentication
-            let currentUser: User | null = null;
-            const identityDefaults = <UserManagerSettings>{
-                checkSessionInterval: 10000,
-                monitorSession: true,
-                automaticSilentRenew: true,
-                response_type: 'id_token token',
-                filterProtocolClaims: true,
-                loadUserInfo: true,                
-            };
-            const userManager = new UserManager(Object.assign({}, identityDefaults, appConfig.identity));
-            // intercept silent redirect and halt actual bootstrap
-            if (userManager.settings.silent_redirect_uri && window.location.href.indexOf(userManager.settings.silent_redirect_uri) > -1) {
-                return userManager.signinSilentCallback().then(() => {});
+            const auth = new AuthenticationService(appConfig.identity!);
+            if (await auth.interceptSilentRedirect()) {
+                return;
             }
-            //handle signin callback
-            if (userManager.settings.redirect_uri && window.location.href.indexOf(userManager.settings.redirect_uri) > -1) {
-                currentUser = await userManager.signinRedirectCallback();
-                window.history.replaceState({}, window.document.title, currentUser.state);
-            } /*else {
-                // validate user existence
-                const currentUser = await userManager.signinSilent().catch(() => null);
-                if (currentUser == null) {
-                    // TODO: move this logic, user can be authenticated
-                    return userManager.signinRedirect({ state: window.location.href });
-                }
-            } */
+            const user = await auth.completeSignIn();
 
             // bootstrap
             const extraProviders = [
-                { provide: UserManager, useValue: userManager },
+                { provide: AuthenticationService, useValue: auth },
                 { provide: AppConfig, useValue: Object.freeze(appConfig) },
             ];
 
             platformBrowserDynamic(extraProviders)
                 .bootstrapModule(AppModule)
-                .catch((e) => {
+                .catch((e: any) => {
                     document.body.innerHTML = e; // TODO
                 });
         },

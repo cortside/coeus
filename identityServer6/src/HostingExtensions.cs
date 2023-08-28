@@ -65,7 +65,6 @@ internal static class HostingExtensions {
 
         builder.Services.AddAuthentication();
 
-
         builder.Services.AddSingleton<ICorsPolicyService>((container) => {
             var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
             return new DefaultCorsPolicyService(logger) {

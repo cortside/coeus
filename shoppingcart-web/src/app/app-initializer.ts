@@ -8,7 +8,7 @@ export const initializeApplication = (
     authorizationService: AuthorizationService
 ): (() => Promise<void>) => {
     return (): Promise<void> => {
-        authenticationService.onUserSignedOut().pipe(tap((x) => authorizationService.reset()));
+        /*authenticationService.onUserSignedOut().pipe(tap((x) => authorizationService.reset()));
         authenticationService.onUserSignedIn().pipe(    
             delay(1000),  //this is to prevent the authorization api call from firing before authentication user is done being set      
             switchMap((x) => client.getAuthorization()),
@@ -18,6 +18,7 @@ export const initializeApplication = (
             })
         ).subscribe();
 
-        return authenticationService.initialize();
+        return authenticationService.initialize();*/
+        return Promise.resolve();
     };
 };

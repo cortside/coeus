@@ -7,6 +7,7 @@ import { customerLazyLoadingRoutes } from './customer/customer-routing.module';
 
 const routes: Routes = [
     { path: '', redirectTo: '/catalog/items', pathMatch: 'full' },
+    { path: 'logout', redirectTo: '/', pathMatch: 'full' },
     ...orderLazyLoadingRoutes,
     ...checkoutLazyLoadingRoutes,
     ...catalogLazyRoutes,
