@@ -1,8 +1,5 @@
-using System.Collections;
-using Duende.IdentityServer;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Mappers;
-using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using IdentityServerHost;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +10,6 @@ namespace IdentityServer;
 internal static class HostingExtensions {
     private static void InitializeDatabase(IApplicationBuilder app) {
         using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope()) {
-            serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.EnsureCreated();
             serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
 
             var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
