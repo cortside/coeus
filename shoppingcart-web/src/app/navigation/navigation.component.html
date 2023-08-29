@@ -16,4 +16,7 @@
             </li>
         </ul>
     </nav>
+
+    <button (click)="signIn()" *ngIf="!user">Sign in</button>
+    <pre>{{user?.name}}</pre>
 </header>

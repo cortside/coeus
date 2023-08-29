@@ -1,6 +1,6 @@
 import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AUTHENTICATED_REQUEST } from '@muziehdesign/auth';
+import { AUTHENTICATED_REQUEST } from '@muziehdesign/core';
 import { Observable } from 'rxjs';
 import { AppConfig } from 'src/environments/app-config';
 import { OrderRequest } from './models/requests/order.request';

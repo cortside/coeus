@@ -6,6 +6,7 @@ import { orderLazyLoadingRoutes } from './order';
 
 const routes: Routes = [
     { path: '', redirectTo: '/catalog/items', pathMatch: 'full' },
+    { path: 'logout', redirectTo: '/', pathMatch: 'full' },
     ...orderLazyLoadingRoutes,
     ...checkoutLazyLoadingRoutes,
     ...catalogLazyRoutes,

@@ -1,8 +1,5 @@
-using System.Collections;
-using Duende.IdentityServer;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Mappers;
-using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using IdentityServerHost;
 using Microsoft.EntityFrameworkCore;
@@ -80,7 +77,6 @@ internal static class HostingExtensions
             .AddTestUsers(TestUsers.Users);
 
         builder.Services.AddAuthentication();
-
 
         builder.Services.AddSingleton<ICorsPolicyService>((container) => {
             var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
