@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { requireAuthentication } from '@muziehdesign/auth';
+import { requireAuthentication } from '@muziehdesign/core';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { OrderListComponent } from './order-list/order-list.component';
 

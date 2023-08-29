@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Log, User, UserManager, UserManagerSettings } from 'oidc-client';
 import { AuthenticatedUser } from './authenticated-user';
 import { AuthenticationSettings } from './authentication-settings';
@@ -7,8 +6,15 @@ export class AuthenticationService {
     private readonly userManager: UserManager;
 
     constructor(protected settings: AuthenticationSettings) {
-        Log.logger = console;
-        Log.level = Log.DEBUG;
+        Log.logger = console; // TODO
+        const map = new Map<string, number>();
+        map.set('debug', Log.DEBUG);
+        map.set('error', Log.ERROR);
+        map.set('none', Log.NONE);
+        map.set('warn', Log.WARN);
+        map.set('info', Log.INFO);
+        Log.level = map.get(settings.logLevel) || Log.NONE;
+
         this.userManager = new UserManager(<UserManagerSettings>{
             authority: settings.authority,
             client_id: settings.clientId,
@@ -57,13 +63,10 @@ export class AuthenticationService {
 
         // validate user existence/renew token
         const user: User | null | undefined = await this.userManager.signinSilent().catch(() => undefined);
-        console.log(user);
-        console.log('user expired', user?.expired);
         return Promise.resolve(this.mapToAuthenticatedUser(user));
     }
 
     async login(): Promise<void> {
-        console.log('logging in');
         return this.userManager.signinRedirect();
     }
 

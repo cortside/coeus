@@ -3,8 +3,8 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
-      "@muziehdesign/auth": [
-        "dist/auth"
+      "@muziehdesign/core": [
+        "dist/core"
       ]
     },
     "baseUrl": "./",

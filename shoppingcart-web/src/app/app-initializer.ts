@@ -1,4 +1,4 @@
-import { AuthenticationService, AuthorizationData, AuthorizationService } from '@muziehdesign/auth';
+import { AuthenticationService, AuthorizationData, AuthorizationService } from '@muziehdesign/core';
 import { delay, switchMap, tap } from 'rxjs';
 import { ShoppingCartClient } from './api/shopping-cart/shopping-cart.client';
 

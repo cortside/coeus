@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticatedUser, AuthenticationService } from '@muziehdesign/auth';
+import { AuthenticatedUser, AuthenticationService } from '@muziehdesign/core';
 import { map, Observable } from 'rxjs';
 import { ShoppingCartService } from '../core/shopping-cart.service';
 

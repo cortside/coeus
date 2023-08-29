@@ -4,7 +4,7 @@ import { forkJoin, map, Observable } from 'rxjs';
 import { ItemResponse } from './models/responses/item.response';
 import { AppConfig } from 'src/environments/app-config';
 import { PagedResponse } from '../paged.response';
-import { AUTHENTICATED_REQUEST } from '@muziehdesign/auth';
+import { AUTHENTICATED_REQUEST } from '@muziehdesign/core';
 
 @Injectable({
     providedIn: 'root',

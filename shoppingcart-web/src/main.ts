@@ -1,6 +1,6 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AuthenticationService } from '@muziehdesign/auth';
+import { AuthenticationService } from '@muziehdesign/core';
 import { forkJoin, from, map, Observable, take } from 'rxjs';
 
 import { AppModule } from './app/app.module';
