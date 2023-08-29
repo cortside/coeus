@@ -1,5 +1,11 @@
 TODO:
 
+* DB stored file/blob
+	* https://github.com/cortside/c6-dcms/blob/develop/src/Domain/Entity/Blob.cs
+	* https://github.com/cortside/c6-dcms/blob/develop/src/Domain/Entity/File.cs
+	* https://github.com/spring2/spring2.common/tree/master/src/Spring2.Common.Storage
+* new .net 8 auth
+	* https://devblogs.microsoft.com/dotnet/improvements-auth-identity-aspnetcore-8/
 * RandomValues class from comms
 * capture of console/log from comms-api
 * EF concurrency example
