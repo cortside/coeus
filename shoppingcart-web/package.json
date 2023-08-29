@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build auth && ng build shoppingcart-web",
+    "start": "concurrently \"ng build core --watch\" \"ng serve\"",
+    "build": "ng build core && ng build shoppingcart-web",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --project=shoppingcart-web",
     "test:ci": "ng test --project=shoppingcart-web --watch=false",
@@ -45,6 +45,7 @@
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
     "autoprefixer": "^10.4.7",
+    "concurrently": "^8.2.1",
     "cypress": "^12.11.0",
     "eslint": "^8.28.0",
     "jasmine-core": "~4.1.0",

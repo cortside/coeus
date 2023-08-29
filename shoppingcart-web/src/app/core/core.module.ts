@@ -7,7 +7,6 @@ import { AppConfig } from 'src/environments/app-config';
     declarations: [],
     imports: [CommonModule, AuthModule],
     providers: [
-        //authenticationIntializerProvider,
         {provide: AUTHORIZATION_POLICY, useClass: PermissionAuthorizationPolicy, multi: true},
         AuthenticationTokenInterceptor
     ],

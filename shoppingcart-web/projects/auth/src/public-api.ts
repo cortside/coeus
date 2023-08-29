@@ -1,7 +1,3 @@
-/*
- * Public API Surface of auth
- */
-
 export * from './lib/authentication-settings';
 export * from './lib/authentication.service';
 export * from './lib/authenticated-user';
