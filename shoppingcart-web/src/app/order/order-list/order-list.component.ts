@@ -8,5 +8,5 @@ import { Component, OnInit } from '@angular/core';
 export class OrderListComponent {
     constructor() {}
 
-    authorize() {}
+    authorize(): void {}
 }
