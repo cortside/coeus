@@ -18,11 +18,11 @@ export class NavigationComponent implements OnInit {
         this.quantity$ = this.service.getCartItems().pipe(map((items) => items.map((i) => i.quantity).reduce((i, j) => i + j, 0)));
     }
 
-    async ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
         this.user = await this.auth.getUser();
     }
 
-    async signIn(): void {
+    async signIn(): Promise<void> {
         await this.auth.login();
     }
 }

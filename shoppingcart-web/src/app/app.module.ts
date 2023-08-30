@@ -17,7 +17,6 @@ import { NavigationComponent } from './navigation/navigation.component';
         AppRoutingModule,
     ],
     providers: [
-        //{ provide: APP_INITIALIZER, useFactory: initializeApplication, deps: [AuthenticationService, ShoppingCartClient, AuthorizationService], multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: AuthenticationTokenInterceptor, multi: true },
     ],
     bootstrap: [AppComponent],

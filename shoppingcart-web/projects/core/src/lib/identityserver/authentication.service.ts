@@ -52,13 +52,11 @@ export class AuthenticationService {
     }
 
     async completeSignIn(): Promise<AuthenticatedUser | undefined> {
-        console.log(window.location.href);
         // handle signin callback
         if (window.location.href.indexOf(this.settings.redirectUri) > -1) {
             console.log('redirect uri handling');
             const redirectedUser = await this.userManager.signinRedirectCallback();
             window.history.replaceState({}, window.document.title, redirectedUser.state || '/');
-            //return Promise.resolve(this.mapToAuthenticatedUser(redirectedUser));
         }
 
         // validate user existence/renew token
