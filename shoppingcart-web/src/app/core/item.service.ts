@@ -19,7 +19,7 @@ export class ItemService {
                     totalItems: x.totalItems,
                     pageNumber: x.pageNumber,
                     pageSize: x.pageSize,
-                    items: x.items.map((i) => assembleItemModel(i))
+                    items: x.items.map((i) => assembleItemModel(i)),
                 } as PagedModel<ItemModel>;
             })
         );
@@ -32,6 +32,6 @@ export const assembleItemModel = (response: ItemResponse): ItemModel => {
         name: response.name,
         sku: response.sku,
         unitPrice: response.unitPrice,
-        imageUrl: response.imageUrl
+        imageUrl: response.imageUrl,
     } as ItemResponse;
 };

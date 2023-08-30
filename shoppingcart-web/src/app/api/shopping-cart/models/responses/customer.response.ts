@@ -1,4 +1,4 @@
-import { AuditableResponse } from "./auditable.response";
+import { AuditableResponse } from './auditable.response';
 
 export interface CustomerResponse extends AuditableResponse {
     customerResourceId: string;

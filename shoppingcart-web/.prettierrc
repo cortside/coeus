@@ -2,6 +2,6 @@
     "trailingComma": "es5",
     "singleQuote": true,
     "tslintIntegration": true,
-    "printWidth": 525,
+    "printWidth": 375,
     "tabWidth": 4
   }

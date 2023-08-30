@@ -1,4 +1,4 @@
-import { SubjectResponse } from "./subject.response";
+import { SubjectResponse } from './subject.response';
 
 export interface AuditableResponse {
     createdDate: Date;

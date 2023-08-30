@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { NavigationComponent } from './navigation/navigation.component';
 
-
 @NgModule({
     declarations: [AppComponent, NavigationComponent],
     imports: [
@@ -20,7 +19,7 @@ import { NavigationComponent } from './navigation/navigation.component';
     ],
     providers: [
         //{ provide: APP_INITIALIZER, useFactory: initializeApplication, deps: [AuthenticationService, ShoppingCartClient, AuthorizationService], multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: AuthenticationTokenInterceptor, multi: true}
+        { provide: HTTP_INTERCEPTORS, useClass: AuthenticationTokenInterceptor, multi: true },
     ],
     bootstrap: [AppComponent],
 })

@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class OrderService {
+    constructor() {}
 
-  constructor() { }
-
-  debug() {
-    console.log('debug');
-  }
+    debug() {
+        console.log('debug');
+    }
 }

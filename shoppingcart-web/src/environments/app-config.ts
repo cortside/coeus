@@ -1,4 +1,4 @@
-import { AuthenticationSettings } from "@muziehdesign/core";
+import { AuthenticationSettings } from '@muziehdesign/core';
 
 export class AppConfig {
     service?: {

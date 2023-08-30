@@ -2,11 +2,7 @@ import { AuthenticationService, AuthorizationData, AuthorizationService } from '
 import { delay, switchMap, tap } from 'rxjs';
 import { ShoppingCartClient } from './api/shopping-cart/shopping-cart.client';
 
-export const initializeApplication = (
-    authenticationService: AuthenticationService,
-    client: ShoppingCartClient,
-    authorizationService: AuthorizationService
-): (() => Promise<void>) => {
+export const initializeApplication = (authenticationService: AuthenticationService, client: ShoppingCartClient, authorizationService: AuthorizationService): (() => Promise<void>) => {
     return (): Promise<void> => {
         /*authenticationService.onUserSignedOut().pipe(tap((x) => authorizationService.reset()));
         authenticationService.onUserSignedIn().pipe(    

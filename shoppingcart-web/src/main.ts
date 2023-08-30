@@ -7,10 +7,7 @@ import { AppModule } from './app/app.module';
 import { AppConfig } from './environments/app-config';
 import { environment } from './environments/environment';
 
-const loadSettings = (urls: string[]): Observable<AppConfig> =>
-    forkJoin(urls.map((url) => from(fetch(url).then((x) => x.json())) as Observable<AppConfig>)).pipe(
-        map((configs: AppConfig[]) => Object.assign({}, ...configs) as AppConfig)
-    );
+const loadSettings = (urls: string[]): Observable<AppConfig> => forkJoin(urls.map((url) => from(fetch(url).then((x) => x.json())) as Observable<AppConfig>)).pipe(map((configs: AppConfig[]) => Object.assign({}, ...configs) as AppConfig));
 
 loadSettings(environment.configurations)
     .pipe(take(1))

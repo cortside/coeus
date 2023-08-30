@@ -11,7 +11,10 @@ import { OrderReponse } from './models/responses/order.response';
     providedIn: 'root',
 })
 export class ShoppingCartClient {
-    constructor(private http: HttpClient, private config: AppConfig) {}
+    constructor(
+        private http: HttpClient,
+        private config: AppConfig
+    ) {}
 
     getAuthorization(): Observable<AuthorizationResponse> {
         return this.http.get<AuthorizationResponse>(`${this.config.shoppingCartApi?.url}/api/v1/authorization`, {

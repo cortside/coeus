@@ -5,9 +5,6 @@ import { AuthenticationTokenInterceptor, AUTHORIZATION_POLICY, PermissionAuthori
 @NgModule({
     declarations: [],
     imports: [CommonModule],
-    providers: [
-        {provide: AUTHORIZATION_POLICY, useClass: PermissionAuthorizationPolicy, multi: true},
-        AuthenticationTokenInterceptor
-    ],
+    providers: [{ provide: AUTHORIZATION_POLICY, useClass: PermissionAuthorizationPolicy, multi: true }, AuthenticationTokenInterceptor],
 })
 export class CoreModule {}

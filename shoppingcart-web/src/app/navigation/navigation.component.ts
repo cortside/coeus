@@ -11,7 +11,10 @@ import { ShoppingCartService } from '../core/shopping-cart.service';
 export class NavigationComponent implements OnInit {
     quantity$: Observable<number>;
     user: AuthenticatedUser | undefined;
-    constructor(private service: ShoppingCartService, private auth: AuthenticationService) {
+    constructor(
+        private service: ShoppingCartService,
+        private auth: AuthenticationService
+    ) {
         this.quantity$ = this.service.getCartItems().pipe(map((items) => items.map((i) => i.quantity).reduce((i, j) => i + j, 0)));
     }
 

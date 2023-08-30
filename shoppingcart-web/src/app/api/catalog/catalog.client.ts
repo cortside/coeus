@@ -42,9 +42,12 @@ export class CatalogClient {
         {
             sku: 'SKU00007',
             name: 'Fireball Cinnamon Whisky',
-        }
+        },
     ];
-    constructor(private http: HttpClient, private config: AppConfig) {}
+    constructor(
+        private http: HttpClient,
+        private config: AppConfig
+    ) {}
 
     getItem(sku: string): Observable<ItemResponse> {
         const item = this.items.find((i) => i.sku == sku);

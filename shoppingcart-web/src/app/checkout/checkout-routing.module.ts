@@ -4,19 +4,17 @@ import { requireAuthentication } from '@muziehdesign/core';
 import { CheckoutComponent } from './checkout.component';
 
 export const checkoutLazyLoadingRoutes: Routes = [
-  {
-      path: 'checkout',
-      loadChildren: () => import('./checkout.module').then((m) => m.CheckoutModule),
-      canActivate: [requireAuthentication]
-  },
+    {
+        path: 'checkout',
+        loadChildren: () => import('./checkout.module').then((m) => m.CheckoutModule),
+        canActivate: [requireAuthentication],
+    },
 ];
 
-const routes: Routes = [
-  {path: '', component: CheckoutComponent}
-];
+const routes: Routes = [{ path: '', component: CheckoutComponent }];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
-export class CheckoutRoutingModule { }
+export class CheckoutRoutingModule {}
