@@ -58,7 +58,7 @@ RUN export coveragefiles="$(find `pwd`/coverage -name lcov.info | tr '\n' ',')" 
 # gathering components from NPM install for ng build
 FROM base as build
 #RUN true
-RUN ng build auth
+RUN ng build core
 RUN ng build --aot --configuration production
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
