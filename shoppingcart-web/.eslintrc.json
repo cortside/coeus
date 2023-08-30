@@ -8,8 +8,8 @@
                 "project": ["tsconfig.json"],
                 "createDefaultProgram": true
             },
-            "plugins": ["sonarjs"],
-            "extends": ["plugin:@angular-eslint/recommended", "plugin:@angular-eslint/template/process-inline-templates", "plugin:sonarjs/recommended"],
+            "extends": ["plugin:@angular-eslint/recommended", "plugin:@angular-eslint/template/process-inline-templates", "plugin:sonarjs/recommended", "plugin:prettier/recommended"],
+            "plugins": ["sonarjs", "prettier"],
             "rules": {
                 "@angular-eslint/directive-selector": [
                     "error",
