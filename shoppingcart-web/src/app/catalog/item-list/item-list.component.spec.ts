@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { CatalogClient } from 'src/app/api/catalog/catalog.client';
 
 import { ItemListComponent } from './item-list.component';
@@ -11,7 +11,7 @@ describe('ItemListComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [ItemListComponent],
-            providers: [{ provide: CatalogClient, useValue: { getItems: () => of(null) } }],
+            providers: [{ provide: CatalogClient, useValue: { getItems: (): Observable<null> => of(null) } }],
         }).compileComponents();
 
         fixture = TestBed.createComponent(ItemListComponent);

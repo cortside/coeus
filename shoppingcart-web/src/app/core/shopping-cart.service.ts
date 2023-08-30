@@ -15,7 +15,7 @@ export class ShoppingCartService {
         return this.items$;
     }
 
-    addItem(itemSku: string, quantity: number) {
+    addItem(itemSku: string, quantity: number): void {
         const list = [...this.items.value];
         const item = list.find((i) => i.sku == itemSku);
         if (item) {

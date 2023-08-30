@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 export class OrderService {
     constructor() {}
 
-    debug() {
+    debug(): void {
         console.log('debug');
     }
 }

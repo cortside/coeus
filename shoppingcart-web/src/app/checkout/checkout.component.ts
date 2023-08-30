@@ -14,5 +14,5 @@ export class CheckoutComponent {
         this.items$ = this.service.getCartItems();
     }
 
-    checkout() {}
+    checkout(): void {}
 }
