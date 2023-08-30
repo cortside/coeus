@@ -1,3 +1,10 @@
+$tokens = @{ 
+	"shoppingcart-api" = $env:SHOPPINGCART_API_TOKEN;
+	"shoppingcart-web" = $env:SHOPPINGCART_WEB_TOKEN; 
+	"identityServer6" = $env:IDENTITYSERVER6_TOKEN; 
+	"policyserver" = $env:POLICYSERVER_TOKEN; 
+}
+
 $buildNumber = $env:APPVEYOR_BUILD_NUMBER;
 
 if (-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
@@ -49,28 +56,20 @@ $files | ForEach-Object {
 
 $dirs.GetEnumerator() | Sort-Object Name | ForEach-Object {
 	$dir = $_.Name
-	Write-Host Building in directory $dir
-	
+	Write-Host ""
+	Write-Host "=========================="
+	Write-Host "Building in directory $dir"
+	Write-Host "=========================="
+
 	cd $dir
-	# need to create dictionary to look these up by $dir name
-	$env:SONAR_TOKEN = $env:SHOPPINGCART_API_TOKEN;
+	Write-Host "Current directory: $pwd"
+	
+	$env:SONAR_TOKEN = $tokens[$dir];
 	.\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
 	cd $PSScriptRoot
 }
 
-cd shoppingcart-api;
-$env:SONAR_TOKEN = $env:SHOPPINGCART_API_TOKEN;
-#.\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
-cd ..;
-cd shoppingcart-web;
-$env:SONAR_TOKEN = $env:SHOPPINGCART_WEB_TOKEN;
-#.\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
-cd ..;
-cd identityServer6;
-$env:SONAR_TOKEN = $env:IDENTITYSERVER6_TOKEN;
-#.\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
-cd ..;
-cd policyserver;
-$env:SONAR_TOKEN = $env:POLICYSERVER_TOKEN;
-#.\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
-cd ..;
+Write-Host ""
+Write-Host "=========================="
+Write-Host "done"
+Write-Host "=========================="
