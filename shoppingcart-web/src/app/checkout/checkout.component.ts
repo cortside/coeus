@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CartItemModel } from '../common/cart-item.model';
 import { ShoppingCartService } from '../core/shopping-cart.service';
@@ -14,5 +14,7 @@ export class CheckoutComponent {
         this.items$ = this.service.getCartItems();
     }
 
-    checkout(): void {}
+    checkout(): void {
+        console.log('test');
+    }
 }

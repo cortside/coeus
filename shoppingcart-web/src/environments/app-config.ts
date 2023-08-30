@@ -10,5 +10,5 @@ export class AppConfig {
     shoppingCartApi?: {
         url: string;
     };
-    identity?: AuthenticationSettings;
+    identity: AuthenticationSettings = {} as AuthenticationSettings;
 }

@@ -1,11 +1,10 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import {  NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AuthenticationService, AuthenticationTokenInterceptor, AuthorizationService } from '@muziehdesign/core';
+import { AuthenticationTokenInterceptor } from '@muziehdesign/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CoreModule } from './core/core.module';
 import { NavigationComponent } from './navigation/navigation.component';
 
 @NgModule({

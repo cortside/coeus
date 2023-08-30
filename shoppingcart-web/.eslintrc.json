@@ -8,8 +8,9 @@
                 "project": ["tsconfig.json"],
                 "createDefaultProgram": true
             },
-            "extends": ["plugin:@angular-eslint/recommended", "plugin:@angular-eslint/template/process-inline-templates", "plugin:sonarjs/recommended"],
-            "plugins": ["sonarjs"],
+            "extends": ["plugin:@typescript-eslint/recommended", "plugin:@angular-eslint/recommended", "plugin:@angular-eslint/template/process-inline-templates", "plugin:sonarjs/recommended"],
+            "parser": "@typescript-eslint/parser",            
+            "plugins": ["@typescript-eslint", "sonarjs"],
             "rules": {
                 "@angular-eslint/directive-selector": [
                     "error",
@@ -26,8 +27,7 @@
                         "prefix": "app",
                         "style": "kebab-case"
                     }
-                ],
-                "@typescript-eslint/explicit-function-return-type": "error"
+                ]
             }
         },
         {

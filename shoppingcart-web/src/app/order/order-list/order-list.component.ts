@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-order-list',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./order-list.component.scss'],
 })
 export class OrderListComponent {
-    constructor() {}
-
-    authorize(): void {}
+    authorize(): void {
+        console.log('authorize');
+    }
 }

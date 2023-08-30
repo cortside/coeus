@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ItemModel } from '../models/item.model';
 
@@ -13,6 +13,4 @@ import { ItemModel } from '../models/item.model';
 export class ItemCardComponent {
     @Input()
     item!: ItemModel;
-
-    constructor() {}
 }

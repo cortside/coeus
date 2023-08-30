@@ -17,11 +17,11 @@ loadSettings(environment.configurations)
                 enableProdMode();
             }
 
-            const auth = new AuthenticationService(appConfig.identity!);
+            const auth = new AuthenticationService(appConfig.identity);
             if (await auth.interceptSilentRedirect()) {
                 return;
             }
-            const user = await auth.completeSignIn();
+            await auth.completeSignIn();
 
             // bootstrap
             const extraProviders = [
@@ -31,7 +31,7 @@ loadSettings(environment.configurations)
 
             platformBrowserDynamic(extraProviders)
                 .bootstrapModule(AppModule)
-                .catch((e: any) => {
+                .catch((e) => {
                     document.body.innerHTML = e; // TODO
                 });
         },
