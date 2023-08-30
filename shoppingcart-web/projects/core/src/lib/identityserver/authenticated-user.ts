@@ -1,7 +1,5 @@
 export class AuthenticatedUser {
-    
-    constructor(private profile: Map<string, any>) {
-    }
+    constructor(private profile: Map<string, any>) {}
 
     get username() {
         return this.profile.get('upn');

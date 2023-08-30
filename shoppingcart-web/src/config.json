@@ -19,6 +19,6 @@
         "accessTokenExpiringNotificationTime": 60,
         "loadUserInfo": true,
         "automaticSilentRenew": true,
-        "logLevel": 0    
+        "logLevel": 0
     }
 }
