@@ -28,7 +28,7 @@ Write-Host Starting build
 $files = ""
 if ( $env:APPVEYOR_PULL_REQUEST_NUMBER ) {
   Write-Host Pull request $env:APPVEYOR_PULL_REQUEST_NUMBER
-  $files = $(git --no-pager diff $target $branch --name-only)
+  $files = $(git --no-pager diff --name-only ..$target)
 } else {
   Write-Host Branch $env:APPVEYOR_REPO_BRANCH
   $files = $(git diff --name-only HEAD~1)
