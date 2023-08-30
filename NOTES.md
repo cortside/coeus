@@ -1,5 +1,17 @@
 TODO:
 
+* conditionally build changed coeus directories instead of blindly building all
+* better changelog generation for release prep for cortside repos
+	* .\update-nugetpackages.ps1 -cortside | grep "Cortside[.]" | sort
+* dto generator
+	* https://blog.devgenius.io/net-source-generators-with-net-7-a68f29b46e74
+	* https://learn.microsoft.com/en-us/dotnet/api/system.codedom.compiler.generatedcodeattribute?view=net-7.0
+* DB stored file/blob
+	* https://github.com/cortside/c6-dcms/blob/develop/src/Domain/Entity/Blob.cs
+	* https://github.com/cortside/c6-dcms/blob/develop/src/Domain/Entity/File.cs
+	* https://github.com/spring2/spring2.common/tree/master/src/Spring2.Common.Storage
+* new .net 8 auth
+	* https://devblogs.microsoft.com/dotnet/improvements-auth-identity-aspnetcore-8/
 * RandomValues class from comms
 * capture of console/log from comms-api
 * EF concurrency example
