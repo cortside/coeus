@@ -33,6 +33,7 @@ $files | ForEach-Object {
   Write-Host $_
   $dir = $_ -replace "\/[^\/]+$", ""
   $dir = $dir -replace "/", "\"
+  Write-Host "Checking $dir for build script"
   if (Test-Path "$dir\build-dockerimages.ps1") {
 	Write-Host "Storing $dir for build"
 	$dirs.Set_Item($dir, 1)
