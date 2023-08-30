@@ -9,6 +9,7 @@
         "test": "ng test --project=shoppingcart-web",
         "test:ci": "ng test --project=shoppingcart-web --watch=false",
         "lint": "ng lint",
+        "prettier": "prettier . --write",
         "prettier:check": "prettier . --check",
         "cypress:open": "cypress open",
         "cypress:run": "cypress run"
