@@ -48,8 +48,6 @@
         "concurrently": "^8.2.1",
         "cypress": "^12.11.0",
         "eslint": "^8.28.0",
-        "eslint-config-prettier": "^9.0.0",
-        "eslint-plugin-prettier": "^5.0.0",
         "eslint-plugin-sonarjs": "^0.21.0",
         "jasmine-core": "~4.1.0",
         "karma": "~6.3.0",
