@@ -16,9 +16,7 @@ import { NavigationComponent } from './navigation/navigation.component';
         // route
         AppRoutingModule,
     ],
-    providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: AuthenticationTokenInterceptor, multi: true },
-    ],
+    providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationTokenInterceptor, multi: true }],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
