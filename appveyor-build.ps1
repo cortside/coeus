@@ -46,9 +46,16 @@ $files | ForEach-Object {
 	}
   }
 }
+
 $dirs.GetEnumerator() | Sort-Object Name | ForEach-Object {
 	$dir = $_.Name
 	Write-Host Building in directory $dir
+	
+	cd $dir
+	# need to create dictionary to look these up by $dir name
+	$env:SONAR_TOKEN = $env:SHOPPINGCART_API_TOKEN;
+	.\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
+	cd $PSScriptRoot
 }
 
 cd shoppingcart-api;
