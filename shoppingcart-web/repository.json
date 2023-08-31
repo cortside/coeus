@@ -1,25 +1,25 @@
 {
-  "version": "1.0",
-  "service": "shoppingcart-web",
-  "repository": {
-    "name": "Acme.ShoppingCart"
-  },
-  "docker": {
-    "buildImage": "cortside/ng-cli:15-alpine",
-    "runtimeImage": "cortside/nginx:1.15-alpine",
-    "image": "cortside/shoppingcart-web",
-	"artifactDirectory": "dist/shoppingcart-web"
-  },
-  "build": {
-    "configuration": "Debug",
-    "publishableProject": "",
-    "nugetfeed": "https://api.nuget.org/v3/index.json"
-  },
-  "sonar": {
-    "organization": "cortside",
-    "key": "acme_shoppingcart-web",
-    "host": "https://sonarcloud.io",
-    "token": "",
-    "propertyPrefix":"-D"
-  }
+    "version": "1.0",
+    "service": "shoppingcart-web",
+    "repository": {
+        "name": "Acme.ShoppingCart"
+    },
+    "docker": {
+        "buildImage": "cortside/ng-cli:15-alpine",
+        "runtimeImage": "cortside/nginx:1.15-alpine",
+        "image": "cortside/shoppingcart-web",
+        "artifactDirectory": "dist/shoppingcart-web"
+    },
+    "build": {
+        "configuration": "Debug",
+        "publishableProject": "",
+        "nugetfeed": "https://api.nuget.org/v3/index.json"
+    },
+    "sonar": {
+        "organization": "cortside",
+        "key": "acme_shoppingcart-web",
+        "host": "https://sonarcloud.io",
+        "token": "",
+        "propertyPrefix": "-D"
+    }
 }

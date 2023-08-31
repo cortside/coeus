@@ -28,22 +28,22 @@ export class AuthenticationService {
             accessTokenExpiringNotificationTime: settings.accessTokenExpiringNotificationTime,
             filterProtocolClaims: settings.filterProtocolClaims,
             loadUserInfo: true,
-            monitorSession: true
+            monitorSession: true,
         });
-        this.userManager.events.addUserSignedOut(async ()=>{
+        this.userManager.events.addUserSignedOut(async () => {
             await this.userManager.signoutRedirect();
         });
     }
 
     async getUser(): Promise<AuthenticatedUser | undefined> {
-        return this.userManager.getUser().then(x=>{
+        return this.userManager.getUser().then((x) => {
             return this.mapToAuthenticatedUser(x);
         });
     }
 
-    async interceptSilentRedirect() : Promise<boolean> {
+    async interceptSilentRedirect(): Promise<boolean> {
         // intercept silent redirect and halt actual bootstrap
-        if(window.location.href.indexOf(this.settings.silentRedirectUri) > -1) {
+        if (window.location.href.indexOf(this.settings.silentRedirectUri) > -1) {
             await this.userManager.signinSilentCallback();
             return true;
         }
@@ -52,13 +52,11 @@ export class AuthenticationService {
     }
 
     async completeSignIn(): Promise<AuthenticatedUser | undefined> {
-        console.log(window.location.href);
         // handle signin callback
         if (window.location.href.indexOf(this.settings.redirectUri) > -1) {
             console.log('redirect uri handling');
             const redirectedUser = await this.userManager.signinRedirectCallback();
             window.history.replaceState({}, window.document.title, redirectedUser.state || '/');
-            //return Promise.resolve(this.mapToAuthenticatedUser(redirectedUser));
         }
 
         // validate user existence/renew token

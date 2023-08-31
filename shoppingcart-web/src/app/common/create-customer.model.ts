@@ -1,4 +1,4 @@
-import { AddressModel } from "./create-address.model";
+import { AddressModel } from './create-address.model';
 
 export class CustomerModel {
     firstName?: string;

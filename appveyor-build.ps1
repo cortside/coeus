@@ -28,7 +28,7 @@ Write-Host Starting build
 $files = ""
 if ( $env:APPVEYOR_PULL_REQUEST_NUMBER ) {
   Write-Host Pull request $env:APPVEYOR_PULL_REQUEST_NUMBER
-  $files = $(git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD main))
+  $files = $(git --no-pager diff --name-only ..$target)
 } else {
   Write-Host Branch $env:APPVEYOR_REPO_BRANCH
   $files = $(git diff --name-only HEAD~1)
@@ -40,7 +40,6 @@ $files | ForEach-Object {
   Write-Host $_
   $dir = $_ -replace "\/[^\/]+$", ""
   $dir = $dir -replace "/", "\"
-  Write-Host "Checking $dir for build script"
   if (Test-Path "$dir\build-dockerimages.ps1") {
 	Write-Host "Storing $dir for build"
 	$dirs.Set_Item($dir, 1)

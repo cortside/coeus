@@ -1,4 +1,4 @@
-import { AuthenticationSettings } from "@muziehdesign/core";
+import { AuthenticationSettings } from '@muziehdesign/core';
 
 export class AppConfig {
     service?: {
@@ -10,5 +10,5 @@ export class AppConfig {
     shoppingCartApi?: {
         url: string;
     };
-    identity?: AuthenticationSettings;
+    identity: AuthenticationSettings = {} as AuthenticationSettings;
 }

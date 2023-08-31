@@ -1,12 +1,9 @@
-import { AuthenticationService, AuthorizationData, AuthorizationService } from '@muziehdesign/core';
-import { delay, switchMap, tap } from 'rxjs';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// TODO
+import { AuthenticationService, AuthorizationService } from '@muziehdesign/core';
 import { ShoppingCartClient } from './api/shopping-cart/shopping-cart.client';
 
-export const initializeApplication = (
-    authenticationService: AuthenticationService,
-    client: ShoppingCartClient,
-    authorizationService: AuthorizationService
-): (() => Promise<void>) => {
+export const initializeApplication = (authenticationService: AuthenticationService, client: ShoppingCartClient, authorizationService: AuthorizationService): (() => Promise<void>) => {
     return (): Promise<void> => {
         /*authenticationService.onUserSignedOut().pipe(tap((x) => authorizationService.reset()));
         authenticationService.onUserSignedIn().pipe(    

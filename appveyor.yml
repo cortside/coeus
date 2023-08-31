@@ -55,7 +55,7 @@ build:
   verbosity: minimal
 
 build_script:
-- ps: .\appveyor-build.ps1
+- pwsh: .\appveyor-build.ps1
 
 cache:
 - '%USERPROFILE%\.nuget\packages'

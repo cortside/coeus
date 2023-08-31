@@ -11,7 +11,7 @@ export class AuthorizationService {
         this.authorizations = new Map<string, AuthorizationData>();
     }
 
-    set(data: Map<string, AuthorizationData>){
+    set(data: Map<string, AuthorizationData>) {
         this.authorizations = data;
     }
 

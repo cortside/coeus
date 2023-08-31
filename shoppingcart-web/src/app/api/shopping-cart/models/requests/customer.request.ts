@@ -6,5 +6,5 @@ export interface CustomerRequest {
         year: number;
         month: number;
         day: number;
-    }
+    };
 }
