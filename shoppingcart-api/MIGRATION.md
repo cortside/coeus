@@ -5,10 +5,15 @@
 ### New
 
 * Update all Cortside libraries to net6.0
+	* removal of deprecated package references
 
 ### Breaking Changes
 
+* IInstaller now takes IConfiguration instead of IConfigurationRoot
+
 ### Changes
+
+* RestApiClient constructor expects HttpContextAccessor for functionality related to X-Forwarded-For handling
 
 ## 2023.08 - Web
 
