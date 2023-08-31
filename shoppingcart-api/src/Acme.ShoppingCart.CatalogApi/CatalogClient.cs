@@ -16,21 +16,16 @@ namespace Acme.ShoppingCart.CatalogApi {
         private readonly RestApiClient client;
         private readonly ILogger<CatalogClient> logger;
 
-        public CatalogClient(CatalogClientConfiguration catalogClientConfiguration, ILogger<CatalogClient> logger, IHttpContextAccessor context) {
+        public CatalogClient(CatalogClientConfiguration catalogClientConfiguration, ILogger<CatalogClient> logger, IHttpContextAccessor context, RestApiClientOptions options = null) {
             this.logger = logger;
-            var options = new RestApiClientOptions {
+            options ??= new RestApiClientOptions {
                 BaseUrl = new Uri(catalogClientConfiguration.ServiceUrl),
                 FollowRedirects = true,
                 Authenticator = new OpenIDConnectAuthenticator(context, catalogClientConfiguration.Authentication),
                 Serializer = new JsonNetSerializer(),
                 Cache = new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions()))
             };
-            client = new RestApiClient(logger, options);
-        }
-
-        public CatalogClient(CatalogClientConfiguration catalogClientConfiguration, ILogger<CatalogClient> logger, RestApiClientOptions options) {
-            this.logger = logger;
-            client = new RestApiClient(logger, options);
+            client = new RestApiClient(logger, context, options);
         }
 
         public async Task<CatalogItem> GetItemAsync(string sku) {

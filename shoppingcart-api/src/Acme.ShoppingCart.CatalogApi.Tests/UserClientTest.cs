@@ -70,7 +70,7 @@ namespace Acme.ShoppingCart.CatalogApi.Tests {
                 Serializer = new JsonNetSerializer(),
                 Cache = new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions()))
             };
-            var client = new CatalogClient(config, new Logger<CatalogClient>(new NullLoggerFactory()), options);
+            var client = new CatalogClient(config, new NullLogger<CatalogClient>(), new HttpContextAccessor(), options);
 
             //act
             CatalogItem response = await client.GetItemAsync(user.Sku).ConfigureAwait(false);
