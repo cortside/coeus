@@ -1,5 +1,7 @@
 TODO:
 
+* Date only handling
+	* https://stackoverflow.com/questions/21256132/deserializing-dates-with-dd-mm-yyyy-format-using-json-net
 * conditionally build changed coeus directories instead of blindly building all
 * better changelog generation for release prep for cortside repos
 	* .\update-nugetpackages.ps1 -cortside | grep "Cortside[.]" | sort

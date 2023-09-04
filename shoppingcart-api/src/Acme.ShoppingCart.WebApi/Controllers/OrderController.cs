@@ -8,6 +8,7 @@ using Acme.ShoppingCart.WebApi.Mappers;
 using Acme.ShoppingCart.WebApi.Models.Requests;
 using Acme.ShoppingCart.WebApi.Models.Responses;
 using Cortside.AspNetCore.Common.Paging;
+using Cortside.Common.Messages.MessageExceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -142,7 +143,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                 try {
                     result = await facade.UpdateOrderAsync(dto).ConfigureAwait(false);
                 } catch (Exception ex) {
-                    throw ex;
+                    throw new InternalServerErrorResponseException("Unable to update order", ex);
                 }
                 return Ok(orderMapper.Map(result));
             }

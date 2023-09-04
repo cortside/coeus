@@ -1,6 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 using Acme.ShoppingCart.CatalogApi.Models.Responses;
+using Cortside.MockServer;
 using Cortside.RestApiClient.Authenticators.OpenIDConnect;
 using Newtonsoft.Json;
 using WireMock.RequestBuilders;
@@ -8,17 +9,16 @@ using WireMock.ResponseBuilders;
 using WireMock.Server;
 
 namespace Acme.ShoppingCart.CatalogApi.Tests.Mock {
-    public class UserWireMock {
+    public class CatalogWireMock : IMockHttpServerBuilder {
         public WireMockServer server { get; }
 
-        public UserWireMock() {
-            if (server == null) {
-                server = WireMockServer.Start();
-            }
-            Configure();
+        public CatalogWireMock() {
+            // TODO: use cortside mockserver
+            server = WireMockServer.Start();
+            Configure(server);
         }
 
-        public void Configure() {
+        public void Configure(WireMockServer server) {
             var getUserUrl =
             new Regex(@"^\/api/v1/items\/([0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12})$");
             server
