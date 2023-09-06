@@ -27,7 +27,7 @@
     "@angular/platform-browser-dynamic": "^16.2.4",
     "@angular/router": "^16.2.4",
     "@tailwindcss/forms": "^0.5.2",
-    "muzieh-ngcomponents": "^0.2.1259-alpha",
+    "muzieh-ngcomponents": "16.0.1402-beta.0",
     "oidc-client": "^1.11.5",
     "rxjs": "~7.5.0",
     "subsink": "^1.0.2",
