@@ -14,6 +14,17 @@
 @import 'node_modules/muzieh-ngcomponents/design/_date-picker';
 @import 'tailwindcss/utilities';
 
+@layer base {
+    :root {
+        // colors
+        --color-primary: #1d4ed8;
+        --color-secondary: #374151;
+        --color-success: rgb(21, 128, 61);
+        --color-danger: rgb(185, 28, 28);
+        --color-warning: rgb(161, 98, 7);
+    }
+}
+
 // TODO:
 .text-block {
     max-width: 100ch;
