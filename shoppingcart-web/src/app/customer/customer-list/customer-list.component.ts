@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ShoppingCartClient } from 'src/app/api/shopping-cart/shopping-cart.client';
 import { CustomerModel } from 'src/app/common/create-customer.model';
-import { ListResult } from 'src/app/common/list-result';
+import { PagedModel } from 'src/app/common/paged.model';
 
 @Component({
   selector: 'app-customer-list',
@@ -11,11 +11,11 @@ import { ListResult } from 'src/app/common/list-result';
 })
 export class CustomerListComponent {
 
-  //customers$: Observable<ListResult<CustomerModel>>;
+  //customers$: Observable<PagedModel<CustomerModel>>;
   constructor(private shoppingCartClient: ShoppingCartClient) {
-    //update this area below to use the variable 2 lines above and the 
+    //update this area below to use the variable 2 lines above and the
     //ShoppingCartClient to get your data from the api
-    
+
   }
   authorize() {
   }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthenticatedGuard } from '@muziehdesign/auth';
+import { requireAuthentication } from '@muziehdesign/core';
 
 import { CustomerListComponent } from './customer-list/customer-list.component';
 
@@ -8,7 +8,7 @@ export const customerLazyLoadingRoutes: Routes = [
     {
         path: 'customers',
         loadChildren: () => import('./customer.module').then((m) => m.CustomerModule),
-        canLoad: [AuthenticatedGuard],
+        canActivate: [ requireAuthentication],
     },
 ];
 

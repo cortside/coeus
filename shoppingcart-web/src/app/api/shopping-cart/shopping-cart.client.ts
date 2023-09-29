@@ -6,7 +6,7 @@ import { AppConfig } from 'src/environments/app-config';
 import { OrderRequest } from './models/requests/order.request';
 import { AuthorizationResponse } from './models/responses/authorization.response';
 import { OrderReponse } from './models/responses/order.response';
-import { ListResult } from 'src/app/common/list-result';
+import { PagedModel } from 'src/app/common/paged.model';
 import { CustomerResponse } from './models/responses/customer.response';
 
 @Injectable({
@@ -24,8 +24,8 @@ export class ShoppingCartClient {
         });
     }
 
-    getCustomers() : Observable<ListResult<CustomerResponse>> {
-        return this.http.get<ListResult<CustomerResponse>>(`${this.config.shoppingCartApi?.url}/api/v1/customers`, {
+    getCustomers() : Observable<PagedModel<CustomerResponse>> {
+        return this.http.get<PagedModel<CustomerResponse>>(`${this.config.shoppingCartApi?.url}/api/v1/customers`, {
             context: new HttpContext().set(AUTHENTICATED_REQUEST, true)
         });
     }
