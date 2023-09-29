@@ -1,16 +1,13 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AuthenticationService } from '@muziehdesign/auth';
+import { AuthenticationService } from '@muziehdesign/core';
 import { forkJoin, from, map, Observable, take } from 'rxjs';
 
 import { AppModule } from './app/app.module';
 import { AppConfig } from './environments/app-config';
 import { environment } from './environments/environment';
 
-const loadSettings = (urls: string[]): Observable<AppConfig> =>
-    forkJoin(urls.map((url) => from(fetch(url).then((x) => x.json())) as Observable<AppConfig>)).pipe(
-        map((configs: AppConfig[]) => Object.assign({}, ...configs) as AppConfig)
-    );
+const loadSettings = (urls: string[]): Observable<AppConfig> => forkJoin(urls.map((url) => from(fetch(url).then((x) => x.json())) as Observable<AppConfig>)).pipe(map((configs: AppConfig[]) => Object.assign({}, ...configs) as AppConfig));
 
 loadSettings(environment.configurations)
     .pipe(take(1))
@@ -20,11 +17,11 @@ loadSettings(environment.configurations)
                 enableProdMode();
             }
 
-            const auth = new AuthenticationService(appConfig.identity!);
+            const auth = new AuthenticationService(appConfig.identity);
             if (await auth.interceptSilentRedirect()) {
                 return;
             }
-            const user = await auth.completeSignIn();
+            await auth.completeSignIn();
 
             // bootstrap
             const extraProviders = [
@@ -34,7 +31,7 @@ loadSettings(environment.configurations)
 
             platformBrowserDynamic(extraProviders)
                 .bootstrapModule(AppModule)
-                .catch((e: any) => {
+                .catch((e) => {
                     document.body.innerHTML = e; // TODO
                 });
         },

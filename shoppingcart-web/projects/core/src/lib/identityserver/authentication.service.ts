@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Log, User, UserManager, UserManagerSettings } from 'oidc-client';
 import { AuthenticatedUser } from './authenticated-user';
 import { AuthenticationSettings } from './authentication-settings';
@@ -7,8 +6,15 @@ export class AuthenticationService {
     private readonly userManager: UserManager;
 
     constructor(protected settings: AuthenticationSettings) {
-        Log.logger = console;
-        Log.level = Log.DEBUG;
+        Log.logger = console; // TODO
+        const map = new Map<string, number>();
+        map.set('debug', Log.DEBUG);
+        map.set('error', Log.ERROR);
+        map.set('none', Log.NONE);
+        map.set('warn', Log.WARN);
+        map.set('info', Log.INFO);
+        Log.level = map.get(settings.logLevel) || Log.NONE;
+
         this.userManager = new UserManager(<UserManagerSettings>{
             authority: settings.authority,
             client_id: settings.clientId,
@@ -22,22 +28,22 @@ export class AuthenticationService {
             accessTokenExpiringNotificationTime: settings.accessTokenExpiringNotificationTime,
             filterProtocolClaims: settings.filterProtocolClaims,
             loadUserInfo: true,
-            monitorSession: true
+            monitorSession: true,
         });
-        this.userManager.events.addUserSignedOut(async ()=>{
+        this.userManager.events.addUserSignedOut(async () => {
             await this.userManager.signoutRedirect();
         });
     }
 
     async getUser(): Promise<AuthenticatedUser | undefined> {
-        return this.userManager.getUser().then(x=>{
+        return this.userManager.getUser().then((x) => {
             return this.mapToAuthenticatedUser(x);
         });
     }
 
-    async interceptSilentRedirect() : Promise<boolean> {
+    async interceptSilentRedirect(): Promise<boolean> {
         // intercept silent redirect and halt actual bootstrap
-        if(window.location.href.indexOf(this.settings.silentRedirectUri) > -1) {
+        if (window.location.href.indexOf(this.settings.silentRedirectUri) > -1) {
             await this.userManager.signinSilentCallback();
             return true;
         }
@@ -46,24 +52,19 @@ export class AuthenticationService {
     }
 
     async completeSignIn(): Promise<AuthenticatedUser | undefined> {
-        console.log(window.location.href);
         // handle signin callback
         if (window.location.href.indexOf(this.settings.redirectUri) > -1) {
             console.log('redirect uri handling');
             const redirectedUser = await this.userManager.signinRedirectCallback();
             window.history.replaceState({}, window.document.title, redirectedUser.state || '/');
-            //return Promise.resolve(this.mapToAuthenticatedUser(redirectedUser));
         }
 
         // validate user existence/renew token
         const user: User | null | undefined = await this.userManager.signinSilent().catch(() => undefined);
-        console.log(user);
-        console.log('user expired', user?.expired);
         return Promise.resolve(this.mapToAuthenticatedUser(user));
     }
 
     async login(): Promise<void> {
-        console.log('logging in');
         return this.userManager.signinRedirect();
     }
 

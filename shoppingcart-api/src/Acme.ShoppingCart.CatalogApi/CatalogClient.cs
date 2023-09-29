@@ -9,6 +9,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Polly;
 using RestSharp;
 
 namespace Acme.ShoppingCart.CatalogApi {
@@ -16,26 +17,28 @@ namespace Acme.ShoppingCart.CatalogApi {
         private readonly RestApiClient client;
         private readonly ILogger<CatalogClient> logger;
 
-        public CatalogClient(CatalogClientConfiguration catalogClientConfiguration, ILogger<CatalogClient> logger, IHttpContextAccessor context) {
+        public CatalogClient(CatalogClientConfiguration catalogClientConfiguration, ILogger<CatalogClient> logger, IHttpContextAccessor context, RestApiClientOptions options = null) {
             this.logger = logger;
-            var options = new RestApiClientOptions {
+            options ??= new RestApiClientOptions {
                 BaseUrl = new Uri(catalogClientConfiguration.ServiceUrl),
                 FollowRedirects = true,
                 Authenticator = new OpenIDConnectAuthenticator(context, catalogClientConfiguration.Authentication),
                 Serializer = new JsonNetSerializer(),
                 Cache = new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions()))
             };
-            client = new RestApiClient(logger, options);
-        }
-
-        public CatalogClient(CatalogClientConfiguration catalogClientConfiguration, ILogger<CatalogClient> logger, RestApiClientOptions options) {
-            this.logger = logger;
-            client = new RestApiClient(logger, options);
+            client = new RestApiClient(logger, context, options);
         }
 
         public async Task<CatalogItem> GetItemAsync(string sku) {
             logger.LogInformation("Getting item by sku: {sku}", sku);
-            RestApiRequest request = new RestApiRequest($"api/v1/items/{sku}", Method.Get);
+            RestApiRequest request = new RestApiRequest($"api/v1/items/{sku}", Method.Get) {
+                Policy = PolicyBuilderExtensions
+                    .HandleTransientHttpError()
+                    .Or<TimeoutException>()
+                    .OrResult(x => x.StatusCode == 0 || x.StatusCode == System.Net.HttpStatusCode.Unauthorized || x.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                    .WaitAndRetryAsync(PolicyBuilderExtensions.Jitter(1, 5))
+            };
+
             try {
                 var response = await client.GetAsync<CatalogItem>(request).ConfigureAwait(false);
                 return response.Data;

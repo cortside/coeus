@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpContext } from '@angular/common/http';
-import { forkJoin, map, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ItemResponse } from './models/responses/item.response';
 import { AppConfig } from 'src/environments/app-config';
 import { PagedResponse } from '../paged.response';
-import { AUTHENTICATED_REQUEST } from '@muziehdesign/auth';
+import { AUTHENTICATED_REQUEST } from '@muziehdesign/core';
 
 @Injectable({
     providedIn: 'root',
@@ -42,9 +42,12 @@ export class CatalogClient {
         {
             sku: 'SKU00007',
             name: 'Fireball Cinnamon Whisky',
-        }
+        },
     ];
-    constructor(private http: HttpClient, private config: AppConfig) {}
+    constructor(
+        private http: HttpClient,
+        private config: AppConfig
+    ) {}
 
     getItem(sku: string): Observable<ItemResponse> {
         const item = this.items.find((i) => i.sku == sku);

@@ -3,7 +3,7 @@ Param()
 
 Push-Location "$PSScriptRoot"
 
-if(!(Test-Path ".\src\config.local.json")) {
+if (!(Test-Path ".\src\config.local.json")) {
     New-Item -path ".\src" -name "config.local.json" -type "file" -value "{}"
 }
 
