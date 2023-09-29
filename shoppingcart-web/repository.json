@@ -5,7 +5,7 @@
         "name": "Acme.ShoppingCart"
     },
     "docker": {
-        "buildImage": "cortside/ng-cli:15-alpine",
+        "buildImage": "cortside/ng-cli:16-alpine",
         "runtimeImage": "cortside/nginx:1.15-alpine",
         "image": "cortside/shoppingcart-web",
         "artifactDirectory": "dist/shoppingcart-web"
