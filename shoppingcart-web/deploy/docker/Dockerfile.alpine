@@ -81,9 +81,9 @@ COPY ./deploy/sh/startup.sh /startup.sh
 #    apk update && \
 #    apk add --no-cache ca-certificates jq bash curl && \
 #    update-ca-certificates && \
-#    adduser -S -u 2001 -s /bin/bash ebuser && \
-#    addgroup -S -g 2001 ebuser && addgroup -S nginx && \
-#    addgroup ebuser ebuser; addgroup ebuser nginx && \
+#    adduser -S -u 2001 -s /bin/bash appuser && \
+#    addgroup -S -g 2001 appuser && addgroup -S nginx && \
+#    addgroup appuser appuser; addgroup appuser nginx && \
 #    mkdir -p /var/lib/nginx/ /run/nginx/ /var/cache/nginx/client_temp /var/cache/nginx/proxy_temp && \
 #    touch /var/run/nginx.pid && \
 #    chown -R nginx:nginx /var/lib/nginx/ /run/nginx/ /var/cache/nginx/ /var/run/nginx.pid && \

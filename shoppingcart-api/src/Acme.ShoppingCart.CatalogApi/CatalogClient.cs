@@ -9,6 +9,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Polly;
 using RestSharp;
 
 namespace Acme.ShoppingCart.CatalogApi {
@@ -30,7 +31,14 @@ namespace Acme.ShoppingCart.CatalogApi {
 
         public async Task<CatalogItem> GetItemAsync(string sku) {
             logger.LogInformation("Getting item by sku: {sku}", sku);
-            RestApiRequest request = new RestApiRequest($"api/v1/items/{sku}", Method.Get);
+            RestApiRequest request = new RestApiRequest($"api/v1/items/{sku}", Method.Get) {
+                Policy = PolicyBuilderExtensions
+                    .HandleTransientHttpError()
+                    .Or<TimeoutException>()
+                    .OrResult(x => x.StatusCode == 0 || x.StatusCode == System.Net.HttpStatusCode.Unauthorized || x.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                    .WaitAndRetryAsync(PolicyBuilderExtensions.Jitter(1, 5))
+            };
+
             try {
                 var response = await client.GetAsync<CatalogItem>(request).ConfigureAwait(false);
                 return response.Data;

@@ -53,7 +53,7 @@ namespace Acme.ShoppingCart.WebApi {
         /// </summary>
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services) {
-            // setup default json serializer settings
+            // setup global default json serializer settings
             JsonConvert.DefaultSettings = JsonNetUtility.GlobalDefaultSettings;
 
             // add ApplicationInsights telemetry

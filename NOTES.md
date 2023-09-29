@@ -1,5 +1,23 @@
 TODO:
 
+* attribute based controller caching and locks
+	* https://medium.com/@gkkomensi/learn-aop-with-c-37d9db7be6bb
+	* conditional based on state?
+* messages shoveled using azure portal online service bus explorer cause XmlException in DomainEventMessage.GetBody
+	* https://github.com/cortside/cortside.domainevent/blob/develop/src/Cortside.DomainEvent/DomainEventMessage.cs#L33
+	* https://github.com/search?q=repo%3AAzure%2Famqpnetlite%20%20getbody&type=code
+	* https://github.com/Azure/amqpnetlite/blob/772d0d3b6bbc43cf64e0ccd25911317f011927d7/src/Serialization/Extensions.cs#L38
+* Add message batching to DomainEvent publisher
+	* https://github.com/Azure/amqpnetlite/commit/ff3ea9ea4653076c0d8e21e374f2df410952bd3d
+* handling of abandoned requests from client
+	* use of cancellation token?
+* DbContext logging
+	* https://learn.microsoft.com/en-us/ef/core/logging-events-diagnostics/extensions-logging?tabs=v3
+* Contract testing
+	* https://github.com/pact-foundation/pact-net
+	* https://medium.com/asos-techblog/pact-testing-in-net-core-6bfc5b0e9131#:~:text=For%20those%20that%20don't,when%20contracts%20change%20between%20APIs.
+	* https://docs.pactflow.io/docs/examples/bi-directional/consumer/dotnet/
+	* https://docs.pact.io/getting_started/comparisons
 * Date only handling
 	* https://stackoverflow.com/questions/21256132/deserializing-dates-with-dd-mm-yyyy-format-using-json-net
 * conditionally build changed coeus directories instead of blindly building all
@@ -14,6 +32,7 @@ TODO:
 	* https://github.com/spring2/spring2.common/tree/master/src/Spring2.Common.Storage
 * new .net 8 auth
 	* https://devblogs.microsoft.com/dotnet/improvements-auth-identity-aspnetcore-8/
+	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/
 * RandomValues class from comms
 * capture of console/log from comms-api
 * EF concurrency example
