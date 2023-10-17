@@ -1,8 +1,8 @@
 [cmdletBinding()]
 Param()
 
-Push-Location "$PSScriptRoot/src/Acme.ShoppingCart.WebApi"
+Push-Location "$PSScriptRoot/src/Acme.IdentityServer.WebApi"
 
-cmd /c start cmd /k "title Acme.ShoppingCart.WebApi & dotnet run"
+cmd /c start cmd /k "title IdentityServer & dotnet run"
 
 Pop-Location
