@@ -18,8 +18,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Cortside.DomainEvent.Stub" Version="6.0.284" />
-    <PackageReference Include="Cortside.MockServer.AccessControl" Version="6.0.44" />
+    <PackageReference Include="Cortside.DomainEvent.Stub" Version="6.1.286-develop" />
+    <PackageReference Include="Cortside.MockServer.AccessControl" Version="6.1.45-develop" />
     <PackageReference Include="coverlet.collector" Version="6.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

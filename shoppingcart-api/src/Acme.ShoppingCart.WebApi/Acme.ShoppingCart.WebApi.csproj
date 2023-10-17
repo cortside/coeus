@@ -10,13 +10,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.0.137" />
-    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="6.0.137" />
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.0.137" />
-    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="6.0.137" />
-    <PackageReference Include="Cortside.Common.Correlation" Version="6.0.376" />
-    <PackageReference Include="Cortside.Common.Hosting" Version="6.0.376" />
-    <PackageReference Include="Cortside.Health" Version="6.0.86" />
+    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.1.152-develop" />
+    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="6.1.152-develop" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.1.152-develop" />
+    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="6.1.152-develop" />
+    <PackageReference Include="Cortside.Common.Correlation" Version="6.1.380-develop" />
+    <PackageReference Include="Cortside.Common.Hosting" Version="6.1.380-develop" />
+    <PackageReference Include="Cortside.Health" Version="6.1.87-develop" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.23" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.23">
