@@ -1,0 +1,184 @@
+div.navbar.navbar-top {
+    border-bottom: 4px solid #006DB6;
+}
+
+.navbar-header {
+    position: relative;
+}
+
+.navbar-left {
+    padding: 10px;
+    display: inline-block;
+}
+
+    .navbar-left > .icon-banner {
+        position: relative;
+        display: inline;
+        height: 80px;
+    }
+
+.icon {
+    position: relative;
+    top: -10px;
+}
+
+.logged-out iframe {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+.page-consent .client-logo {
+    float: left;
+}
+
+    .page-consent .client-logo img {
+        width: 80px;
+        height: 80px;
+    }
+
+.page-consent .consent-buttons {
+    margin-top: 25px;
+}
+
+.page-consent .consent-form .consent-scopecheck {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.page-consent .consent-form .consent-description {
+    margin-left: 25px;
+}
+
+    .page-consent .consent-form .consent-description label {
+        font-weight: normal;
+    }
+
+.page-consent .consent-form .consent-remember {
+    padding-left: 16px;
+}
+
+.grants .page-header {
+    margin-bottom: 10px;
+}
+
+.grants .grant {
+    margin-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid lightgray;
+}
+
+.grants .grant img {
+    width: 100px;
+    height: 100px;
+}
+
+.grants .grant .clientname {
+    font-size: 140%;
+    font-weight: bold;
+}
+
+.grants .grant .granttype {
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.grants .grant .created {
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.grants .grant .expires {
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.grants .grant li {
+    list-style-type: none;
+    display: inline;
+}
+
+.grants .grant li:after {
+    content: ", ";
+}
+
+.grants .grant li:last-child:after {
+    content: "";
+}
+
+#main {
+    flex: 1;
+}
+
+footer {
+    background-color: #4d4d4d;
+    padding: 25px 0 35px;
+    color: #fff;
+    width: 100%;
+}
+
+.footer-row {
+    padding: 8px 40px;
+    text-align: center;
+}
+
+.footer-row-text {
+    font-size: 14px;
+}
+
+.footer-logo {
+    margin: 0.5rem 0;
+}
+
+.footer-links {
+    list-style-type: none;
+}
+
+    .footer-links li {
+        padding-right: 10px;
+        display: inline-block;
+    }
+
+        .footer-links li:not(:first-child)::before {
+            content: '|';
+            padding-right: 10px;
+            color: #fff;
+        }
+
+    .footer-links a {
+        color: #fff;
+    }
+
+/* push footer to bottom */
+html {
+    position: relative;
+    height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    font-size: 16px;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+input.form-control {
+    font-size: 16px;
+}
+
+.body-content {
+    padding-bottom: 48px;
+}
+
+/* Hide so the people don't see it but the screen reader does for accessibility */
+.visually-hidden {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+}
