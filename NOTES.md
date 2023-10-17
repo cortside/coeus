@@ -1,5 +1,8 @@
 TODO:
 
+* RestApiClient does not handle well when invalid scope is configured for auth -- can't easily tell and was still calling api without a token
+* Add guidelines page for expected claims
+	* https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
 * attribute based controller caching and locks
 	* https://medium.com/@gkkomensi/learn-aop-with-c-37d9db7be6bb
 	* conditional based on state?
@@ -234,3 +237,4 @@ TODONE:
 	* update nginx startup.sh to be more like dotnet-runtime startup.sh
 * validate sonar branching and prs work
 	* https://www.jetbrains.com/help/teamcity/pull-requests.html#Bitbucket+Cloud+Pull+Requests
+* Move MockLogger from Cortside.DomainEvent.Tests as LogEventLogger to common testutilities 
