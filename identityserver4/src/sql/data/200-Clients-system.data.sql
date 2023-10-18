@@ -1,5 +1,5 @@
-Declare @clientName varchar(200) ='shoppingcart-api'
-Declare @clientId varchar(200) ='shoppingcart-api'
+Declare @clientName varchar(200) ='system'
+Declare @clientId varchar(200) ='system'
 Declare @id int
 
 if (not exists(select * from auth.Clients where clientId=@clientId))
@@ -33,16 +33,6 @@ if (not exists(select * from auth.ClientScopes where clientid = @id and scope = 
     INSERT [AUTH].[ClientScopes] ([ClientId], [Scope]) VALUES (@id, N'profile')
   END
   
-if (not exists(select * from auth.ClientScopes where clientid = @id and scope = 'role'))
-  BEGIN
-    INSERT [AUTH].[ClientScopes] ([ClientId], [Scope]) VALUES (@id, N'role')
-  END
-  
-if (not exists(select * from auth.ClientScopes where clientid = @id and scope = 'groups'))
-  BEGIN
-    INSERT [AUTH].[ClientScopes] ([ClientId], [Scope]) VALUES (@id, N'groups')
-  END
-
 if (not exists(select * from auth.ClientScopes where clientid = @id and scope = 'policyserver.runtime'))
   BEGIN
     INSERT [AUTH].[ClientScopes] ([ClientId], [Scope]) VALUES (@id, N'policyserver.runtime')
@@ -53,8 +43,13 @@ if (not exists(select * from auth.ClientScopes where clientid = @id and scope = 
     INSERT [AUTH].[ClientScopes] ([ClientId], [Scope]) VALUES (@id, N'catalog-api')
   END
 
-if (not exists(select * from auth.ClientClaims where clientid = @id and Type='sub' and Value = '24ff997c-a6d1-4de2-9552-3f1d0b74988e'))
+if (not exists(select * from auth.ClientScopes where clientid = @id and scope = 'shoppingcart-api'))
+  BEGIN
+    INSERT [AUTH].[ClientScopes] ([ClientId], [Scope]) VALUES (@id, N'shoppingcart-api')
+  END
+
+if (not exists(select * from auth.ClientClaims where clientid = @id and Type='sub' and Value = '15dc38a9-e9a0-4d44-8244-c7e28b20c558'))
 BEGIN
-  insert into auth.ClientClaims values(@id, 'sub', '24ff997c-a6d1-4de2-9552-3f1d0b74988e')
+  insert into auth.ClientClaims values(@id, 'sub', '15dc38a9-e9a0-4d44-8244-c7e28b20c558')
 END
 

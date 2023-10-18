@@ -4,7 +4,7 @@
 
 declare @id int
 declare @name nvarchar(400)
-set @name='shoppingcart-api'
+set @name='catalog-api'
 
 if (not exists(select * from auth.[ApiResources] where name=@name))
   BEGIN
