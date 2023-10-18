@@ -1,5 +1,17 @@
 TODO:
 
+* commit build.config and don't update with build.ps1
+	* i guess I just need to start committing that with projects, huh?
+	* 11:07
+	* it's expected to be overwritten by deploy -- and with the docker build stuff i have, it is in the resulting image
+	* 11:07
+	* that would make it easier for new people
+	* 11:08
+	* i just hate that it ends up being update over and over again
+	* 11:08
+	* i guess if build.ps1 didn't do that....it wouldn't
+	* 11:08
+	* hmmm
 * RestApiClient does not handle well when invalid scope is configured for auth -- can't easily tell and was still calling api without a token
 * Add guidelines page for expected claims
 	* https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims

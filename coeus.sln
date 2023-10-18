@@ -56,7 +56,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolicyServer", "policyserve
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Acme.ShoppingCart", "Acme.ShoppingCart", "{149F6B05-454C-4A01-87D8-6CFAA25F08D2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Acme.IdentityServer", "Acme.IdentityServer", "{87828EE1-E0B4-476F-BA6D-D937B86F96A4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Acme.IdentityServer4", "Acme.IdentityServer4", "{87828EE1-E0B4-476F-BA6D-D937B86F96A4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PolicyServer", "PolicyServer", "{22600215-BD8B-4572-8DA6-4FFCE0AF541F}"
 EndProject
@@ -69,6 +69,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.IdentityServer.WebApi.Tests", "identityserver4\src\Acme.IdentityServer.WebApi.Tests\Acme.IdentityServer.WebApi.Tests.csproj", "{FC475551-7293-4928-AA19-A3BBE1F32AD3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.IdentityServer.WebApi.IntegrationTests", "identityserver4\src\Acme.IdentityServer.WebApi.IntegrationTests\Acme.IdentityServer.WebApi.IntegrationTests.csproj", "{229105C3-83A7-4A0D-A468-AD87C2875FE4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Acme.IdentityServer6", "Acme.IdentityServer6", "{AE4916B9-0D99-478C-A090-C8D9CDAE2519}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.IdentityServer", "identityServer6\src\Acme.IdentityServer.csproj", "{A4C27714-1746-48FA-8840-EE699A81CD0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -180,6 +184,10 @@ Global
 		{229105C3-83A7-4A0D-A468-AD87C2875FE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{229105C3-83A7-4A0D-A468-AD87C2875FE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{229105C3-83A7-4A0D-A468-AD87C2875FE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4C27714-1746-48FA-8840-EE699A81CD0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4C27714-1746-48FA-8840-EE699A81CD0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4C27714-1746-48FA-8840-EE699A81CD0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4C27714-1746-48FA-8840-EE699A81CD0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -213,6 +221,7 @@ Global
 		{A11DE6FC-CD8B-40C1-9EBE-C9AA22957AB8} = {87828EE1-E0B4-476F-BA6D-D937B86F96A4}
 		{FC475551-7293-4928-AA19-A3BBE1F32AD3} = {87828EE1-E0B4-476F-BA6D-D937B86F96A4}
 		{229105C3-83A7-4A0D-A468-AD87C2875FE4} = {87828EE1-E0B4-476F-BA6D-D937B86F96A4}
+		{A4C27714-1746-48FA-8840-EE699A81CD0D} = {AE4916B9-0D99-478C-A090-C8D9CDAE2519}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D2AA434-A5A9-4EBF-A047-87D95B49DE7A}
