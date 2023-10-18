@@ -9,7 +9,7 @@
         "url": "http://localhost:5000"
     },
     "identity": {
-        "authority": "https://localhost:5002",
+        "authority": "http://localhost:5002",
         "clientId": "shoppingcart-web",
         "responseType": "id_token token",
         "scope": "openid profile shoppingcart-api catalog-api",

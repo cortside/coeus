@@ -5,7 +5,7 @@ declare @id int
 if (not exists(select * from auth.Clients where clientId=@clientId))
   BEGIN
 	INSERT [AUTH].[Clients] ([AbsoluteRefreshTokenLifetime], [AccessTokenLifetime], [AccessTokenType], [AllowAccessTokensViaBrowser], [AllowOfflineAccess], [AllowPlainTextPkce], [AllowRememberConsent], [AlwaysIncludeUserClaimsInIdToken], [AlwaysSendClientClaims], [AuthorizationCodeLifetime], [BackChannelLogoutSessionRequired], [BackChannelLogoutUri], [ClientClaimsPrefix], [ClientId], [ClientName], [ClientUri], [ConsentLifetime], [Description], [EnableLocalLogin], [Enabled], [FrontChannelLogoutSessionRequired], [FrontChannelLogoutUri], [IdentityTokenLifetime], [IncludeJwtId], [LogoUri], [PairWiseSubjectSalt], [LogoutSessionRequired], [LogoutUri], [NonEditable], [ProtocolType], [RefreshTokenExpiration], [RefreshTokenUsage], [RequireClientSecret], [RequireConsent], [RequirePkce], [SlidingRefreshTokenLifetime], [UpdateAccessTokenClaimsOnRefresh]) 
-		VALUES (2592000, 3600, 0, 1, 0, 0, 1, 1, 1, 300, 1, NULL, N'client_', @clientId, N'Status Web', NULL, NULL, NULL, 1, 1, 1, NULL, 300, 0, NULL, NULL, 0, NULL, 0, N'oidc', 1, 1, 1, 0, 0, 1296000, 0)
+		VALUES (2592000, 3600, 0, 1, 0, 0, 1, 1, 1, 300, 1, NULL, N'client_', @clientId, N'ShoppingCart Web', NULL, NULL, NULL, 1, 1, 1, NULL, 300, 0, NULL, NULL, 0, NULL, 0, N'oidc', 1, 1, 1, 0, 0, 1296000, 0)
 
 	set @id = SCOPE_IDENTITY()
 
@@ -24,6 +24,9 @@ if (not exists(select * from auth.Clients where clientId=@clientId))
 	INSERT [AUTH].[ClientPostLogoutRedirectUris] ([ClientId], [PostLogoutRedirectUri]) VALUES (@id, N'https://shoppingcart.acme.com/logout')
 	INSERT [AUTH].[ClientCorsOrigins] VALUES (@id, 'https://shoppingcart.acme.com')
   END
+
+-- ClientCorsOrigins
+
 
 if (exists(select * from auth.Clients where ClientId=@clientId))
   BEGIN
@@ -81,7 +84,8 @@ declare @grantedScopes table (
 insert into @grantedScopes values (N'openid')
 insert into @grantedScopes values (N'profile')
 insert into @grantedScopes values (N'role')
-insert into @grantedScopes values (N'shoppingcart.api')
+insert into @grantedScopes values (N'shoppingcart-api')
+insert into @grantedScopes values (N'catalog-api')
 
 insert into [AUTH].[ClientScopes] (ClientId, Scope)
 select @id, a.Scope
