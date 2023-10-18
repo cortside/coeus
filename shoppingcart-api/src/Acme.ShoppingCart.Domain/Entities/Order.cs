@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Acme.ShoppingCart.CatalogApi.Models.Responses;
 using Acme.ShoppingCart.Domain.Enumerations;
+using Acme.ShoppingCart.Exceptions;
 using Cortside.AspNetCore.Auditable.Entities;
 using Cortside.Common.Validation;
 using Microsoft.EntityFrameworkCore;
@@ -52,7 +53,7 @@ namespace Acme.ShoppingCart.Domain.Entities {
         public virtual IReadOnlyList<OrderItem> Items => items;
 
         private void AssertOpenOrder() {
-            Guard.Against(() => Status == OrderStatus.Cancelled || Status == OrderStatus.Shipped, () => throw new InvalidOperationException($"Update not allowed when Status is {Status}"));
+            Guard.Against(() => Status == OrderStatus.Cancelled || Status == OrderStatus.Shipped, () => throw new InvalidOrderStateChangeMessage($"Update not allowed when Status is {Status}"));
         }
 
         public void UpdateAddress(string street, string city, string state, string country, string zipCode) {
@@ -74,16 +75,16 @@ namespace Acme.ShoppingCart.Domain.Entities {
 
         public void RemoveItem(OrderItem item) {
             AssertOpenOrder();
-            Guard.Against(() => item == null || !items.Contains(item), () => throw new InvalidOperationException("Item to remove must not be null and must be part of order"));
+            Guard.Against(() => item == null || !items.Contains(item), () => throw new InvalidItemMessage("Item to remove must not be null and must be part of order"));
 
             items.Remove(item);
         }
 
         public void RemoveItems(List<OrderItem> itemsToRemove) {
             AssertOpenOrder();
-            Guard.Against(() => itemsToRemove == null || itemsToRemove.Count == 0, () => throw new InvalidOperationException("Items to remove must not be null and have items"));
+            Guard.Against(() => itemsToRemove == null || itemsToRemove.Count == 0, () => throw new InvalidItemMessage("Items to remove must not be null and have items"));
             foreach (var item in itemsToRemove) {
-                Guard.Against(() => item == null || !items.Contains(item), () => throw new InvalidOperationException("Item to remove must not be null and must be part of order"));
+                Guard.Against(() => item == null || !items.Contains(item), () => throw new InvalidItemMessage("Item to remove must not be null and must be part of order"));
             }
 
             foreach (var item in itemsToRemove) {
@@ -93,7 +94,7 @@ namespace Acme.ShoppingCart.Domain.Entities {
 
         public void UpdateItem(OrderItem item, int quantity) {
             AssertOpenOrder();
-            Guard.Against(() => item == null || !items.Contains(item), () => throw new InvalidOperationException("Item to remove must not be null and must be part of order"));
+            Guard.Against(() => item == null || !items.Contains(item), () => throw new InvalidItemMessage("Item to remove must not be null and must be part of order"));
 
             item.UpdateQuantity(quantity);
         }

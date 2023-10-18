@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.CatalogApi.Models.Responses;
-using Acme.ShoppingCart.Exceptions;
 using Cortside.RestApiClient;
 using Cortside.RestApiClient.Authenticators.OpenIDConnect;
 using Microsoft.AspNetCore.Http;
@@ -36,16 +35,15 @@ namespace Acme.ShoppingCart.CatalogApi {
                     .HandleTransientHttpError()
                     .Or<TimeoutException>()
                     .OrResult(x => x.StatusCode == 0 || x.StatusCode == System.Net.HttpStatusCode.Unauthorized || x.StatusCode == System.Net.HttpStatusCode.Forbidden)
-                    .WaitAndRetryAsync(PolicyBuilderExtensions.Jitter(1, 5))
+                    .WaitAndRetryAsync(PolicyBuilderExtensions.Jitter(1, 3))
             };
 
-            try {
-                var response = await client.GetAsync<CatalogItem>(request).ConfigureAwait(false);
-                return response.Data;
-            } catch (Exception ex) {
-                logger.LogError("Error contacting user api to retrieve user info for {sku}", sku);
-                throw new ExternalCommunicationFailureMessage($"Error contacting user api to retrieve user info for {sku}.", ex);
+            var response = await client.GetAsync<CatalogItem>(request).ConfigureAwait(false);
+            if (!response.IsSuccessful) {
+                throw response.LoggedFailureException(logger, "Error contacting user api to retrieve user info for {sku}", sku);
             }
+
+            return response.Data;
         }
 
         public void Dispose() {
