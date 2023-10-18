@@ -112,3 +112,6 @@ insert into [AUTH].[ClientRedirectUris] (ClientId, RedirectUri)
 select @id, a.Uri
 from @allowedRedirectUris a
 where uri not in (select RedirectUri from auth.ClientRedirectUris where clientId=@id)
+
+
+update auth.clients set EnableLocalLogin=1 where id=@id
