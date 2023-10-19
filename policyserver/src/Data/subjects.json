@@ -65,7 +65,7 @@
             ]
         },
         {
-            "clientId": "admin",
+            "clientId": "system",
             "subjectId": "15dc38a9-e9a0-4d44-8244-c7e28b20c558",
             "claims": [
                 {

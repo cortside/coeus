@@ -1,6 +1,7 @@
 $tokens = @{ 
 	"shoppingcart-api" = $env:SHOPPINGCART_API_TOKEN;
 	"shoppingcart-web" = $env:SHOPPINGCART_WEB_TOKEN; 
+	"identityserver4" = $env:IDENTITYSERVER4_TOKEN; 
 	"identityServer6" = $env:IDENTITYSERVER6_TOKEN; 
 	"policyserver" = $env:POLICYSERVER_TOKEN; 
 }
