@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\IdentityServer.pfx" Link="IdentityServer.pfx">
+    <None Include="..\IdentityServer.pfx" Link="IdentityServer.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

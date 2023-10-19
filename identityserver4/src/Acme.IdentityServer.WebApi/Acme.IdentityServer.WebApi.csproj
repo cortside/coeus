@@ -93,7 +93,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\IdentityServer.pfx" Link="IdentityServer.pfx">
+    <None Include="..\IdentityServer.pfx" Link="IdentityServer.pfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="build.json" />
