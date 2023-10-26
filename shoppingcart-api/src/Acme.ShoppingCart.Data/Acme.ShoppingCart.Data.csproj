@@ -8,8 +8,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.1.153-develop" />
-    <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="6.1.153-develop" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.1.154-develop" />
+    <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="6.1.154-develop" />
     <PackageReference Include="Cortside.Common.Security" Version="6.1.380-develop" />
     <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="6.1.287-develop" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.24" />
