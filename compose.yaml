@@ -43,21 +43,30 @@ services:
       retries: 5
       start_period: 20s
       timeout: 10s      
+  identityserver-bootstrap:
+    image: cortside/identityserver4:develop
+    depends_on:
+      db:
+        condition: "service_healthy"
+    volumes:
+      - coeus-data:/settings
+    command: ["/bin/sh", "-c", "cd /sql; pwsh ./update-database.ps1 -CreateDatabase -appsettings /settings/identityserver4/appsettings.local.json"]
   identityserver:
-    image: cortside/identityserver6:develop
+    image: cortside/identityserver4:develop
     restart: unless-stopped
     ports:
       - 5002:5000
     depends_on:
       - db
+      - identityserver-bootstrap
     volumes:
       - coeus-data:/settings
-    # healthcheck:
-      # test: curl --fail http://localhost:5000/api/health || exit 1
-      # interval: 60s
-      # retries: 5
-      # start_period: 20s
-      # timeout: 10s      
+    healthcheck:
+      test: curl --fail http://localhost:5000/api/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s      
   policyserver:
     image: cortside/policyserver:develop
     restart: unless-stopped

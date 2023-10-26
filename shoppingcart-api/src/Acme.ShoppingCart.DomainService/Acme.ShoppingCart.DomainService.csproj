@@ -11,7 +11,7 @@
     <PackageReference Include="Cortside.Common.Correlation" Version="6.1.380-develop" />
     <PackageReference Include="Cortside.Common.Messages" Version="6.1.380-develop" />
     <PackageReference Include="Cortside.Common.Validation" Version="6.1.380-develop" />
-    <PackageReference Include="Cortside.DomainEvent" Version="6.1.286-develop" />
+    <PackageReference Include="Cortside.DomainEvent" Version="6.1.287-develop" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.7.30">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

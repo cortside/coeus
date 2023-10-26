@@ -65,6 +65,10 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
             Configuration["CatalogApi:ServiceUrl"] = $"{MockServer.Url}";
             Configuration["CatalogApi:Authentication:Url"] = $"{MockServer.Url}/connect/token";
 
+            // make sure background services are enabled for tests
+            Configuration["HealthCheckHostedService:Enabled"] = "true";
+            Configuration["ReceiverHostedService:Enabled"] = "true";
+
             MockServer.WaitForStart();
 
             return Host.CreateDefaultBuilder()

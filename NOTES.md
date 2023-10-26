@@ -1,5 +1,19 @@
 TODO:
 
+* chatgpt client
+	* https://www.codeproject.com/Articles/5370452/Developing-a-Client-Package-for-Integrating-OpenAI
+* dynamic filters for search
+	* https://www.codeproject.com/Tips/5370451/A-Convenient-Way-of-Filtering-Objects-with-Objects
+* Add concurrency example with etag/RowVersion
+* for troy -- restapiclient deserialization handling with GetAsync
+	* not able to know it's a deserialization error
+	* class with property typed int where json has decimal, or class has non-nullable  property with null in json
+	* ThrowOnAnyError = true (nothing other than serializer set in options)
+* dto generator
+	* https://blog.devgenius.io/net-source-generators-with-net-7-a68f29b46e74
+	* https://learn.microsoft.com/en-us/dotnet/api/system.codedom.compiler.generatedcodeattribute?view=net-7.0
+	* https://github.com/loresoft/EntityFrameworkCore.Generator
+	* https://learn.microsoft.com/en-us/ef/core/extensions/
 * commit build.config and don't update with build.ps1
 	* i guess I just need to start committing that with projects, huh?
 	* 11:07
@@ -38,9 +52,6 @@ TODO:
 * conditionally build changed coeus directories instead of blindly building all
 * better changelog generation for release prep for cortside repos
 	* .\update-nugetpackages.ps1 -cortside | grep "Cortside[.]" | sort
-* dto generator
-	* https://blog.devgenius.io/net-source-generators-with-net-7-a68f29b46e74
-	* https://learn.microsoft.com/en-us/dotnet/api/system.codedom.compiler.generatedcodeattribute?view=net-7.0
 * DB stored file/blob
 	* https://github.com/cortside/c6-dcms/blob/develop/src/Domain/Entity/Blob.cs
 	* https://github.com/cortside/c6-dcms/blob/develop/src/Domain/Entity/File.cs

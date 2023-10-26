@@ -8,7 +8,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Cortside.AspNetCore" Version="6.1.152-develop" />
+    <PackageReference Include="Cortside.AspNetCore" Version="6.1.153-develop" />
     <PackageReference Include="Cortside.Common.BootStrap" Version="6.1.380-develop" />
     <PackageReference Include="Cortside.Common.Cryptography" Version="6.1.380-develop" />
     <PackageReference Include="DistributedLock.SqlServer" Version="1.0.3" />

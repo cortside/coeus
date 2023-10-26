@@ -8,7 +8,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Cortside.DomainEvent" Version="6.1.286-develop" />
+    <PackageReference Include="Cortside.DomainEvent" Version="6.1.287-develop" />
     <PackageReference Include="DistributedLock.SqlServer" Version="1.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.7.30">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
