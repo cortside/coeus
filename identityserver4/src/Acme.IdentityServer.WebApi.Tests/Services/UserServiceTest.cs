@@ -112,7 +112,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             }.AsQueryable());
 
             // act & assert
-            await Assert.ThrowsAsync<InvalidValueMessage>(() => service.UpdateUser(userId, model)).ConfigureAwait(false);
+            await Assert.ThrowsAsync<InvalidValueMessage>(() => service.UpdateUser(userId, model));
         }
 
         [Fact]
@@ -125,7 +125,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             idsDbContextMock.Setup(c => c.Users).Returns(new List<User>().AsQueryable());
 
             // act & assert
-            await Assert.ThrowsAsync<ResourceNotFoundMessage>(() => service.UpdateUser(userId, model)).ConfigureAwait(false);
+            await Assert.ThrowsAsync<ResourceNotFoundMessage>(() => service.UpdateUser(userId, model));
         }
 
         [Fact]
@@ -238,7 +238,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             idsDbContextMock.Setup(c => c.Users).Returns(new List<User>().AsQueryable());
 
             // act & assert
-            await Assert.ThrowsAsync<ResourceNotFoundMessage>(() => service.UpdateUser(subjectId, model)).ConfigureAwait(false);
+            await Assert.ThrowsAsync<ResourceNotFoundMessage>(() => service.UpdateUser(subjectId, model));
         }
 
         [Fact]
@@ -442,18 +442,18 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
 
             var userId = Guid.NewGuid();
 
-            await context.Users.AddAsync(new User { UserId = userId }).ConfigureAwait(false);
+            await context.Users.AddAsync(new User { UserId = userId });
             var logins = new List<LoginAttempt> {
                 new LoginAttempt { UserId = userId, Successful = true, AttemptedOn = DateTime.UtcNow.AddSeconds(10) },
                 new LoginAttempt { UserId = userId, Successful = true, AttemptedOn = DateTime.UtcNow.AddSeconds(12) },
                 new LoginAttempt { UserId = Guid.NewGuid(), Successful = true, AttemptedOn = DateTime.UtcNow.AddSeconds(15) },
                 new LoginAttempt { UserId = userId, Successful = false, AttemptedOn = DateTime.UtcNow.AddSeconds(20) },
             };
-            await context.LoginAttempts.AddRangeAsync(logins).ConfigureAwait(false);
+            await context.LoginAttempts.AddRangeAsync(logins);
 
-            await context.SaveChangesAsync().ConfigureAwait(false);
+            await context.SaveChangesAsync();
 
-            var user = await service.FindBySubjectIdAsync(userId).ConfigureAwait(false);
+            var user = await service.FindBySubjectIdAsync(userId);
 
             user.Should().NotBeNull();
             user.UserId.Should().Be(userId);
@@ -467,15 +467,15 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
 
             var userId = Guid.NewGuid();
 
-            await context.Users.AddAsync(new User { UserId = userId }).ConfigureAwait(false);
+            await context.Users.AddAsync(new User { UserId = userId });
             var logins = new List<LoginAttempt> {
                 new LoginAttempt { UserId = userId, Successful = false, AttemptedOn = DateTime.UtcNow.AddSeconds(20) },
             };
-            await context.LoginAttempts.AddRangeAsync(logins).ConfigureAwait(false);
+            await context.LoginAttempts.AddRangeAsync(logins);
 
-            await context.SaveChangesAsync().ConfigureAwait(false);
+            await context.SaveChangesAsync();
 
-            var user = await service.FindBySubjectIdAsync(userId).ConfigureAwait(false);
+            var user = await service.FindBySubjectIdAsync(userId);
 
             user.Should().NotBeNull();
             user.UserId.Should().Be(userId);
@@ -487,7 +487,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             var context = GetDatabaseContext();
             SetupService(context);
 
-            await service.Invoking(srv => srv.FindBySubjectIdAsync(It.IsAny<Guid>())).Should().ThrowAsync<ResourceNotFoundMessage>().ConfigureAwait(false);
+            await service.Invoking(srv => srv.FindBySubjectIdAsync(It.IsAny<Guid>())).Should().ThrowAsync<ResourceNotFoundMessage>();
         }
 
         private void SetupService(IIdentityServerDbContext dbContext) {

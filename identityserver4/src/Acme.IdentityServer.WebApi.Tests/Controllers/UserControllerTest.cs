@@ -223,7 +223,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Controllers {
             userModelAssemblerMock.Setup(s => s.ToUserOutputModel(created)).Returns(output);
 
             // act
-            var result = await target.GetUserAsync(userId).ConfigureAwait(false) as OkObjectResult;
+            var result = await target.GetUserAsync(userId) as OkObjectResult;
             UserOutputModel resultUser = result.Value as UserOutputModel;
             Assert.Equal(resultUser.UserId, userId);
         }
@@ -231,11 +231,11 @@ namespace Acme.IdentityServer.WebApi.Tests.Controllers {
         [Fact]
         public async Task ShouldFailToGetUserAsync() {
             // arrange
-            var userId = new Guid();
+            var userId = Guid.NewGuid();
             userServiceMock.Setup(s => s.FindBySubjectIdAsync(userId)).ReturnsAsync(null as User);
 
             // act
-            var result = await target.GetUserAsync(userId).ConfigureAwait(false) as NotFoundResult;
+            var result = await target.GetUserAsync(userId) as NotFoundResult;
 
             // assert
             Assert.Equal(new NotFoundResult().StatusCode, result.StatusCode);

@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using Acme.IdentityServer.WebApi.Data;
+using Acme.IdentityServer.WebApi.IntegrationTests.Helpers;
 using Cortside.AspNetCore.Auditable;
 using Cortside.Common.Security;
+using Cortside.Common.Testing;
 using Cortside.DomainEvent;
 using Cortside.DomainEvent.EntityFramework;
-using Acme.IdentityServer.WebApi.IntegrationTests.Helpers;
-using Acme.IdentityServer.WebApi.Data;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
@@ -18,7 +18,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Moq;
 using Serilog;
 using ApiScope = IdentityServer4.Models.ApiScope;
@@ -90,8 +89,6 @@ namespace Acme.IdentityServer.WebApi.IntegrationTests {
             sc.AddDbContext<DataProtectionKeyContext>(options =>
                 options.UseInMemoryDatabase(dbName)
             );
-
-            sc.Unregister<IConfigureOptions<KeyManagementOptions>>();
             sc.AddDataProtection().PersistKeysToDbContext<DataProtectionKeyContext>();
 
             sc.AddIdentityServerBuilder()

@@ -7,8 +7,8 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Acme.IdentityServer.WebApi.IntegrationTests.Extensions;
 using Acme.IdentityServer.WebApi.Models;
+using Cortside.Common.Testing;
 using FluentAssertions;
 using IdentityModel;
 using Newtonsoft.Json;
@@ -19,7 +19,6 @@ namespace Acme.IdentityServer.WebApi.IntegrationTests.Tests.Admin.User {
 
     public class UserTest : IClassFixture<IntegrationTestFixture> {
         private readonly IntegrationTestFixture integrationTestFixture;
-        private static readonly Random random = new Random();
 
         public UserTest(IntegrationTestFixture integrationTestFixture) {
             this.integrationTestFixture = integrationTestFixture;
@@ -60,7 +59,7 @@ namespace Acme.IdentityServer.WebApi.IntegrationTests.Tests.Admin.User {
 
             // update user
             var updateModel = new Acme.IdentityServer.WebApi.Models.Input.UpdateUserModel() {
-                Username = random.RandomString(),
+                Username = RandomValues.CreateRandomString(),
                 Status = Acme.IdentityServer.WebApi.Models.Enumerations.UserStatus.Active,
                 Claims = new List<UserClaimModel> {
                     new UserClaimModel() {
@@ -139,7 +138,7 @@ namespace Acme.IdentityServer.WebApi.IntegrationTests.Tests.Admin.User {
 
         private Acme.IdentityServer.WebApi.Models.Input.CreateUserModel getUserRequestBody() {
             return new Acme.IdentityServer.WebApi.Models.Input.CreateUserModel() {
-                Username = random.RandomString(),
+                Username = RandomValues.CreateRandomString(),
                 Password = integrationTestFixture.Password,
                 Claims = new List<UserClaimModel>
                 {

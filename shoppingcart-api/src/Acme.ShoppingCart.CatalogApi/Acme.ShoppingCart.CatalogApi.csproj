@@ -4,12 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AsyncAnalyzers" Version="1.1.7">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="6.1.287-develop" />
-    <PackageReference Include="Cortside.RestApiClient" Version="6.1.148-develop" />
+    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="6.1.293" />
+    <PackageReference Include="Cortside.RestApiClient" Version="6.1.152-develop" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.7.30">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

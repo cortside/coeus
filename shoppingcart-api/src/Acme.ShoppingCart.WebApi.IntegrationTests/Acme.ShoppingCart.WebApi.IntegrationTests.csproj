@@ -14,12 +14,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AsyncAnalyzers" Version="1.1.7">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Cortside.DomainEvent.Stub" Version="6.1.287-develop" />
-    <PackageReference Include="Cortside.MockServer.AccessControl" Version="6.1.45-develop" />
+    <PackageReference Include="Cortside.Common.Testing" Version="6.1.392" />
+    <PackageReference Include="Cortside.DomainEvent.Stub" Version="6.1.293" />
+    <PackageReference Include="Cortside.MockServer.AccessControl" Version="6.1.62" />
     <PackageReference Include="coverlet.collector" Version="6.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -28,13 +25,13 @@
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.24" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.24" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.7.30">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="WireMock.Net" Version="1.5.39" />
-    <PackageReference Include="xunit" Version="2.5.3" />
+    <PackageReference Include="WireMock.Net" Version="1.5.40" />
+    <PackageReference Include="xunit" Version="2.6.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

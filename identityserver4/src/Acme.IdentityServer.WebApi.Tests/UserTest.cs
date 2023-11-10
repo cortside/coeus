@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using Acme.IdentityServer.Data;
 using Acme.IdentityServer.WebApi.Data;
 using Acme.IdentityServer.WebApi.Exceptions;
 using Acme.IdentityServer.WebApi.Models;

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Cortside.Common.Validation;
-using Cortside.DomainEvent.EntityFramework;
 using Acme.DomainEvent.Events;
 using Acme.IdentityServer.WebApi.Data;
 using Acme.IdentityServer.WebApi.Events;
@@ -13,6 +11,8 @@ using Acme.IdentityServer.WebApi.Models;
 using Acme.IdentityServer.WebApi.Models.Enumerations;
 using Acme.IdentityServer.WebApi.Models.Input;
 using Acme.IdentityServer.WebApi.Services;
+using Cortside.Common.Validation;
+using Cortside.DomainEvent.EntityFramework;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -247,7 +247,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
         /// <param name="claims">The claims.</param>
         /// <returns></returns>
         public async Task<User> AutoProvisionUser(string provider, string userId, List<Claim> claims) {
-            /// TODO: look at combining with the UserRegisteredHandler
+            // TODO: look at combining with the UserRegisteredHandler
 
             // create a new unique subject id
             var sub = Guid.NewGuid();

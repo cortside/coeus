@@ -1,7 +1,26 @@
 TODO:
 
+* document RestApiClient enhancements over just RestSharp
+* guard enhancements
+	* https://github.com/mabroukmahdhi/Mahdhi.GuardFluently
+* RestApiClient interface for configuration with openIdauthentication?
+* RestApiClient from HttpClient -- for use with MockServer and TestServer
+* settings controller in cortside.aspnetcore
+	* have controller use SettingsModel from IoC, setup in startup
+* authorization controller in cortside.aspnetcore
+	* probably need way of conditionally including it, i.e. for when access control is not setup or when authorization is not setup
+* use of dapper for db access with unit/integration Tests
+	* https://www.learndapper.com/database-providers
+	* https://www.connectionstrings.com/sqlite/
+	* https://enlear.academy/how-to-write-unit-tests-with-dapper-d97f4c6f76d6
+* valid mock/test jwt generation for AccessControl mocks
+	* https://stebet.net/mocking-jwt-tokens-in-asp-net-core-integration-tests/
+* openapi injestion for mock generation in MockHttpServer
+	* https://github.com/WireMock-Net/WireMock.Net/blob/master/src/WireMock.Net.OpenApiParser/WireMock.Net.OpenApiParser.csproj
 * chatgpt client
 	* https://www.codeproject.com/Articles/5370452/Developing-a-Client-Package-for-Integrating-OpenAI
+* codeproject.ai server
+	* https://www.codeproject.com/Articles/5322557/CodeProject-AI-Server-AI-the-easy-way
 * dynamic filters for search
 	* https://www.codeproject.com/Tips/5370451/A-Convenient-Way-of-Filtering-Objects-with-Objects
 * Add concurrency example with etag/RowVersion

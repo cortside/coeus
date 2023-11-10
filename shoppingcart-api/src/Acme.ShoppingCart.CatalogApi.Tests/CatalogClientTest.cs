@@ -22,9 +22,9 @@ namespace Acme.ShoppingCart.CatalogApi.Tests {
         private readonly CatalogClientConfiguration config;
 
         public CatalogClientTest() {
-            var server = new MockHttpServer(Guid.NewGuid().ToString())
-                .ConfigureBuilder<CatalogWireMock>();
-            server.WaitForStart();
+            var server = MockHttpServer.CreateBuilder(Guid.NewGuid().ToString())
+                .AddMock<CatalogMock>()
+                .Build();
 
             var wiremockurl = server.Url;
             var request = new TokenRequest {
@@ -54,13 +54,13 @@ namespace Acme.ShoppingCart.CatalogApi.Tests {
         [Fact]
         public async Task MockHttpMessageHandler_ShouldGetUserAsync() {
             // arrange
-            var user = new CatalogItem() {
+            var item = new CatalogItem() {
                 ItemId = Guid.NewGuid(),
                 Name = "Foo",
                 Sku = Guid.NewGuid().ToString(),
                 UnitPrice = 12.34M
             };
-            var json = JsonConvert.SerializeObject(user);
+            var json = JsonConvert.SerializeObject(item);
 
             const string url = "http://localhost:1234";
             var mockHttp = new MockHttpMessageHandler();
@@ -77,10 +77,10 @@ namespace Acme.ShoppingCart.CatalogApi.Tests {
             var client = new CatalogClient(config, new NullLogger<CatalogClient>(), new HttpContextAccessor(), options);
 
             //act
-            CatalogItem response = await client.GetItemAsync(user.Sku).ConfigureAwait(false);
+            CatalogItem response = await client.GetItemAsync(item.Sku).ConfigureAwait(false);
 
             //assert
-            response.Should().BeEquivalentTo(user);
+            response.Should().BeEquivalentTo(item);
         }
     }
 }
