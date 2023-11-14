@@ -9,7 +9,7 @@ if (not exists(select * from auth.Clients where clientId=@clientId))
 		VALUES (2592000, 3600, 0, 1, 0, 0, 1, 1, 1, 300, 1, NULL, N'client_', @clientId, N'ShoppingCart Mobile', NULL, NULL, NULL, 1, 1, 1, NULL, 300, 0, NULL, NULL, 0, NULL, 0, N'oidc', 1, 1, 0, 0, 0, 1296000, 0)
 
 	set @id = SCOPE_IDENTITY()
-    INSERT [AUTH].[ClientGrantTypes] ([ClientId], [GrantType]) VALUES (3, N'authorization_code')
+    INSERT [AUTH].[ClientGrantTypes] ([ClientId], [GrantType]) VALUES (@id, N'authorization_code')
 
 	--Local environment
 	INSERT [AUTH].[ClientPostLogoutRedirectUris] ([ClientId], [PostLogoutRedirectUri]) VALUES (@id, N'http://localhost:4200/logout')
