@@ -15,5 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Acme.ShoppingCart.CatalogApi\Acme.ShoppingCart.CatalogApi.csproj" />
+    <ProjectReference Include="..\Acme.ShoppingCart.Exceptions\Acme.ShoppingCart.Exceptions.csproj" />
   </ItemGroup>
 </Project>
