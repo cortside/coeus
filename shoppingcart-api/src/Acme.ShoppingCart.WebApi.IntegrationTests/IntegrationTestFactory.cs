@@ -42,6 +42,10 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
 
         //}
 
+
+        //https://timdeschryver.dev/blog/how-to-test-your-csharp-web-api#writing-your-own-webapplicationfactory
+
+
         protected override IHostBuilder CreateHostBuilder() {
             SetupConfiguration();
             SetupLogger();
