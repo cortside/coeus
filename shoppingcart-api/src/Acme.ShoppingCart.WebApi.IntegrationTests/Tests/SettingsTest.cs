@@ -1,10 +1,10 @@
 using System.Net;
 using System.Threading.Tasks;
+using Cortside.Common.Testing.Logging.Xunit;
 using Cortside.RestApiClient;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.Logging.Debug;
 using RestSharp;
 using Xunit;
 using Xunit.Abstractions;

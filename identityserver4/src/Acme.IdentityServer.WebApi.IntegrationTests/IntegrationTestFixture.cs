@@ -6,7 +6,7 @@ using Acme.IdentityServer.WebApi.Data;
 using Acme.IdentityServer.WebApi.IntegrationTests.Helpers;
 using Cortside.AspNetCore.Auditable;
 using Cortside.Common.Security;
-using Cortside.Common.Testing;
+using Cortside.Common.Testing.Extensions;
 using Cortside.DomainEvent;
 using Cortside.DomainEvent.EntityFramework;
 using IdentityServer4.Models;

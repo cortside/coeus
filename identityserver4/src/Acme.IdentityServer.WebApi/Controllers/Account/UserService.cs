@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
+using Acme.IdentityServer.WebApi.AuditEvents;
 using Acme.IdentityServer.WebApi.Data;
 using Acme.IdentityServer.WebApi.Events;
 using Acme.IdentityServer.WebApi.Exceptions;

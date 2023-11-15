@@ -6,7 +6,7 @@ using System.Net.Http.Headers;
 using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.WebApi.IntegrationTests.Mocks;
 using Cortside.AspNetCore.Builder;
-using Cortside.Common.Testing;
+using Cortside.Common.Testing.Extensions;
 using Cortside.DomainEvent;
 using Cortside.DomainEvent.Stub;
 using Cortside.MockServer;

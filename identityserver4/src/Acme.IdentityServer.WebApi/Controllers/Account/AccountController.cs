@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using Acme.IdentityServer.WebApi.AuditEvents;
 using Acme.IdentityServer.WebApi.Data;
 using Acme.IdentityServer.WebApi.Events;
 using Acme.IdentityServer.WebApi.Services;

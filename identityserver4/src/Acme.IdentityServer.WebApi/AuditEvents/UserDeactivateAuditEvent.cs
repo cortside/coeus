@@ -1,4 +1,4 @@
-namespace Acme.IdentityServer.WebApi.Events {
+namespace Acme.IdentityServer.WebApi.AuditEvents {
     public class UserDeactivateAuditEvent {
     }
 }
