@@ -1,13 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Cortside.Common.Testing" Version="6.1.397" />
     <PackageReference Include="Cortside.DomainEvent.Stub" Version="6.1.293" />
@@ -33,13 +31,11 @@
     </PackageReference>
     <PackageReference Include="DistributedLock.FileSystem" Version="1.0.1" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Acme.ShoppingCart.Data\Acme.ShoppingCart.Data.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.CatalogApi\Acme.ShoppingCart.CatalogApi.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.WebApi\Acme.ShoppingCart.WebApi.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <None Update="Data\*.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
