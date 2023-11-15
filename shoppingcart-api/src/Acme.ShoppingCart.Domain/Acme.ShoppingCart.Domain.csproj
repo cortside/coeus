@@ -5,7 +5,7 @@
     <NoWarn>1701;1702;RCS1170;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.Auditable" Version="6.1.163" />
+    <PackageReference Include="Cortside.AspNetCore.Auditable" Version="6.1.165" />
     <PackageReference Include="Cortside.Common.Validation" Version="6.1.397" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.25" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.8.14">
