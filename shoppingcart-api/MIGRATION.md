@@ -1,5 +1,22 @@
 # Migration notes and instructions
 
+## 2023.11 - API
+
+### New
+
+### Breaking Changes
+
+### Changes
+
+* Remove MiniProfiler as part of active setup but leave instructions for adding
+* Make use of new AddRestApiClient extension methods
+* Use new MockHttpServer builder for mocks in tests
+* Add more examples of using Polly policies in client setup
+* Cleanup exceptions and use existing ones from Cortside.Common.Messages and/or more appropriate base classes
+* Show example of using TestServer HttpClient used to create RestApiClient for tests 
+* Show example of using distributed lock in controller
+
+
 ## 2023.08 - API
 
 ### New
