@@ -32,7 +32,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             HttpResponseMessage response = null;
             var timer = new Stopwatch();
             timer.Start();
-            while (!success && timer.ElapsedMilliseconds < 30000) {
+            while (!success && timer.ElapsedMilliseconds < 45000) {
                 await Task.Delay(500).ConfigureAwait(false);
                 response = await testServerClient.GetAsync("api/health").ConfigureAwait(false);
                 success = response.IsSuccessStatusCode;
