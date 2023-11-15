@@ -4,9 +4,9 @@
     <nav class="border-y border-gray-100 my-4">
         <ul>
             <li><a routerLink="/catalog/items" routerLinkActive="active">Catalog</a></li>
-            <li><a routerLink="/orders">Orders</a></li>
+            <li><a routerLink="/orders" routerLinkActive="active">Orders</a></li>
             <li>
-                <a routerLink="/checkout"> {{ quantity$ | async }} cart items </a>
+                <a routerLink="/checkout"routerLinkActive="active"> {{ quantity$ | async }} cart items </a>
             </li>
         </ul>
     </nav>

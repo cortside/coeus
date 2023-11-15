@@ -1,0 +1,87 @@
+.hidden {
+    display: none;
+}
+
+.warning {
+    font-weight: bold;
+    font-size: 12px;
+    color: #E38F35;
+}
+
+span.field-validation-error {
+    display: block;
+    font-size: 12px;
+    color: #CF5817;
+    margin-top: 10px;
+}
+
+div.login-page {
+    display: flex;
+    justify-content: center;
+}
+
+    div.login-page > .login-form {
+        max-width: 480px;
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+    }
+
+.login-form h1.h2 {
+    margin-bottom: 20px;
+}
+
+.login-form label {
+    font-weight: normal;
+    margin-bottom: 0;
+}
+
+div.input-box-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+div.form-group.password, div.form-group.login {
+    margin-bottom: 0;
+}
+
+div.warning-reveal-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+    div.warning-reveal-container > * {
+        height: 20px;
+    }
+
+@media (min-width: 768px) {
+    div.warning-reveal-container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+div.bottom-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+    div.bottom-links a {
+        margin: 5px 0px 10px 0px;
+    }
+
+button.btn.btn-link, a {
+    padding: 0;
+}
+
+input.form-control, button.btn.btn-primary, h1 {
+    height: 40px;
+    width: 100%;
+    max-width: 480px;
+}

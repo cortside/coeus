@@ -12,6 +12,7 @@ using Cortside.AspNetCore.Auditable.Entities;
 using Cortside.AspNetCore.Builder;
 using Cortside.AspNetCore.EntityFramework;
 using Cortside.AspNetCore.Swagger;
+using Cortside.Common.Messages.Filters;
 using Cortside.DomainEvent;
 using Cortside.DomainEvent.EntityFramework;
 using Cortside.Health;
@@ -53,7 +54,7 @@ namespace Acme.ShoppingCart.WebApi {
         /// </summary>
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services) {
-            // setup default json serializer settings
+            // setup global default json serializer settings
             JsonConvert.DefaultSettings = JsonNetUtility.GlobalDefaultSettings;
 
             // add ApplicationInsights telemetry
@@ -80,7 +81,9 @@ namespace Acme.ShoppingCart.WebApi {
             services.AddDomainEventOutboxPublisher<DatabaseContext>(Configuration);
 
             // add controllers and all of the api defaults
-            services.AddApiDefaults();
+            services.AddApiDefaults(InternalDateTimeHandling.Utc, options => {
+                options.Filters.Add<MessageExceptionResponseFilter>();
+            });
 
             // add SubjectPrincipal for auditing
             services.AddSubjectPrincipal();
@@ -108,7 +111,10 @@ namespace Acme.ShoppingCart.WebApi {
         /// <param name="env"></param>
         /// <param name="provider"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider) {
-            app.UseMiniProfiler();
+            // Can be used for more analytic information if not using an APM of some kind.
+            // Need to add installer MiniProfilerInstaller to default bootstrapper or as an installer above
+            // app.UseMiniProfiler();
+
             app.UseApiDefaults(Configuration);
             app.UseSwagger("Acme.ShoppingCart Api", provider);
 

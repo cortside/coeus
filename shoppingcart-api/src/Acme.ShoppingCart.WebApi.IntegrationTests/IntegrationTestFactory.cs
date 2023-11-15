@@ -6,11 +6,13 @@ using System.Net.Http.Headers;
 using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.WebApi.IntegrationTests.Mocks;
 using Cortside.AspNetCore.Builder;
+using Cortside.Common.Testing.Extensions;
 using Cortside.DomainEvent;
 using Cortside.DomainEvent.Stub;
 using Cortside.MockServer;
 using Cortside.MockServer.AccessControl;
 using Cortside.MockServer.AccessControl.Models;
+using Cortside.MockServer.Mocks;
 using Medallion.Threading;
 using Medallion.Threading.FileSystem;
 using Microsoft.AspNetCore.Hosting;
@@ -36,22 +38,30 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
         private IConfiguration Configuration { get; set; }
         public JsonSerializerSettings SerializerSettings { get; private set; }
 
+        //public IntegrationTestFactory(ITestOutputHelper outputHelper) {
+
+        //}
+
         protected override IHostBuilder CreateHostBuilder() {
             SetupConfiguration();
             SetupLogger();
 
-            MockServer = new MockHttpServer(dbName)
-                .ConfigureBuilder<CommonMock>()
-                .ConfigureBuilder(new IdentityServerMock("./Data/discovery.json", "./Data/jwks.json"))
-                .ConfigureBuilder(new SubjectMock("./Data/subjects.json"))
-                .ConfigureBuilder<CatalogMock>();
+            // TODO: create logger for test output?
+            // ITestOutputHelper
+            // https://github.com/dotnet/runtime/tree/main/src/libraries/Microsoft.Extensions.Logging.Debug/src
+
+            MockServer = MockHttpServer.CreateBuilder(dbName)
+                .AddMock<CommonMock>()
+                .AddMock(new IdentityServerMock("./Data/discovery.json", "./Data/jwks.json"))
+                .AddMock(new SubjectMock("./Data/subjects.json"))
+                .AddMock<CatalogMock>()
+                .Build();
 
             Configuration["HealthCheckHostedService:Checks:1:Value"] = $"{MockServer.Url}/api/health";
             Configuration["HealthCheckHostedService:Checks:2:Value"] = $"{MockServer.Url}/api/health";
             Configuration["HealthCheckHostedService:Checks:4:Value"] = $"{MockServer.Url}/api/health";
 
             Configuration["IdentityServer:Authority"] = MockServer.Url;
-            Configuration["IdentityServer:BaseUrl"] = $"{MockServer.Url}/connect/token";
             Configuration["IdentityServer:RequireHttpsMetadata"] = "false";
 
             Configuration["PolicyServer:TokenClient:Authority"] = MockServer.Url;
@@ -59,13 +69,12 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
 
             Configuration["DistributedLock:UseRedisLockProvider"] = "false";
 
-            Configuration["LoanServicingApi:BaseUrl"] = MockServer.Url;
-            Configuration["LoanServicingApi:Authentication:Url"] = $"{MockServer.Url}/connect/token";
-
             Configuration["CatalogApi:ServiceUrl"] = $"{MockServer.Url}";
             Configuration["CatalogApi:Authentication:Url"] = $"{MockServer.Url}/connect/token";
 
-            MockServer.WaitForStart();
+            // make sure background services are enabled for tests
+            Configuration["HealthCheckHostedService:Enabled"] = "true";
+            Configuration["ReceiverHostedService:Enabled"] = "true";
 
             return Host.CreateDefaultBuilder()
                 .ConfigureAppConfiguration(builder => builder.AddConfiguration(Configuration))

@@ -4,15 +4,11 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AsyncAnalyzers" Version="1.1.7">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Cortside.Common.Correlation" Version="6.0.376" />
-    <PackageReference Include="Cortside.Common.Messages" Version="6.0.376" />
-    <PackageReference Include="Cortside.Common.Validation" Version="6.0.376" />
-    <PackageReference Include="Cortside.DomainEvent" Version="6.0.278" />
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.7.30">
+    <PackageReference Include="Cortside.Common.Correlation" Version="6.1.397" />
+    <PackageReference Include="Cortside.Common.Messages" Version="6.1.397" />
+    <PackageReference Include="Cortside.Common.Validation" Version="6.1.397" />
+    <PackageReference Include="Cortside.DomainEvent" Version="6.1.293" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.8.14">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -22,6 +18,5 @@
     <ProjectReference Include="..\Acme.ShoppingCart.Data\Acme.ShoppingCart.Data.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.Domain\Acme.ShoppingCart.Domain.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.Dto\Acme.ShoppingCart.Dto.csproj" />
-    <ProjectReference Include="..\Acme.ShoppingCart.Exceptions\Acme.ShoppingCart.Exceptions.csproj" />
   </ItemGroup>
 </Project>

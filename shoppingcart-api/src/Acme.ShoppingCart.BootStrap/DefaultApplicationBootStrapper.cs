@@ -9,7 +9,6 @@ namespace Acme.ShoppingCart.BootStrap {
                 new ExampleHostedServiceInstaller(),
                 new RepositoryInstaller(),
                 new DomainServiceInstaller(),
-                new MiniProfilerInstaller(),
                 new DistributedLockInstaller(),
                 new RestApiClientInstaller(),
                 new FacadeInstaller()

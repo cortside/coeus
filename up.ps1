@@ -14,6 +14,8 @@ docker create -v coeus-data:/settings --name helper busybox true
 docker cp ./settings helper:/
 docker rm helper
 
+docker system prune --force
+
 #docker compose pull
 docker compose up -d
 

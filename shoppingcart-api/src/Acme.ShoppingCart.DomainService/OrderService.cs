@@ -8,8 +8,8 @@ using Acme.ShoppingCart.Data.Repositories;
 using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.Dto;
-using Acme.ShoppingCart.Exceptions;
 using Cortside.AspNetCore.Common.Paging;
+using Cortside.Common.Messages.MessageExceptions;
 using Cortside.Common.Validation;
 using Cortside.DomainEvent.EntityFramework;
 using Microsoft.Extensions.Logging;
@@ -30,7 +30,7 @@ namespace Acme.ShoppingCart.DomainService {
         }
 
         public async Task<Order> CreateOrderAsync(Customer customer, OrderDto dto) {
-            Guard.From.Null<BadRequestMessage>(customer, "customer not found");
+            Guard.From.Null<BadRequestResponseException>(customer, "customer not found");
 
             var entity = new Order(customer, dto.Address.Street, dto.Address.City, dto.Address.State, dto.Address.Country, dto.Address.ZipCode);
             using (LogContext.PushProperty("OrderResourceId", entity.OrderResourceId)) {

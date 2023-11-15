@@ -1,7 +1,7 @@
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.CatalogApi.Models.Responses;
-using Acme.ShoppingCart.Exceptions;
 using Cortside.RestApiClient;
 using Cortside.RestApiClient.Authenticators.OpenIDConnect;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +9,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Polly;
 using RestSharp;
 
 namespace Acme.ShoppingCart.CatalogApi {
@@ -21,7 +22,12 @@ namespace Acme.ShoppingCart.CatalogApi {
             options ??= new RestApiClientOptions {
                 BaseUrl = new Uri(catalogClientConfiguration.ServiceUrl),
                 FollowRedirects = true,
-                Authenticator = new OpenIDConnectAuthenticator(context, catalogClientConfiguration.Authentication),
+                Authenticator = new OpenIDConnectAuthenticator(context, catalogClientConfiguration.Authentication)
+                    .UsePolicy(PolicyBuilderExtensions.Handle<Exception>()
+                        .OrResult(r => r.StatusCode == HttpStatusCode.Unauthorized || r.StatusCode == 0)
+                        .WaitAndRetryAsync(PolicyBuilderExtensions.Jitter(1, 2))
+                    )
+                    .UseLogger(logger),
                 Serializer = new JsonNetSerializer(),
                 Cache = new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions()))
             };
@@ -30,14 +36,20 @@ namespace Acme.ShoppingCart.CatalogApi {
 
         public async Task<CatalogItem> GetItemAsync(string sku) {
             logger.LogInformation("Getting item by sku: {sku}", sku);
-            RestApiRequest request = new RestApiRequest($"api/v1/items/{sku}", Method.Get);
-            try {
-                var response = await client.GetAsync<CatalogItem>(request).ConfigureAwait(false);
-                return response.Data;
-            } catch (Exception ex) {
-                logger.LogError("Error contacting user api to retrieve user info for {sku}", sku);
-                throw new ExternalCommunicationFailureMessage($"Error contacting user api to retrieve user info for {sku}.", ex);
+            RestApiRequest request = new RestApiRequest($"api/v1/items/{sku}", Method.Get) {
+                Policy = PolicyBuilderExtensions
+                    .HandleTransientHttpError()
+                    .Or<TimeoutException>()
+                    .OrResult(x => x.StatusCode == 0 || x.StatusCode == System.Net.HttpStatusCode.Unauthorized || x.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                    .WaitAndRetryAsync(PolicyBuilderExtensions.Jitter(1, 3))
+            };
+
+            var response = await client.GetAsync<CatalogItem>(request).ConfigureAwait(false);
+            if (!response.IsSuccessful) {
+                throw response.LoggedFailureException(logger, "Error contacting catalog api to retrieve item info for {0}", sku);
             }
+
+            return response.Data;
         }
 
         public void Dispose() {
