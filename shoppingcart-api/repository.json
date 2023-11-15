@@ -19,8 +19,8 @@
     }
   },
   "docker": {
-    "buildImage": "cortside/dotnet-sdk:6.0-alpine",
-    "runtimeImage": "cortside/dotnet-runtime:6.0-alpine",
+    "buildImage": "cortside/dotnet-sdk:8.0-alpine",
+    "runtimeImage": "cortside/dotnet-runtime:8.0-alpine",
     "image": "cortside/shoppingcart-api",
     "executable": "Acme.ShoppingCart.WebApi"
   },
