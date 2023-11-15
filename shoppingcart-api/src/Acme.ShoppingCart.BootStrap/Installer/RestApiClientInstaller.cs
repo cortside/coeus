@@ -1,24 +1,27 @@
 using Acme.ShoppingCart.CatalogApi;
-using Acme.ShoppingCart.Configuration;
-using Cortside.AspNetCore;
+using Cortside.AspNetCore.AccessControl;
 using Cortside.Common.BootStrap;
+using Cortside.RestApiClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Acme.ShoppingCart.BootStrap.Installer {
     public class RestApiClientInstaller : IInstaller {
-        public void Install(IServiceCollection services, IConfigurationRoot configuration) {
-            // register clients
-            services.AddRestApiClient<ICatalogClient, CatalogClient, CatalogClientConfiguration>(configuration, "CatalogApi");
-
-            var catalogClientConfiguration = configuration.GetSection("CatalogApi").Get<CatalogClientConfiguration>();
-
+        /// <summary>
+        /// Registers a RestApiClient with it's interface and configuration.  Configuration authentication
+        /// is populated from IdentityServer section if not populated.
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        public void Install(IServiceCollection services, IConfiguration configuration) {
+            // get common ids authorization and make sure the authorityUrl is set
             var idsConfig = configuration.GetSection("IdentityServer").Get<IdentityServerConfiguration>();
+            idsConfig.Authentication.AuthorityUrl = idsConfig.Authority;
 
+            // register clients
+            var catalogClientConfiguration = configuration.GetSection("CatalogApi").Get<CatalogClientConfiguration>();
             catalogClientConfiguration.Authentication = idsConfig.Authentication;
-            catalogClientConfiguration.Authentication.AuthorityUrl = idsConfig.Authority;
-
-            services.AddSingleton(catalogClientConfiguration);
+            services.AddRestApiClient<ICatalogClient, CatalogClient, CatalogClientConfiguration>(catalogClientConfiguration);
         }
     }
 }

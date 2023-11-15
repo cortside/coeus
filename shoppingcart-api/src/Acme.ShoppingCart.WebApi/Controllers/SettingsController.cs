@@ -66,7 +66,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                         Url = policyServer.GetValue<string>("PolicyServerUrl"),
                     }
                 },
-                Service = "ShoppingCart"
+                Service = Configuration["Service:Name"]
             };
         }
     }

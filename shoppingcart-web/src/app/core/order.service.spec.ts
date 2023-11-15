@@ -3,16 +3,16 @@ import { TestBed } from '@angular/core/testing';
 import { OrderService } from './order.service';
 
 describe('OrderService', () => {
-  let service: OrderService;
+    let service: OrderService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [OrderService]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [OrderService],
+        });
+        service = TestBed.inject(OrderService);
     });
-    service = TestBed.inject(OrderService);
-  });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
 });

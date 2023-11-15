@@ -1,4 +1,4 @@
-DROP TRIGGER IF EXISTS trAddress
+DROP TRIGGER IF EXISTS dbo.trAddress
 GO
 
 ---
@@ -13,7 +13,7 @@ CREATE TRIGGER trAddress
 	SET NOCOUNT ON
 
 	DECLARE 
-		@AuditLogTransactionId	int,
+		@AuditLogTransactionId	bigint,
 		@Inserted	    		int = 0,
  		@ROWS_COUNT				int
 

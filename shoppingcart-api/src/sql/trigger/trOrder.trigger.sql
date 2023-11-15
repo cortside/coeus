@@ -1,4 +1,4 @@
-DROP TRIGGER IF EXISTS trOrder
+DROP TRIGGER IF EXISTS dbo.trOrder
 GO
 
 ---
@@ -13,7 +13,7 @@ CREATE TRIGGER trOrder
 	SET NOCOUNT ON
 
 	DECLARE 
-		@AuditLogTransactionId	int,
+		@AuditLogTransactionId	bigint,
 		@Inserted	    		int = 0,
  		@ROWS_COUNT				int
 

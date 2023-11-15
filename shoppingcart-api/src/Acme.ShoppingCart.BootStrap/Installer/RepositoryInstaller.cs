@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Acme.ShoppingCart.BootStrap.Installer {
     public class RepositoryInstaller : IInstaller {
-        public void Install(IServiceCollection services, IConfigurationRoot configuration) {
+        public void Install(IServiceCollection services, IConfiguration configuration) {
             // register repositories
             typeof(OrderRepository).GetTypeInfo().Assembly.GetTypes()
                 .Where(x => (x.Name.EndsWith("Repository"))

@@ -1,34 +1,44 @@
 [
     {
+        "itemId": "1ed35ab5-0055-4da2-b6fc-8721d136babf",
         "sku": "PAPPY-10",
         "name": "Pappy Van Winkle 10 Year",
+        "unitPrice":  999.99,
         "imageUrl": "https://www.oldripvanwinkle.com/app/uploads/2016/09/bourbon-bg-10year-2.jpg"
     },
     {
+        "itemId": "2da19c38-6de0-4545-b6e9-3ebcb1ac5340",
         "sku": "PAPPY-12",
-        "name": "Pappy Van Winkle 12 Year"
+        "name": "Pappy Van Winkle 12 Year",
+        "unitPrice": 1039.99,
+        "imageUrl": "https://www.oldripvanwinkle.com/app/uploads/2016/09/bourbon-bg-10year-2.jpg"
     },
     {
+        "itemId": "04a61420-75aa-4aa9-a2c1-87a50ae14ea4",
         "sku": "PAPPY-15",
         "name": "Pappy Van Winkle 15 Year",
+        "unitPrice": 2219.95,
         "imageUrl": "https://www.oldripvanwinkle.com/app/uploads/2016/09/15_year.jpg"
     },
     {
-        "sku": "PAPPY-18",
-        "name": "Pappy Van Winkle 18 Year"
-    },
-    {
+        "itemId": "d7843a1a-a16d-47a2-97b5-8620639462b4",
         "sku": "PAPPY-20",
         "name": "Pappy Van Winkle 20 Year",
+        "unitPrice": 4989.99,
         "imageUrl": "https://www.oldripvanwinkle.com/app/uploads/2016/09/bourbon-bg-20year-1.jpg"
     },
     {
+        "itemId": "c08dd0a1-7ba3-4499-abbb-feac2af85433",
         "sku": "PAPPY-23",
         "name": "Pappy Van Winkle 23 Year",
+        "unitPrice": 5184.99,
         "imageUrl": "https://www.oldripvanwinkle.com/app/uploads/2016/09/bourbon-bg-23year-2.jpg"
     },
     {
+        "itemId": "d6ab90f2-bf58-4919-a118-07b08f80f7cf",
         "sku": "PAPPY-25",
-        "name": "Pappy Van Winkle 25 Year"
+        "name": "Pappy Van Winkle 25 Year",
+        "unitPrice": 59999,
+        "imageUrl": "https://www.oldripvanwinkle.com/app/uploads/2016/09/bourbon-bg-10year-2.jpg"
     }
 ]

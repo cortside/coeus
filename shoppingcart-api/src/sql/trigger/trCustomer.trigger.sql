@@ -1,4 +1,4 @@
-DROP TRIGGER IF EXISTS trCustomer
+DROP TRIGGER IF EXISTS dbo.trCustomer
 GO
 
 ---
@@ -13,7 +13,7 @@ CREATE TRIGGER trCustomer
 	SET NOCOUNT ON
 
 	DECLARE 
-		@AuditLogTransactionId	int,
+		@AuditLogTransactionId	bigint,
 		@Inserted	    		int = 0,
  		@ROWS_COUNT				int
 

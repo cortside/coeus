@@ -1,5 +1,48 @@
 # Migration notes and instructions
 
+## 2023.11 - API
+
+### New
+
+### Breaking Changes
+
+### Changes
+
+* Remove MiniProfiler as part of active setup but leave instructions for adding
+* Make use of new AddRestApiClient extension methods
+* Use new MockHttpServer builder for mocks in tests
+* Add more examples of using Polly policies in client setup
+* Cleanup exceptions and use existing ones from Cortside.Common.Messages and/or more appropriate base classes
+* Show example of using TestServer HttpClient used to create RestApiClient for tests 
+* Show example of using distributed lock in controller
+
+
+## 2023.08 - API
+
+### New
+
+* Update all Cortside libraries to net6.0
+	* removal of deprecated package references
+
+### Breaking Changes
+
+* IInstaller now takes IConfiguration instead of IConfigurationRoot
+
+### Changes
+
+* RestApiClient constructor expects HttpContextAccessor for functionality related to X-Forwarded-For handling
+
+## 2023.08 - Web
+
+### New
+
+* continued work in progress for initial full examples
+
+### Breaking Changes
+
+### Changes
+
+
 ## 2023.06 - API
 
 ### New

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthenticatedGuard } from '@muziehdesign/auth';
+import { requireAuthentication } from '@muziehdesign/core';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { OrderListComponent } from './order-list/order-list.component';
 
@@ -8,7 +8,7 @@ export const orderLazyLoadingRoutes: Routes = [
     {
         path: 'orders',
         loadChildren: () => import('./order.module').then((m) => m.OrderModule),
-        canLoad: [AuthenticatedGuard],
+        canActivate: [requireAuthentication],
     },
 ];
 

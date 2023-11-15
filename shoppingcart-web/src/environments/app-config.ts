@@ -1,5 +1,7 @@
+import { AuthenticationSettings } from '@muziehdesign/core';
+
 export class AppConfig {
-    application?: {
+    service?: {
         name: string;
     };
     catalogApi?: {
@@ -8,11 +10,5 @@ export class AppConfig {
     shoppingCartApi?: {
         url: string;
     };
-    identity?: {
-        authority: string;
-        client_id: string;
-        redirect_uri: string;
-        silent_redirect_uri: string;
-        scope: string;
-    }
+    identity: AuthenticationSettings = {} as AuthenticationSettings;
 }

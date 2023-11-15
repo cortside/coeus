@@ -1,0 +1,134 @@
+@model Acme.IdentityServer.WebApi.Controllers.Account.LoginViewModel
+<link href="~/css/login.css" rel="stylesheet" type="text/css" />
+<title>Acme USA</title>
+<div class="login-page">
+    @section scripts {
+        <script type="text/javascript" src="~/scripts/login-page.js"></script>
+        <script type="text/javascript" src="~/lib/qrcode.js"></script>
+        <script type="text/javascript" src="~/scripts/qr.js"></script>
+    }
+    <input type="hidden" asp-for="ReturnUrl" />
+    <input type="hidden" asp-for="HasTwoFactorSetup" />
+    <div class="login-form">
+        @if (!@Model.ValidatedLogin)
+        {
+            <form asp-route="Login">
+
+                <h1 class="h2">Login</h1>
+                <fieldset>
+                    <legend class="visually-hidden">Login</legend>
+                    <div class="form-group">
+                        <label asp-for="Username"></label>
+                        <div class="input-box-wrapper">
+                            <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
+                        </div>
+                    </div>
+                    <div class="form-group password">
+                        <label asp-for="Password"></label>
+                        <div class="input-box-wrapper">
+                            <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="warning-reveal-container">
+                        <div><span id="capsWarning" class="warning hidden">Capslock is on</span></div>
+                        <button id="revealPassword" type="button" class="btn btn-link">Show</button>
+                    </div>
+                    <div class="form-group login">
+                        <button id="loginBtn" class="btn btn-primary" name="button" value="login">Sign In</button>
+                    </div>
+                    @if (ViewContext.ModelState.IsValid == false)
+                    {
+                        @Html.ValidationMessage("loginerror")
+                    }
+                </fieldset>
+            </form>
+            <div class="bottom-links">
+                <a href="@Model.ForgotPasswordAddress">Forgot Password/Username?</a>
+                @if (Model.VisibleExternalProviders.Any())
+                {
+                    @foreach (var provider in Model.VisibleExternalProviders)
+                    {
+                        <a asp-action="ExternalLogin"
+                           asp-route-provider="@provider.AuthenticationScheme"
+                           asp-route-returnUrl="@Model.ReturnUrl">
+                            Acme Employee Sign in (@provider.DisplayName)
+                        </a>
+                    }
+                }
+                <a href="https://acme.com/contact-us" target="_blank">Contact Us</a>
+                <div>
+                    Site questions? Call Support at <a href="tel:+1-888-867-5309">1-888-867-5309</a>.
+                </div>
+            </div>
+        }
+        else
+        {
+
+            <div>
+                <div>
+                    <form method="post" asp-route-returnUrl="@Model.ReturnUrl">
+                        <fieldset>
+                            <legend class="visually-hidden">Two Factor Required</legend>
+                            <input type="hidden" asp-for="Username" />
+                            <input type="hidden" asp-for="Password" />
+
+                            @if (Model.SetupCode?.Length > 1 && !Model.HasTwoFactorSetup)
+                            {
+                                <h1 class="h2">Two Factor Authentication Required</h1>
+                                <p>To use an authenticator app go through the following steps:</p>
+
+                                <p>
+                                    Download a two-factor authenticator app like Microsoft Authenticator for
+                                    <a href="https://go.microsoft.com/fwlink/?Linkid=825072">Android</a> and
+                                    <a href="https://go.microsoft.com/fwlink/?Linkid=825073">iOS</a> or
+                                    Google Authenticator for
+                                    <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;hl=en">Android</a> and
+                                    <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8">iOS</a> or another app that supports TOTP authentication.
+                                </p>
+
+                                <p>Scan the QR Code or enter this key <kbd>@Model.SetupCode</kbd> into your two factor authenticator app. Spaces and casing do not matter.</p>
+                                <div id="qrCode"></div>
+                                <div id="qrCodeData" data-url="@Html.Raw(Model.AuthenticatorUri)"></div>
+
+                                <p>
+                                    Once you have scanned the QR code or input the key above, your two factor authentication app will provide you
+                                    with a unique code. Enter the code in the confirmation box below.
+                                </p>
+                            }
+                            else
+                            {
+                                <p>Your login is protected with an authenticator app. Enter your authenticator code below.</p>
+                            }
+
+                            <div class="form-group">
+                                <label asp-for="TwoFactorCode">Authenticator Code</label>
+                                <input asp-for="TwoFactorCode" class="form-control" autocomplete="off" />
+                                <span asp-validation-for="TwoFactorCode" class="text-danger"></span>
+                            </div>
+                            @*<div class="form-group">
+                        <div class="checkbox">
+                        <label asp-for="RememberMachine">
+                        <input asp-for="RememberMachine"/>
+                        @Html.DisplayNameFor(m => m.RememberMachine)
+                        </label>
+                        </div>
+                        </div>*@
+                            <div class="form-group">
+                                <button id="twofaBtn" class="btn btn-primary" name="button" value="check2fa">Complete Sign In</button>
+                            </div>
+                            @if (ViewContext.ModelState.IsValid == false)
+                            {
+                                @Html.ValidationMessage("loginerror")
+                            }
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+
+            @*<p>
+        Don't have access to your authenticator device? You can
+        <a asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">log in with a recovery code</a>.
+        </p>*@
+        }
+    </div>
+</div>

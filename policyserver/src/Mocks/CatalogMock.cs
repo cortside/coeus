@@ -3,14 +3,14 @@ using System.IO;
 using System.Linq;
 using Cortside.AspNetCore.Common.Paging;
 using Cortside.MockServer;
+using Cortside.MockServer.Builder;
 using Newtonsoft.Json;
 using PolicyServer.Mocks.Models;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
-using WireMock.Server;
 
 namespace PolicyServer.Mocks {
-    public class CatalogMock : IMockHttpServerBuilder {
+    public class CatalogMock : IMockHttpMock {
         private readonly PagedList<CatalogItem> items = new PagedList<CatalogItem>();
 
         public CatalogMock(string filename) {
@@ -20,8 +20,8 @@ namespace PolicyServer.Mocks {
             items.TotalItems = items.Items.Count;
         }
 
-        public void Configure(WireMockServer server) {
-            server
+        public void Configure(MockHttpServer server) {
+            server.WireMockServer
                 .Given(
                     Request.Create().WithPath("/api/v1/items")
                         .UsingGet()
@@ -33,7 +33,7 @@ namespace PolicyServer.Mocks {
                         .WithBody(_ => JsonConvert.SerializeObject(items))
                 );
 
-            server
+            server.WireMockServer
                 .Given(
                     Request.Create().WithPath("/api/v1/items/*")
                         .UsingGet()
@@ -47,7 +47,7 @@ namespace PolicyServer.Mocks {
         }
 
         private CatalogItem GetItem(string sku) {
-            var item = items.Items.FirstOrDefault(x => x.Sku == sku);
+            var item = items.Items.Find(x => x.Sku == sku);
             return item ?? items.Items.FirstOrDefault();
         }
     }

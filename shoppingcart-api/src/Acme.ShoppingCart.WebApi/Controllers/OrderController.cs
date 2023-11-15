@@ -8,9 +8,12 @@ using Acme.ShoppingCart.WebApi.Mappers;
 using Acme.ShoppingCart.WebApi.Models.Requests;
 using Acme.ShoppingCart.WebApi.Models.Responses;
 using Cortside.AspNetCore.Common.Paging;
+using Cortside.Common.Messages.MessageExceptions;
+using Medallion.Threading;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Serilog.Context;
 
 namespace Acme.ShoppingCart.WebApi.Controllers {
@@ -25,13 +28,17 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
     public class OrderController : Controller {
         private readonly OrderModelMapper orderMapper;
         private readonly IOrderFacade facade;
+        private readonly IDistributedLockProvider lockProvider;
+        private readonly ILogger<OrderController> logger;
 
         /// <summary>
         /// Initializes a new instance of the OrderController
         /// </summary>
-        public OrderController(IOrderFacade facade, OrderModelMapper orderMapper) {
+        public OrderController(IOrderFacade facade, OrderModelMapper orderMapper, ILogger<OrderController> logger, IDistributedLockProvider lockProvider) {
             this.facade = facade;
             this.orderMapper = orderMapper;
+            this.lockProvider = lockProvider;
+            this.logger = logger;
         }
 
         /// <summary>
@@ -125,26 +132,32 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [Authorize(Constants.Authorization.Permissions.UpdateOrder)]
         [ProducesResponseType(typeof(OrderModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateOrderAsync(Guid id, CreateOrderModel input) {
-            using (LogContext.PushProperty("OrderResourceId", id)) {
-                var dto = new OrderDto() {
-                    OrderResourceId = id,
-                    Address = new AddressDto() {
-                        Street = input.Address.Street,
-                        City = input.Address.City,
-                        State = input.Address.State,
-                        Country = input.Address.Country,
-                        ZipCode = input.Address.ZipCode
-                    },
-                    Items = input.Items?.ConvertAll(x => new OrderItemDto() { Sku = x.Sku, Quantity = x.Quantity })
-                };
+            var lockName = $"OrderResourceId:{id}";
+            logger.LogDebug("Acquiring lock for {LockName}", lockName);
+            await using (await lockProvider.AcquireLockAsync(lockName).ConfigureAwait(false)) {
+                logger.LogDebug("Acquired lock for {LockName}", lockName);
+                using (LogContext.PushProperty("OrderResourceId", id)) {
+                    var dto = new OrderDto() {
+                        OrderResourceId = id,
+                        Address = new AddressDto() {
+                            Street = input.Address.Street,
+                            City = input.Address.City,
+                            State = input.Address.State,
+                            Country = input.Address.Country,
+                            ZipCode = input.Address.ZipCode
+                        },
+                        Items = input.Items?.ConvertAll(x => new OrderItemDto() { Sku = x.Sku, Quantity = x.Quantity })
+                    };
 
-                OrderDto result;
-                try {
-                    result = await facade.UpdateOrderAsync(dto).ConfigureAwait(false);
-                } catch (Exception ex) {
-                    throw ex;
+                    OrderDto result;
+                    try {
+                        result = await facade.UpdateOrderAsync(dto).ConfigureAwait(false);
+                    } catch (Exception ex) {
+                        throw new InternalServerErrorResponseException("Unable to update order", ex);
+                    }
+
+                    return Ok(orderMapper.Map(result));
                 }
-                return Ok(orderMapper.Map(result));
             }
         }
 

@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Acme.ShoppingCart.BootStrap.Installer {
     public class ExampleHostedServiceInstaller : IInstaller {
-        public void Install(IServiceCollection services, IConfigurationRoot configuration) {
+        public void Install(IServiceCollection services, IConfiguration configuration) {
             services.AddSingleton(configuration.GetSection("ExampleHostedService").Get<ExampleHostedServiceConfiguration>());
             services.AddHostedService<ExampleHostedService>();
         }
