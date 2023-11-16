@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
-using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.Domain.Entities;
 using Cortside.Common.Threading;
 using Cortside.DomainEvent;
@@ -15,13 +14,11 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests.Handlers {
     public class OrderStateChangedHandlerTest : IClassFixture<IntegrationTestFactory<Startup>> {
         private readonly IStubBroker broker;
         private readonly IDomainEventPublisher publisher;
-        private DatabaseContext db;
         private readonly IntegrationTestFactory<Startup> fixture;
 
         public OrderStateChangedHandlerTest(IntegrationTestFactory<Startup> fixture) {
             broker = fixture.Services.GetService<IStubBroker>();
             publisher = fixture.Services.GetService<IDomainEventPublisher>();
-            db = fixture.NewScopedDbContext();
             this.fixture = fixture;
         }
 
@@ -32,7 +29,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests.Handlers {
             var customer = db.Customers.First();
             var order = new Order(customer, "", "", "", "", "");
             db.Orders.Add(order);
-            await db.SaveChangesAsync().ConfigureAwait(false);
+            await db.SaveChangesAsync();
 
             var message = new OrderStateChangedEvent() {
                 OrderResourceId = order.OrderResourceId,
@@ -41,7 +38,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests.Handlers {
             await publisher.PublishAsync(message);
 
             // act
-            await AsyncUtil.WaitUntilAsync(new CancellationTokenSource(TimeSpan.FromSeconds(10)).Token, () => !broker.HasItems).ConfigureAwait(false);
+            await AsyncUtil.WaitUntilAsync(new CancellationTokenSource(TimeSpan.FromSeconds(10)).Token, () => !broker.HasItems);
 
             // assert
             db = fixture.NewScopedDbContext();

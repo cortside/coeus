@@ -6,16 +6,16 @@
     <NoWarn>1701;1702;1591;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.1.165" />
-    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="6.1.165" />
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.1.165" />
-    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="6.1.165" />
+    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.1.190" />
+    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="6.1.190" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.1.190" />
+    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="6.1.190" />
     <PackageReference Include="Cortside.Common.Correlation" Version="6.1.397" />
     <PackageReference Include="Cortside.Common.Hosting" Version="6.1.397" />
     <PackageReference Include="Cortside.Health" Version="6.0.86" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.25">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
