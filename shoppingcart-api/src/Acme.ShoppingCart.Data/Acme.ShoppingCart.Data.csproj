@@ -4,10 +4,10 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.1.163" />
-    <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="6.1.163" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.1.190" />
+    <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="6.1.190" />
     <PackageReference Include="Cortside.Common.Security" Version="6.1.397" />
-    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="6.1.293" />
+    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="6.1.295" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.25" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.25" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.25" />

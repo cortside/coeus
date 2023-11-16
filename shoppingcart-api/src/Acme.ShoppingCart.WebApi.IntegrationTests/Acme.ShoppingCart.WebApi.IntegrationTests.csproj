@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Cortside.Common.Testing" Version="6.1.397" />
-    <PackageReference Include="Cortside.DomainEvent.Stub" Version="6.1.293" />
+    <PackageReference Include="Cortside.DomainEvent.Stub" Version="6.1.295" />
     <PackageReference Include="Cortside.MockServer.AccessControl" Version="6.1.62" />
     <PackageReference Include="coverlet.collector" Version="6.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

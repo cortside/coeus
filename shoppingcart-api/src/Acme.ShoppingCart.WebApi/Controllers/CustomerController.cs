@@ -68,7 +68,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
             string reqUrl = HttpHelper.BuildUriFromRequest(Request);
             reqUrl += "?encryptedParams=" + HttpUtility.UrlEncode(encryptedString);
 
-            Response.Headers.Add("Location", reqUrl);
+            Response.Headers.Append("Location", reqUrl);
             return StatusCode((int)HttpStatusCode.SeeOther);
         }
 

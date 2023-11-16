@@ -18,7 +18,7 @@ using Xunit;
 
 namespace Acme.ShoppingCart.CatalogApi.Tests {
     public class CatalogClientTest {
-        private readonly ICatalogClient catalogClient;
+        private readonly CatalogClient catalogClient;
         private readonly CatalogClientConfiguration config;
 
         public CatalogClientTest() {
@@ -45,7 +45,7 @@ namespace Acme.ShoppingCart.CatalogApi.Tests {
             string sku = Guid.NewGuid().ToString();
 
             //act
-            CatalogItem item = await catalogClient.GetItemAsync(sku).ConfigureAwait(false);
+            CatalogItem item = await catalogClient.GetItemAsync(sku);
 
             //assert
             item.Should().NotBeNull();
@@ -77,7 +77,7 @@ namespace Acme.ShoppingCart.CatalogApi.Tests {
             var client = new CatalogClient(config, new NullLogger<CatalogClient>(), new HttpContextAccessor(), options);
 
             //act
-            CatalogItem response = await client.GetItemAsync(item.Sku).ConfigureAwait(false);
+            CatalogItem response = await client.GetItemAsync(item.Sku);
 
             //assert
             response.Should().BeEquivalentTo(item);
