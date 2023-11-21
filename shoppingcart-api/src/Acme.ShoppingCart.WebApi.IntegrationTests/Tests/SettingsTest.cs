@@ -1,27 +1,21 @@
 using System.Net;
 using System.Threading.Tasks;
-using Cortside.Common.Testing.Logging.Xunit;
 using Cortside.RestApiClient;
 using FluentAssertions;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Testing;
 using RestSharp;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
-    public class SettingsTest : IClassFixture<IntegrationTestFactory<Startup>> {
-        private readonly IntegrationTestFactory<Startup> fixture;
-        private readonly ITestOutputHelper testOutputHelper;
+    public class SettingsTest : IClassFixture<WebApiApplicationFactory> {
+        private readonly WebApiApplicationFactory webApi;
+        private readonly ITestOutputHelper output;
         private readonly RestApiClient client;
 
-        public SettingsTest(IntegrationTestFactory<Startup> fixture, ITestOutputHelper testOutputHelper) {
-            this.fixture = fixture;
-            this.testOutputHelper = testOutputHelper;
-            var httpClient = fixture.CreateClient(new WebApplicationFactoryClientOptions {
-                AllowAutoRedirect = false
-            });
-            client = new RestApiClient(new XunitLogger("SettingsTest", testOutputHelper), new HttpContextAccessor(), new RestApiClientOptions(), httpClient);
+        public SettingsTest(WebApiApplicationFactory webApi, ITestOutputHelper output) {
+            this.webApi = webApi;
+            this.output = output;
+            client = webApi.CreateRestApiClient(output);
         }
 
         [Fact]
