@@ -1,3 +1,6 @@
+# TODO: use script params for target host
+$env:DOCKER_HOST="mitterhorn"
+
 docker rm -f mssql
 docker rm -f rabbitmq
 docker rm -f seq

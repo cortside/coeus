@@ -1,5 +1,20 @@
 TODO:
 
+* play with aspire project
+	* https://learn.microsoft.com/en-us/dotnet/aspire/get-started/aspire-overview
+	* https://devblogs.microsoft.com/dotnet/introducing-dotnet-aspire-simplifying-cloud-native-development-with-dotnet-8/
+* multitargeting library
+	 * https://www.meziantou.net/never-forget-a-if-when-multi-targeting-dotnet-libraries-or-applications.htm 
+	```
+	#if NET5_0
+	// Optimized code that uses .NET 5.0 API
+	#elif NETSTANDARD2_0 || NETSTANDARD2_1
+	// Legacy implementation for previous frameworks
+	#else
+	// Prevent compilation for unknown target frameworks
+	#error Target Framework not supported
+	#endif
+	```
 * document RestApiClient enhancements over just RestSharp
 * guard enhancements
 	* https://github.com/mabroukmahdhi/Mahdhi.GuardFluently
@@ -78,6 +93,7 @@ TODO:
 * new .net 8 auth
 	* https://devblogs.microsoft.com/dotnet/improvements-auth-identity-aspnetcore-8/
 	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/
+	* https://www.codeproject.com/Articles/5370795/Microservices-using-ASP-NET-Core-8-Ocelot-MongoDB#identity-microservice
 * RandomValues class from comms
 * capture of console/log from comms-api
 * EF concurrency example
