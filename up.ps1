@@ -1,6 +1,7 @@
 [CmdletBinding()]
 Param 
 (
+	[Parameter(Mandatory = $false)][string]$environment = "",
 	[Parameter(Mandatory = $false)][switch]$tearDown
 )
 
@@ -12,9 +13,10 @@ function envsubst {
 }
 
 if ($tearDown.IsPresent) {
-	docker compose down
-
+	docker compose down --remove-orphans
 	docker volume rm coeus-data
+	docker compose down --remove-orphans
+
 	docker volume create coeus-data
 	docker create -v coeus-data:/settings --name helper busybox true
 

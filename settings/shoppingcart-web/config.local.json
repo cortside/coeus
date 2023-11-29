@@ -3,19 +3,19 @@
         "name": "shoppingcart-web"
     },
     "catalogApi": {
-        "url": "http://kehlstein:5001"
+        "url": "https://mockserver.cortside.net"
     },
     "shoppingCartApi": {
-        "url": "http://kehlstein:5000"
+        "url": "https://shoppingcartapi.cortside.net"
     },
     "identity": {
-        "authority": "https://identityserver.cortside.com",
+        "authority": "https://identityserver.cortside.net",
         "clientId": "shoppingcart-web",
         "responseType": "id_token token",
         "scope": "openid profile shoppingcart-api catalog-api",
-        "redirectUri": "http://kehlstein:5004/login-redirect",
-        "silentRedirectUri": "http://kehlstein:5004/silent-redirect",
-        "postLogoutRedirectUri": "http://kehlstein:5004/logout",
+        "redirectUri": "https://shoppingcart.cortside.net/login-redirect",
+        "silentRedirectUri": "https://shoppingcart.cortside.net/silent-redirect",
+        "postLogoutRedirectUri": "https://shoppingcart.cortside.net/logout",
         "accessTokenExpiringNotificationTime": 60,
         "loadUserInfo": true,
         "automaticSilentRenew": true,
