@@ -1,6 +1,9 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Acme.IdentityServer.BootStrap;
+using Acme.IdentityServer.WebApi.Data;
+using Acme.IdentityServer.WebApi.Installers;
 using Cortside.AspNetCore;
 using Cortside.AspNetCore.ApplicationInsights;
 using Cortside.AspNetCore.Auditable;
@@ -13,9 +16,6 @@ using Cortside.Common.Correlation;
 using Cortside.DomainEvent;
 using Cortside.DomainEvent.EntityFramework;
 using Cortside.Health;
-using Acme.IdentityServer.BootStrap;
-using Acme.IdentityServer.WebApi.Data;
-using Acme.IdentityServer.WebApi.Installers;
 using IdentityServer4.Extensions;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -130,10 +130,21 @@ namespace Acme.IdentityServer.WebApi {
             app.UseResponseCaching();
             app.UseSerilogRequestLogging();
 
-            // added for okta -- not sure if it's needed
-            app.UseCookiePolicy(new CookiePolicyOptions {
-                Secure = CookieSecurePolicy.Always
-            });
+            // handle cookies in chromium browsers over http
+            if (bool.Parse(Configuration["UseInsecureCookies"])) {
+                app.UseCookiePolicy(new CookiePolicyOptions {
+                    OnAppendCookie = cookieContext => {
+                        cookieContext.CookieOptions.SameSite = SameSiteMode.Unspecified;
+                        cookieContext.CookieOptions.Secure = false;
+                    },
+                    OnDeleteCookie = cookieContext => {
+                        cookieContext.CookieOptions.SameSite = SameSiteMode.Unspecified;
+                        cookieContext.CookieOptions.Secure = false;
+                    }
+                });
+            } else {
+                app.UseCookiePolicy();
+            }
 
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
@@ -161,7 +172,7 @@ namespace Acme.IdentityServer.WebApi {
 
             // to handle x-forwarded-* headers
             var forwardedHeaderOptions = new ForwardedHeadersOptions {
-                ForwardedHeaders = ForwardedHeaders.XForwardedHost | ForwardedHeaders.XForwardedProto
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedHost | ForwardedHeaders.XForwardedProto
             };
             forwardedHeaderOptions.KnownNetworks.Clear();
             forwardedHeaderOptions.KnownProxies.Clear();

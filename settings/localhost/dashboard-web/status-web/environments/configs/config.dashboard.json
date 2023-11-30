@@ -1,0 +1,65 @@
+{
+  "environments": ["coeus", "prod"],
+  "services": [
+    {
+      "name": "healthmonitor-api",
+      "type": "api",
+      "groups": ["tools"],
+      "instances": {
+        "coeus": [{ "key": "001", "health": "http://kehlstein:5005/api/health" }],
+        "prod": [{ "key": "001", "health": "http://kehlstein:5005/api/health" }]
+      },
+      "description": "Overall health of the environment, inclusive of all services"
+    },
+    {
+      "name": "status-web",
+      "type": "api",
+      "groups": ["tools"],
+      "instances": {
+        "coeus": [{ "key": "001", "health": "http://kehlstein:5005/api/v1/services/status-web" }],
+        "prod": [{ "key": "001", "health": "http://kehlstein:5005/api/v1/services/status-web" }]
+      },
+      "description": "The status website you're most likely looking at right now."
+    },
+    {
+      "name": "identityserver",
+      "type": "api",
+      "groups": ["auth"],
+      "instances": {
+        "coeus": [{ "key": "001", "health": "http://kehlstein:5005/api/v1/services/identityserver" }],
+        "prod": [{ "key": "001", "health": "http://kehlstein:5005/api/v1/services/identityserver" }]
+      },
+      "description": "Processes authorization requests for all applications"
+    },
+    {
+      "name": "policyserver",
+      "type": "api",
+      "groups": ["auth"],
+      "instances": {
+        "coeus": [{ "key": "001", "health": "http://kehlstein:5005/api/v1/services/policyserver" }],
+        "prod": [{ "key": "001", "health": "http://kehlstein:5005/api/v1/services/policyserver" }]
+      },
+      "description": "Stores authorization policies and handles authorization requests"
+    },
+    {
+      "name": "shoppingcart-api",
+      "type": "api",
+      "groups": ["shoppingcart"],
+      "instances": {
+        "coeus": [{ "key": "001", "health": "http://kehlstein:5005/api/v1/services/shoppingcart-api" }],
+        "prod": [{ "key": "001", "health": "http://kehlstein:5005/api/v1/services/shoppingcart-api" }]
+      },
+      "description": "shoppingcart-api"
+    },
+    {
+      "name": "shoppingcart-web",
+      "type": "api",
+      "groups": ["shoppingcart"],
+      "instances": {
+        "coeus": [{ "key": "001", "health": "http://kehlstein:5005/api/v1/services/shoppingcart-web" }],
+        "prod": [{ "key": "001", "health": "http://kehlstein:5005/api/v1/services/shoppingcart-web" }]
+      },
+      "description": "shoppingcart-web"
+    }
+  ]
+}

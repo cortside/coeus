@@ -1,5 +1,8 @@
 TODO:
 
+* chrome/safari conflict with same-site cookies
+	* https://www.thinktecture.com/en/identityserver/prepare-your-identityserver/
+	* https://jub0bs.com/posts/2021-01-29-great-samesite-confusion/
 * play with aspire project
 	* https://learn.microsoft.com/en-us/dotnet/aspire/get-started/aspire-overview
 	* https://devblogs.microsoft.com/dotnet/introducing-dotnet-aspire-simplifying-cloud-native-development-with-dotnet-8/

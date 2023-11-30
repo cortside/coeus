@@ -1,0 +1,24 @@
+{
+    "application": {
+        "name": "shoppingcart-web"
+    },
+    "catalogApi": {
+        "url": "http://kehlstein:5001"
+    },
+    "shoppingCartApi": {
+        "url": "http://kehlstein:5000"
+    },
+    "identity": {
+        "authority": "http://kehlstein:5002",
+        "clientId": "shoppingcart-web",
+        "responseType": "id_token token",
+        "scope": "openid profile shoppingcart-api catalog-api",
+        "redirectUri": "http://kehlstein:5004/login-redirect",
+        "silentRedirectUri": "http://kehlstein:5004/silent-redirect",
+        "postLogoutRedirectUri": "http://kehlstein:5004/logout",
+        "accessTokenExpiringNotificationTime": 60,
+        "loadUserInfo": true,
+        "automaticSilentRenew": true,
+        "logLevel": 0
+    }
+}

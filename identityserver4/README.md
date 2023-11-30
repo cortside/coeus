@@ -22,3 +22,33 @@ https://github.com/IdentityServer/IdentityServer4/blob/3ff3b46698f48f164ab1b54d1
 
 ## Generating hashed client secret values (bash)
 echo -n 'plaintextpassword' | openssl dgst -binary -sha256 | openssl base64
+
+Example of setting up multiple external providers:
+
+```json
+    "externalProviders": [
+        {
+            "scheme": "AAD",
+            "displayName": "Azure Active Directory",
+            "authority": "https://login.microsoftonline.com/common",
+            "clientId": "clientId",
+            "callbackPath": "/signin-oidc",
+            "scopes": [ "openid", "profile" ],
+            "providerIdClaim": "nameid",
+            "usernameclaim": "upn",
+            "claims": [ "email", "family_name", "given_name", "groups", "name" ]
+        },
+        {
+            "scheme": "Okta",
+            "displayName": "Okta",
+            "authority": "https://oktaauthority",
+            "clientId": "clientId",		
+            "callbackPath": "/signin-oidc-okta",
+            "scopes": [ "openid", "profile", "groups", "email", "phone" ],
+            "providerIdClaim": "nameid",
+            "usernameClaim": "upn",
+            "claims": [ "email", "family_name", "given_name", "groups", "name", "locale", "zoneinfo" ],
+            "AddIdTokenHint": true
+        }
+    ],
+```
