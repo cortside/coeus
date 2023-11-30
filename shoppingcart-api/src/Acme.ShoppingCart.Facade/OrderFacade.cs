@@ -34,7 +34,6 @@ namespace Acme.ShoppingCart.Facade {
             await uow.SaveChangesAsync().ConfigureAwait(false);
 
             return mapper.MapToDto(order);
-
         }
 
         public async Task<OrderDto> CreateOrderAsync(OrderDto input) {

@@ -68,6 +68,7 @@ RUN chmod -R a+rw /sql
 WORKDIR /app
 COPY --from=build /app/src/out ./
 COPY --from=build /app/src/"$publishableProject"/build.json ./
+RUN chown user:user appsettings.json
 
 USER user
 EXPOSE 5000/tcp
