@@ -36,6 +36,19 @@ namespace PolicyServer.Mocks {
             server.WireMockServer
                 .Given(
                     Request.Create().WithPath("/api/v1/items/*")
+                        .WithPath((path) => GetItem(path.Trim('/').Split("/")[3]) == null)
+                        .UsingGet()
+                )
+                .RespondWith(
+                    Response.Create()
+                        .WithStatusCode(200)
+                        .WithHeader("Content-Type", "application/json")
+                        .WithNotFound()
+                );
+
+            server.WireMockServer
+                .Given(
+                    Request.Create().WithPath("/api/v1/items/*")
                         .UsingGet()
                 )
                 .RespondWith(
@@ -47,8 +60,8 @@ namespace PolicyServer.Mocks {
         }
 
         private CatalogItem GetItem(string sku) {
-            var item = items.Items.Find(x => x.Sku == sku);
-            return item ?? items.Items.FirstOrDefault();
+            var item = items.Items.FirstOrDefault(x => x.Sku == sku);
+            return item;
         }
     }
 }
