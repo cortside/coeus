@@ -3,8 +3,9 @@ import { ActivatedRouteSnapshot, Route, Router } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
 import { ItemService } from '../core/item.service';
 
-const canActivateGuard = (snapshot:ActivatedRouteSnapshot, router: Router) => {
+const canActivateGuard = (snapshot:ActivatedRouteSnapshot) => {
     const service = inject(ItemService);
+    const router = inject(Router);
     return service.getItem(snapshot.params['sku']).pipe(
         map(()=>true),
         catchError(()=> {
