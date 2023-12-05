@@ -1,7 +1,7 @@
-<a [routerLink]="[item.itemId]" class="inline-block cursor-pointer aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+<a [routerLink]="[item.sku]" class="inline-block cursor-pointer aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
     <img src="{{ item.imageUrl }}" alt="{{ item.name }}" class="h-full w-full object-cover object-center lg:h-full lg:w-full" />
 </a>
 <div class="block mt-4">
-    <a [routerLink]="[item.itemId]">{{ item.name }}</a>
+    <a [routerLink]="[item.sku]">{{ item.name }}</a>
     {{ item.unitPrice | currency }}
 </div>
