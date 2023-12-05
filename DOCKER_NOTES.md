@@ -8,7 +8,8 @@ sudo chown -R root:docker /var/run/docker
 # to allow remote docker api
 * Open the file /lib/systemd/system/docker.service
 * Modify the following line:
-ExecStart=/usr/bin/docker daemon -H fd:// -H tcp://0.0.0.0:2375
+#ExecStart=/usr/bin/docker daemon -H fd:// -H tcp://0.0.0.0:2375
+ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375 --containerd=/run/containerd/containerd.sock
 
 * Reload the configuration and restart the Docker daemon:
 

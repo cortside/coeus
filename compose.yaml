@@ -29,6 +29,7 @@ services:
       - 5341:80
   redis:
     image: redislabs/redismod
+    restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
       interval: 1s

@@ -170,15 +170,20 @@ namespace Acme.IdentityServer.WebApi {
                 return next();
             });
 
+            // TODO: add extension method for UseReverseProxyHeaders
+            // in the method docs state what headers need to be set
             // to handle x-forwarded-* headers
             var forwardedHeaderOptions = new ForwardedHeadersOptions {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedHost | ForwardedHeaders.XForwardedProto
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedHost | ForwardedHeaders.XForwardedProto,
+                RequireHeaderSymmetry = false
             };
             forwardedHeaderOptions.KnownNetworks.Clear();
             forwardedHeaderOptions.KnownProxies.Clear();
-
             app.UseForwardedHeaders(forwardedHeaderOptions);
+
             app.UseStaticFiles();
+
+            // must be after forward headers
             app.UseIdentityServer();
 
             app.UseAuthentication();
