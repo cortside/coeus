@@ -1,5 +1,7 @@
 TODO:
 
+* MockServer implementation of all http status responses
+	* https://github.com/httpstatuses/httpstatuses/blob/main/contents/codes/200.md
 * use of docker based proxy to capture traffic (instead of something like fiddler)
 	* https://mitmproxy.org/
 * chrome/safari conflict with same-site cookies

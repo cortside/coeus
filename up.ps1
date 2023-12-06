@@ -25,7 +25,7 @@ if ($tearDown.IsPresent) {
 	docker compose down --remove-orphans
 	docker volume rm coeus-data
 	docker compose down --remove-orphans
-	docker volumn prune --force
+	docker volume prune --force
 
 	docker volume create coeus-data
 	docker create -v coeus-data:/settings --name helper busybox true
