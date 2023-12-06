@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ItemService } from 'src/app/core/item.service';
 import { ItemModel } from '../models/item.model';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Signal } from '@angular/core';
 
 @Component({
     selector: 'app-item',
