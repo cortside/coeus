@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
-        "start": "concurrently \"ng build core --watch\" \"ng serve\"",
+        "start": "ng build core & ng serve",
         "build": "ng build core && ng build shoppingcart-web",
         "watch": "ng build --watch --configuration development",
         "test": "ng test --project=shoppingcart-web",
