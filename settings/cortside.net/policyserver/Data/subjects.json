@@ -13,7 +13,7 @@
             "referenceToken": "admin-token",
             "policies": [
                 {
-                    "policyName": "SqlReport*",
+                    "policyName": "SqlReportApi",
                     "authorization": {
                         "roles": [
                             "Support"

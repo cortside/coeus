@@ -42,6 +42,6 @@ testem.log
 Thumbs.db
 
 # User files
-src/config.local.json
+*.local.json
 src/build.json
 cypress/videos

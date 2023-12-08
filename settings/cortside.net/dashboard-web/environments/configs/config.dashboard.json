@@ -42,6 +42,16 @@
       "description": "Stores authorization policies and handles authorization requests"
     },
     {
+      "name": "mockserver",
+      "type": "api",
+      "groups": ["auth"],
+      "instances": {
+        "coeus": [{ "key": "001", "health": "https://healthmonitorapi.cortside.net/api/v1/services/mockserver" }],
+        "prod": [{ "key": "001", "health": "https://healthmonitorapi.cortside.net/api/v1/services/mockserver" }]
+      },
+      "description": "mockserver-api"
+    },
+    {
       "name": "shoppingcart-api",
       "type": "api",
       "groups": ["shoppingcart"],
@@ -60,6 +70,16 @@
         "prod": [{ "key": "001", "health": "https://healthmonitorapi.cortside.net/api/v1/services/shoppingcart-web" }]
       },
       "description": "shoppingcart-web"
+    },
+    {
+      "name": "sqlreport-api",
+      "type": "api",
+      "groups": ["sqlreport"],
+      "instances": {
+        "coeus": [{ "key": "001", "health": "https://healthmonitorapi.cortside.net/api/v1/services/sqlreport-api" }],
+        "prod": [{ "key": "001", "health": "https://healthmonitorapi.cortside.net/api/v1/services/sqlreport-api" }]
+      },
+      "description": "sqlreport-api"
     }
   ]
 }

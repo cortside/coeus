@@ -1,6 +1,6 @@
 {
   "apiBaseUrl":   "https://shoppingcartapi.cortside.net/api/v1",
-  "sqlReportUrl": "https://shoppingcartapi.cortside.net/api/v1",
+  "sqlReportUrl": "https://sqlreport.cortside.net/api/v1",
   
   
   "decisionEngineUrl": "https://shoppingcartapi.cortside.net/api/v1",
@@ -13,7 +13,7 @@
   "identity": {
     "authority": "https://identityserver.cortside.net",
     "clientId": "dashboard-web",
-    "scope": "openid profile role shoppingcart-api",
+    "scope": "openid profile role shoppingcart-api sqlreport-api",
     "redirectUri": "https://dashboard.cortside.net/login-redirect",
     "postLogoutRedirectUri": "https://dashboard.cortside.net/logout",
     "responseType": "id_token token",

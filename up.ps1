@@ -26,7 +26,8 @@ if ($tearDown.IsPresent) {
 	docker volume rm coeus-data
 	docker compose down --remove-orphans
 	docker volume prune --force
-
+	docker volume list
+	
 	docker volume create coeus-data
 	docker create -v coeus-data:/settings --name helper busybox true
 
@@ -34,19 +35,24 @@ if ($tearDown.IsPresent) {
 	docker cp "./settings/$environment/dashboard-web" helper:/settings
 	docker cp "./settings/$environment/healthmonitor-api" helper:/settings
 	docker cp "./settings/$environment/identityserver" helper:/settings
+	docker cp "./settings/$environment/policyserver" helper:/settings
+	docker cp "./settings/$environment/mockserver" helper:/settings
 	docker cp "./settings/$environment/shoppingcart-api" helper:/settings
 	docker cp "./settings/$environment/shoppingcart-web" helper:/settings
+	docker cp "./settings/$environment/sqlreport-api" helper:/settings
 
 	docker rm helper
-
 	docker system prune --force
 } else {
 	# todo: use for loop over directories
 	docker compose cp "./settings/$environment/dashboard-web" identityserver:/settings
 	docker compose cp "./settings/$environment/healthmonitor-api" identityserver:/settings
 	docker compose cp "./settings/$environment/identityserver" identityserver:/settings
+	docker compose cp "./settings/$environment/policyserver" identityserver:/settings
+	docker compose cp "./settings/$environment/mockserver" identityserver:/settings
 	docker compose cp "./settings/$environment/shoppingcart-api" identityserver:/settings
 	docker compose cp "./settings/$environment/shoppingcart-web" identityserver:/settings
+	docker compose cp "./settings/$environment/sqlreport-api" identityserver:/settings
 
 	docker compose restart
 }
@@ -76,7 +82,6 @@ do {
 } while ($output -ne $null)
 
 docker compose ps | grep starting
-
 
 echo "*************"
 echo "done"

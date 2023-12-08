@@ -101,6 +101,7 @@ insert into @grantedScopes values (N'openid')
 insert into @grantedScopes values (N'profile')
 insert into @grantedScopes values (N'role')
 insert into @grantedScopes values (N'shoppingcart-api')
+insert into @grantedScopes values (N'sqlreport-api')
 
 insert into [AUTH].[ClientScopes] (ClientId, Scope)
 select @id, a.Scope

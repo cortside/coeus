@@ -1,5 +1,11 @@
 TODO:
 
+* identityserver admin ui
+	* https://github.com/skoruba/IdentityServer4.Admin
+* convert libraries from Newtonsoft.Json to System.Text.Json
+	* https://www.andybutland.dev/2023/07/202307migrating-api-from-newtonsoftjson-to-system-text-json.html
+	* https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/migrate-from-newtonsoft?pivots=dotnet-8-0
+	* 
 * MockServer implementation of all http status responses
 	* https://github.com/httpstatuses/httpstatuses/blob/main/contents/codes/200.md
 * use of docker based proxy to capture traffic (instead of something like fiddler)

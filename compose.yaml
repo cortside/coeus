@@ -2,9 +2,11 @@ services:
 #5005 - healthmonitor-api
 #5002 - identityserver
 #5001 - policyserver
+#5007 - mockserver
 #5000 - shoppingcart-api
 #4200 - shoppingcart-web
 #5003 - dashboard-web
+#5006 - sqlreport-api
   rabbitmq:
     environment:
       ACCEPT_EULA: "Y"
@@ -90,6 +92,24 @@ services:
       retries: 5
       start_period: 20s
       timeout: 10s      
+  mockserver:
+    image: cortside/policyserver:develop
+    restart: unless-stopped
+    environment:
+      SERVICE_NAME: mockserver
+    ports:
+      - 5007:5001
+    depends_on:
+      - db
+      - identityserver
+    volumes:
+      - coeus-data:/settings
+    healthcheck:
+      test: curl --fail http://localhost:5001/api/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s      
   shoppingcart-bootstrap:
     image: cortside/shoppingcart-api:develop
     depends_on:
@@ -105,9 +125,35 @@ services:
       - 5000:5000
     depends_on:
       - db
-      - policyserver
+      - mockserver
       - identityserver
       - shoppingcart-bootstrap
+    volumes:
+      - coeus-data:/settings
+    healthcheck:
+      test: curl --fail http://localhost:5000/api/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s      
+  sqlreport-bootstrap:
+    image: cortside/sqlreport-api:develop
+    depends_on:
+      db:
+        condition: "service_healthy"
+    volumes:
+      - coeus-data:/settings
+    command: ["/bin/sh", "-c", "cd /sql; pwsh ./update-database.ps1 -CreateDatabase -appsettings /settings/sqlreport-api/appsettings.local.json"]   
+  sqlreport-api:
+    image: cortside/sqlreport-api:develop
+    restart: unless-stopped
+    ports:
+      - 5006:5000
+    depends_on:
+      - db
+      - mockserver
+      - identityserver
+      - sqlreport-bootstrap
     volumes:
       - coeus-data:/settings
     healthcheck:
