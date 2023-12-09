@@ -84,5 +84,6 @@ do {
 docker compose ps | grep starting
 
 echo "*************"
+echo (Get-Date -Format "dddd MM/dd/yyyy HH:mm K")
 echo "done"
 echo "*************"

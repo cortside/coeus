@@ -143,7 +143,7 @@ services:
         condition: "service_healthy"
     volumes:
       - coeus-data:/settings
-    command: ["/bin/sh", "-c", "cd /sql; pwsh ./update-database.ps1 -CreateDatabase -appsettings /settings/sqlreport-api/appsettings.local.json"]   
+    command: ["/bin/sh", "-c", "cd /sql; pwsh ./update-database.ps1 -CreateDatabase -appsettings /settings/sqlreport-api/app/appsettings.local.json"]   
   sqlreport-api:
     image: cortside/sqlreport-api:develop
     restart: unless-stopped

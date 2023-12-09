@@ -13,14 +13,15 @@
             "referenceToken": "admin-token",
             "policies": [
                 {
-                    "policyName": "SqlReportApi",
+                    "policyName": "SqlReport*",
                     "authorization": {
                         "roles": [
                             "Support"
                         ],
                         "permissions": [
                             "CanGetReports",
-                            "spReport_Report1"
+                            "spReport_Tables",
+							"spReport_Table"
                         ]
                     }
                 },
