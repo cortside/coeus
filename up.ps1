@@ -10,6 +10,7 @@ if ($environment -eq "") {
 }
 
 echo "*************"
+echo (Get-Date -Format "dddd MM/dd/yyyy HH:mm K")
 echo "docker host: $($env:DOCKER_HOST)"
 echo "environment: $environment"
 echo "*************"
@@ -61,9 +62,6 @@ docker run --rm -i -v=coeus-data:/settings busybox ls -Al /settings
 
 #docker compose pull
 docker compose up -d
-
-#docker exec -it coeus-healthmonitor-api-1 ls -R /settings
-#docker exec -it coeus-healthmonitor-api-1 ls appsettings*
 
 do {
     write-host "Waiting for bootstrap containers to finish..."
