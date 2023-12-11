@@ -1,11 +1,19 @@
 TODO:
 
+
+* Dependency Injection into Entity Class
+	* https://stackoverflow.com/questions/51082764/dependency-injection-into-entity-class
+	* https://stackoverflow.com/questions/4835046/why-not-use-an-ioc-container-to-resolve-dependencies-for-entities-business-objec
+* Lock with async/await
+	* https://www.rocksolidknowledge.com/articles/locking-and-asyncawait
+* RestFS stuff
+	* https://makolyte.com/csharp-get-a-files-checksum-using-any-hashing-algorithm-md5-sha256/
 * identityserver admin ui
 	* https://github.com/skoruba/IdentityServer4.Admin
 * convert libraries from Newtonsoft.Json to System.Text.Json
 	* https://www.andybutland.dev/2023/07/202307migrating-api-from-newtonsoftjson-to-system-text-json.html
 	* https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/migrate-from-newtonsoft?pivots=dotnet-8-0
-	* 
+	* https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/migrate-from-newtonsoft?pivots=dotnet-6-0
 * MockServer implementation of all http status responses
 	* https://github.com/httpstatuses/httpstatuses/blob/main/contents/codes/200.md
 * use of docker based proxy to capture traffic (instead of something like fiddler)
@@ -107,6 +115,7 @@ TODO:
 	* https://devblogs.microsoft.com/dotnet/improvements-auth-identity-aspnetcore-8/
 	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/
 	* https://www.codeproject.com/Articles/5370795/Microservices-using-ASP-NET-Core-8-Ocelot-MongoDB#identity-microservice
+	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/
 * RandomValues class from comms
 * capture of console/log from comms-api
 * EF concurrency example
