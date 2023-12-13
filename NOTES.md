@@ -1,6 +1,8 @@
 TODO:
 
-
+* RandomValues class from comms
+	* https://github.com/dochoffiday/Lorem.NET/blob/master/Examples/Program.cs
+* capture of console/log from comms-api
 * Dependency Injection into Entity Class
 	* https://stackoverflow.com/questions/51082764/dependency-injection-into-entity-class
 	* https://stackoverflow.com/questions/4835046/why-not-use-an-ioc-container-to-resolve-dependencies-for-entities-business-objec
@@ -116,8 +118,6 @@ TODO:
 	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/
 	* https://www.codeproject.com/Articles/5370795/Microservices-using-ASP-NET-Core-8-Ocelot-MongoDB#identity-microservice
 	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/
-* RandomValues class from comms
-* capture of console/log from comms-api
 * EF concurrency example
 * ETag example
 * Add schema parameter to AddDomainEventOutbox()
