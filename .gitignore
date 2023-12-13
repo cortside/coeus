@@ -360,3 +360,5 @@ policyserver/*.local.json
 *.db-wal
 *.db
 shoppingcart-api/DataDictionary.csv
+
+.env

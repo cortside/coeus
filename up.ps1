@@ -5,22 +5,34 @@ Param
 	[Parameter(Mandatory = $false)][switch]$tearDown
 )
 
+$DOCKER_HOST = $env:DOCKER_HOST
+
+if ($DOCKER_HOST -eq $null) { 
+	$DOCKER_HOST="localhost"
+	$environment=$DOCKER_HOST
+}
+
 if ($environment -eq "") {
-	$environment=$env:DOCKER_HOST
+	$environment=$DOCKER_HOST
 }
 
 echo "*************"
 echo (Get-Date -Format "dddd MM/dd/yyyy HH:mm K")
-echo "docker host: $($env:DOCKER_HOST)"
+echo "docker host: $($DOCKER_HOST)"
 echo "environment: $environment"
 echo "*************"
 
 
-if ($env:DOCKER_HOST -eq $environment) {
+if ($DOCKER_HOST -eq $environment) {
 	$environment = "DOCKER_HOST"
 	echo "Using DOCKER_HOST files"
 	echo "*************"
 }
+
+echo "DOCKER_HOST=$DOCKER_HOST" > .env
+echo "DOCKER_HOST_IP=$((Resolve-DNSName -Type A $DOCKER_HOST).IPAddress)" >> .env
+cat .env
+echo "*************"
 
 function envsubst {
   param([Parameter(ValueFromPipeline)][string]$InputObject)
@@ -68,7 +80,7 @@ if ($tearDown.IsPresent) {
 docker run --rm -i -v=coeus-data:/settings busybox:musl ls -Al /settings
 # replace DOCKER_HOST with env var value
 $cmd = 'cd /settings; for i in $(grep -r -l ''DOCKER_HOST'' *); do sed -i ''s/DOCKER_HOST/env:DOCKER_HOST/g'' $i; echo $i; done'
-$cmd = $cmd -replace 'env:DOCKER_HOST', $($env:DOCKER_HOST)
+$cmd = $cmd -replace 'env:DOCKER_HOST', $($DOCKER_HOST)
 $cmd
 docker run --rm -i -v=coeus-data:/settings busybox:musl sh -c $cmd
 docker run --rm -i -v=coeus-data:/settings busybox:musl sh -c 'cd /settings; for i in $(find . -name ''*''); do echo $i; dos2unix -b $i; done'
