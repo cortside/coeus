@@ -50,6 +50,8 @@ services:
     restart: unless-stopped
     ports:
       - 5005:5000
+    extra_hosts:
+      - ${DOCKER_HOST}:${DOCKER_HOST_IP}
     volumes:
       - coeus-data:/settings
     healthcheck:
@@ -65,12 +67,14 @@ services:
         condition: "service_healthy"
     volumes:
       - coeus-data:/settings
-    command: ["/bin/sh", "-c", "cd /sql; pwsh ./update-database.ps1 -CreateDatabase -TestData -appsettings /settings/identityserver/appsettings.local.json"]
+    command: ["/bin/sh", "-c", "unset SERVICE_EXECUTABLE; /startup.sh; cd /sql; pwsh ./update-database.ps1 -CreateDatabase -TestData -appsettings /app/appsettings.local.json"]
   identityserver:
     image: cortside/identityserver4:develop
     restart: unless-stopped
     ports:
       - 5002:5000
+    extra_hosts:
+      - ${DOCKER_HOST}:${DOCKER_HOST_IP}
     depends_on:
       - db
       - identityserver-bootstrap
@@ -87,6 +91,8 @@ services:
     restart: unless-stopped
     ports:
       - 5001:5001
+    extra_hosts:
+      - ${DOCKER_HOST}:${DOCKER_HOST_IP}
     depends_on:
       - db
       - identityserver
@@ -105,6 +111,8 @@ services:
       SERVICE_NAME: mockserver
     ports:
       - 5007:5001
+    extra_hosts:
+      - ${DOCKER_HOST}:${DOCKER_HOST_IP}
     depends_on:
       - db
       - identityserver
@@ -123,12 +131,14 @@ services:
         condition: "service_healthy"
     volumes:
       - coeus-data:/settings
-    command: ["/bin/sh", "-c", "cd /sql; pwsh ./update-database.ps1 -CreateDatabase -appsettings /settings/shoppingcart-api/appsettings.local.json"]   
+    command: ["/bin/sh", "-c", "unset SERVICE_EXECUTABLE; /startup.sh; cd /sql; pwsh ./update-database.ps1 -CreateDatabase -appsettings /settings/shoppingcart-api/appsettings.local.json"]   
   shoppingcart-api:
     image: cortside/shoppingcart-api:develop
     restart: unless-stopped
     ports:
       - 5000:5000
+    extra_hosts:
+      - ${DOCKER_HOST}:${DOCKER_HOST_IP}
     depends_on:
       - db
       - mockserver
@@ -149,12 +159,14 @@ services:
         condition: "service_healthy"
     volumes:
       - coeus-data:/settings
-    command: ["/bin/sh", "-c", "cd /sql; pwsh ./update-database.ps1 -CreateDatabase -appsettings /settings/sqlreport-api/app/appsettings.local.json"]   
+    command: ["/bin/sh", "-c", "unset SERVICE_EXECUTABLE; /startup.sh; cd /sql; pwsh ./update-database.ps1 -CreateDatabase -appsettings /settings/sqlreport-api/app/appsettings.local.json"]   
   sqlreport-api:
     image: cortside/sqlreport-api:develop
     restart: unless-stopped
     ports:
       - 5006:5000
+    extra_hosts:
+      - ${DOCKER_HOST}:${DOCKER_HOST_IP}
     depends_on:
       - db
       - mockserver
@@ -203,6 +215,7 @@ services:
       start_period: 20s
       timeout: 10s      
   db:
+    user: root
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "password1@"

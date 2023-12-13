@@ -15,6 +15,13 @@ echo "docker host: $($env:DOCKER_HOST)"
 echo "environment: $environment"
 echo "*************"
 
+
+if ($env:DOCKER_HOST -eq $environment) {
+	$environment = "DOCKER_HOST"
+	echo "Using DOCKER_HOST files"
+	echo "*************"
+}
+
 function envsubst {
   param([Parameter(ValueFromPipeline)][string]$InputObject)
 
@@ -30,7 +37,7 @@ if ($tearDown.IsPresent) {
 	docker volume list
 	
 	docker volume create coeus-data
-	docker create -v coeus-data:/settings --name helper busybox true
+	docker create -v coeus-data:/settings --name helper busybox:musl true
 
 	# todo: use for loop over directories
 	docker cp "./settings/$environment/dashboard-web" helper:/settings
@@ -58,7 +65,14 @@ if ($tearDown.IsPresent) {
 	docker compose restart
 }
 
-docker run --rm -i -v=coeus-data:/settings busybox ls -Al /settings
+docker run --rm -i -v=coeus-data:/settings busybox:musl ls -Al /settings
+# replace DOCKER_HOST with env var value
+$cmd = 'cd /settings; for i in $(grep -r -l ''DOCKER_HOST'' *); do sed -i ''s/DOCKER_HOST/env:DOCKER_HOST/g'' $i; echo $i; done'
+$cmd = $cmd -replace 'env:DOCKER_HOST', $($env:DOCKER_HOST)
+$cmd
+docker run --rm -i -v=coeus-data:/settings busybox:musl sh -c $cmd
+docker run --rm -i -v=coeus-data:/settings busybox:musl sh -c 'cd /settings; for i in $(find . -name ''*''); do echo $i; dos2unix -b $i; done'
+docker run --rm -i -v=coeus-data:/settings busybox:musl ls -Al /settings
 
 #docker compose pull
 docker compose up -d
