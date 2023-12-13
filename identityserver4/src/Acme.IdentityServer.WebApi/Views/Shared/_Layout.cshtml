@@ -1,11 +1,30 @@
 @inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
 @inject Microsoft.Extensions.Configuration.IConfiguration configuration
+@using IdentityModel
 @using IdentityServer4.Extensions
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     string name = null;
     if (!true.Equals(ViewData["signed-out"]))
     {
-        name = Context.User?.GetDisplayName();
+        //name = Context.User?.GetDisplayName();
+        name = Context.User.Identity.Name;
+
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            var claim = Context.User.FindFirst("upn");
+            if (claim != null) name = claim.Value;
+        }
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            var claim = Context.User.FindFirst(JwtClaimTypes.Subject);
+            if (claim != null) name = claim.Value;
+        }
+
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            name = string.Empty;
+        }
     }
 }
 <!DOCTYPE html>
@@ -34,9 +53,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <span class="navbar-left">
-                        <img src="~/images/logo.svg" class="icon-banner" alt="Logo">
-                    </span>
+                    <a href="/">
+                        <span class="navbar-left">
+                            <img src="~/images/logo.svg" class="icon-banner" alt="Logo">
+                        </span>
+                    </a>
                 </div>
                 @if (!string.IsNullOrWhiteSpace(name))
                 {

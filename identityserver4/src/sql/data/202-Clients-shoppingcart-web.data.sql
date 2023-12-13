@@ -42,6 +42,7 @@ declare @uris table (
 insert into @uris values (N'http://localhost:4200')
 insert into @uris values (N'http://kehlstein:5003')
 insert into @uris values (N'http://kehlstein:5004')
+insert into @uris values (N'https://shoppingcart.cortside.net')
 insert into @uris values (N'https://status.dev.acme.com')
 insert into @uris values (N'https://status.acme.com')
 
@@ -55,6 +56,7 @@ DELETE FROM @uris
 insert into @uris values (N'http://localhost:4200/logout')
 insert into @uris values (N'http://kehlstein:5003/logout')
 insert into @uris values (N'http://kehlstein:5004/logout')
+insert into @uris values (N'https://shoppingcart.cortside.net/logout')
 insert into @uris values (N'https://status.dev.acme.com/logout')
 insert into @uris values (N'https://status.acme.com/logout')
 
@@ -72,6 +74,8 @@ insert into @allowedRedirectUris values (N'http://localhost:4200/login-redirect'
 insert into @allowedRedirectUris values (N'http://localhost:4200/silent-redirect')
 insert into @allowedRedirectUris values (N'http://kehlstein:5004/login-redirect')
 insert into @allowedRedirectUris values (N'http://kehlstein:5004/silent-redirect')
+insert into @allowedRedirectUris values (N'https://shoppingcart.cortside.net/login-redirect')
+insert into @allowedRedirectUris values (N'https://shoppingcart.cortside.net/silent-redirect')
 insert into @allowedRedirectUris values (N'https://shoppingcart.dev.acme.com/login-redirect')
 insert into @allowedRedirectUris values (N'https://shoppingcart.dev.acme.com/silent-redirect')
 insert into @allowedRedirectUris values (N'https://shoppingcart.acme.com/login-redirect')

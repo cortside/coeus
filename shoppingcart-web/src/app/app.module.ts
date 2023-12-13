@@ -6,9 +6,10 @@ import { AuthenticationTokenInterceptor } from '@muziehdesign/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
-    declarations: [AppComponent, NavigationComponent],
+    declarations: [AppComponent, NavigationComponent, PageNotFoundComponent],
     imports: [
         BrowserModule,
         HttpClientModule,

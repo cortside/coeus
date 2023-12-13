@@ -1,0 +1,49 @@
+{
+  "apiBaseUrl":   "http://DOCKER_HOST:5000/api/v1",
+  "sqlReportUrl": "http://DOCKER_HOST:5006/api/v1",
+  
+  
+  "decisionEngineUrl": "http://DOCKER_HOST:5000/api/v1",
+  "auditBaseUrl": "http://DOCKER_HOST:5000/api/v1",  
+  
+  
+  "name": "coeus",
+  "prodMode": false,
+  "timeoutIdleSecondsTimer": 900,
+  "timeoutResetSecondsTimer": 10,
+  "identity": {
+    "authority": "http://DOCKER_HOST:5002",
+    "clientId": "dashboard-web",
+    "scope": "openid profile role shoppingcart-api sqlreport-api",
+    "redirectUri": "http://DOCKER_HOST:5003/login-redirect",
+    "postLogoutRedirectUri": "http://DOCKER_HOST:5003/logout",
+    "responseType": "id_token token",
+    "accessTokenExpiringNotificationTime": 60,
+    "loadUserInfo": false,
+    "silentRedirectUrl": "http://DOCKER_HOST:5003/silent-redirect",
+    "automaticSilentRenew": true,
+    "logLevel": 0,
+    "metadata": {
+      "issuer": "http://DOCKER_HOST:5002",
+      "authorizationEndpoint": "http://DOCKER_HOST:5002/connect/authorize",
+      "endSessionEndpoint": "http://DOCKER_HOST:5002/connect/endsession",
+      "jwksUri": "http://DOCKER_HOST:5002/.well-known/openid-configuration/jwks",
+      "checkSessionIFrame": "http://DOCKER_HOST:5002/connect/checksession"
+    }
+  },
+  "features": {},
+  "queues": [
+    "user.queue"
+  ],
+  "appInsightsSegments": {
+    "resourceGroups": "ai-group",
+    "components": "coeus"
+  },
+  "events": [
+    {
+      "eventName": "UserStateChangedEvent",
+      "serviceUrl": "http://DOCKER_HOST:5099/api/v1/users",
+      "byId": false
+    }
+  ]
+}

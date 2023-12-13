@@ -1,6 +1,95 @@
 {
     "subjects": [
         {
+            "clientId": "admin",
+            "subjectId": "46f6eecf-e483-4428-a2a9-2bc5f6ce62db",
+            "claims": [
+                {
+                    "type": "active",
+                    "value": "true"
+                }
+            ],
+            "userType": "user",
+            "referenceToken": "admin-token",
+            "policies": [
+                {
+                    "policyName": "SqlReport*",
+                    "authorization": {
+                        "roles": [
+                            "Support"
+                        ],
+                        "permissions": [
+                            "CanGetReports",
+                            "spReport_Report1"
+                        ]
+                    }
+                },
+                {
+                    "policyName": "ShoppingCart*",
+                    "authorization": {
+                        "roles": [
+                            "Internal"
+                        ],
+                        "permissions": [
+                            "GetOrders",
+                            "GetOrder",
+                            "CreateOrder",
+                            "UpdateOrder",
+                            "GetCustomers",
+                            "GetCustomer",
+                            "CreateCustomer",
+                            "UpdateCustomer"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "clientId": "test",
+            "subjectId": "26cd64b9-e1d1-402d-b1c8-219aec0472d6",
+            "claims": [
+                {
+                    "type": "active",
+                    "value": "true"
+                }
+            ],
+            "userType": "user",
+            "referenceToken": "test-token",
+            "policies": [
+                {
+                    "policyName": "SqlReportApi",
+                    "authorization": {
+                        "roles": [
+                            "Support"
+                        ],
+                        "permissions": [
+                            "CanGetReports"
+                        ]
+                    }
+                },
+                {
+                    "policyName": "ShoppingCart*",
+                    "authorization": {
+                        "roles": [
+                            "Internal"
+                        ],
+                        "permissions": [
+                            "GetOrders",
+                            "GetOrder",
+                            "CreateOrder",
+                            "UpdateOrder",
+                            "GetCustomers",
+                            "GetCustomer",
+                            "CreateCustomer",
+                            "UpdateCustomer"
+                        ]
+                    }
+                }
+            ]
+        },
+
+
+        {
             "clientId": "alice",
             "subjectId": "132953b2-f6a7-4c1d-8da1-2b3c3dafe1c5",
             "claims": [

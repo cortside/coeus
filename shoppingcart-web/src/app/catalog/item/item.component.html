@@ -1,1 +1,7 @@
-<p>catalog item works!</p>
+<div *ngIf="item() as itemValue">
+    <h1>{{itemValue.name}}</h1>
+    <div class="inline-block max-w-2xl">
+        <img src="{{ itemValue.imageUrl }}" alt="{{ itemValue.name }}" class="h-full w-full object-cover object-center" />
+    </div>
+    <div>{{ itemValue.unitPrice | currency }}</div>
+</div>

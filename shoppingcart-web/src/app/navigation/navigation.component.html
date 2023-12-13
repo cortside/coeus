@@ -3,10 +3,10 @@
     <div class="w-full text-center mx-auto text-gray-500 tracking-wide uppercase text-sm">The best whiskey selection online</div>
     <nav class="border-y border-gray-100 my-4">
         <ul>
-            <li><a routerLink="/catalog/items" routerLinkActive="active">Catalog</a></li>
-            <li><a routerLink="/orders" routerLinkActive="active">Orders</a></li>
+            <li><a routerLink="/catalog/items" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Catalog</a></li>
+            <li><a routerLink="/orders" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Orders</a></li>
             <li>
-                <a routerLink="/checkout"routerLinkActive="active"> {{ quantity$ | async }} cart items </a>
+                <a routerLink="/checkout"routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"> {{ quantity$ | async }} cart items </a>
             </li>
         </ul>
     </nav>

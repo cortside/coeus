@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService } from '@muziehdesign/core';
 
 import { NavigationComponent } from './navigation.component';
@@ -9,6 +11,7 @@ describe('NavigationComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            imports: [ CommonModule, RouterTestingModule ],
             declarations: [NavigationComponent],
             providers: [{ provide: AuthenticationService, useValue: {} }],
         }).compileComponents();

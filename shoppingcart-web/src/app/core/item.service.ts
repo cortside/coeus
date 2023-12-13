@@ -1,5 +1,6 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
 import { CatalogClient } from '../api/catalog/catalog.client';
 import { ItemResponse } from '../api/catalog/models/responses/item.response';
 import { PagedResponse } from '../api/paged.response';
@@ -11,6 +12,16 @@ import { PagedModel } from '../common/paged.model';
 })
 export class ItemService {
     constructor(private client: CatalogClient) {}
+
+    getItem(sku: string): Observable<ItemModel> {
+        return this.client.getItem(sku).pipe(
+            catchError((error: HttpErrorResponse) => {
+                console.log(error);
+                throw new Error('not yet implemeted');
+            }),
+            map((x:ItemResponse) => assembleItemModel(x))
+        );
+    } 
 
     getItems(): Observable<PagedModel<ItemModel>> {
         return this.client.getItems().pipe(

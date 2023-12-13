@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ItemService } from 'src/app/core/item.service';
+import { ItemModel } from '../models/item.model';
+import { ActivatedRoute } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-item',
@@ -8,4 +12,10 @@ import { CommonModule } from '@angular/common';
     templateUrl: './item.component.html',
     styleUrls: ['./item.component.scss'],
 })
-export class ItemComponent {}
+export class ItemComponent {
+    
+    item: Signal<ItemModel | undefined>;
+    constructor(private route: ActivatedRoute, private service: ItemService){
+        this.item = toSignal(service.getItem(route.snapshot.params['sku']));
+    }
+}

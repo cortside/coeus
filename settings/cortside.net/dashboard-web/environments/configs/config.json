@@ -1,0 +1,48 @@
+{
+  "apiBaseUrl":   "https://shoppingcartapi.cortside.net/api/v1",
+  "sqlReportUrl": "https://sqlreport.cortside.net/api/v1",
+  
+  
+  "decisionEngineUrl": "https://shoppingcartapi.cortside.net/api/v1",
+  "auditBaseUrl": "https://shoppingcartapi.cortside.net/api/v1",
+  
+  "name": "coeus",
+  "prodMode": false,
+  "timeoutIdleSecondsTimer": 900,
+  "timeoutResetSecondsTimer": 10,
+  "identity": {
+    "authority": "https://identityserver.cortside.net",
+    "clientId": "dashboard-web",
+    "scope": "openid profile role shoppingcart-api sqlreport-api",
+    "redirectUri": "https://dashboard.cortside.net/login-redirect",
+    "postLogoutRedirectUri": "https://dashboard.cortside.net/logout",
+    "responseType": "id_token token",
+    "accessTokenExpiringNotificationTime": 60,
+    "loadUserInfo": false,
+    "silentRedirectUrl": "https://dashboard.cortside.net/silent-redirect",
+    "automaticSilentRenew": true,
+    "logLevel": 0,
+    "metadata": {
+      "issuer": "https://identityserver.cortside.net",
+      "authorizationEndpoint": "https://identityserver.cortside.net/connect/authorize",
+      "endSessionEndpoint": "https://identityserver.cortside.net/connect/endsession",
+      "jwksUri": "https://identityserver.cortside.net/.well-known/openid-configuration/jwks",
+      "checkSessionIFrame": "https://identityserver.cortside.net/connect/checksession"
+    }
+  },
+  "features": {},
+  "queues": [
+    "user.queue"
+  ],
+  "appInsightsSegments": {
+    "resourceGroups": "ai-group",
+    "components": "coeus"
+  },
+  "events": [
+    {
+      "eventName": "UserStateChangedEvent",
+      "serviceUrl": "http://kehlstein:5099/api/v1/users",
+      "byId": false
+    }
+  ]
+}
