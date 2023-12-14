@@ -8,3 +8,7 @@ dist
 #Ignoring tool cache directories
 .vscode
 .angular
+
+# ignore documents
+docs
+

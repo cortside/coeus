@@ -1,6 +1,23 @@
 TODO:
 
-
+* db column encryption with ef core
+	* https://blog.wiseowls.co.nz/index.php/2020/01/26/custom-functions-ef-core-3/  <<-- using custom functions and symmetric keys
+		* https://carstent.wordpress.com/tag/entity-framework/ <<-- examples of sql with creating and using certificates for keys
+	* https://github.com/emrekizildas/EntityFrameworkCore.EncryptColumn/tree/main
+	* https://github.com/Eastrall/EntityFrameworkCore.DataEncryption
+	* https://stackoverflow.com/questions/76726818/entity-framework-core-and-column-level-sql-server-encryption-with-stored-procedu
+	* https://stackoverflow.com/questions/66035987/decrypting-data-using-ef-core-3
+	* https://stackoverflow.com/questions/59191856/using-ef-core-2-2-to-decrypt-a-string-using-sql-server-decryptbykey
+		* https://www.thinktecture.com/en/entity-framework-core/custom-functions-using-imethodcalltranslator-in-2-1/
+		* https://github.com/tkhadimullin/ef-core-custom-functions/tree/master?tab=readme-ov-file
+		* https://github.com/tkhadimullin/ef-core-custom-functions/tree/feature/ef-3.1-version
+		* https://stackoverflow.com/questions/77160320/writing-custom-entity-framework-function-with-imethodcalltranslator
+		* https://github.com/npgsql/efcore.pg/issues/2186
+	* https://carstent.wordpress.com/tag/entity-framework/
+	* https://blog.wiseowls.co.nz/index.php/2020/01/26/custom-functions-ef-core-3/
+* RandomValues class from comms
+	* https://github.com/dochoffiday/Lorem.NET/blob/master/Examples/Program.cs
+* capture of console/log from comms-api
 * Dependency Injection into Entity Class
 	* https://stackoverflow.com/questions/51082764/dependency-injection-into-entity-class
 	* https://stackoverflow.com/questions/4835046/why-not-use-an-ioc-container-to-resolve-dependencies-for-entities-business-objec
@@ -116,8 +133,6 @@ TODO:
 	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/
 	* https://www.codeproject.com/Articles/5370795/Microservices-using-ASP-NET-Core-8-Ocelot-MongoDB#identity-microservice
 	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/
-* RandomValues class from comms
-* capture of console/log from comms-api
 * EF concurrency example
 * ETag example
 * Add schema parameter to AddDomainEventOutbox()
@@ -179,7 +194,7 @@ TODO:
 * extension methods in cortisde.domainevent for services setup
 * extension method to make registering client easier in restsharpclient
 * cortside.aspnetcore.entityframework extension method for db setup with unit of work 
-* extention method for cortside.common.cryptography EncryptionService
+* extension method for cortside.common.cryptography EncryptionService
 * cortside.aspnetcore extension method for registering types from assembly with name ending in x -- see repositoryinstaller
 * add services registration to webapi builder
 * add configure to webapi builder

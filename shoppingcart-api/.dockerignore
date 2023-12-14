@@ -1,1 +1,14 @@
-﻿
+﻿#Ignoring folders that are part of git or build output
+.git
+node_modules
+**/bin
+**/obj
+dist
+
+#Ignoring tool cache directories
+.vscode
+.angular
+
+# ignore documents
+docs
+

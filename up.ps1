@@ -5,14 +5,38 @@ Param
 	[Parameter(Mandatory = $false)][switch]$tearDown
 )
 
+$DOCKER_HOST = $env:DOCKER_HOST
+
+if ($DOCKER_HOST -eq $null) { 
+	$DOCKER_HOST="localhost"
+	$environment=$DOCKER_HOST
+}
+
 if ($environment -eq "") {
-	$environment=$env:DOCKER_HOST
+	$environment=$DOCKER_HOST
 }
 
 echo "*************"
 echo (Get-Date -Format "dddd MM/dd/yyyy HH:mm K")
-echo "docker host: $($env:DOCKER_HOST)"
+echo "docker host: $($DOCKER_HOST)"
 echo "environment: $environment"
+echo "*************"
+
+
+if ($DOCKER_HOST -eq $environment) {
+	$environment = "DOCKER_HOST"
+	echo "Using DOCKER_HOST files"
+	echo "*************"
+}
+
+$DOCKER_HOST_IP = $env:DOCKER_HOST_IP
+if ("$DOCKER_HOST_IP" -eq "") {
+	$DOCKER_HOST_IP = (Resolve-DNSName -Type A $DOCKER_HOST).IPAddress
+}
+
+echo "DOCKER_HOST=$DOCKER_HOST" > .env
+echo "DOCKER_HOST_IP=$DOCKER_HOST_IP" >> .env
+cat .env
 echo "*************"
 
 function envsubst {
@@ -30,7 +54,7 @@ if ($tearDown.IsPresent) {
 	docker volume list
 	
 	docker volume create coeus-data
-	docker create -v coeus-data:/settings --name helper busybox true
+	docker create -v coeus-data:/settings --name helper busybox:musl true
 
 	# todo: use for loop over directories
 	docker cp "./settings/$environment/dashboard-web" helper:/settings
@@ -58,7 +82,19 @@ if ($tearDown.IsPresent) {
 	docker compose restart
 }
 
-docker run --rm -i -v=coeus-data:/settings busybox ls -Al /settings
+docker run --rm -i -v=coeus-data:/settings busybox:musl ls -Al /settings
+# replace DOCKER_HOST with env var value
+$cmd = 'cd /settings; for i in $(grep -r -l ''DOCKER_HOST'' *); do sed -i ''s/DOCKER_HOST/env:DOCKER_HOST/g'' $i; echo $i; done'
+$cmd = $cmd -replace 'env:DOCKER_HOST', $($DOCKER_HOST)
+$cmd
+docker run --rm -i -v=coeus-data:/settings busybox:musl sh -c $cmd
+#docker run --rm -i -v=coeus-data:/settings busybox:musl sh -c 'cd /settings; for i in $(find . -name ''*''); do echo $i; dos2unix -b $i; done'
+docker run --rm -i -v=coeus-data:/settings busybox:musl sh -c 'cd /settings; for i in $(find . -name ''*''); do echo $i; chmod a+rw $i; done'
+docker run --rm -i -v=coeus-data:/settings busybox:musl sh -c 'cd /settings; for i in $(find . -name *.sh); do echo $i; chmod a+x $i; done'
+docker run --rm -i -v=coeus-data:/settings busybox:musl ls -RAl /settings
+
+find . -name *.sh
+
 
 #docker compose pull
 docker compose up -d

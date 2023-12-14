@@ -1,0 +1,24 @@
+{
+    "application": {
+        "name": "shoppingcart-web"
+    },
+    "catalogApi": {
+        "url": "http://DOCKER_HOST:5001"
+    },
+    "shoppingCartApi": {
+        "url": "http://DOCKER_HOST:5000"
+    },
+    "identity": {
+        "authority": "http://DOCKER_HOST:5002",
+        "clientId": "shoppingcart-web",
+        "responseType": "id_token token",
+        "scope": "openid profile shoppingcart-api catalog-api",
+        "redirectUri": "http://DOCKER_HOST:5004/login-redirect",
+        "silentRedirectUri": "http://DOCKER_HOST:5004/silent-redirect",
+        "postLogoutRedirectUri": "http://DOCKER_HOST:5004/logout",
+        "accessTokenExpiringNotificationTime": 60,
+        "loadUserInfo": true,
+        "automaticSilentRenew": true,
+        "logLevel": 0
+    }
+}
