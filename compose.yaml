@@ -62,6 +62,7 @@ services:
       timeout: 10s      
   identityserver-bootstrap:
     image: cortside/identityserver4:develop
+    user: root
     depends_on:
       db:
         condition: "service_healthy"
@@ -126,6 +127,7 @@ services:
       timeout: 10s      
   shoppingcart-bootstrap:
     image: cortside/shoppingcart-api:develop
+    user: root
     depends_on:
       db:
         condition: "service_healthy"
@@ -154,6 +156,7 @@ services:
       timeout: 10s      
   sqlreport-bootstrap:
     image: cortside/sqlreport-api:develop
+    user: root
     depends_on:
       db:
         condition: "service_healthy"
