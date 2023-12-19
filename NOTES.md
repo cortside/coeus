@@ -1,5 +1,9 @@
 TODO:
 
+* EF core [NotMapped] usage and examples
+* add constants from userapi client constants.header to restapiclient
+* domainevent outbox interceptor
+	* https://www.milanjovanovic.tech/blog/how-to-use-ef-core-interceptors
 * db column encryption with ef core
 	* https://blog.wiseowls.co.nz/index.php/2020/01/26/custom-functions-ef-core-3/  <<-- using custom functions and symmetric keys
 		* https://carstent.wordpress.com/tag/entity-framework/ <<-- examples of sql with creating and using certificates for keys
@@ -72,6 +76,7 @@ TODO:
 	* https://github.com/WireMock-Net/WireMock.Net/blob/master/src/WireMock.Net.OpenApiParser/WireMock.Net.OpenApiParser.csproj
 * chatgpt client
 	* https://www.codeproject.com/Articles/5370452/Developing-a-Client-Package-for-Integrating-OpenAI
+	* https://www.codeproject.com/Articles/5372480/Csharp-OpenAI-Library-that-Supports-Latest-Assista
 * codeproject.ai server
 	* https://www.codeproject.com/Articles/5322557/CodeProject-AI-Server-AI-the-easy-way
 * dynamic filters for search
