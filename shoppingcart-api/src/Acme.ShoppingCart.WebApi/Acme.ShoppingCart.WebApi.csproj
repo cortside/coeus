@@ -13,7 +13,7 @@
     <PackageReference Include="Cortside.Common.Correlation" Version="6.1.397" />
     <PackageReference Include="Cortside.Common.Hosting" Version="6.1.397" />
     <PackageReference Include="Cortside.Health" Version="6.0.86" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.25" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.25">
       <PrivateAssets>all</PrivateAssets>
