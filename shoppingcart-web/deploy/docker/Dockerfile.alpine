@@ -18,7 +18,7 @@ COPY ./ /app/
 
 # gathering components from NPM install for linting
 #FROM base as lint
-#RUN npm run prettier:check
+#RUN npm run prettier:fix
 RUN ng lint
 
 # gathering components from NPM install for unit testing
