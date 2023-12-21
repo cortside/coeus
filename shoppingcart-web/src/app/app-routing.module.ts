@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { cartRoutes } from './cart/cart.routes';
 import { catalogLazyRoutes } from './catalog/catalog.routes';
 import { checkoutLazyLoadingRoutes } from './checkout/checkout-routing.module';
 import { orderLazyLoadingRoutes } from './order';
@@ -11,6 +12,7 @@ const routes: Routes = [
         ...orderLazyLoadingRoutes, 
         ...checkoutLazyLoadingRoutes, 
         ...catalogLazyRoutes,
+        ...cartRoutes,
         { path: '**', component: PageNotFoundComponent }
     ];
 
