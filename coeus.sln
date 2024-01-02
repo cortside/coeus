@@ -74,6 +74,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Acme.IdentityServer6", "Acm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.IdentityServer", "identityServer6\src\Acme.IdentityServer.csproj", "{A4C27714-1746-48FA-8840-EE699A81CD0D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{995E7547-3DAC-445A-8B47-000817ADF9AD}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
