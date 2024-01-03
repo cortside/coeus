@@ -2,4 +2,14 @@
 
 {{ items$ | async | json }}
 
+<form #cartForm="ngForm" (ngSubmit)="createOrder()" class="form">
+    <label class="field">
+        <span class="sr-only">First name</span>
+        <input type="number" [(ngModel)]="model.firstName" name="firstName" #firstNameField="ngModel" />
+    </label>
+    <mz-field-errors [field]="firstNameField"></mz-field-errors>
+    <button type="submit" class="button button-primary">Create order</button>
+</form>
+
+
 <a class="button button-primary" routerLink="/checkout">Check out</a>
