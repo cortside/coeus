@@ -107,11 +107,14 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
                     RegisterInMemoryDbContext(services);
                     RegisterFileSystemDistributedLock(services);
                 }
+
                 RegisterDomainEventPublisher(services);
                 ResolveSerializerSettings(services);
             });
 
-            builder.UseSerilog(Log.Logger);
+            builder.ConfigureLogging(x => {
+                x.AddSerilog(Log.Logger);
+            });
         }
 
         // TODO: this should be an extension method in testing project
