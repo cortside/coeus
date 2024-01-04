@@ -1,12 +1,15 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { CartItemModel } from '../common/cart-item.model';
 import { ShoppingCartService } from '../core/shopping-cart.service';
 import { RouterModule } from '@angular/router';
-import { FormsModule as MuziehFormsModule, NgFormModelState } from '@muziehdesign/forms';
+import { FormsModule as MuziehFormsModule, NgFormModelState, NgFormModelStateFactory } from '@muziehdesign/forms';
 import { CustomerInputModel } from './customer-input.model';
 import { FormsModule, NgForm } from '@angular/forms';
+import { CreateOrderModel } from './create-order.model';
+import { AddressInputModel } from './address-input.model';
+import { OrderService } from '../core/order.service';
 
 @Component({
     selector: 'app-cart',
@@ -15,21 +18,29 @@ import { FormsModule, NgForm } from '@angular/forms';
     templateUrl: './cart.component.html',
     styleUrls: ['./cart.component.scss'],
 })
-export class CartComponent {
+export class CartComponent implements AfterViewInit {
     items$: Observable<CartItemModel[]>;
-    model: CustomerInputModel;
-    modelState!: NgFormModelState<CustomerInputModel>;
-    @ViewChild('cartForm', {static: true}) cartForm!: NgForm;
-    constructor(private service: ShoppingCartService) {
+    model: CreateOrderModel;
+    modelState!: NgFormModelState<CreateOrderModel>;
+    @ViewChild('cartForm', { static: true }) cartForm!: NgForm;
+    constructor(private service: ShoppingCartService, private modelStateFactory: NgFormModelStateFactory, private orderService: OrderService) {
         this.items$ = this.service.getCartItems();
-        this.model = new CustomerInputModel();
+        this.model = new CreateOrderModel();
+        this.model.address = new AddressInputModel();
+        this.model.customer = new CustomerInputModel();
     }
 
-    public createOrder() {
-        console.log('attempt to create order');
+    ngAfterViewInit():void {
+        this.modelState = this.modelStateFactory.create(this.cartForm, this.model);
     }
 
-    checkout(): void {
-        console.log('test');
+    public async createOrder() {
+        // TODO: troubleshoot needed for undefined form error
+        this.modelState = this.modelState || this.modelStateFactory.create(this.cartForm, this.model);
+        const result = await this.modelState.validate();
+        console.log('attempt to create order', result);
+        this.orderService.createOrder(this.model).subscribe(x=>{
+            console.log('created order', x);
+        });
     }
 }

@@ -22,9 +22,7 @@ export class ShoppingCartClient {
         });
     }
 
-    // TODO
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     createOrders(order: OrderRequest): Observable<OrderReponse> {
-        return this.http.post<OrderReponse>(`${this.config.shoppingCartApi?.url}/api/v1/orders`, { context: new HttpContext().set(AUTHENTICATED_REQUEST, true) });
+        return this.http.post<OrderReponse>(`${this.config.shoppingCartApi?.url}/api/v1/orders`, order, { context: new HttpContext().set(AUTHENTICATED_REQUEST, true) });
     }
 }

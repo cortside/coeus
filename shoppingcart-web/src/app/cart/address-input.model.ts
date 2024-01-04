@@ -1,6 +1,6 @@
 import { required, StringType } from "@muziehdesign/forms";
 
-export class CustomerAddressModel {
+export class AddressInputModel {
     @StringType(required())
     street?: string;
     @StringType(required())
