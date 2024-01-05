@@ -5,7 +5,9 @@ import { AddressRequest } from '../api/shopping-cart/models/requests/address.req
 import { CustomerRequest } from '../api/shopping-cart/models/requests/customer.request';
 import { OrderRequest } from '../api/shopping-cart/models/requests/order.request';
 import { ShoppingCartClient } from '../api/shopping-cart/shopping-cart.client';
+import { AddressInputModel } from '../cart/address-input.model';
 import { CreateOrderModel } from '../cart/create-order.model';
+import { CustomerInputModel } from '../cart/customer-input.model';
 import { OrderSummaryModel } from '../models/models';
 
 @Injectable({
@@ -19,7 +21,19 @@ export class OrderService {
     }
 
     createOrder(model: CreateOrderModel): Observable<OrderSummaryModel> {
+
+        // TODO
+        model.customer = new CustomerInputModel();
+        model.customer.firstName = "Jane";
+        model.customer.lastName = "Doe";
+        model.customer.emailAddress = "janedoe@test.com";
+        model.customer.birthdate = "1975-1-1";
+
+        model.address = new AddressInputModel();
+        model.address.street = "Street";
+
         const request = assembleCreateOrderRequest(model);
+        request.items = [{sku: "PAPPY-10", quantity: 1}]
         return this.client.createOrders(request).pipe(
             map((x) => {
                 return {
@@ -37,11 +51,7 @@ export const assembleCreateOrderRequest = (model: CreateOrderModel): OrderReques
             firstName: model.customer!.firstName,
             lastName: model.customer!.lastName,
             email: model.customer?.emailAddress,
-            birthDate: {
-                year: 1975,
-                month: 1,
-                day: 1,
-            },
+            birthDate: "1975-01-01"
         } as CustomerRequest,
         address: {
             street: model.address!.street,

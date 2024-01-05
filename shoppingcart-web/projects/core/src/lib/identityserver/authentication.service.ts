@@ -72,7 +72,13 @@ export class AuthenticationService {
     }
 
     async getAuthorizationData(): Promise<string> {
-        return this.userManager.getUser().then((u) => u?.access_token || '');
+        return this.userManager.getUser().then((u) => {
+            if (u?.access_token) {
+                return `Bearer ${u.access_token}`;
+            }
+            
+            return '';
+        });
     }
 
     private mapToAuthenticatedUser(user: User | undefined | null) {

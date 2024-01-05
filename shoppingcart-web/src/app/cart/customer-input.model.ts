@@ -1,6 +1,7 @@
 import { required, StringType } from "@muziehdesign/forms";
 
 export class CustomerInputModel {
+    
     @StringType(required())
     firstName?: string;
     @StringType(required())
