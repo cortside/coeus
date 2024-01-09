@@ -14,8 +14,8 @@
     <PackageReference Include="Cortside.Common.Hosting" Version="6.2.399-develop" />
     <PackageReference Include="Cortside.Health" Version="6.1.87-develop" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.25" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.25">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.26" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.26">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

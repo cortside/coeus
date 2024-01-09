@@ -1,5 +1,24 @@
 TODO:
 
+* restapiclient ip??
+	* "x-real-ip": "75.169.156.172"
+* add request rewind support in cortside.aspnetcore
+	* https://stackoverflow.com/questions/40494913/how-to-read-request-body-in-an-asp-net-core-webapi-controller
+	* peek body extension method
+* should this be common (from restapiclient):
+	* var accessor = new HttpContextAccessor().SetHttpContext("host", "/path", header);
+* EF Core relationships and navigational types
+	* https://github.com/dotnet/EntityFramework.Docs/pull/1003
+	* https://github.com/dotnet/EntityFramework.Docs/issues/1023
+	* https://github.com/dotnet/EntityFramework.Docs/blob/main/entity-framework/core/modeling/relationships.md
+	* https://stackoverflow.com/questions/70111504/collection-vs-list-which-i-have-to-use-for-navigation-properties
+	* https://learn.microsoft.com/en-us/ef/core/modeling/relationships/navigations#initialization-of-collection-navigations
+* code coverage tools from microsoft
+	* https://devblogs.microsoft.com/dotnet/whats-new-in-our-code-coverage-tooling/
+* protectedJson
+	* https://www.codeproject.com/Articles/5372873/ProtectedJson-Integrating-ASP-NET-Core-Configurati
+* add geolocation information from ip address
+	* http://ip-api.com/json/75.169.153.72?lang=en
 * EF core [NotMapped] usage and examples
 * add constants from userapi client constants.header to restapiclient
 * domainevent outbox interceptor
