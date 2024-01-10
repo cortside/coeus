@@ -1,5 +1,9 @@
 TODO:
 
+* update aspnetcore versioning libraries
+	* https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/tree/dev
+	* https://github.com/dotnet/aspnet-api-versioning/wiki/Migration
+	* https://github.com/dotnet/aspnet-api-versioning/discussions/808
 * restapiclient ip??
 	* "x-real-ip": "75.169.156.172"
 * add request rewind support in cortside.aspnetcore
