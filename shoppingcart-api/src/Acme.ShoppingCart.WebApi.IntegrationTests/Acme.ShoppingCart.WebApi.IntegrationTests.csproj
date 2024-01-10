@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cortside.Common.Testing" Version="6.2.399-develop" />
+    <PackageReference Include="Cortside.Common.Testing" Version="6.2.403" />
     <PackageReference Include="Cortside.DomainEvent.Stub" Version="6.2.290-develop" />
     <PackageReference Include="Cortside.MockServer.AccessControl" Version="6.2.60-develop" />
     <PackageReference Include="coverlet.collector" Version="6.0.0">
@@ -18,15 +18,15 @@
     </PackageReference>
     <PackageReference Include="EFCore.Seeder" Version="3.1.0" />
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.25" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.25" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.26" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.26" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.8.14">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="WireMock.Net" Version="1.5.45" />
-    <PackageReference Include="xunit" Version="2.6.4" />
+    <PackageReference Include="WireMock.Net" Version="1.5.46" />
+    <PackageReference Include="xunit" Version="2.6.5" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

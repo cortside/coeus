@@ -10,11 +10,15 @@ using Moq;
 using Xunit;
 
 namespace Acme.ShoppingCart.DomainService.Tests {
-    public class CustomerServiceTest : DomainServiceTest<ICustomerService> {
+    public class CustomerServiceTest : DomainServiceTest<CustomerService> {
         private readonly DatabaseContext databaseContext;
 
         public CustomerServiceTest() : base() {
             databaseContext = GetDatabaseContext();
+
+            var publisher = new Mock<IDomainEventOutboxPublisher>();
+            var customerRepository = new CustomerRepository(databaseContext);
+            service = new CustomerService(customerRepository, publisher.Object, NullLogger<CustomerService>.Instance);
         }
 
         [Fact]
@@ -25,10 +29,6 @@ namespace Acme.ShoppingCart.DomainService.Tests {
                 LastName = Guid.NewGuid().ToString(),
                 Email = Guid.NewGuid().ToString() + "@gmail.com"
             };
-
-            var publisher = new Mock<IDomainEventOutboxPublisher>();
-            var customerRepository = new CustomerRepository(databaseContext);
-            var service = new CustomerService(customerRepository, publisher.Object, NullLogger<CustomerService>.Instance);
 
             // Act
             await service.CreateCustomerAsync(dto);

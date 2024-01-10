@@ -2,12 +2,12 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Cortside.Common.Messages.MessageExceptions;
-using Cortside.DomainEvent.EntityFramework;
 using Acme.DomainEvent.Events;
 using Acme.IdentityServer.WebApi.Data;
 using Acme.IdentityServer.WebApi.Models.Input;
 using Acme.IdentityServer.WebApi.Services;
+using Cortside.Common.Messages.MessageExceptions;
+using Cortside.DomainEvent.EntityFramework;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -67,16 +67,16 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
         }
 
         [Fact]
-        public void ShouldNotResetClientSecretIfClientOrSecretDoesntExist() {
+        public async Task ShouldNotResetClientSecretIfClientOrSecretDoesntExist() {
             // Arrange
             var clientId = 1;
 
             // Act invalid client
-            Assert.ThrowsAsync<BadRequestResponseException>(() => sut.ResetSecret(clientId));
+            await Assert.ThrowsAsync<BadRequestResponseException>(() => sut.ResetSecret(clientId));
 
             // Act invalid client secret
             InsertTestClientIntoDbContext("clientId1", Guid.NewGuid(), false);
-            Assert.ThrowsAsync<BadRequestResponseException>(() => sut.ResetSecret(clientId));
+            await Assert.ThrowsAsync<BadRequestResponseException>(() => sut.ResetSecret(clientId));
         }
 
         [Fact]
