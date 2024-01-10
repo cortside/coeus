@@ -4,11 +4,13 @@ import { Observable } from 'rxjs/internal/Observable';
 import { AddressRequest } from '../api/shopping-cart/models/requests/address.request';
 import { CustomerRequest } from '../api/shopping-cart/models/requests/customer.request';
 import { OrderRequest } from '../api/shopping-cart/models/requests/order.request';
+import { OrderReponse } from '../api/shopping-cart/models/responses/order.response';
 import { ShoppingCartClient } from '../api/shopping-cart/shopping-cart.client';
 import { AddressInputModel } from '../cart/address-input.model';
 import { CreateOrderModel } from '../cart/create-order.model';
 import { CustomerInputModel } from '../cart/customer-input.model';
-import { OrderSummaryModel } from '../models/models';
+import { PagedModel } from '../common/paged.model';
+import { CustomerModel, OrderSummaryModel } from '../models/models';
 
 @Injectable({
     providedIn: 'root',
@@ -43,7 +45,34 @@ export class OrderService {
             })
         );
     }
+
+    getOrders(): Observable<PagedModel<OrderSummaryModel>> {
+        return this.client.getOrders().pipe(
+            map((x)=> {
+                const items = x.items.map(y=>assembleOrderSummaryModel(y));
+                return {
+                    totalItems: x.totalItems,
+                    pageNumber: x.pageNumber,
+                    pageSize: x.pageSize,
+                    items: items
+                } as PagedModel<OrderSummaryModel>;
+            })
+        );
+    }
 }
+
+export const assembleOrderSummaryModel = (response: OrderReponse): OrderSummaryModel => {
+    return {
+        orderResourceId: response.orderResourceId,
+        status: response.status,
+        customer: {
+            customerResourceId: response.customer.customerResourceId,
+            firstName: response.customer.firstName,
+            lastName: response.customer.lastName,
+            email: response.customer.email
+        } as CustomerModel
+    } as OrderSummaryModel;
+};
 
 export const assembleCreateOrderRequest = (model: CreateOrderModel): OrderRequest => {
     return {
