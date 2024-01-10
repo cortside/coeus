@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cortside.Common.Testing" Version="6.2.399-develop" />
+    <PackageReference Include="Cortside.Common.Testing" Version="6.2.403" />
     <PackageReference Include="Cortside.DomainEvent.Stub" Version="6.2.290-develop" />
     <PackageReference Include="Cortside.MockServer.AccessControl" Version="6.2.60-develop" />
     <PackageReference Include="coverlet.collector" Version="6.0.0">

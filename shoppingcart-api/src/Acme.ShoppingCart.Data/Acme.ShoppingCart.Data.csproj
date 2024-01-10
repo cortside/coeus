@@ -4,9 +4,9 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.2.192-update-serilog" />
-    <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="6.2.192-update-serilog" />
-    <PackageReference Include="Cortside.Common.Security" Version="6.2.399-develop" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.2.194-develop" />
+    <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="6.2.194-develop" />
+    <PackageReference Include="Cortside.Common.Security" Version="6.2.403" />
     <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="6.2.290-develop" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.26" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.26" />

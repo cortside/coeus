@@ -13,6 +13,7 @@ namespace Acme.ShoppingCart.Domain.Tests {
 
             // Assert
             Assert.Equal("elmer", customer.FirstName);
+            Assert.Equal("foo@baz.com", customer.Email);
         }
     }
 }
