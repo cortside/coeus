@@ -8,9 +8,10 @@ import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HeaderComponent } from './header/header.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
-    declarations: [AppComponent, NavigationComponent, PageNotFoundComponent, HeaderComponent],
+    declarations: [AppComponent, NavigationComponent, PageNotFoundComponent, HeaderComponent, ProfileComponent],
     imports: [
         BrowserModule,
         HttpClientModule,
