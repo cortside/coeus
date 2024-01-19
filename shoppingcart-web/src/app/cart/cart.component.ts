@@ -10,6 +10,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { CreateOrderModel } from './create-order.model';
 import { AddressInputModel } from './address-input.model';
 import { OrderService } from '../core/order.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-cart',
@@ -23,7 +24,7 @@ export class CartComponent implements AfterViewInit {
     model: CreateOrderModel;
     modelState!: NgFormModelState<CreateOrderModel>;
     @ViewChild('cartForm', { static: true }) cartForm!: NgForm;
-    constructor(private service: ShoppingCartService, private modelStateFactory: NgFormModelStateFactory, private orderService: OrderService) {
+    constructor(private service: ShoppingCartService, private modelStateFactory: NgFormModelStateFactory, private orderService: OrderService, private router: Router) {
         this.items$ = this.service.getCartItems();
         this.model = new CreateOrderModel();
         this.model.address = new AddressInputModel();
@@ -41,6 +42,7 @@ export class CartComponent implements AfterViewInit {
         console.log('attempt to create order', result);
         this.orderService.createOrder(this.model).subscribe(x=>{
             console.log('created order', x);
+            this.router.navigate(['/orders']);
         });
     }
 }
