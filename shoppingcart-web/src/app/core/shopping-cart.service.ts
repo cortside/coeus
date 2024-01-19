@@ -9,9 +9,10 @@ import { CartItemModel } from '../common/cart-item.model';
 export class ShoppingCartService {
     private items:BehaviorSubject<CartItemModel[]>;
     private items$:Observable<CartItemModel[]>;
+    readonly ITEMS_KEY = 'ShoppingCartService.items';
 
     constructor(@Inject(DOCUMENT) private document: Document) {
-        const existing = JSON.parse(this.document.defaultView?.localStorage.getItem('ShoppingCartService.items') || "[]");
+        const existing = JSON.parse(this.document.defaultView?.localStorage.getItem(this.ITEMS_KEY) || "[]");
         this.items = new BehaviorSubject<CartItemModel[]>(existing);
         this.items$ = this.items.asObservable();
     }
@@ -33,12 +34,12 @@ export class ShoppingCartService {
             list.push({ sku: itemSku, quantity: quantity });
         }
 
-        this.document.defaultView?.localStorage.setItem('ShoppingCartService.items', JSON.stringify(list));
+        this.document.defaultView?.localStorage.setItem(this.ITEMS_KEY, JSON.stringify(list));
         this.items.next(list);
     }
 
     clear(): void {
-        this.document.defaultView?.localStorage.removeItem('ShoppingCartService.items');
+        this.document.defaultView?.localStorage.removeItem(this.ITEMS_KEY);
         this.items.next([]);
     }
 }
