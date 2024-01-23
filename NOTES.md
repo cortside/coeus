@@ -1,5 +1,30 @@
 TODO:
 
+* domaineventreceiver to add stopwatch and report proccessing time
+* script to help find open branches
+	* git branch --no-merged remotes/origin/develop -r --sort=committerdate --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:short)%(color:reset))'
+* set App=name; in connection string based on service.name
+	* AddDbContext
+* example of subtyped ef stuff
+	* policy flags in de -- 3 levels
+* handle cert errors in sql scripts
+	-Encrypt:$False
+* .editorconfig possible additions
+	```
+	dotnet_style_operator_placement_when_wrapping = beginning_of_line
+	tab_width = 4
+	end_of_line = crlf
+	dotnet_style_coalesce_expression = true:suggestion
+	dotnet_style_null_propagation = true:suggestion
+	dotnet_style_prefer_is_null_check_over_reference_equality_method = true:suggestion
+	dotnet_style_namespace_match_folder                                      = true
+	csharp_prefer_braces = true:refactoring
+	csharp_style_expression_bodied_lambdas = true:refactoring
+	csharp_style_expression_bodied_local_functions = true:refactoring
+	csharp_style_prefer_method_group_conversion = true:silent
+	csharp_style_prefer_top_level_statements = true:silent
+	csharp_style_prefer_primary_constructors = true:suggestion
+	```
 * update aspnetcore versioning libraries
 	* https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/tree/dev
 	* https://github.com/dotnet/aspnet-api-versioning/wiki/Migration
