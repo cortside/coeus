@@ -29,8 +29,13 @@ if ($DOCKER_HOST -eq $environment) {
 	echo "*************"
 }
 
+$DOCKER_HOST_IP = $env:DOCKER_HOST_IP
+if ("$DOCKER_HOST_IP" -eq "") {
+	$DOCKER_HOST_IP = (Resolve-DNSName -Type A $DOCKER_HOST).IPAddress
+}
+
 echo "DOCKER_HOST=$DOCKER_HOST" > .env
-echo "DOCKER_HOST_IP=$((Resolve-DNSName -Type A $DOCKER_HOST).IPAddress)" >> .env
+echo "DOCKER_HOST_IP=$DOCKER_HOST_IP" >> .env
 cat .env
 echo "*************"
 
@@ -83,8 +88,13 @@ $cmd = 'cd /settings; for i in $(grep -r -l ''DOCKER_HOST'' *); do sed -i ''s/DO
 $cmd = $cmd -replace 'env:DOCKER_HOST', $($DOCKER_HOST)
 $cmd
 docker run --rm -i -v=coeus-data:/settings busybox:musl sh -c $cmd
-docker run --rm -i -v=coeus-data:/settings busybox:musl sh -c 'cd /settings; for i in $(find . -name ''*''); do echo $i; dos2unix -b $i; done'
-docker run --rm -i -v=coeus-data:/settings busybox:musl ls -Al /settings
+#docker run --rm -i -v=coeus-data:/settings busybox:musl sh -c 'cd /settings; for i in $(find . -name ''*''); do echo $i; dos2unix -b $i; done'
+docker run --rm -i -v=coeus-data:/settings busybox:musl sh -c 'cd /settings; for i in $(find . -name ''*''); do echo $i; chmod a+rw $i; done'
+docker run --rm -i -v=coeus-data:/settings busybox:musl sh -c 'cd /settings; for i in $(find . -name *.sh); do echo $i; chmod a+x $i; done'
+docker run --rm -i -v=coeus-data:/settings busybox:musl ls -RAl /settings
+
+find . -name *.sh
+
 
 #docker compose pull
 docker compose up -d

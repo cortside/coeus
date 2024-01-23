@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
 using Acme.ShoppingCart.Data.Repositories;
@@ -8,7 +9,6 @@ using Acme.ShoppingCart.Dto;
 using Cortside.AspNetCore.Common.Paging;
 using Cortside.DomainEvent.EntityFramework;
 using Microsoft.Extensions.Logging;
-using Serilog.Context;
 
 namespace Acme.ShoppingCart.DomainService {
     public class CustomerService : ICustomerService {
@@ -24,7 +24,7 @@ namespace Acme.ShoppingCart.DomainService {
 
         public async Task<Customer> CreateCustomerAsync(CustomerDto dto) {
             var entity = new Customer(dto.FirstName, dto.LastName, dto.Email);
-            using (LogContext.PushProperty("CustomerResourceId", entity.CustomerResourceId)) {
+            using (logger.BeginScope(new Dictionary<string, object> { ["CustomerResourceId"] = entity.CustomerResourceId })) {
                 customerRepository.Add(entity);
                 logger.LogInformation("Created new customer");
 
@@ -46,7 +46,7 @@ namespace Acme.ShoppingCart.DomainService {
 
         public async Task<Customer> UpdateCustomerAsync(CustomerDto dto) {
             var entity = await customerRepository.GetAsync(dto.CustomerResourceId).ConfigureAwait(false);
-            using (LogContext.PushProperty("CustomerResourceId", entity.CustomerResourceId)) {
+            using (logger.BeginScope(new Dictionary<string, object> { ["CustomerResourceId"] = entity.CustomerResourceId })) {
                 entity.Update(dto.FirstName, dto.LastName, dto.Email);
                 logger.LogInformation("Updated existing customer");
 

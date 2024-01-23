@@ -9,4 +9,6 @@ dist
 .vscode
 .angular
 
+# ignore documents
 docs
+

@@ -4,6 +4,9 @@ import { CatalogComponent } from './catalog/catalog.component';
 
 @NgModule({
     declarations: [],
-    imports: [CommonModule, CatalogComponent],
+    imports: [
+        CommonModule, 
+        CatalogComponent
+    ],
 })
 export class CatalogModule {}

@@ -1,4 +1,5 @@
-<p>order-list works!</p>
-<button (click)="authorize()">Authorize</button>
+<h1>Orders</h1>
 
-<a routerLink="3">Order 3</a>
+<div *ngIf="orders$ | async as orders">
+    <pre>{{orders | json}}</pre>
+</div>

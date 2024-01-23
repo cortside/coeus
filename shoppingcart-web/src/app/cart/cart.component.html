@@ -1,0 +1,70 @@
+<h1>Cart</h1>
+
+{{ items$ | async | json }}
+
+<form #cartForm="ngForm" (ngSubmit)="createOrder()" class="form">
+    <fieldset ngModelGroup="model.customer">
+        <legend>Customer</legend>
+        <label class="field">
+            <span class="field-label">First name</span>
+            <input type="text" [(ngModel)]="model.customer!.firstName" name="firstName" #firstNameField="ngModel" />
+        </label>
+        <mz-field-errors [field]="firstNameField"></mz-field-errors>
+
+        <label class="field">
+            <span class="field-label">Last name</span>
+            <input type="text" [(ngModel)]="model.customer!.lastName" name="lastName" #lastNameField="ngModel" />
+        </label>
+        <mz-field-errors [field]="lastNameField"></mz-field-errors>
+
+        <label class="field">
+            <span class="field-label">Email</span>
+            <input type="text" [(ngModel)]="model.customer!.emailAddress" name="emailAddress" #emailAddressField="ngModel" />
+        </label>
+        <mz-field-errors [field]="emailAddressField"></mz-field-errors>
+
+        <label class="field">
+            <span class="field-label">Birthdate</span>
+            <input type="text" [(ngModel)]="model.customer!.birthdate" name="birthdate" #birthdateField="ngModel" />
+        </label>
+        <mz-field-errors [field]="birthdateField"></mz-field-errors>
+    </fieldset>
+    <fieldset>
+        <legend>Shipping address</legend>
+        <label class="field">
+            <span class="field-label">Street</span>
+            <input type="text" [(ngModel)]="model.address!.street" name="street" #streetField="ngModel" />
+        </label>
+        <mz-field-errors [field]="streetField"></mz-field-errors>
+
+        <label class="field">
+            <span class="field-label">City</span>
+            <input type="text" [(ngModel)]="model.address!.city" name="city" #cityField="ngModel" />
+        </label>
+        <mz-field-errors [field]="cityField"></mz-field-errors>
+
+        <label class="field">
+            <span class="field-label">State</span>
+            <input type="text" [(ngModel)]="model.address!.state" name="state" #stateField="ngModel" />
+        </label>
+        <mz-field-errors [field]="stateField"></mz-field-errors>
+
+        <label class="field">
+            <span class="field-label">Country</span>
+            <input type="text" [(ngModel)]="model.address!.country" name="country" #countryField="ngModel" />
+        </label>
+        <mz-field-errors [field]="countryField"></mz-field-errors>
+
+        <label class="field">
+            <span class="field-label">Zip code</span>
+            <input type="text" [(ngModel)]="model.address!.zipCode" name="zipCode" #zipCodeField="ngModel" />
+        </label>
+        <mz-field-errors [field]="zipCodeField"></mz-field-errors>
+    </fieldset>
+    
+    <pre>
+        {{model | json}}
+    </pre>
+
+    <button type="submit" class="button button-primary">Create order</button>
+</form>

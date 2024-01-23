@@ -1,5 +1,5 @@
 nav a {
-    @apply p-1 uppercase py-4 px-8 hover:border-b-4 hover:border-b-gray-900 hover:no-underline hover:text-gray-700;
+    @apply p-1 uppercase hover:border-b-4 hover:border-b-gray-900 hover:no-underline hover:text-gray-700;
 }
 
 nav a.active {
@@ -7,5 +7,5 @@ nav a.active {
 }
 
 nav li {
-    @apply inline-block mx-2 my-4;
+    @apply inline-block mx-4 my-2;
 }

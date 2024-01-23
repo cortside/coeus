@@ -1,4 +1,5 @@
 import { AuthenticationSettings } from '@muziehdesign/core';
+import { BuildInfo } from './build-info';
 
 export class AppConfig {
     service?: {
@@ -11,4 +12,5 @@ export class AppConfig {
         url: string;
     };
     identity: AuthenticationSettings = {} as AuthenticationSettings;
+    build: BuildInfo = {} as BuildInfo;
 }

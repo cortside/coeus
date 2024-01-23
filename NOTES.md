@@ -1,6 +1,75 @@
 TODO:
 
-
+* domaineventreceiver to add stopwatch and report proccessing time
+* script to help find open branches
+	* git branch --no-merged remotes/origin/develop -r --sort=committerdate --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:short)%(color:reset))'
+* set App=name; in connection string based on service.name
+	* AddDbContext
+* example of subtyped ef stuff
+	* policy flags in de -- 3 levels
+* handle cert errors in sql scripts
+	-Encrypt:$False
+* .editorconfig possible additions
+	```
+	dotnet_style_operator_placement_when_wrapping = beginning_of_line
+	tab_width = 4
+	end_of_line = crlf
+	dotnet_style_coalesce_expression = true:suggestion
+	dotnet_style_null_propagation = true:suggestion
+	dotnet_style_prefer_is_null_check_over_reference_equality_method = true:suggestion
+	dotnet_style_namespace_match_folder                                      = true
+	csharp_prefer_braces = true:refactoring
+	csharp_style_expression_bodied_lambdas = true:refactoring
+	csharp_style_expression_bodied_local_functions = true:refactoring
+	csharp_style_prefer_method_group_conversion = true:silent
+	csharp_style_prefer_top_level_statements = true:silent
+	csharp_style_prefer_primary_constructors = true:suggestion
+	```
+* update aspnetcore versioning libraries
+	* https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/tree/dev
+	* https://github.com/dotnet/aspnet-api-versioning/wiki/Migration
+	* https://github.com/dotnet/aspnet-api-versioning/discussions/808
+* restapiclient ip??
+	* "x-real-ip": "75.169.156.172"
+* add request rewind support in cortside.aspnetcore
+	* https://stackoverflow.com/questions/40494913/how-to-read-request-body-in-an-asp-net-core-webapi-controller
+	* peek body extension method
+* should this be common (from restapiclient):
+	* var accessor = new HttpContextAccessor().SetHttpContext("host", "/path", header);
+* EF Core relationships and navigational types
+	* https://github.com/dotnet/EntityFramework.Docs/pull/1003
+	* https://github.com/dotnet/EntityFramework.Docs/issues/1023
+	* https://github.com/dotnet/EntityFramework.Docs/blob/main/entity-framework/core/modeling/relationships.md
+	* https://stackoverflow.com/questions/70111504/collection-vs-list-which-i-have-to-use-for-navigation-properties
+	* https://learn.microsoft.com/en-us/ef/core/modeling/relationships/navigations#initialization-of-collection-navigations
+* code coverage tools from microsoft
+	* https://devblogs.microsoft.com/dotnet/whats-new-in-our-code-coverage-tooling/
+* protectedJson
+	* https://www.codeproject.com/Articles/5372873/ProtectedJson-Integrating-ASP-NET-Core-Configurati
+* add geolocation information from ip address
+	* http://ip-api.com/json/75.169.153.72?lang=en
+* EF core [NotMapped] usage and examples
+* add constants from userapi client constants.header to restapiclient
+* domainevent outbox interceptor
+	* https://www.milanjovanovic.tech/blog/how-to-use-ef-core-interceptors
+* db column encryption with ef core
+	* https://blog.wiseowls.co.nz/index.php/2020/01/26/custom-functions-ef-core-3/  <<-- using custom functions and symmetric keys
+		* https://carstent.wordpress.com/tag/entity-framework/ <<-- examples of sql with creating and using certificates for keys
+	* https://github.com/emrekizildas/EntityFrameworkCore.EncryptColumn/tree/main
+	* https://github.com/Eastrall/EntityFrameworkCore.DataEncryption
+	* https://stackoverflow.com/questions/76726818/entity-framework-core-and-column-level-sql-server-encryption-with-stored-procedu
+	* https://stackoverflow.com/questions/66035987/decrypting-data-using-ef-core-3
+	* https://stackoverflow.com/questions/59191856/using-ef-core-2-2-to-decrypt-a-string-using-sql-server-decryptbykey
+		* https://www.thinktecture.com/en/entity-framework-core/custom-functions-using-imethodcalltranslator-in-2-1/
+		* https://github.com/tkhadimullin/ef-core-custom-functions/tree/master?tab=readme-ov-file
+		* https://github.com/tkhadimullin/ef-core-custom-functions/tree/feature/ef-3.1-version
+		* https://stackoverflow.com/questions/77160320/writing-custom-entity-framework-function-with-imethodcalltranslator
+		* https://github.com/npgsql/efcore.pg/issues/2186
+	* https://carstent.wordpress.com/tag/entity-framework/
+	* https://blog.wiseowls.co.nz/index.php/2020/01/26/custom-functions-ef-core-3/
+* RandomValues class from comms
+	* https://github.com/dochoffiday/Lorem.NET/blob/master/Examples/Program.cs
+* capture of console/log from comms-api
 * Dependency Injection into Entity Class
 	* https://stackoverflow.com/questions/51082764/dependency-injection-into-entity-class
 	* https://stackoverflow.com/questions/4835046/why-not-use-an-ioc-container-to-resolve-dependencies-for-entities-business-objec
@@ -55,6 +124,7 @@ TODO:
 	* https://github.com/WireMock-Net/WireMock.Net/blob/master/src/WireMock.Net.OpenApiParser/WireMock.Net.OpenApiParser.csproj
 * chatgpt client
 	* https://www.codeproject.com/Articles/5370452/Developing-a-Client-Package-for-Integrating-OpenAI
+	* https://www.codeproject.com/Articles/5372480/Csharp-OpenAI-Library-that-Supports-Latest-Assista
 * codeproject.ai server
 	* https://www.codeproject.com/Articles/5322557/CodeProject-AI-Server-AI-the-easy-way
 * dynamic filters for search
@@ -116,8 +186,6 @@ TODO:
 	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/
 	* https://www.codeproject.com/Articles/5370795/Microservices-using-ASP-NET-Core-8-Ocelot-MongoDB#identity-microservice
 	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/
-* RandomValues class from comms
-* capture of console/log from comms-api
 * EF concurrency example
 * ETag example
 * Add schema parameter to AddDomainEventOutbox()
@@ -179,7 +247,7 @@ TODO:
 * extension methods in cortisde.domainevent for services setup
 * extension method to make registering client easier in restsharpclient
 * cortside.aspnetcore.entityframework extension method for db setup with unit of work 
-* extention method for cortside.common.cryptography EncryptionService
+* extension method for cortside.common.cryptography EncryptionService
 * cortside.aspnetcore extension method for registering types from assembly with name ending in x -- see repositoryinstaller
 * add services registration to webapi builder
 * add configure to webapi builder
