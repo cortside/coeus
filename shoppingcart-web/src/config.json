@@ -20,5 +20,11 @@
         "loadUserInfo": true,
         "automaticSilentRenew": true,
         "logLevel": 0
+    },
+    "build": {
+        "timestamp": "2024-01-12T20:16:11.6932Z",
+        "version": "1.0.0",
+        "tag": "1.0-local",
+        "suffix": "local"
     }
 }

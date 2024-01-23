@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { map, tap } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { AddressRequest } from '../api/shopping-cart/models/requests/address.request';
 import { CustomerRequest } from '../api/shopping-cart/models/requests/customer.request';
@@ -11,12 +11,13 @@ import { CreateOrderModel } from '../cart/create-order.model';
 import { CustomerInputModel } from '../cart/customer-input.model';
 import { PagedModel } from '../common/paged.model';
 import { CustomerModel, OrderSummaryModel } from '../models/models';
+import { ShoppingCartService } from './shopping-cart.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class OrderService {
-    constructor(private client: ShoppingCartClient) {}
+    constructor(private cart: ShoppingCartService, private client: ShoppingCartClient) {}
 
     debug(): void {
         console.log('debug');
@@ -35,8 +36,11 @@ export class OrderService {
         model.address.street = "Street";
 
         const request = assembleCreateOrderRequest(model);
-        request.items = [{sku: "PAPPY-10", quantity: 1}]
+        request.items = this.cart.getCurrentCartItems();
         return this.client.createOrders(request).pipe(
+            tap(x=>{
+                this.cart.clear();
+            }),
             map((x) => {
                 return {
                     orderResourceId: x.orderResourceId,
