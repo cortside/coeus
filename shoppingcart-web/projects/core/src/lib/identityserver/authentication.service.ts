@@ -54,7 +54,6 @@ export class AuthenticationService {
     async completeSignIn(): Promise<AuthenticatedUser | undefined> {
         // handle signin callback
         if (window.location.href.indexOf(this.settings.redirectUri) > -1) {
-            console.log('redirect uri handling');
             const redirectedUser = await this.userManager.signinRedirectCallback();
             window.history.replaceState({}, window.document.title, redirectedUser.state || '/');
         }
@@ -73,7 +72,13 @@ export class AuthenticationService {
     }
 
     async getAuthorizationData(): Promise<string> {
-        return this.userManager.getUser().then((u) => u?.access_token || '');
+        return this.userManager.getUser().then((u) => {
+            if (u?.access_token) {
+                return `Bearer ${u.access_token}`;
+            }
+            
+            return '';
+        });
     }
 
     private mapToAuthenticatedUser(user: User | undefined | null) {

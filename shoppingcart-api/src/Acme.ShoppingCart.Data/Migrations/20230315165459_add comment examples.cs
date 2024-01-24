@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 #nullable disable
 
 namespace Acme.ShoppingCart.Data.Migrations {
-    public partial class addcommentexamples : Migration {
+    public partial class AddCommentExamples : Migration {
         protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.AlterTable(
                 name: "OrderItem",
@@ -18,97 +18,97 @@ namespace Acme.ShoppingCart.Data.Migrations {
 
             migrationBuilder.AlterColumn<decimal>(
                 name: "UnitPrice",
-                schema: "dbo",
                 table: "OrderItem",
                 type: "money",
+                schema: "dbo",
                 nullable: false,
-                comment: "Per quantity price",
                 oldClrType: typeof(decimal),
-                oldType: "money");
+                oldType: "money",
+                comment: "Per quantity price");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Sku",
-                schema: "dbo",
                 table: "OrderItem",
                 type: "nvarchar(10)",
                 maxLength: 10,
+                schema: "dbo",
                 nullable: true,
-                comment: "Item Sku",
                 oldClrType: typeof(string),
                 oldType: "nvarchar(10)",
                 oldMaxLength: 10,
-                oldNullable: true);
+                oldNullable: true,
+                comment: "Item Sku");
 
             migrationBuilder.AlterColumn<int>(
                 name: "Quantity",
-                schema: "dbo",
                 table: "OrderItem",
                 type: "int",
+                schema: "dbo",
                 nullable: false,
-                comment: "Quantity of Sku",
                 oldClrType: typeof(int),
-                oldType: "int");
+                oldType: "int",
+                comment: "Quantity of Sku");
 
             migrationBuilder.AlterColumn<Guid>(
                 name: "ItemId",
-                schema: "dbo",
                 table: "OrderItem",
                 type: "uniqueidentifier",
+                schema: "dbo",
                 nullable: false,
-                comment: "FK to Item in Catalog service",
                 oldClrType: typeof(Guid),
-                oldType: "uniqueidentifier");
+                oldType: "uniqueidentifier",
+                comment: "FK to Item in Catalog service");
 
             migrationBuilder.AlterColumn<int>(
                 name: "OrderItemId",
-                schema: "dbo",
                 table: "OrderItem",
                 type: "int",
+                schema: "dbo",
                 nullable: false,
-                comment: "Primary Key",
                 oldClrType: typeof(int),
-                oldType: "int")
+                oldType: "int",
+                comment: "Primary Key")
                 .Annotation("SqlServer:Identity", "1, 1")
                 .OldAnnotation("SqlServer:Identity", "1, 1");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Status",
-                schema: "dbo",
                 table: "Order",
                 type: "nvarchar(20)",
+                schema: "dbo",
                 nullable: false,
-                comment: "Order status (created, paid, shipped, cancelled)",
                 oldClrType: typeof(string),
-                oldType: "nvarchar(20)");
+                oldType: "nvarchar(20)",
+                comment: "Order status (created, paid, shipped, cancelled)");
 
             migrationBuilder.AlterColumn<Guid>(
                 name: "OrderResourceId",
-                schema: "dbo",
                 table: "Order",
                 type: "uniqueidentifier",
+                schema: "dbo",
                 nullable: false,
-                comment: "Public unique identifier",
                 oldClrType: typeof(Guid),
-                oldType: "uniqueidentifier");
+                oldType: "uniqueidentifier",
+                comment: "Public unique identifier");
 
             migrationBuilder.AlterColumn<int>(
                 name: "OrderId",
-                schema: "dbo",
                 table: "Order",
                 type: "int",
+                schema: "dbo",
                 nullable: false,
-                comment: "Primary Key",
                 oldClrType: typeof(int),
-                oldType: "int")
+                oldType: "int",
+                comment: "Primary Key")
                 .Annotation("SqlServer:Identity", "1, 1")
                 .OldAnnotation("SqlServer:Identity", "1, 1");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Street",
-                schema: "dbo",
                 table: "Address",
                 type: "nvarchar(50)",
                 maxLength: 50,
+                schema: "dbo",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)",
@@ -116,17 +116,17 @@ namespace Acme.ShoppingCart.Data.Migrations {
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_OrderResourceId",
-                schema: "dbo",
                 table: "Order",
                 column: "OrderResourceId",
+                schema: "dbo",
                 unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropIndex(
                 name: "IX_Order_OrderResourceId",
-                schema: "dbo",
-                table: "Order");
+                table: "Order",
+                schema: "dbo");
 
             migrationBuilder.AlterTable(
                 name: "OrderItem",
@@ -140,9 +140,9 @@ namespace Acme.ShoppingCart.Data.Migrations {
 
             migrationBuilder.AlterColumn<decimal>(
                 name: "UnitPrice",
-                schema: "dbo",
                 table: "OrderItem",
                 type: "money",
+                schema: "dbo",
                 nullable: false,
                 oldClrType: typeof(decimal),
                 oldType: "money",
@@ -150,10 +150,10 @@ namespace Acme.ShoppingCart.Data.Migrations {
 
             migrationBuilder.AlterColumn<string>(
                 name: "Sku",
-                schema: "dbo",
                 table: "OrderItem",
                 type: "nvarchar(10)",
                 maxLength: 10,
+                schema: "dbo",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(10)",
@@ -163,9 +163,9 @@ namespace Acme.ShoppingCart.Data.Migrations {
 
             migrationBuilder.AlterColumn<int>(
                 name: "Quantity",
-                schema: "dbo",
                 table: "OrderItem",
                 type: "int",
+                schema: "dbo",
                 nullable: false,
                 oldClrType: typeof(int),
                 oldType: "int",
@@ -173,9 +173,9 @@ namespace Acme.ShoppingCart.Data.Migrations {
 
             migrationBuilder.AlterColumn<Guid>(
                 name: "ItemId",
-                schema: "dbo",
                 table: "OrderItem",
                 type: "uniqueidentifier",
+                schema: "dbo",
                 nullable: false,
                 oldClrType: typeof(Guid),
                 oldType: "uniqueidentifier",
@@ -183,9 +183,9 @@ namespace Acme.ShoppingCart.Data.Migrations {
 
             migrationBuilder.AlterColumn<int>(
                 name: "OrderItemId",
-                schema: "dbo",
                 table: "OrderItem",
                 type: "int",
+                schema: "dbo",
                 nullable: false,
                 oldClrType: typeof(int),
                 oldType: "int",
@@ -195,9 +195,9 @@ namespace Acme.ShoppingCart.Data.Migrations {
 
             migrationBuilder.AlterColumn<string>(
                 name: "Status",
-                schema: "dbo",
                 table: "Order",
                 type: "nvarchar(20)",
+                schema: "dbo",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(20)",
@@ -205,9 +205,9 @@ namespace Acme.ShoppingCart.Data.Migrations {
 
             migrationBuilder.AlterColumn<Guid>(
                 name: "OrderResourceId",
-                schema: "dbo",
                 table: "Order",
                 type: "uniqueidentifier",
+                schema: "dbo",
                 nullable: false,
                 oldClrType: typeof(Guid),
                 oldType: "uniqueidentifier",
@@ -215,9 +215,9 @@ namespace Acme.ShoppingCart.Data.Migrations {
 
             migrationBuilder.AlterColumn<int>(
                 name: "OrderId",
-                schema: "dbo",
                 table: "Order",
                 type: "int",
+                schema: "dbo",
                 nullable: false,
                 oldClrType: typeof(int),
                 oldType: "int",
@@ -227,9 +227,9 @@ namespace Acme.ShoppingCart.Data.Migrations {
 
             migrationBuilder.AlterColumn<string>(
                 name: "Street",
-                schema: "dbo",
                 table: "Address",
                 type: "nvarchar(max)",
+                schema: "dbo",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(50)",

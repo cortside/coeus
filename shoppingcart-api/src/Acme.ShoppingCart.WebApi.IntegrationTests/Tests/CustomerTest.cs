@@ -32,11 +32,11 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             var requestBody = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
 
             //act
-            var response = await testServerClient.PostAsync("/api/v1/customers", requestBody).ConfigureAwait(false);
+            var response = await testServerClient.PostAsync("/api/v1/customers", requestBody);
 
             //assert
             response.StatusCode.Should().Be(HttpStatusCode.Created);
-            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var content = await response.Content.ReadAsStringAsync();
             var customer = JsonConvert.DeserializeObject<Models.Responses.CustomerModel>(content);
             Assert.Equal(request.FirstName, customer.FirstName);
             Assert.Equal(request.LastName, customer.LastName);
@@ -50,7 +50,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             var id = db.Customers.First().CustomerResourceId;
 
             //act
-            var response = await testServerClient.GetAsync($"api/v1/customers/{id}").ConfigureAwait(false);
+            var response = await testServerClient.GetAsync($"api/v1/customers/{id}");
 
             //assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -69,7 +69,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             var requestBody = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
 
             //act
-            var response = await testServerClient.PostAsync("/api/v1/customers/search", requestBody).ConfigureAwait(false);
+            var response = await testServerClient.PostAsync("/api/v1/customers/search", requestBody);
 
             //assert
             // testserver httpclient does not follow redirects and no current way to make that happen, so have to handle this manually
@@ -77,12 +77,12 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             var location = response.Headers.FirstOrDefault(x => x.Key == "Location").Value.First();
             location.Should().NotBeNull();
 
-            var customersResponse = await testServerClient.GetAsync(location).ConfigureAwait(false);
+            var customersResponse = await testServerClient.GetAsync(location);
             customersResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-            var content = await customersResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var content = await customersResponse.Content.ReadAsStringAsync();
             var customers = JsonConvert.DeserializeObject<PagedList<CustomerModel>>(content);
-            customers.Items.Any(x => x.CustomerResourceId == id.CustomerResourceId).Should().BeTrue();
+            customers.Items.Exists(x => x.CustomerResourceId == id.CustomerResourceId).Should().BeTrue();
         }
     }
 }

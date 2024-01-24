@@ -59,22 +59,17 @@ ENV ASPNETCORE_ENVIRONMENT=Deployment
 ENV SERVICE_NAME=$service_name
 ENV SERVICE_EXECUTABLE=$service_executable
 
-#COPY ./deploy/sh/startup.sh /startup.sh
-#COPY ./certs/* /usr/local/share/ca-certificates/
-COPY ./src/sql /sql
+COPY ./src/sql /sql/src/sql
 COPY ./update-database.ps1 /sql
-COPY ./src/*.db /app/
-#RUN chmod a+x /startup.sh
-#RUN chmod a+rw /app
+COPY ./repository.psm1 /sql
+COPY ./repository.json /sql
+RUN chmod -R a+rw /sql
 
 WORKDIR /app
 COPY --from=build /app/src/out ./
 COPY --from=build /app/src/"$publishableProject"/build.json ./
+RUN chown user:user appsettings.json
 
-#RUN echo "{}" > /app/appsettings.local.json
-#RUN chmod a+rw /app/appsettings.local.json
-
-#TODO uncomment when not using sqllite db
-#USER user
+USER user
 EXPOSE 5000/tcp
 CMD ["/startup.sh"]

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src='https://www.google.com/recaptcha/api.js?render=6LfaYSwcAAAAABtQsvJDbdE0GRFweDHirRzwF22f'></script>
+</head>
+<body>
+<div>This site demonstrates how recaptcha can be validated with ids -- must run on http://localhost</div>
+  <form id="contactForm" action="http://localhost:5002/connect/token" method="post">
+    <input type="text" id="recaptcha_token" name="recaptcha_token">
+    <input type="text" id="site_secret" name="site_secret" value="6LfaYSwcAAAAAJjQWWeBxePPU-V5UiPsfej0o1GZ">
+
+    <input type="text" id="grant_type" name="grant_type" value="recaptcha">
+    <input type="text" id="scope" name="scope" value="shoppingcart-api">
+    <input type="text" id="client_id" name="client_id" value="shoppingcart-web">
+    <input type="text" id="client_secret" name="client_secret" value="secret">
+    <input type="submit" name="btnsubmit" value="SUBMIT">
+  </form>
+  <script>
+    contactForm.addEventListener('submit', event => {
+      event.preventDefault()
+      validate(contactForm)
+    });
+  </script>
+  <script>
+    function validate(form) {
+      getRecaptchaToken(form)
+    }
+
+    function getRecaptchaToken(form) {
+      grecaptcha.ready(function () {
+        grecaptcha.execute('6LfaYSwcAAAAABtQsvJDbdE0GRFweDHirRzwF22f', { action: 'contactForm' }).then(function (gtoken) {
+          console.log(gtoken)
+          recaptcha_token.value = gtoken //set the value of the hidden field
+          form.submit() //submit the form
+        });
+      });
+    }
+  </script>
+</body>
+</html>

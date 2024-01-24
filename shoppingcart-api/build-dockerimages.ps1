@@ -84,7 +84,7 @@ Function New-BuildJson {
 	$builditems.timestamp = $buildTime
 	$builditems.Keys | % { $build | Add-Member -MemberType NoteProperty -Name $_ -Value $builditems.$_ } > $null
 	
-	$buildobject | Add-Member -MemberType NoteProperty -Name Build -Value $build
+	$buildobject | Add-Member -MemberType NoteProperty -Name build -Value $build
 	$buildobject | ConvertTo-Json -Depth 5 | Out-File $buildjsonpath -force
 
 	return $buildobject

@@ -41,15 +41,16 @@ $files | ForEach-Object {
   Write-Host $_
   $dir = $_ -replace "\/[^\/]+$", ""
   $dir = $dir -replace "/", "\"
-  if (Test-Path "$dir\build-dockerimages.ps1") {
-	Write-Host "Storing $dir for build"
-	$dirs.Set_Item($dir, 1)
+  $rootdir = $dir.split("\",3)[0]
+  if (Test-Path "$rootdir\build-dockerimages.ps1") {
+	Write-Host "Storing $rootdir for build"
+	$dirs.Set_Item($rootdir, 1)
   } else {
 	$dir = $dir -replace "\\[^\\]+$", ""
-	#if (Test-Path "$dir\build-dockerimages.ps1") {
-	if (Test-Path "$dir\Dockerfile.*") {
-	  Write-Host "Storing $dir for build"
-	  $dirs.Set_Item($dir, 1)
+	#if (Test-Path "$rootdir\build-dockerimages.ps1") {
+	if (Test-Path "$rootdir\Dockerfile.*") {
+	  Write-Host "Storing $rootdir for build"
+	  $dirs.Set_Item($rootdir, 1)
 	}
   }
 }

@@ -1,1 +1,19 @@
-<p>catalog item works!</p>
+<div *ngIf="item() as itemValue">
+    <h1>{{itemValue.name}}</h1>
+    <div class="inline-block max-w-2xl">
+        <img src="{{ itemValue.imageUrl }}" alt="{{ itemValue.name }}" class="h-full w-full object-cover object-center" />
+    </div>
+    <div>{{ itemValue.unitPrice | currency }}</div>
+
+    <form #cartForm="ngForm" (ngSubmit)="addToCart()" class="form">
+        <div>
+            {{cartForm.value | json}}
+        </div>
+        <label class="field">
+            <span class="sr-only">Quantity</span>
+            <input type="number" [(ngModel)]="model.quantity" name="quantity" #quantityField="ngModel" />
+        </label>
+        <mz-field-errors [field]="quantityField"></mz-field-errors>
+        <button type="submit" class="button button-primary">Add to cart</button>
+    </form>
+</div>

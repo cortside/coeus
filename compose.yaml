@@ -2,8 +2,11 @@ services:
 #5005 - healthmonitor-api
 #5002 - identityserver
 #5001 - policyserver
+#5007 - mockserver
 #5000 - shoppingcart-api
 #4200 - shoppingcart-web
+#5003 - dashboard-web
+#5006 - sqlreport-api
   rabbitmq:
     environment:
       ACCEPT_EULA: "Y"
@@ -26,8 +29,20 @@ services:
     restart: unless-stopped
     ports:
       - 5341:80
+    healthcheck:
+      test: curl --fail http://localhost/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s      
   redis:
     image: redislabs/redismod
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 1s
+      timeout: 3s
+      retries: 5
     ports:
       - 6379:6379
   healthmonitor-api:
@@ -35,6 +50,8 @@ services:
     restart: unless-stopped
     ports:
       - 5005:5000
+    extra_hosts:
+      - ${DOCKER_HOST}:${DOCKER_HOST_IP}
     volumes:
       - coeus-data:/settings
     healthcheck:
@@ -45,17 +62,20 @@ services:
       timeout: 10s      
   identityserver-bootstrap:
     image: cortside/identityserver4:develop
+    user: root
     depends_on:
       db:
         condition: "service_healthy"
     volumes:
       - coeus-data:/settings
-    command: ["/bin/sh", "-c", "cd /sql; pwsh ./update-database.ps1 -CreateDatabase -appsettings /settings/identityserver4/appsettings.local.json"]
+    command: ["/bin/sh", "-c", "unset SERVICE_EXECUTABLE; /startup.sh; cd /sql; pwsh ./update-database.ps1 -CreateDatabase -TestData -appsettings /app/appsettings.local.json"]
   identityserver:
     image: cortside/identityserver4:develop
     restart: unless-stopped
     ports:
       - 5002:5000
+    extra_hosts:
+      - ${DOCKER_HOST}:${DOCKER_HOST_IP}
     depends_on:
       - db
       - identityserver-bootstrap
@@ -72,6 +92,28 @@ services:
     restart: unless-stopped
     ports:
       - 5001:5001
+    extra_hosts:
+      - ${DOCKER_HOST}:${DOCKER_HOST_IP}
+    depends_on:
+      - db
+      - identityserver
+    volumes:
+      - coeus-data:/settings
+    healthcheck:
+      test: curl --fail http://localhost:5001/api/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s      
+  mockserver:
+    image: cortside/policyserver:develop
+    restart: unless-stopped
+    environment:
+      SERVICE_NAME: mockserver
+    ports:
+      - 5007:5001
+    extra_hosts:
+      - ${DOCKER_HOST}:${DOCKER_HOST_IP}
     depends_on:
       - db
       - identityserver
@@ -84,23 +126,55 @@ services:
       start_period: 20s
       timeout: 10s      
   shoppingcart-bootstrap:
-    image: cortside/shoppingcart-api:1.0.10-develop-alpine
+    image: cortside/shoppingcart-api:develop
+    user: root
     depends_on:
       db:
         condition: "service_healthy"
     volumes:
       - coeus-data:/settings
-    command: ["/bin/sh", "-c", "cd /sql; pwsh ./update-database.ps1 -CreateDatabase -appsettings /settings/shoppingcart-api/appsettings.local.json"]   
+    command: ["/bin/sh", "-c", "unset SERVICE_EXECUTABLE; /startup.sh; cd /sql; pwsh ./update-database.ps1 -CreateDatabase -appsettings /settings/shoppingcart-api/appsettings.local.json"]   
   shoppingcart-api:
-    image: cortside/shoppingcart-api:1.0.10-develop-alpine
+    image: cortside/shoppingcart-api:develop
     restart: unless-stopped
     ports:
       - 5000:5000
+    extra_hosts:
+      - ${DOCKER_HOST}:${DOCKER_HOST_IP}
     depends_on:
       - db
-      - policyserver
+      - mockserver
       - identityserver
       - shoppingcart-bootstrap
+    volumes:
+      - coeus-data:/settings
+    healthcheck:
+      test: curl --fail http://localhost:5000/api/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s      
+  sqlreport-bootstrap:
+    image: cortside/sqlreport-api:develop
+    user: root
+    depends_on:
+      db:
+        condition: "service_healthy"
+    volumes:
+      - coeus-data:/settings
+    command: ["/bin/sh", "-c", "unset SERVICE_EXECUTABLE; /startup.sh; cd /sql; pwsh ./update-database.ps1 -CreateDatabase -appsettings /settings/sqlreport-api/app/appsettings.local.json"]   
+  sqlreport-api:
+    image: cortside/sqlreport-api:develop
+    restart: unless-stopped
+    ports:
+      - 5006:5000
+    extra_hosts:
+      - ${DOCKER_HOST}:${DOCKER_HOST_IP}
+    depends_on:
+      - db
+      - mockserver
+      - identityserver
+      - sqlreport-bootstrap
     volumes:
       - coeus-data:/settings
     healthcheck:
@@ -113,9 +187,26 @@ services:
     image: cortside/shoppingcart-web:develop
     restart: unless-stopped
     ports:
-      - 4200:8080
+      - 5004:8080
     depends_on:
       - shoppingcart-api
+    volumes:
+      - coeus-data:/settings
+    environment:
+      EXTERNAL_HOST: ${DOCKER_HOST}
+    healthcheck:
+      test: curl --fail http://localhost:8080/health || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s      
+  dashboard-web:
+    image: cortside/dashboard-web:develop
+    restart: unless-stopped
+    ports:
+      - 5003:8080
+    depends_on:
+      - identityserver
     volumes:
       - coeus-data:/settings
     environment:
@@ -129,7 +220,7 @@ services:
   db:
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: password1@
+      SA_PASSWORD: "password1@"
     image: mcr.microsoft.com/mssql/server:2022-latest
     restart: unless-stopped
     ports:

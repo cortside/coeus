@@ -19,3 +19,9 @@
 2. Run identityServer6
 3. Run shoppingcart-api
 4. Run shoppingcart-web
+
+## Thanks
+
+Many thanks to [JetBrains](https://www.jetbrains.com) for providing me licenses for wonderful tools like [Resharper](https://www.jetbrains.com/resharper/)!
+
+![JetBrains Logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg "JetBrains Logo")

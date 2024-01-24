@@ -6,9 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore" Version="6.1.163" />
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.1.163" />
-    <PackageReference Include="Cortside.Common.Json" Version="6.1.397" />
+    <PackageReference Include="Cortside.AspNetCore" Version="6.1.190" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.1.190" />
+    <PackageReference Include="Cortside.Common.Json" Version="6.2.403" />
     <PackageReference Include="Cortside.MockServer.AccessControl" Version="6.1.62" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.8.14">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

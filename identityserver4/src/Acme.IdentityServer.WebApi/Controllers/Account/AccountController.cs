@@ -97,6 +97,8 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginInputModel model, string button) {
+			logger.LogInformation("Attempting local user login for {username}", model.Username);
+			
             if (button != "login" && button != "check2fa") {
                 // the user clicked the "cancel" button
                 var context = await idsService.GetAuthorizationContextAsync(model.ReturnUrl);

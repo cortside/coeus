@@ -4,10 +4,10 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore" Version="6.1.163" />
-    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.1.163" />
-    <PackageReference Include="Cortside.Common.BootStrap" Version="6.1.397" />
-    <PackageReference Include="Cortside.Common.Cryptography" Version="6.1.397" />
+    <PackageReference Include="Cortside.AspNetCore" Version="6.2.202" />
+    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.2.202" />
+    <PackageReference Include="Cortside.Common.BootStrap" Version="6.2.408" />
+    <PackageReference Include="Cortside.Common.Cryptography" Version="6.2.408" />
     <PackageReference Include="DistributedLock.SqlServer" Version="1.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.8.14">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

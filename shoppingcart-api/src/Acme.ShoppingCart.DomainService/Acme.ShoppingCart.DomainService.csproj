@@ -4,10 +4,10 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.Common.Correlation" Version="6.1.397" />
-    <PackageReference Include="Cortside.Common.Messages" Version="6.1.397" />
-    <PackageReference Include="Cortside.Common.Validation" Version="6.1.397" />
-    <PackageReference Include="Cortside.DomainEvent" Version="6.1.293" />
+    <PackageReference Include="Cortside.Common.Correlation" Version="6.2.408" />
+    <PackageReference Include="Cortside.Common.Messages" Version="6.2.408" />
+    <PackageReference Include="Cortside.Common.Validation" Version="6.2.408" />
+    <PackageReference Include="Cortside.DomainEvent" Version="6.2.301" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.8.14">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

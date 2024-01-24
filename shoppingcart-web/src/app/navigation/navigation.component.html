@@ -1,12 +1,21 @@
 <header>
-    <h1 class="text-2xl font-bold uppercase tracking-wider w-full text-center">Coeus Whiskey</h1>
+    <h1 class="text-2xl font-bold uppercase tracking-wider w-full text-center">
+        <a href="/" class="text-default hover:no-underline text-gray-700 hover:text-gray-700">Coeus Whiskey</a>
+    </h1>
     <div class="w-full text-center mx-auto text-gray-500 tracking-wide uppercase text-sm">The best whiskey selection online</div>
     <nav class="border-y border-gray-100 my-4">
         <ul>
-            <li><a routerLink="/catalog/items" routerLinkActive="active">Catalog</a></li>
-            <li><a routerLink="/orders" routerLinkActive="active">Orders</a></li>
+            <li><a routerLink="/catalog/items" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Catalog</a></li>
+            <li><a routerLink="/orders" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Orders</a></li>
             <li>
-                <a routerLink="/checkout"routerLinkActive="active"> {{ quantity$ | async }} cart items </a>
+                <a routerLink="/cart"> 
+                    {{ quantity$ | async }}
+                    <span class="inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                        </svg>
+                    </span>                                          
+                </a>
             </li>
         </ul>
     </nav>

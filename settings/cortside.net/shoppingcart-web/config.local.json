@@ -1,0 +1,24 @@
+{
+    "application": {
+        "name": "shoppingcart-web"
+    },
+    "catalogApi": {
+        "url": "https://mockserver.cortside.net"
+    },
+    "shoppingCartApi": {
+        "url": "https://shoppingcartapi.cortside.net"
+    },
+    "identity": {
+        "authority": "https://identityserver.cortside.net",
+        "clientId": "shoppingcart-web",
+        "responseType": "id_token token",
+        "scope": "openid profile shoppingcart-api catalog-api",
+        "redirectUri": "https://shoppingcart.cortside.net/login-redirect",
+        "silentRedirectUri": "https://shoppingcart.cortside.net/silent-redirect",
+        "postLogoutRedirectUri": "https://shoppingcart.cortside.net/logout",
+        "accessTokenExpiringNotificationTime": 60,
+        "loadUserInfo": true,
+        "automaticSilentRenew": true,
+        "logLevel": 0
+    }
+}

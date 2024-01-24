@@ -11,6 +11,6 @@ export class AppComponent {
     title = 'shoppingcart-web';
     user: User | null = null;
     constructor(private config: AppConfig) {
-        console.log(config);
+
     }
 }

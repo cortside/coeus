@@ -45,10 +45,10 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
 
             //act
             var orderBody = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");
-            var orderResponse = await client.PostAsync("/api/v1/orders", orderBody).ConfigureAwait(false);
+            var orderResponse = await client.PostAsync("/api/v1/orders", orderBody);
 
             //assert
-            var orderContent = await orderResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var orderContent = await orderResponse.Content.ReadAsStringAsync();
             orderResponse.StatusCode.Should().Be(HttpStatusCode.Created);
             var order = JsonConvert.DeserializeObject<OrderModel>(orderContent);
             order.Customer.CustomerResourceId.Should().NotBeEmpty();
@@ -79,16 +79,16 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             };
 
             //act
-            var response = await client.PostAsync("/api/v1/customers", requestBody).ConfigureAwait(false);
-            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var response = await client.PostAsync("/api/v1/customers", requestBody);
+            var content = await response.Content.ReadAsStringAsync();
             var customer = JsonConvert.DeserializeObject<Models.Responses.CustomerModel>(content);
 
             var orderBody = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");
-            var orderResponse = await client.PostAsync($"/api/v1/customers/{customer.CustomerResourceId}/orders", orderBody).ConfigureAwait(false);
+            var orderResponse = await client.PostAsync($"/api/v1/customers/{customer.CustomerResourceId}/orders", orderBody);
 
             //assert
             response.StatusCode.Should().Be(HttpStatusCode.Created);
-            var orderContent = await orderResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var orderContent = await orderResponse.Content.ReadAsStringAsync();
             orderResponse.StatusCode.Should().Be(HttpStatusCode.Created);
             var order = JsonConvert.DeserializeObject<OrderModel>(orderContent);
             order.Customer.CustomerResourceId.Should().Be(customer.CustomerResourceId);
@@ -102,10 +102,10 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             var customer = db.Customers.First();
             var order = new Order(customer, "", "", "", "", "");
             db.Orders.Add(order);
-            await db.SaveChangesAsync().ConfigureAwait(false);
+            await db.SaveChangesAsync();
 
             //act
-            var response = await client.GetAsync($"api/v1/orders/{order.OrderResourceId}").ConfigureAwait(false);
+            var response = await client.GetAsync($"api/v1/orders/{order.OrderResourceId}");
 
             //assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -118,13 +118,13 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             var customer = db.Customers.First();
             var orderRequest = new Order(customer, "", "", "", "", "");
             db.Orders.Add(orderRequest);
-            await db.SaveChangesAsync().ConfigureAwait(false);
+            await db.SaveChangesAsync();
 
             //act
-            var orderResponse = await client.GetAsync($"api/v1/orders/{orderRequest.OrderResourceId}").ConfigureAwait(false);
+            var orderResponse = await client.GetAsync($"api/v1/orders/{orderRequest.OrderResourceId}");
 
             //assert
-            var orderContent = await orderResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var orderContent = await orderResponse.Content.ReadAsStringAsync();
             orderResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             var order = JsonConvert.DeserializeObject<OrderModel>(orderContent);
             order.Customer.CustomerResourceId.Should().NotBeEmpty();
@@ -135,18 +135,18 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             // act
             var itemRequest = new CreateOrderItemModel() { Sku = "123", Quantity = 1 };
             var orderBody = new StringContent(JsonConvert.SerializeObject(itemRequest), Encoding.UTF8, "application/json");
-            orderResponse = await client.PostAsync($"api/v1/orders/{orderRequest.OrderResourceId}/items", orderBody).ConfigureAwait(false);
+            orderResponse = await client.PostAsync($"api/v1/orders/{orderRequest.OrderResourceId}/items", orderBody);
 
             //assert
-            orderContent = await orderResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+            orderContent = await orderResponse.Content.ReadAsStringAsync();
             orderResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             Assert.Contains(orderRequest.OrderResourceId.ToString(), orderContent);
 
             //act
-            orderResponse = await client.GetAsync($"api/v1/orders/{orderRequest.OrderResourceId}").ConfigureAwait(false);
+            orderResponse = await client.GetAsync($"api/v1/orders/{orderRequest.OrderResourceId}");
 
             //assert
-            orderContent = await orderResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+            orderContent = await orderResponse.Content.ReadAsStringAsync();
             orderResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             order = JsonConvert.DeserializeObject<OrderModel>(orderContent);
             order.Customer.CustomerResourceId.Should().NotBeEmpty();
@@ -164,10 +164,10 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
                 var order = new Order(customer, "", "", "", "", "");
                 db.Orders.Add(order);
             }
-            await db.SaveChangesAsync().ConfigureAwait(false);
+            await db.SaveChangesAsync();
 
             //act
-            var response = await client.GetAsync("api/v1/orders?pageSize=5&page=1").ConfigureAwait(false);
+            var response = await client.GetAsync("api/v1/orders?pageSize=5&page=1");
 
             //assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -197,10 +197,10 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
 
             //act
             var orderBody = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");
-            var orderResponse = await client.PostAsync("/api/v1/orders", orderBody).ConfigureAwait(false);
+            var orderResponse = await client.PostAsync("/api/v1/orders", orderBody);
 
             //assert
-            var orderContent = await orderResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var orderContent = await orderResponse.Content.ReadAsStringAsync();
             orderResponse.StatusCode.Should().Be(HttpStatusCode.Created);
             var order = JsonConvert.DeserializeObject<OrderModel>(orderContent);
             order.Customer.CustomerResourceId.Should().NotBeEmpty();
@@ -211,8 +211,8 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             orderRequest.Items.RemoveAt(0);
             orderRequest.Items.Add(new CreateOrderItemModel() { Sku = "789", Quantity = 3 });
             orderBody = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");
-            orderResponse = await client.PutAsync($"/api/v1/orders/{order.OrderResourceId}", orderBody).ConfigureAwait(false);
-            orderContent = await orderResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+            orderResponse = await client.PutAsync($"/api/v1/orders/{order.OrderResourceId}", orderBody);
+            orderContent = await orderResponse.Content.ReadAsStringAsync();
             orderResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             order = JsonConvert.DeserializeObject<OrderModel>(orderContent);
             order.Customer.CustomerResourceId.Should().NotBeEmpty();

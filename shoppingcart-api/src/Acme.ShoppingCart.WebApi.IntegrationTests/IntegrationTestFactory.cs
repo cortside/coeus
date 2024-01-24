@@ -39,8 +39,9 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
         public JsonSerializerSettings SerializerSettings { get; private set; }
 
         //public IntegrationTestFactory(ITestOutputHelper outputHelper) {
-
         //}
+
+        //https://timdeschryver.dev/blog/how-to-test-your-csharp-web-api#writing-your-own-webapplicationfactory
 
         protected override IHostBuilder CreateHostBuilder() {
             SetupConfiguration();

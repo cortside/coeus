@@ -6,6 +6,7 @@ using Cortside.MockServer;
 using Cortside.MockServer.Builder;
 using Newtonsoft.Json;
 using PolicyServer.Mocks.Models;
+using WireMock.Matchers;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
 
@@ -36,6 +37,19 @@ namespace PolicyServer.Mocks {
             server.WireMockServer
                 .Given(
                     Request.Create().WithPath("/api/v1/items/*")
+                        .WithPath((path) => GetItem(path.Trim('/').Split("/")[3]) == null)
+                        .UsingGet()
+                )
+                .RespondWith(
+                    Response.Create()
+                        .WithStatusCode(200)
+                        .WithHeader("Content-Type", "application/json")
+                        .WithNotFound()
+                );
+
+            server.WireMockServer
+                .Given(
+                    Request.Create().WithPath(new RegexMatcher(@"^\/api\/v1\/items\/\w+-\d+$"))
                         .UsingGet()
                 )
                 .RespondWith(
@@ -44,11 +58,32 @@ namespace PolicyServer.Mocks {
                         .WithHeader("Content-Type", "application/json")
                         .WithBody(r => JsonConvert.SerializeObject(GetItem(r.PathSegments[3])))
                 );
+
+            server.WireMockServer
+                .Given(
+                    Request.Create().WithPath(new RegexMatcher(@"^\/api\/v1\/items\/\w+-\d+/related$"))
+                        .UsingGet()
+                )
+                .RespondWith(
+                    Response.Create()
+                        .WithStatusCode(200)
+                        .WithHeader("Content-Type", "application/json")
+                        .WithBody(r => JsonConvert.SerializeObject(GetRelatedItems(r.PathSegments[3])))
+                );
         }
 
         private CatalogItem GetItem(string sku) {
-            var item = items.Items.Find(x => x.Sku == sku);
-            return item ?? items.Items.FirstOrDefault();
+            var item = items.Items.FirstOrDefault(x => x.Sku == sku);
+            return item;
+        }
+
+        private PagedList<CatalogItem> GetRelatedItems(string sku) {
+            var page = new PagedList<CatalogItem>();
+            page.Items = new List<CatalogItem>(items.Items.Where(x => x.Sku != sku));
+            page.PageSize = page.Items.Count;
+            page.TotalItems = page.Items.Count;
+            page.PageNumber = 1;
+            return page;
         }
     }
 }

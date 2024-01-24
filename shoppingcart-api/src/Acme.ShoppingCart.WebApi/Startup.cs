@@ -33,6 +33,7 @@ namespace Acme.ShoppingCart.WebApi {
         /// Startup
         /// </summary>
         /// <param name="configuration"></param>
+        [ActivatorUtilitiesConstructor]
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
         }
