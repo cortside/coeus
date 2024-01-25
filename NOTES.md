@@ -1,5 +1,7 @@
 TODO:
 
+* guidelines page for common test data	
+	* https://developer.wepay.com/docs/articles/testing
 * domaineventreceiver to add stopwatch and report proccessing time
 * script to help find open branches
 	* git branch --no-merged remotes/origin/develop -r --sort=committerdate --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:short)%(color:reset))'
@@ -83,6 +85,9 @@ TODO:
 	* https://www.andybutland.dev/2023/07/202307migrating-api-from-newtonsoftjson-to-system-text-json.html
 	* https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/migrate-from-newtonsoft?pivots=dotnet-8-0
 	* https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/migrate-from-newtonsoft?pivots=dotnet-6-0
+	* https://github.com/dotnet/runtime/issues/74385 <-- enum-string conversion
+	* https://www.planetgeek.ch/2022/10/15/using-system-text-json-alongside-newtonsoft-json-net/
+	* https://github.com/FetchGoods/Text.Json.Extensions/blob/master/Fetchgoods.Text.Json.Extensions/JsonExtensionMethods.cs
 * MockServer implementation of all http status responses
 	* https://github.com/httpstatuses/httpstatuses/blob/main/contents/codes/200.md
 * use of docker based proxy to capture traffic (instead of something like fiddler)
@@ -174,6 +179,7 @@ TODO:
 	* https://docs.pact.io/getting_started/comparisons
 * Date only handling
 	* https://stackoverflow.com/questions/21256132/deserializing-dates-with-dd-mm-yyyy-format-using-json-net
+	* https://github.com/JamesNK/Newtonsoft.Json/issues/2521
 * conditionally build changed coeus directories instead of blindly building all
 * better changelog generation for release prep for cortside repos
 	* .\update-nugetpackages.ps1 -cortside | grep "Cortside[.]" | sort
