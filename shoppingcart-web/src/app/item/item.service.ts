@@ -7,9 +7,7 @@ import { PagedResponse } from '../api/paged.response';
 import { ItemModel } from '../item/models/item.model';
 import { PagedModel } from '../common/paged.model';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable()
 export class ItemService {
     constructor(private client: CatalogClient) {}
 

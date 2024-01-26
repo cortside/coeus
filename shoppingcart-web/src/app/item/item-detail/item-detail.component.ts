@@ -1,7 +1,6 @@
 import { Component, Signal, ViewChildren } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ItemService } from 'src/app/core/item.service';
 import { ItemModel } from '../models/item.model';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -10,6 +9,7 @@ import { AddToCartModel } from '../models/add-to-cart.model';
 import { ViewChild, AfterViewInit } from '@angular/core';
 import { NgFormModelState, NgFormModelStateFactory } from '@muziehdesign/forms';
 import { ShoppingCart } from 'src/app/core/shopping-cart';
+import { ItemService } from '../item.service';
 
 @Component({
   selector: 'app-item-detail',

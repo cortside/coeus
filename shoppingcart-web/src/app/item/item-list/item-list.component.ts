@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ItemService } from 'src/app/core/item.service';
 import { ItemModel } from '../models/item.model';
 import { PagedModel } from 'src/app/common/paged.model';
 import { Observable } from 'rxjs';
 import { ItemCardComponent } from '../item-card/item-card.component';
+import { ItemService } from '../item.service';
 
 @Component({
     selector: 'app-item-list',
