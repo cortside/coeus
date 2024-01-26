@@ -10,6 +10,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { HeaderComponent } from './header/header.component';
 import { ProfileComponent } from './profile/profile.component';
 import { FooterComponent } from './footer/footer.component';
+import { ItemDetailComponent } from './item/item-detail/item-detail.component';
 
 @NgModule({
     declarations: [AppComponent, NavigationComponent, PageNotFoundComponent, HeaderComponent, ProfileComponent, FooterComponent],

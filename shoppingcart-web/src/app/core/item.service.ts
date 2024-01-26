@@ -4,7 +4,7 @@ import { catchError, map, Observable } from 'rxjs';
 import { CatalogClient } from '../api/catalog/catalog.client';
 import { ItemResponse } from '../api/catalog/models/responses/item.response';
 import { PagedResponse } from '../api/paged.response';
-import { ItemModel } from '../catalog/models/item.model';
+import { ItemModel } from '../item/models/item.model';
 import { PagedModel } from '../common/paged.model';
 
 @Injectable({

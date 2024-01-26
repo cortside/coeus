@@ -15,15 +15,14 @@ const canActivateGuard = (snapshot:ActivatedRouteSnapshot) => {
     );
 }
 
-export const catalogLazyRoutes: Route[] = [
+export const itemRoutes: Route[] = [
     {
-        path: 'catalog',
+        path: 'items',
         children: [
-            { path: '', redirectTo: 'items', pathMatch: 'full' },
-            { path: 'items', loadComponent: () => import('./item-list/item-list.component').then((x) => x.ItemListComponent) },
+            { path: '', loadComponent: () => import('./item-list/item-list.component').then((x) => x.ItemListComponent) },
             { 
-                path: 'items/:sku', 
-                loadComponent: () => import('./item/item.component').then((x) => x.ItemComponent),
+                path: ':sku', 
+                loadComponent: () => import('./item-detail/item-detail.component').then((x) => x.ItemDetailComponent),
                 canActivate: [canActivateGuard]
             },
         ],
