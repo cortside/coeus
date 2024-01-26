@@ -23,7 +23,7 @@ export class ItemDetailComponent {
   model:AddToCartModel;
   modelState!: NgFormModelState<AddToCartModel>;
   @ViewChild('cartForm', {static: false}) cartForm!: NgForm;
-  constructor(private route: ActivatedRoute, private modelStateFactory: NgFormModelStateFactory, private service: ItemService, private cartService: ShoppingCart){
+  constructor(private route: ActivatedRoute, private modelStateFactory: NgFormModelStateFactory, private service: ItemService) {
       this.item = toSignal(service.getItem(route.snapshot.params['sku']));
       this.model = new AddToCartModel();
       this.model.quantity = 1;
@@ -38,7 +38,7 @@ export class ItemDetailComponent {
       this.modelState = this.modelState || this.modelStateFactory.create(this.cartForm, this.model);
       const result = await this.modelState.validate();
       if(result.valid) {
-          this.cartService.addItem(this.item()!.sku, this.model.quantity!);
+          this.service.addToCart(this.item()!.sku, this.model.quantity!);
           console.log('added');
       } else {
           console.log('invalid model', result.errors);
