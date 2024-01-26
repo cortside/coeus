@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticatedUser, AuthenticationService } from '@muziehdesign/core';
 import { map, Observable } from 'rxjs';
-import { ShoppingCartService } from '../core/shopping-cart.service';
+import { ShoppingCart } from '../core/shopping-cart';
 
 @Component({
     selector: 'app-header',
@@ -11,7 +11,7 @@ import { ShoppingCartService } from '../core/shopping-cart.service';
 export class HeaderComponent implements OnInit {
     user: AuthenticatedUser | undefined;
     itemCount$: Observable<number>;
-    constructor(private auth: AuthenticationService, private cart: ShoppingCartService) {
+    constructor(private auth: AuthenticationService, private cart: ShoppingCart) {
       this.itemCount$ = this.cart.getCartItems().pipe(map((items)=>items.length));
     }
 

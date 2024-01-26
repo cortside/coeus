@@ -9,7 +9,7 @@ import { FormsModule as MuziehFormsModule } from '@muziehdesign/forms';
 import { AddToCartModel } from '../models/add-to-cart.model';
 import { ViewChild, AfterViewInit } from '@angular/core';
 import { NgFormModelState, NgFormModelStateFactory } from '@muziehdesign/forms';
-import { ShoppingCartService } from 'src/app/core/shopping-cart.service';
+import { ShoppingCart } from 'src/app/core/shopping-cart';
 
 @Component({
   selector: 'app-item-detail',
@@ -23,7 +23,7 @@ export class ItemDetailComponent {
   model:AddToCartModel;
   modelState!: NgFormModelState<AddToCartModel>;
   @ViewChild('cartForm', {static: false}) cartForm!: NgForm;
-  constructor(private route: ActivatedRoute, private modelStateFactory: NgFormModelStateFactory, private service: ItemService, private cartService: ShoppingCartService){
+  constructor(private route: ActivatedRoute, private modelStateFactory: NgFormModelStateFactory, private service: ItemService, private cartService: ShoppingCart){
       this.item = toSignal(service.getItem(route.snapshot.params['sku']));
       this.model = new AddToCartModel();
       this.model.quantity = 1;

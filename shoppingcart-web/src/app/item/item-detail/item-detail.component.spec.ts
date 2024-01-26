@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NgFormModelStateFactory } from '@muziehdesign/forms';
 import { of } from 'rxjs';
 import { ItemService } from 'src/app/core/item.service';
-import { ShoppingCartService } from 'src/app/core/shopping-cart.service';
+import { ShoppingCart } from 'src/app/core/shopping-cart';
 import { ItemDetailComponent } from './item-detail.component';
 
 describe('ItemDetailComponent', () => {
@@ -14,7 +14,7 @@ describe('ItemDetailComponent', () => {
   beforeEach(async () => {
       const itemService = jasmine.createSpyObj<ItemService>(ItemService.name, { getItem: of(), getItems: of() });
       const stateFactory = jasmine.createSpyObj<NgFormModelStateFactory>(NgFormModelStateFactory.name, ['create']);
-      const cartService = jasmine.createSpyObj<ShoppingCartService>(ShoppingCartService.name, ['addItem']);
+      const cartService = jasmine.createSpyObj<ShoppingCart>(ShoppingCart.name, ['addItem']);
 
       await TestBed.configureTestingModule({
           imports: [ItemDetailComponent],
@@ -22,7 +22,7 @@ describe('ItemDetailComponent', () => {
               { provide: ActivatedRoute, useValue: { snapshot: { params: sku } } },
               { provide: ItemService, useValue: itemService },
               { provide: NgFormModelStateFactory, useValue: stateFactory },
-              { provide: ShoppingCartService, useValue: cartService }
+              { provide: ShoppingCart, useValue: cartService }
           ],
       }).compileComponents();
 

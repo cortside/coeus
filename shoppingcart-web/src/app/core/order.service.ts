@@ -11,13 +11,13 @@ import { CreateOrderModel } from '../cart/create-order.model';
 import { CustomerInputModel } from '../cart/customer-input.model';
 import { PagedModel } from '../common/paged.model';
 import { CustomerModel, OrderSummaryModel } from '../models/models';
-import { ShoppingCartService } from './shopping-cart.service';
+import { ShoppingCart } from './shopping-cart';
 
 @Injectable({
     providedIn: 'root',
 })
 export class OrderService {
-    constructor(private cart: ShoppingCartService, private client: ShoppingCartClient) {}
+    constructor(private cart: ShoppingCart, private client: ShoppingCartClient) {}
 
     debug(): void {
         console.log('debug');
