@@ -25,12 +25,12 @@ if (not exists(select * from auth.Clients where clientId=@clientId))
 	INSERT [AUTH].[ClientCorsOrigins] VALUES (@id, 'http://kehlstein:5003')
 
 	--Develop environment
-	INSERT [AUTH].[ClientPostLogoutRedirectUris] ([ClientId], [PostLogoutRedirectUri]) VALUES (@id, N'https://dashboard.dev.enerbank.com/logout')
-	INSERT [AUTH].[ClientCorsOrigins] VALUES (@id, 'https://dashboard.dev.enerbank.com')
+	INSERT [AUTH].[ClientPostLogoutRedirectUris] ([ClientId], [PostLogoutRedirectUri]) VALUES (@id, N'https://dashboard.dev.cortside.com/logout')
+	INSERT [AUTH].[ClientCorsOrigins] VALUES (@id, 'https://dashboard.dev.cortside.com')
 	
 	--Production environment
-	INSERT [AUTH].[ClientPostLogoutRedirectUris] ([ClientId], [PostLogoutRedirectUri]) VALUES (@id, N'https://dashboard.enerbank.com/logout')
-	INSERT [AUTH].[ClientCorsOrigins] VALUES (@id, 'https://dashboard.enerbank.com')
+	INSERT [AUTH].[ClientPostLogoutRedirectUris] ([ClientId], [PostLogoutRedirectUri]) VALUES (@id, N'https://dashboard.cortside.com/logout')
+	INSERT [AUTH].[ClientCorsOrigins] VALUES (@id, 'https://dashboard.cortside.com')
   END
 
 if (exists(select * from auth.Clients where ClientId=@clientId))
@@ -48,7 +48,7 @@ if (exists(select * from auth.Clients where ClientId=@clientId))
     --Production environment--
 
     declare @productionPostLogoutRedirectUri nvarchar(200)
-    set @productionPostLogoutRedirectUri = 'https://dashboard.enerbank.com/logout'
+    set @productionPostLogoutRedirectUri = 'https://dashboard.cortside.com/logout'
 
     if (not exists(select * from [AUTH].[ClientPostLogoutRedirectUris] where ClientId = @id AND PostLogoutRedirectUri = @productionPostLogoutRedirectUri))
       BEGIN
@@ -70,7 +70,7 @@ if (exists(select * from auth.Clients where ClientId=@clientId))
       END
 
     declare @productionOrigin nvarchar(200)
-    set @productionOrigin = 'https://dashboard.enerbank.com'
+    set @productionOrigin = 'https://dashboard.cortside.com'
 
     if (not exists(select * from [AUTH].[ClientCorsOrigins] where ClientId = @id AND Origin = @productionOrigin))
       BEGIN
@@ -124,8 +124,8 @@ insert into @allowedRedirectUris values (N'http://kehlstein:5003/silent-redirect
 insert into @allowedRedirectUris values (N'http://kehlstein:5003/login-redirect')
 insert into @allowedRedirectUris values (N'https://dashboard.cortside.net/silent-redirect')
 insert into @allowedRedirectUris values (N'https://dashboard.cortside.net/login-redirect')
-insert into @allowedRedirectUris values (N'https://dashboard.dev.enerbank.com/login-redirect')
-insert into @allowedRedirectUris values (N'https://dashboard.dev.enerbank.com/silent-redirect')
+insert into @allowedRedirectUris values (N'https://dashboard.dev.cortside.com/login-redirect')
+insert into @allowedRedirectUris values (N'https://dashboard.dev.cortside.com/silent-redirect')
 insert into [AUTH].[ClientRedirectUris] (ClientId, RedirectUri)
 select @id, a.Uri
 from @allowedRedirectUris a
