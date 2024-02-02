@@ -243,3 +243,4 @@ build.json
 deploy/ps/*.zip
 *.stackdump
 *.local.json
+*.pfx

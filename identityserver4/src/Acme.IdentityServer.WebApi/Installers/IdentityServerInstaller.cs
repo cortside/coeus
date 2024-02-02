@@ -53,26 +53,31 @@ namespace Acme.IdentityServer.WebApi.Installers {
                 options.Events.RaiseInformationEvents = true;
             });
 
-            var certificatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "IdentityServer.pfx");
-            idsBuilder.AddSigningCredential(new X509Certificate2(certificatePath))
-                .AddConfigurationStore(options => {
-                    options.DefaultSchema = "auth";
-                    options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(authConnString);
-                })
-                .AddOperationalStore(options => {
-                    options.DefaultSchema = "auth";
-                    options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(authConnString);
+            if (!string.IsNullOrEmpty(configuration["IdentityServer:SigningCertificate"])) {
+                var certificatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), configuration["IdentityServer:SigningCertificate"]);
+                idsBuilder.AddSigningCredential(new X509Certificate2(certificatePath), configuration["IdentityServer:SigningCertificatePassword"]);
+            } else {
+                idsBuilder.AddDeveloperSigningCredential(false);
+            }
 
-                    // this enables automatic token cleanup. this is optional.
-                    options.EnableTokenCleanup = true;
-                    options.TokenCleanupInterval = 30;
-                })
-                .AddProfileService<UserProfileService>()
-                .AddCustomTokenRequestValidator<DelegationTokenRequestValidator>()
-                .AddExtensionGrantValidator<RecaptchaGrantValidator>()
-                .AddExtensionGrantValidator<DelegationGrantValidator>();
+            idsBuilder.AddConfigurationStore(options => {
+                options.DefaultSchema = "auth";
+                options.ConfigureDbContext = builder =>
+                    builder.UseSqlServer(authConnString);
+            })
+                    .AddOperationalStore(options => {
+                        options.DefaultSchema = "auth";
+                        options.ConfigureDbContext = builder =>
+                            builder.UseSqlServer(authConnString);
+
+                        // this enables automatic token cleanup. this is optional.
+                        options.EnableTokenCleanup = true;
+                        options.TokenCleanupInterval = 30;
+                    })
+                    .AddProfileService<UserProfileService>()
+                    .AddCustomTokenRequestValidator<DelegationTokenRequestValidator>()
+                    .AddExtensionGrantValidator<RecaptchaGrantValidator>()
+                    .AddExtensionGrantValidator<DelegationGrantValidator>();
 
             var authenticationBuilder = services.AddAuthentication();
 

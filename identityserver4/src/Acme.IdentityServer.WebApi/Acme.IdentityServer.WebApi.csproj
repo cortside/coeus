@@ -79,6 +79,11 @@
     <PackageReference Include="System.IO.Abstractions" Version="19.2.91" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Acme.DomainEvent.Events\Acme.DomainEvent.Events.csproj" />
+    <ProjectReference Include="..\Acme.IdentityServer.BootStrap\Acme.IdentityServer.BootStrap.csproj" />
+  </ItemGroup>
+
   <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
     <!--<Exec Command="dotnet bundle" />-->
   </Target>
@@ -92,15 +97,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\IdentityServer.pfx" Link="IdentityServer.pfx">
+    <None Include="..\*.pfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="build.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Acme.DomainEvent.Events\Acme.DomainEvent.Events.csproj" />
-    <ProjectReference Include="..\Acme.IdentityServer.BootStrap\Acme.IdentityServer.BootStrap.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -109,9 +109,6 @@
     </None>
     <None Update="build.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="IdentityServer.pfx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>
