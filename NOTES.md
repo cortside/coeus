@@ -1,5 +1,58 @@
 TODO:
 
+* use of reference tokens for api clients
+* Use of DateOnly and TimeOnly
+	* https://code-maze.com/csharp-map-dateonly-timeonly-types-to-sql/
+	* https://stackoverflow.com/questions/52254740/entity-framework-migrate-from-datetime-to-datetimeoffset
+	* https://learn.microsoft.com/en-us/dotnet/standard/datetime/converting-between-datetime-and-offset
+* DateTimeOffset
+	* https://ardalis.com/why-use-datetimeoffset/
+* Use ef interceptor instead of derived dbcontext class to set audit stamps
+	```csharp
+	public sealed class UpdateEntityLifetimeInterceptor : SaveChangesInterceptor
+	{
+		public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
+		{
+		   DbContext? dbContext = eventData.Context;
+		   if (dbContext is null)
+		   {
+			   return await base.SavingChangesAsync(eventData, result, cancellationToken);
+		   }
+
+		   var entities = dbContext.ChangeTracker.Entries<Entity>();
+
+		   foreach (var entity in entities)
+		   {
+			   if (entity.CreatedOn == DateTime.MinValue)
+				   entity.CreatedOn = DateTime.Now;
+			   else
+				   entity.ModifiedOn = DateTime.Now;
+		   }
+
+		   return await base.SavingChangesAsync(eventData, result, cancellationToken);
+		}
+	}
+	```
+* (OR-284) Expose service bus message consumption stats in health check
+	* shoppingcart-api
+		* messages consumed
+		* messages accepted
+		* messages rejected
+		* datetime last message consume
+		* datetme last message accepted
+		* datetime last message rejected
+* injectable services in EF entity Class
+	* https://community.abp.io/posts/injecting-service-dependencies-to-entities-with-entity-framework-core-7.0-db6vdh4s
+	* could use attribute to denote properties to inject
+		* properties wouldn't be available to constructor, unless an argument in constructor
+	* https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-implementation-entity-framework-core#infrastructure-in-entity-framework-core-from-a-ddd-perspective
+	* https://medium.com/@sergiis/domain-entity-projections-in-efcore-2dbd6a9116ff
+	* https://www.reddit.com/r/dotnet/comments/14lfbb3/how_can_a_rich_domain_model_be_implemented_in/
+	* Separation of concerns. Entity deals with the entity. Service deals with things that use the entity.
+	* https://www.thereformedprogrammer.net/creating-domain-driven-design-entity-classes-with-entity-framework-core/
+	* https://www.thereformedprogrammer.net/architecture-of-business-layer-working-with-entity-framework-core-and-v6-revisited/
+* object graph walker
+	* https://stackoverflow.com/questions/61944125/traversing-a-graph-of-unknown-object-types-and-mutating-some-object-properties
 * guidelines page for common test data	
 	* https://developer.wepay.com/docs/articles/testing
 * domaineventreceiver to add stopwatch and report proccessing time
