@@ -1,5 +1,64 @@
 TODO:
 
+* use of reference tokens for api clients
+* ITimeProvider
+	* https://steven-giesel.com/blogPost/4d5b70fe-35c1-43c7-bebe-49194195ffcb
+* Use of DateOnly and TimeOnly
+	* https://code-maze.com/csharp-map-dateonly-timeonly-types-to-sql/
+	* https://stackoverflow.com/questions/52254740/entity-framework-migrate-from-datetime-to-datetimeoffset
+	* https://learn.microsoft.com/en-us/dotnet/standard/datetime/converting-between-datetime-and-offset
+* DateTimeOffset
+	* https://ardalis.com/why-use-datetimeoffset/
+* Use ef interceptor instead of derived dbcontext class to set audit stamps
+	```csharp
+	public sealed class UpdateEntityLifetimeInterceptor : SaveChangesInterceptor
+	{
+		public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
+		{
+		   DbContext? dbContext = eventData.Context;
+		   if (dbContext is null)
+		   {
+			   return await base.SavingChangesAsync(eventData, result, cancellationToken);
+		   }
+
+		   var entities = dbContext.ChangeTracker.Entries<Entity>();
+
+		   foreach (var entity in entities)
+		   {
+			   if (entity.CreatedOn == DateTime.MinValue)
+				   entity.CreatedOn = DateTime.Now;
+			   else
+				   entity.ModifiedOn = DateTime.Now;
+		   }
+
+		   return await base.SavingChangesAsync(eventData, result, cancellationToken);
+		}
+	}
+	```
+* (OR-284) Expose service bus message consumption stats in health check
+	* shoppingcart-api
+		* messages consumed
+		* messages accepted
+		* messages rejected
+		* messages published
+		* datetime last message consume
+		* datetme last message accepted
+		* datetime last message rejected
+		* datetime last message published
+* injectable services in EF entity Class
+	* https://community.abp.io/posts/injecting-service-dependencies-to-entities-with-entity-framework-core-7.0-db6vdh4s
+	* could use attribute to denote properties to inject
+		* properties wouldn't be available to constructor, unless an argument in constructor
+	* https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-implementation-entity-framework-core#infrastructure-in-entity-framework-core-from-a-ddd-perspective
+	* https://medium.com/@sergiis/domain-entity-projections-in-efcore-2dbd6a9116ff
+	* https://www.reddit.com/r/dotnet/comments/14lfbb3/how_can_a_rich_domain_model_be_implemented_in/
+	* Separation of concerns. Entity deals with the entity. Service deals with things that use the entity.
+	* https://www.thereformedprogrammer.net/creating-domain-driven-design-entity-classes-with-entity-framework-core/
+	* https://www.thereformedprogrammer.net/architecture-of-business-layer-working-with-entity-framework-core-and-v6-revisited/
+* object graph walker
+	* https://stackoverflow.com/questions/61944125/traversing-a-graph-of-unknown-object-types-and-mutating-some-object-properties
+* guidelines page for common test data	
+	* https://developer.wepay.com/docs/articles/testing
 * domaineventreceiver to add stopwatch and report proccessing time
 * script to help find open branches
 	* git branch --no-merged remotes/origin/develop -r --sort=committerdate --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:short)%(color:reset))'
@@ -83,6 +142,9 @@ TODO:
 	* https://www.andybutland.dev/2023/07/202307migrating-api-from-newtonsoftjson-to-system-text-json.html
 	* https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/migrate-from-newtonsoft?pivots=dotnet-8-0
 	* https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/migrate-from-newtonsoft?pivots=dotnet-6-0
+	* https://github.com/dotnet/runtime/issues/74385 <-- enum-string conversion
+	* https://www.planetgeek.ch/2022/10/15/using-system-text-json-alongside-newtonsoft-json-net/
+	* https://github.com/FetchGoods/Text.Json.Extensions/blob/master/Fetchgoods.Text.Json.Extensions/JsonExtensionMethods.cs
 * MockServer implementation of all http status responses
 	* https://github.com/httpstatuses/httpstatuses/blob/main/contents/codes/200.md
 * use of docker based proxy to capture traffic (instead of something like fiddler)
@@ -174,6 +236,7 @@ TODO:
 	* https://docs.pact.io/getting_started/comparisons
 * Date only handling
 	* https://stackoverflow.com/questions/21256132/deserializing-dates-with-dd-mm-yyyy-format-using-json-net
+	* https://github.com/JamesNK/Newtonsoft.Json/issues/2521
 * conditionally build changed coeus directories instead of blindly building all
 * better changelog generation for release prep for cortside repos
 	* .\update-nugetpackages.ps1 -cortside | grep "Cortside[.]" | sort

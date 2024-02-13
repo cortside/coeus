@@ -4,14 +4,16 @@ import { catchError, map, Observable } from 'rxjs';
 import { CatalogClient } from '../api/catalog/catalog.client';
 import { ItemResponse } from '../api/catalog/models/responses/item.response';
 import { PagedResponse } from '../api/paged.response';
-import { ItemModel } from '../catalog/models/item.model';
+import { ItemModel } from '../item/models/item.model';
 import { PagedModel } from '../common/paged.model';
+import { ShoppingCart } from '../core/shopping-cart';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable()
 export class ItemService {
-    constructor(private client: CatalogClient) {}
+    constructor(
+        private cart: ShoppingCart,
+        private client: CatalogClient
+    ) {}
 
     getItem(sku: string): Observable<ItemModel> {
         return this.client.getItem(sku).pipe(
@@ -19,9 +21,9 @@ export class ItemService {
                 console.log(error);
                 throw new Error('not yet implemeted');
             }),
-            map((x:ItemResponse) => assembleItemModel(x))
+            map((x: ItemResponse) => assembleItemModel(x))
         );
-    } 
+    }
 
     getItems(): Observable<PagedModel<ItemModel>> {
         return this.client.getItems().pipe(
@@ -34,6 +36,11 @@ export class ItemService {
                 } as PagedModel<ItemModel>;
             })
         );
+    }
+
+    addToCart(sku: string, quantity: number): Promise<void> {
+        this.cart.addItem(sku, quantity);
+        return Promise.resolve();
     }
 }
 

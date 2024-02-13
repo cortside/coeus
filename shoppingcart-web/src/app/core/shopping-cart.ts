@@ -6,10 +6,10 @@ import { CartItemModel } from '../common/cart-item.model';
 @Injectable({
     providedIn: 'root',
 })
-export class ShoppingCartService {
+export class ShoppingCart {
     private items:BehaviorSubject<CartItemModel[]>;
     private items$:Observable<CartItemModel[]>;
-    readonly ITEMS_KEY = 'ShoppingCartService.items';
+    readonly ITEMS_KEY = 'ShoppingCart.items';
 
     constructor(@Inject(DOCUMENT) private document: Document) {
         const existing = JSON.parse(this.document.defaultView?.localStorage.getItem(this.ITEMS_KEY) || "[]");

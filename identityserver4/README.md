@@ -20,6 +20,25 @@ There is a [template](docs/update-client-secret-template.sql) for how to update 
 ## IdentityServer enum values
 https://github.com/IdentityServer/IdentityServer4/blob/3ff3b46698f48f164ab1b54d124125d63439f9d0/src/Storage/src/Models/Enums.cs
 
+## Generating new token signing certificate
+
+NOTE: certificates should not be committed as it can be possible exposure to token forgeries.
+
+```powershell
+$Certificate=New-SelfsignedCertificate `
+	-KeyExportPolicy Exportable `
+	-Subject "CN=IdentityServerSignature" `
+	-KeySpec Signature `
+	-KeyAlgorithm RSA `
+	-KeyLength 2048 `
+	-HashAlgorithm SHA256 `
+	-CertStoreLocation "cert:\LocalMachine\My" `
+	-NotAfter (Get-Date).AddYears(10)
+
+$Pwd = ConvertTo-SecureString -String "1234" -Force -AsPlainText 
+Export-PfxCertificate -Cert $Certificate -FilePath "IdentityServer.pfx" -Password $Pwd
+```
+
 ## Generating hashed client secret values (bash)
 echo -n 'plaintextpassword' | openssl dgst -binary -sha256 | openssl base64
 

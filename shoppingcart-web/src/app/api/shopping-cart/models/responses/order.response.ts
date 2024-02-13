@@ -1,5 +1,5 @@
 import { AddressResponse } from './address.response';
-import { AuditableResponse } from './auditable.response';
+import { AuditableResponse } from '../../../auditable.response';
 import { CustomerResponse } from './customer.response';
 import { OrderItemResponse } from './order-item.response';
 

@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { CartItemModel } from '../common/cart-item.model';
-import { ShoppingCartService } from '../core/shopping-cart.service';
+import { ShoppingCart } from '../core/shopping-cart';
 import { RouterModule } from '@angular/router';
 import { FormsModule as MuziehFormsModule, NgFormModelState, NgFormModelStateFactory } from '@muziehdesign/forms';
 import { CustomerInputModel } from './customer-input.model';
@@ -25,7 +25,7 @@ export class CartComponent implements AfterViewInit {
     model: CreateOrderModel;
     modelState!: NgFormModelState<CreateOrderModel>;
     @ViewChild('cartForm', { static: true }) cartForm!: NgForm;
-    constructor(private service: ShoppingCartService, private modelStateFactory: NgFormModelStateFactory, private orderService: OrderService, private router: Router, private auth: AuthenticationService) {
+    constructor(private service: ShoppingCart, private modelStateFactory: NgFormModelStateFactory, private orderService: OrderService, private router: Router, private auth: AuthenticationService) {
         this.items$ = this.service.getCartItems();
         this.model = new CreateOrderModel();
         this.model.address = new AddressInputModel();
