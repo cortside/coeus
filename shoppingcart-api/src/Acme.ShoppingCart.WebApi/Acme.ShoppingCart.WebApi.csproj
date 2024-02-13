@@ -6,10 +6,10 @@
     <NoWarn>1701;1702;1591;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.2.202" />
-    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="6.2.202" />
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.2.202" />
-    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="6.2.202" />
+    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.2.205" />
+    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="6.2.205" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.2.205" />
+    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="6.2.205" />
     <PackageReference Include="Cortside.Common.Correlation" Version="6.2.408" />
     <PackageReference Include="Cortside.Common.Hosting" Version="6.2.408" />
     <PackageReference Include="Cortside.Health" Version="6.0.86" />
@@ -19,7 +19,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.8.14">
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.9.28">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
