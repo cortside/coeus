@@ -1,6 +1,8 @@
 TODO:
 
 * use of reference tokens for api clients
+* ITimeProvider
+	* https://steven-giesel.com/blogPost/4d5b70fe-35c1-43c7-bebe-49194195ffcb
 * Use of DateOnly and TimeOnly
 	* https://code-maze.com/csharp-map-dateonly-timeonly-types-to-sql/
 	* https://stackoverflow.com/questions/52254740/entity-framework-migrate-from-datetime-to-datetimeoffset
@@ -38,9 +40,11 @@ TODO:
 		* messages consumed
 		* messages accepted
 		* messages rejected
+		* messages published
 		* datetime last message consume
 		* datetme last message accepted
 		* datetime last message rejected
+		* datetime last message published
 * injectable services in EF entity Class
 	* https://community.abp.io/posts/injecting-service-dependencies-to-entities-with-entity-framework-core-7.0-db6vdh4s
 	* could use attribute to denote properties to inject
