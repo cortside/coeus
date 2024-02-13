@@ -4,14 +4,14 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.2.202" />
-    <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="6.2.202" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.2.205" />
+    <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="6.2.205" />
     <PackageReference Include="Cortside.Common.Security" Version="6.2.408" />
     <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="6.2.301" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.26" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.26" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.26" />
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.8.14">
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.9.28">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
