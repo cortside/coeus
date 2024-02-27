@@ -7,7 +7,6 @@ using System.Security.Principal;
 using System.Threading.Tasks;
 using Acme.IdentityServer.WebApi.AuditEvents;
 using Acme.IdentityServer.WebApi.Data;
-using Acme.IdentityServer.WebApi.Events;
 using Acme.IdentityServer.WebApi.Services;
 using IdentityModel;
 using IdentityServer4;
@@ -97,8 +96,8 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginInputModel model, string button) {
-			logger.LogInformation("Attempting local user login for {username}", model.Username);
-			
+            logger.LogInformation("Attempting local user login for {username}", model.Username);
+
             if (button != "login" && button != "check2fa") {
                 // the user clicked the "cancel" button
                 var context = await idsService.GetAuthorizationContextAsync(model.ReturnUrl);
@@ -125,7 +124,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
                 var user = authResponse.User;
 
                 if (user != null && !string.IsNullOrEmpty(model.TwoFactorCode)) {
-                    if (userService.VerifyCurrentTOTP(user.UserId, model.TwoFactorCode)) {
+                    if (await userService.VerifyCurrentTOTP(user.UserId, model.TwoFactorCode)) {
                         user.TwoFactor = model.SetupCode;
                         AuthenticationProperties props = null;
                         if (AccountOptions.AllowRememberLogin && model.RememberLogin) {
@@ -220,7 +219,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
                             vm2faSetup.HasTwoFactorSetup = false;
                             //only generate this during setup.  Should not do this without user in process of setting up 2FA
                             //save code as an unverified code with SaveChanges
-                            var twoFactorSetupCode = userService.GenerateAndSetNewTOTPCode(user.UserId);
+                            var twoFactorSetupCode = await userService.GenerateAndSetNewTOTPCode(user.UserId);
                             var authenticatorUri = userService.GetTwoFactorURI(user.UserId);
                             vm2faSetup.Password = model.Password;
                             vm2faSetup.SetupCode = twoFactorSetupCode;

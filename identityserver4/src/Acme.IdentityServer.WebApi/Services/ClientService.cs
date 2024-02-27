@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cortside.Common.Messages.MessageExceptions;
+using System.Threading.Tasks;
 using Acme.IdentityServer.WebApi.Data;
 using Acme.IdentityServer.WebApi.Data.DbSetComparers;
 using Acme.IdentityServer.WebApi.Helpers;
 using Acme.IdentityServer.WebApi.Models;
 using Acme.IdentityServer.WebApi.Models.Input;
+using Cortside.Common.Messages.MessageExceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -33,8 +34,7 @@ namespace Acme.IdentityServer.WebApi.Services {
         /// </summary>
         /// <param name="clientId">Client ID, a string name that corresponds with an auth client.</param>
         /// <returns></returns>
-        public void DeleteClient(string clientId) {
-
+        public Task DeleteClient(string clientId) {
             using (var scope = serviceProvider.CreateScope()) {
                 var dbContext = scope.ServiceProvider.GetRequiredService<IIdentityServerDbContext>();
                 var client = dbContext.Clients.Where(x => x.ClientId == clientId).FirstOrDefault();
@@ -43,7 +43,7 @@ namespace Acme.IdentityServer.WebApi.Services {
                     dbContext.Clients.Remove(client);
                 }
 
-                dbContext.SaveChanges();
+                return dbContext.SaveChangesAsync();
             }
         }
 
@@ -54,8 +54,7 @@ namespace Acme.IdentityServer.WebApi.Services {
         /// <param name="clientId">Client ID, a string name that corresponds with an auth client.</param>
         /// <param name="updateClientRequest">The request object containing settings to update.</param>
         /// <returns>Client that was inserted or updated, containing all child entities.</returns>
-        public Client UpdateClient(string clientId, UpdateClientRequest updateClientRequest) {
-
+        public async Task<Client> UpdateClient(string clientId, UpdateClientRequest updateClientRequest) {
             using (var scope = serviceProvider.CreateScope()) {
                 var dbContext = scope.ServiceProvider.GetRequiredService<IIdentityServerDbContext>();
                 // main aggregate
@@ -69,8 +68,7 @@ namespace Acme.IdentityServer.WebApi.Services {
                 UpsertClientRedirectUris(dbContext, client, updateClientRequest);
                 UpsertClientCorsOrigins(dbContext, client, updateClientRequest);
                 UpsertClientScopes(dbContext, client, updateClientRequest);
-
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
 
                 return client;
             }
@@ -82,7 +80,7 @@ namespace Acme.IdentityServer.WebApi.Services {
         /// <param name="id">Client Id</param>
         /// <param name="request">Model containing the claims/scopes</param>
         /// <returns></returns>
-        public Client UpdateClient(int id, UpdateClientModel request) {
+        public async Task<Client> UpdateClient(int id, UpdateClientModel request) {
             using var scope = serviceProvider.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<IIdentityServerDbContext>();
 
@@ -157,7 +155,7 @@ namespace Acme.IdentityServer.WebApi.Services {
                     Value = request.PhoneNumber
                 });
             }
-            db.SaveChanges();
+            await db.SaveChangesAsync();
             return client;
         }
 
@@ -167,7 +165,7 @@ namespace Acme.IdentityServer.WebApi.Services {
         /// <param name="id">Client Id</param>
         /// <param name="model">Model containing the scopes</param>
         /// <returns></returns>
-        public UpdateClientScopesModel UpdateClientScopes(int id, UpdateClientScopesModel model) {
+        public async Task<UpdateClientScopesModel> UpdateClientScopes(int id, UpdateClientScopesModel model) {
             using var scope = serviceProvider.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<IIdentityServerDbContext>();
 
@@ -189,7 +187,7 @@ namespace Acme.IdentityServer.WebApi.Services {
                 });
             });
 
-            db.SaveChanges();
+            await db.SaveChangesAsync();
             return model;
         }
 
@@ -199,7 +197,7 @@ namespace Acme.IdentityServer.WebApi.Services {
         /// <param name="id">Client Id</param>
         /// <param name="model">Model containing the claims</param>
         /// <returns></returns>
-        public UpdateClientClaimsModel UpdateClientClaims(int id, UpdateClientClaimsModel model) {
+        public async Task<UpdateClientClaimsModel> UpdateClientClaims(int id, UpdateClientClaimsModel model) {
             using var scope = serviceProvider.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<IIdentityServerDbContext>();
 
@@ -254,7 +252,7 @@ namespace Acme.IdentityServer.WebApi.Services {
                 }
             });
 
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             return model;
         }
@@ -297,7 +295,7 @@ namespace Acme.IdentityServer.WebApi.Services {
             }
         }
 
-        public Client CreateClient(CreateClientModel request) {
+        public async Task<Client> CreateClient(CreateClientModel request) {
             using var scope = serviceProvider.CreateScope();
             logger.LogInformation($"Creating client with id {request.ClientId}");
             var db = scope.ServiceProvider.GetRequiredService<IdentityServerDbContext>();
@@ -336,14 +334,14 @@ namespace Acme.IdentityServer.WebApi.Services {
                 SetClientDefaultValues(client);
 
                 db.Clients.Add(client);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
 
                 // save the client grant type
                 db.ClientGrantTypes.Add(new ClientGrantType {
                     ClientId = client.Id,
                     GrantType = "client_credentials"
                 });
-                db.SaveChanges();
+                await db.SaveChangesAsync();
 
                 // save the client claims
                 SaveNewClientClaims(db, request, client.Id);
@@ -355,7 +353,7 @@ namespace Acme.IdentityServer.WebApi.Services {
                         Scope = item
                     });
                 });
-                db.SaveChanges();
+                await db.SaveChangesAsync();
 
                 // normally here we would then either generate/save the secret
                 // and insert it, or email the user a one time code that redirects back to here
@@ -370,7 +368,7 @@ namespace Acme.IdentityServer.WebApi.Services {
                     Created = DateTime.UtcNow,
                     Value = secret
                 });
-                db.SaveChanges();
+                await db.SaveChangesAsync();
 
                 clientSecretService.SaveNewClientSecretRequest(db, client.Id);
 
@@ -383,11 +381,11 @@ namespace Acme.IdentityServer.WebApi.Services {
             } catch (Exception e) {
                 logger.LogError($"Failed creating new client {request.ClientId}", e);
                 transaction.Rollback();
-                throw e;
+                throw;
             }
         }
 
-        private void SaveNewClientClaims(IIdentityServerDbContext db, CreateClientModel request, int clientId) {
+        private Task SaveNewClientClaims(IIdentityServerDbContext db, CreateClientModel request, int clientId) {
             request.Claims?.ForEach(claim => {
                 db.ClientClaims.Add(new ClientClaim {
                     ClientId = clientId,
@@ -414,7 +412,7 @@ namespace Acme.IdentityServer.WebApi.Services {
                 Value = phoneNumberHelper.FormatPhoneNumber(request.PhoneNumber)
             });
 
-            db.SaveChanges();
+            return db.SaveChangesAsync();
         }
 
         private void DeleteClient<T>(DbSet<T> collectionToDeleteFrom, Func<T, bool> predicateForDeletion) where T : class {

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Acme.IdentityServer.Data;
 using Acme.IdentityServer.WebApi.Data;
 using Acme.IdentityServer.WebApi.Services;
 using Microsoft.Extensions.DependencyInjection;

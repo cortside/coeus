@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Acme.IdentityServer.WebApi.Models.Input;
 using Acme.IdentityServer.WebApi.Services;
 using IdentityServer4.AccessTokenValidation;
@@ -38,7 +39,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.Client {
         /// <param name="id"></param>
         /// <returns>Client Model</returns>
         [HttpPost]
-        public IActionResult Create([FromBody] CreateClientModel createClientRequest) {
+        public async Task<IActionResult> Create([FromBody] CreateClientModel createClientRequest) {
 
             if (string.IsNullOrEmpty(createClientRequest.ClientId)) {
                 return BadRequest("ClientId cannot be null or empty");
@@ -56,7 +57,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.Client {
                 return BadRequest("PhoneNumber cannot be null or empty");
             }
             try {
-                var client = _clientService.CreateClient(createClientRequest);
+                var client = await _clientService.CreateClient(createClientRequest);
                 return Ok(client);
             } catch (Exception e) {
                 return BadRequest(e.Message);

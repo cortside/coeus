@@ -44,7 +44,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.ResetClientSecretController {
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult VerifyIdentity(string requestId, string verificationCode, string tokenHash, string button) {
+        public async Task<IActionResult> VerifyIdentity(string requestId, string verificationCode, string tokenHash, string button) {
             if (string.IsNullOrEmpty(verificationCode)) {
                 ModelState.AddModelError("submiterror", "Verification Code is required.");
             }
@@ -57,7 +57,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.ResetClientSecretController {
             vm.TokenHash = tokenHash;
 
             if (ModelState.IsValid) {
-                var response = clientSecretService.IsVerificationCodeValid(vm.RequestId, verificationCode);
+                var response = await clientSecretService.IsVerificationCodeValid(vm.RequestId, verificationCode);
                 if (!response.IsValid) {
                     ModelState.AddModelError("submiterror", $"{response.Reason}");
                 }

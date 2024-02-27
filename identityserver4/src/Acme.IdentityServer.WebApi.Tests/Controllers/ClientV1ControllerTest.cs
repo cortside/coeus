@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using Acme.IdentityServer.WebApi.Controllers.Client;
 using Acme.IdentityServer.WebApi.Data;
 using Acme.IdentityServer.WebApi.Models.Input;
@@ -24,16 +25,16 @@ namespace Acme.IdentityServer.WebApi.Tests.Controllers {
         }
 
         [Fact]
-        public void ShouldCreateClient() {
+        public async Task ShouldCreateClient() {
             SetupControllerWithRequest(new HeaderDictionary());
 
             var testClient = new Client();
 
             _clientsServiceMock
                 .Setup(x => x.CreateClient(It.IsAny<CreateClientModel>()))
-                .Returns(testClient);
+                .ReturnsAsync(testClient);
 
-            var result = _clientsController.Create(new CreateClientModel() {
+            var result = await _clientsController.Create(new CreateClientModel() {
                 ClientId = "clientId",
                 SubjectId = "subjectId",
                 Email = "email",
@@ -45,16 +46,16 @@ namespace Acme.IdentityServer.WebApi.Tests.Controllers {
         }
 
         [Fact]
-        public void ShouldNotClient_MissingClientId() {
+        public async Task ShouldNotClient_MissingClientId() {
             SetupControllerWithRequest(new HeaderDictionary());
 
             var testClient = new Client();
 
             _clientsServiceMock
                 .Setup(x => x.CreateClient(It.IsAny<CreateClientModel>()))
-                .Returns(testClient);
+                .ReturnsAsync(testClient);
 
-            var result = _clientsController.Create(new CreateClientModel() {
+            var result = await _clientsController.Create(new CreateClientModel() {
                 SubjectId = "subjectId"
             }) as BadRequestObjectResult;
 
@@ -63,16 +64,16 @@ namespace Acme.IdentityServer.WebApi.Tests.Controllers {
         }
 
         [Fact]
-        public void ShouldNotClient_MissingSubjectId() {
+        public async Task ShouldNotClient_MissingSubjectId() {
             SetupControllerWithRequest(new HeaderDictionary());
 
             var testClient = new Client();
 
             _clientsServiceMock
                 .Setup(x => x.CreateClient(It.IsAny<CreateClientModel>()))
-                .Returns(testClient);
+                .ReturnsAsync(testClient);
 
-            var result = _clientsController.Create(new CreateClientModel() {
+            var result = await _clientsController.Create(new CreateClientModel() {
                 ClientId = "clientId"
             }) as BadRequestObjectResult;
 
@@ -122,7 +123,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Controllers {
 
             _clientsServiceMock
                 .Setup(x => x.UpdateClient(1, It.IsAny<UpdateClientModel>()))
-                .Returns(testClient);
+                .ReturnsAsync(testClient);
 
             var request = new UpdateClientModel();
             var result = _clientsController.Update(1, request) as OkObjectResult;
@@ -203,7 +204,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Controllers {
 
             _clientsServiceMock
                 .Setup(x => x.UpdateClientScopes(It.IsAny<int>(), It.IsAny<UpdateClientScopesModel>()))
-                .Returns(model);
+                .ReturnsAsync(model);
 
             // Act
             var result = _clientsController.UpdateScopes(clientId, model) as OkObjectResult;
@@ -223,7 +224,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Controllers {
 
             _clientsServiceMock
                 .Setup(x => x.UpdateClientClaims(It.IsAny<int>(), It.IsAny<UpdateClientClaimsModel>()))
-                .Returns(model);
+                .ReturnsAsync(model);
 
             // Act
             var result = _clientsController.UpdateClaims(clientId, model) as OkObjectResult;

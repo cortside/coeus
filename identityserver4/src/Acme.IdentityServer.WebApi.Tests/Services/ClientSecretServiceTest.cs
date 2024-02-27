@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
 using Acme.IdentityServer.WebApi.Data;
@@ -53,17 +52,17 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
         }
 
         [Fact]
-        public void ShouldResetClientSecret() {
+        public async Task ShouldResetClientSecretAsync() {
             // Arrange
             var clientId = InsertTestClientIntoDbContext("clientId", Guid.NewGuid());
             InsertTestClientSecretRequestsIntoDbContext(clientId);
 
             // Act
-            var client = sut.ResetSecret(clientId);
+            var client = await sut.ResetSecret(clientId);
 
             // Assert
-            client.Result.Should().NotBeNull();
-            client.Result.ClientSecret.Value.Should().Be("invalid-hash=");
+            client.Should().NotBeNull();
+            client.ClientSecret.Value.Should().Be("invalid-hash=");
         }
 
         [Fact]
@@ -309,7 +308,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
         }
 
         [Fact]
-        public void IsVerificationCodeValid_ShouldReturnValid() {
+        public async Task IsVerificationCodeValid_ShouldReturnValid() {
             // Arrange
             var clientId = 1;
             var requestId = Guid.NewGuid();
@@ -319,14 +318,14 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             InsertTestClientSecretRequestsIntoDbContext(clientId, requestId, token, DateTime.Now.AddDays(1), 3, verificationCode);
 
             // Act
-            var result = sut.IsVerificationCodeValid(requestId, verificationCode);
+            var result = await sut.IsVerificationCodeValid(requestId, verificationCode);
 
             // Assert
             Assert.True(result.IsValid);
         }
 
         [Fact]
-        public void IsVerificationCodeValid_ShouldReturnInvalid_TooManyAttempts() {
+        public async Task IsVerificationCodeValid_ShouldReturnInvalid_TooManyAttempts() {
             // Arrange
             var clientId = 1;
             var requestId = Guid.NewGuid();
@@ -336,7 +335,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             InsertTestClientSecretRequestsIntoDbContext(clientId, requestId, token, DateTime.Now.AddDays(1), 0, verificationCode);
 
             // Act
-            var result = sut.IsVerificationCodeValid(requestId, verificationCode);
+            var result = await sut.IsVerificationCodeValid(requestId, verificationCode);
 
             // Assert
             Assert.False(result.IsValid);
@@ -344,7 +343,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
         }
 
         [Fact]
-        public void IsVerificationCodeValid_ShouldReturnInvalid_IncorrectVerificationCode() {
+        public async Task IsVerificationCodeValid_ShouldReturnInvalid_IncorrectVerificationCode() {
             // Arrange
             var clientId = 1;
             var requestId = Guid.NewGuid();
@@ -354,7 +353,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             InsertTestClientSecretRequestsIntoDbContext(clientId, requestId, token, DateTime.Now.AddDays(1), 3, "654321");
 
             // Act
-            var result = sut.IsVerificationCodeValid(requestId, verificationCode);
+            var result = await sut.IsVerificationCodeValid(requestId, verificationCode);
 
             // Assert
             Assert.False(result.IsValid);
@@ -362,7 +361,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
         }
 
         [Fact]
-        public void IsVerificationCodeValid_ShouldReturnInvalid_CodeIsExpired() {
+        public async Task IsVerificationCodeValid_ShouldReturnInvalid_CodeIsExpired() {
             // Arrange
             var clientId = 1;
             var requestId = Guid.NewGuid();
@@ -372,24 +371,11 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             InsertTestClientSecretRequestsIntoDbContext(clientId, requestId, token, DateTime.Now.AddDays(-1), 3, verificationCode);
 
             // Act
-            var result = sut.IsVerificationCodeValid(requestId, verificationCode);
+            var result = await sut.IsVerificationCodeValid(requestId, verificationCode);
 
             // Assert
             Assert.False(result.IsValid);
             Assert.Equal("Code is expired.", result.Reason);
-        }
-
-        private string GetDefaultHtmlTemplate() {
-            var sb = new StringBuilder();
-            sb.AppendLine("<head>");
-            sb.AppendLine(" <title>Test Html</title>");
-            sb.AppendLine("</head>");
-            sb.AppendLine("<body>");
-            sb.AppendLine(" <div>{{token}}</div>");
-            sb.AppendLine(" <div>{{token2}}</div>");
-            sb.AppendLine("</body>");
-
-            return sb.ToString();
         }
     }
 }

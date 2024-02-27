@@ -1,11 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using Cortside.Common.Messages;
 using Acme.IdentityServer.WebApi.Assemblers;
 using Acme.IdentityServer.WebApi.Data;
 using Acme.IdentityServer.WebApi.Exceptions;
 using Acme.IdentityServer.WebApi.Models.Input;
 using Acme.IdentityServer.WebApi.Services;
+using Cortside.Common.Messages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
@@ -229,11 +229,13 @@ namespace Acme.IdentityServer.WebApi.Controllers {
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        public IActionResult UpdateUserLock(Guid id, [FromBody] UpdateLockModel model) {
-            if (!ModelState.IsValid) { return BadRequest(); }
+        public async Task<IActionResult> UpdateUserLock(Guid id, [FromBody] UpdateLockModel model) {
+            if (!ModelState.IsValid) {
+                return BadRequest();
+            }
             User user = null;
             try {
-                user = userService.UpdateUserLock(id, model);
+                user = await userService.UpdateUserLock(id, model);
             } catch (ResourceNotFoundMessage) {
                 return NotFound();
             }

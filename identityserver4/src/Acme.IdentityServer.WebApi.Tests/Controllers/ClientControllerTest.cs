@@ -1,4 +1,5 @@
 using System.Net;
+using System.Threading.Tasks;
 using Acme.IdentityServer.WebApi.Controllers.Client;
 using Acme.IdentityServer.WebApi.Data;
 using Acme.IdentityServer.WebApi.Models;
@@ -21,16 +22,16 @@ namespace Acme.IdentityServer.WebApi.Tests.Controllers {
         }
 
         [Fact]
-        public void Update_ShouldReturnSuccessWithResponseBody_IfSuccessful() {
+        public async Task Update_ShouldReturnSuccessWithResponseBody_IfSuccessful() {
             SetupControllerWithRequest(new HeaderDictionary());
 
             var testClient = new Client();
 
             clientsServiceMock
                 .Setup(x => x.UpdateClient(It.IsAny<string>(), It.IsAny<UpdateClientRequest>()))
-                .Returns(testClient);
+                .ReturnsAsync(testClient);
 
-            var result = clientsController.Update("test", new UpdateClientRequest() {
+            var result = await clientsController.Update("test", new UpdateClientRequest() {
                 GrantType = ClientConstants.GrantTypes.Implicit
             }) as OkObjectResult;
 
@@ -39,11 +40,11 @@ namespace Acme.IdentityServer.WebApi.Tests.Controllers {
         }
 
         [Fact]
-        public void Update_ShouldReturnBadRequest_IfGrantTypeIsUnrecognized() {
+        public async Task Update_ShouldReturnBadRequest_IfGrantTypeIsUnrecognized() {
 
             SetupControllerWithRequest(new HeaderDictionary());
 
-            var result = clientsController.Update("test", new UpdateClientRequest() {
+            var result = await clientsController.Update("test", new UpdateClientRequest() {
                 GrantType = "invalid"
             }) as BadRequestResult;
 
