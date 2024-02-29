@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Acme.IdentityServer.Data;
 using Acme.IdentityServer.WebApi.Data;
 using Acme.IdentityServer.WebApi.Models.Input;
 using Acme.IdentityServer.WebApi.Models.Output;
@@ -19,7 +18,7 @@ namespace Acme.IdentityServer.WebApi.Services {
         /// </summary>
         /// <param name="db"></param>
         /// <param name="clientId"></param>
-        void SaveNewClientSecretRequest(IIdentityServerDbContext db, int clientId);
+        Task SaveNewClientSecretRequest(IIdentityServerDbContext db, int clientId);
 
         /// <summary>
         /// Will reset the client secret to an invalid hash, until the user provides a new secret
@@ -58,7 +57,7 @@ namespace Acme.IdentityServer.WebApi.Services {
         /// </summary>
         /// <param name="requestId"></param>
         /// <param name="verificationCode"></param>
-        IsVerificationCodeValidOutput IsVerificationCodeValid(Guid requestId, string verificationCode);
+        Task<IsVerificationCodeValidOutput> IsVerificationCodeValid(Guid requestId, string verificationCode);
 
         /// <summary>
         /// Returns a clients phone number pulled from the client secret request id
@@ -70,6 +69,6 @@ namespace Acme.IdentityServer.WebApi.Services {
         /// Returns a new secret key for a client
         /// </summary>
         /// <param name="requestId"></param>
-        string GetClientSecretKey(Guid requestId);
+        Task<string> GetClientSecretKey(Guid requestId);
     }
 }

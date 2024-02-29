@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
 using Acme.IdentityServer.WebApi.AuditEvents;
 using Acme.IdentityServer.WebApi.Data;
-using Acme.IdentityServer.WebApi.Events;
 using Acme.IdentityServer.WebApi.Exceptions;
 using Acme.IdentityServer.WebApi.Models;
 using Acme.IdentityServer.WebApi.Models.Enumerations;
@@ -83,7 +82,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
                 user.Update(userCreateRequest.Username, UserStatus.New, userCreateRequest.Claims ?? new List<UserClaimModel>(), restrictedEmailDomains.ToList());
 
                 dbContext.AddUser(user);
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
 
                 // TODO: log siem event for success
                 Serilog.Log.ForContext<UserCreateAuditEvent>().Information("User {Username} was created with {Result}", user.Username, "success");
@@ -110,7 +109,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
 
                 user.Update(userUpdateRequest.Username, userUpdateRequest.Status, userUpdateRequest.Claims ?? new List<UserClaimModel>(), restrictedEmailDomains.ToList());
 
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
 
                 // TODO: log siem event for success
                 Serilog.Log.ForContext<UserUpdateAuditEvent>().Information("User {Username} was updated with {Result}", user.Username, "success");
@@ -125,7 +124,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
         /// Generates a new 2FA TOTP Code, and sets TwoFactor property
         /// </summary>
         /// <returns>New Base32 encoded string</returns>
-        public string GenerateAndSetNewTOTPCode(Guid subjectId) {
+        public async Task<string> GenerateAndSetNewTOTPCode(Guid subjectId) {
             using (var scope = serviceProvider.CreateScope()) {
                 var dbContext = scope.ServiceProvider.GetRequiredService<IIdentityServerDbContext>();
                 var user = dbContext.Users.FirstOrDefault(x => x.UserId == subjectId);
@@ -137,7 +136,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
                 var base32String = Base32Encoding.ToString(key);
                 user.TwoFactor = base32String;
                 user.TwoFactorVerified = false;
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
                 return base32String;
             }
         }
@@ -153,8 +152,11 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
                 if (user == null) {
                     throw new ResourceNotFoundMessage();
                 }
-                if (string.IsNullOrEmpty(user.TwoFactor))
+
+                if (string.IsNullOrEmpty(user.TwoFactor)) {
                     return null;
+                }
+
                 var base32Bytes = Base32Encoding.ToBytes(user.TwoFactor);
                 var authenticatorUri = new OtpUri(OtpType.Totp, base32Bytes, user.Username, "Acme - Applications").ToString();
                 return authenticatorUri;
@@ -162,7 +164,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
 
         }
 
-        public bool VerifyCurrentTOTP(Guid subjectId, string code) {
+        public async Task<bool> VerifyCurrentTOTP(Guid subjectId, string code) {
             using (var scope = serviceProvider.CreateScope()) {
                 var dbContext = scope.ServiceProvider.GetRequiredService<IIdentityServerDbContext>();
                 var user = dbContext.Users.FirstOrDefault(x => x.UserId == subjectId);
@@ -176,14 +178,14 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
                 var currentCode = otp.ComputeTotp();
                 if (currentCode == code) {
                     user.TwoFactorVerified = true;
-                    dbContext.SaveChanges();
+                    await dbContext.SaveChangesAsync();
                     return true;
                 }
                 return false;
             }
         }
 
-        public User UpdateUserLock(Guid subjectId, UpdateLockModel model) {
+        public async Task<User> UpdateUserLock(Guid subjectId, UpdateLockModel model) {
             using (var scope = serviceProvider.CreateScope()) {
                 var dbContext = scope.ServiceProvider.GetRequiredService<IIdentityServerDbContext>();
                 var user = dbContext.Users.FirstOrDefault(x => x.UserId == subjectId);
@@ -203,7 +205,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
                 } else {
                     user.LockedReason = model.Reason;
                 }
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
 
                 // TODO: log siem event for success
                 Serilog.Log.ForContext<UserLockAuditEvent>().Information("User {Username} was {Action} with {Result}", user.Username, model.IsLocked ? "locked" : "unlocked", "success");
@@ -212,7 +214,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
             }
         }
 
-        public void UpdatePassword(Guid subjectId, UpdatePasswordModel model) {
+        public async Task UpdatePassword(Guid subjectId, UpdatePasswordModel model) {
             using (var scope = serviceProvider.CreateScope()) {
                 var dbContext = scope.ServiceProvider.GetRequiredService<IIdentityServerDbContext>();
                 var user = dbContext.Users.FirstOrDefault(x => x.UserId == subjectId);
@@ -220,7 +222,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
                     throw new ResourceNotFoundMessage();
                 }
                 SetUserPasswordValues(user, model.Password);
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
 
                 // TODO: log siem event for success
                 Serilog.Log.ForContext<UserPasswordUpdateAuditEvent>().Information("User {Username} had password updated with {Result}", user.Username, "success");
@@ -286,7 +288,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
             using (var scope = serviceProvider.CreateScope()) {
                 var dbContext = scope.ServiceProvider.GetRequiredService<IIdentityServerDbContext>();
                 dbContext.AddUser(user);
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
             }
             await PublishUserStateChangedEventAsync(user);
 
@@ -297,7 +299,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
         /// Activate/Deactivate the User by setting the user Status to either Active or Inactive
         /// </summary>
         /// <returns>Were we successful</returns>
-        public void DeactivateUser(Guid userId) {
+        public async Task DeactivateUser(Guid userId) {
             using (var scope = serviceProvider.CreateScope()) {
                 var dbContext = scope.ServiceProvider.GetRequiredService<IIdentityServerDbContext>();
                 // Quick check to see if we can deactivate this user
@@ -312,7 +314,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
 
                 logger.LogInformation($"Deactivated user ({userId})");
 
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
 
                 // TODO: log siem event for success
                 Serilog.Log.ForContext<UserDeactivateAuditEvent>().Information("User {Username} was deactivated with {Result}", user.Username, "success");
@@ -347,7 +349,7 @@ namespace Acme.IdentityServer.WebApi.Controllers.Account {
                 user.UpdateExternal(claims);
 
                 dbContext.UpdateUser(user);
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
                 await PublishUserStateChangedEventAsync(user);
                 return user;
             }

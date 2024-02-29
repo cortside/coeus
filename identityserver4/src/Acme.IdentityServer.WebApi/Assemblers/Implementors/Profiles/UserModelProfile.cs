@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
-using Acme.IdentityServer.Data;
 using Acme.IdentityServer.WebApi.Data;
 using Acme.IdentityServer.WebApi.Models;
+using AutoMapper;
 
 namespace Acme.IdentityServer.WebApi.Assemblers.Implementors.Profiles {
     public class UserModelProfile : Profile {

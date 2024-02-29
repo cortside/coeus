@@ -161,7 +161,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Controllers {
         }
 
         [Fact]
-        public void ShouldLockUser() {
+        public async Task ShouldLockUser() {
             // arrange
             UserOutputModel output = new UserOutputModel();
             Guid subjectId = Guid.NewGuid();
@@ -176,7 +176,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Controllers {
 
 
             // act
-            var result = target.UpdateUserLock(subjectId, model) as OkObjectResult;
+            var result = await target.UpdateUserLock(subjectId, model) as OkObjectResult;
 
             // assert
             Assert.IsType<OkObjectResult>(result);
@@ -186,27 +186,27 @@ namespace Acme.IdentityServer.WebApi.Tests.Controllers {
         }
 
         [Fact]
-        public void ShouldNotLockUserWithInvalidLockModel() {
+        public async Task ShouldNotLockUserWithInvalidLockModel() {
             // arrange
             Guid subjectId = Guid.NewGuid();
             UpdateLockModel model = new UpdateLockModel();
             target.ModelState.AddModelError("test", "test"); // stimulating invalid model state
 
             // act
-            var result = target.UpdateUserLock(subjectId, model);
+            var result = await target.UpdateUserLock(subjectId, model);
 
             // assert
             Assert.IsType<BadRequestResult>(result);
         }
 
         [Fact]
-        public void ShouldNotLockUnfoundUser() {
+        public async Task ShouldNotLockUnfoundUser() {
             // arrange
             Guid subjectId = Guid.NewGuid();
             UpdateLockModel model = new UpdateLockModel();
-            userServiceMock.Setup(s => s.UpdateUserLock(subjectId, model)).Throws(new ResourceNotFoundMessage());
+            userServiceMock.Setup(s => s.UpdateUserLock(subjectId, model)).ThrowsAsync(new ResourceNotFoundMessage());
             // act
-            var result = target.UpdateUserLock(subjectId, model);
+            var result = await target.UpdateUserLock(subjectId, model);
 
             // assert
             Assert.IsType<NotFoundResult>(result);

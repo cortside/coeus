@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using Cortside.AspNetCore.Auditable;
-using Cortside.Common.Security;
 using Acme.IdentityServer.WebApi.Controllers.Client;
 using Acme.IdentityServer.WebApi.Data;
+using Cortside.AspNetCore.Auditable;
+using Cortside.Common.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;

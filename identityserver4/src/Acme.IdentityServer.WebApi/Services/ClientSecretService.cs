@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Cortside.Common.Messages.MessageExceptions;
-using Cortside.DomainEvent.EntityFramework;
 using Acme.DomainEvent.Events;
 using Acme.IdentityServer.WebApi.Data;
 using Acme.IdentityServer.WebApi.Models.Input;
 using Acme.IdentityServer.WebApi.Models.Output;
+using Cortside.Common.Messages.MessageExceptions;
+using Cortside.DomainEvent.EntityFramework;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -98,7 +98,7 @@ namespace Acme.IdentityServer.WebApi.Services {
             }
 
             clientSecret.Value = "invalid-hash=";
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             SaveNewClientSecretRequest(db, clientId);
 
@@ -154,7 +154,7 @@ namespace Acme.IdentityServer.WebApi.Services {
             var verificationAttempts = config["ClientSecretRequest:VerificationAttempts"];
             clientSecretRequest.RemainingSmsVerificationAttempts = int.Parse(verificationAttempts);
 
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             var payload = $"Acme USA automated msg: Your verification code is: {code}. It’ll expire in {expirationInMinutes} min. Don’t share this with anyone.";
 
@@ -179,7 +179,7 @@ namespace Acme.IdentityServer.WebApi.Services {
         /// </summary>
         /// <param name="db"></param>
         /// <param name="clientId"></param>
-        public void SaveNewClientSecretRequest(IIdentityServerDbContext db, int clientId) {
+        public Task SaveNewClientSecretRequest(IIdentityServerDbContext db, int clientId) {
             var date = DateTime.Now;
             var expirationInHoursOffset = config["ClientSecretRequest:ExpirationInHours"];
             var verificationAttempts = config["ClientSecretRequest:VerificationAttempts"];
@@ -195,7 +195,7 @@ namespace Acme.IdentityServer.WebApi.Services {
             };
 
             db.ClientSecretRequests.Add(clientSecretRequest);
-            db.SaveChanges();
+            return db.SaveChangesAsync();
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace Acme.IdentityServer.WebApi.Services {
         /// </summary>
         /// <param name="requestId"></param>
         /// <param name="verificationCode"></param>
-        public IsVerificationCodeValidOutput IsVerificationCodeValid(Guid requestId, string verificationCode) {
+        public async Task<IsVerificationCodeValidOutput> IsVerificationCodeValid(Guid requestId, string verificationCode) {
             var output = new IsVerificationCodeValidOutput {
                 IsValid = false
             };
@@ -269,7 +269,7 @@ namespace Acme.IdentityServer.WebApi.Services {
             }
 
             clientSecretRequest.RemainingSmsVerificationAttempts--;
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             if (clientSecretRequest.SmsVerificationCode != verificationCode) {
                 output.Reason = $"Incorrect verification code.";
@@ -338,7 +338,7 @@ namespace Acme.IdentityServer.WebApi.Services {
         /// Returns a new secret key for a client
         /// </summary>
         /// <param name="requestId"></param>
-        public string GetClientSecretKey(Guid requestId) {
+        public async Task<string> GetClientSecretKey(Guid requestId) {
             using var scope = serviceProvider.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<IdentityServerDbContext>();
 
@@ -363,7 +363,7 @@ namespace Acme.IdentityServer.WebApi.Services {
                 clientSecret.Created = DateTime.UtcNow;
             }
 
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             return secretKey;
         }
