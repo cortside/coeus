@@ -49,7 +49,7 @@ namespace PolicyServer.Mocks {
 
             server.WireMockServer
                 .Given(
-                    Request.Create().WithPath(new RegexMatcher(@"^\/api\/v1\/items\/\w+-\d+$"))
+                    Request.Create().WithPath(new RegexMatcher(@"^\/api\/v1\/items\/[\w-]+$"))
                         .UsingGet()
                 )
                 .RespondWith(
@@ -61,7 +61,7 @@ namespace PolicyServer.Mocks {
 
             server.WireMockServer
                 .Given(
-                    Request.Create().WithPath(new RegexMatcher(@"^\/api\/v1\/items\/\w+-\d+/related$"))
+                    Request.Create().WithPath(new RegexMatcher(@"^\/api\/v1\/items\/[\w-]+\/related$"))
                         .UsingGet()
                 )
                 .RespondWith(
