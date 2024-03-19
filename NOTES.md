@@ -1,5 +1,21 @@
 TODO:
 
+* SVC-2887 
+* extentions methods to setup LogEvent logger in serviceCollection
+	* ILoggingBuilder
+* complete query-by-post guideline
+* swagger docs should show the required permission
+* test out having multiple domainevents with common base type handled by single handler
+* api rate limiting
+	* https://learn.microsoft.com/en-us/aspnet/core/performance/rate-limit?view=aspnetcore-8.0#rate-limiter-samples
+* package AmqpCommon from AmqpTools for use by AmqpService-api
+* Add peek and receive to AmqpTools
+* Add delete to AmqpTools
+	* figure out if there is way to not have to receive all messages and then either accept or release
+		* filters	
+		* https://github.com/Azure/amqpnetlite/blob/master/docs/articles/azure_eventhubs.md
+		* https://gist.github.com/scholzj/8a79abc31fc3b1224637#file-requestresponse-cs-L55
+		* https://github.com/amqp/rhea/issues/55
 * use of reference tokens for api clients
 * ITimeProvider
 	* https://steven-giesel.com/blogPost/4d5b70fe-35c1-43c7-bebe-49194195ffcb
