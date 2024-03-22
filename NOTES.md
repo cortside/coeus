@@ -1,5 +1,6 @@
 TODO:
 
+* update templates and libraries to treat warnings as errors
 * SVC-2887 
 * extentions methods to setup LogEvent logger in serviceCollection
 	* ILoggingBuilder

@@ -10,7 +10,6 @@ using Cortside.DomainEvent;
 using Cortside.DomainEvent.Stub;
 using Cortside.MockServer;
 using Cortside.MockServer.AccessControl;
-using Cortside.MockServer.AccessControl.Models;
 using Cortside.MockServer.Mocks;
 using Cortside.RestApiClient;
 using Medallion.Threading;
@@ -32,12 +31,11 @@ using Serilog;
 using Xunit.Abstractions;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests {
-    public class WebApiApplicationFactory : WebApplicationFactory<Startup>, IDisposable {
+    public class WebApiApplicationFactory : WebApplicationFactory<Startup> {
         private bool disposed = false;
 
         // testId is created outside of the options so that it's constant and not reevaluated at instance creation time
         private readonly string testId = Guid.NewGuid().ToString();
-        private Subjects subjects;
         public MockHttpServer MockServer { get; private set; }
         public JsonSerializerSettings SerializerSettings { get; private set; }
 
@@ -191,14 +189,12 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
             });
         }
 
-        public void Dispose() {
+        public new void Dispose() {
             // Dispose of unmanaged resources.
             Dispose(true);
-            // Suppress finalization.
-            GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing) {
+        protected override void Dispose(bool disposing) {
             if (disposed) {
                 return;
             }
@@ -209,6 +205,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
             }
 
             disposed = true;
+            base.Dispose(disposing);
         }
     }
 }

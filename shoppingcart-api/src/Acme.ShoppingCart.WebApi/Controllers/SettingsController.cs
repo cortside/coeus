@@ -38,7 +38,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         }
 
         private SettingsModel GetSettingsModel() {
-            var ServiceBus = Configuration.GetSection("ServiceBus");
+            var serviceBus = Configuration.GetSection("ServiceBus");
             var authConfig = Configuration.GetSection("IdentityServer");
             var policyServer = Configuration.GetSection("PolicyServer");
             var build = Configuration.GetSection("Build");
@@ -52,9 +52,9 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                 },
                 Configuration = new ConfigurationModel() {
                     ServiceBus = new ServicebusModel {
-                        Exchange = ServiceBus.GetValue<string>("Exchange"),
-                        NameSpace = ServiceBus.GetValue<string>("Namespace"),
-                        Queue = ServiceBus.GetValue<string>("Queue"),
+                        Exchange = serviceBus.GetValue<string>("Exchange"),
+                        NameSpace = serviceBus.GetValue<string>("Namespace"),
+                        Queue = serviceBus.GetValue<string>("Queue"),
                     },
                     IdentityServer = new IdentityServerModel {
                         Apiname = authConfig.GetValue<string>("ApiName"),

@@ -115,7 +115,7 @@ namespace Acme.ShoppingCart.WebApi {
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider) {
             // Can be used for more analytic information if not using an APM of some kind.
             // Need to add installer MiniProfilerInstaller to default bootstrapper or as an installer above
-            // app.UseMiniProfiler();
+            // uncomment: app.UseMiniProfiler()
 
             app.UseApiDefaults(Configuration);
             app.UseSwagger("Acme.ShoppingCart Api", provider);

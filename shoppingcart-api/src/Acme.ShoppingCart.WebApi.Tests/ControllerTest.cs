@@ -11,14 +11,19 @@ namespace Acme.ShoppingCart.WebApi.Tests {
             testFixture = new UnitTestFixture();
         }
 
-        public void Dispose() {
-            testFixture.TearDown();
-        }
-
         protected ControllerContext GetControllerContext() {
             var controllerContext = new ControllerContext();
             controllerContext.HttpContext = new DefaultHttpContext();
             return controllerContext;
+        }
+
+        public void Dispose() {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing) {
+            // Cleanup
+            testFixture.TearDown();
         }
     }
 }
