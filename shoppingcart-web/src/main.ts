@@ -18,7 +18,7 @@ loadSettings(environment.configurations)
                 enableProdMode();
             }
 
-            const auth = new AuthenticationService(appConfig.identity);
+            const auth = new AuthenticationService(appConfig.identity); // TODO
             if (await auth.interceptSilentRedirect()) {
                 return;
             }
