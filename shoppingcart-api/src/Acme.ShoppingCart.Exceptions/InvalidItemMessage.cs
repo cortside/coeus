@@ -1,3 +1,5 @@
+#pragma warning disable S3376 // Attribute, EventArgs, and Exception type names should end with the type being extended
+
 using Cortside.Common.Messages.MessageExceptions;
 
 namespace Acme.ShoppingCart.Exceptions {

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using Acme.ShoppingCart.Data;
 using Cortside.AspNetCore.Auditable;
@@ -24,7 +23,7 @@ namespace Acme.ShoppingCart.DomainService.Tests {
                 .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning))
                 .Options;
 
-            var context = new DatabaseContext(databaseContextOptions, new SubjectPrincipal(new List<Claim>() { new Claim("sub", Guid.NewGuid().ToString()) }), new DefaultSubjectFactory());
+            var context = new DatabaseContext(databaseContextOptions, new SubjectPrincipal([new Claim("sub", Guid.NewGuid().ToString())]), new DefaultSubjectFactory());
             return context;
         }
 

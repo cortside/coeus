@@ -13,7 +13,7 @@ namespace Acme.ShoppingCart.WebApi.Tests {
         protected readonly Mock<IHttpContextAccessor> httpContextAccessorMock = new Mock<IHttpContextAccessor>();
 
         public UnitTestFixture() {
-            mocks = new List<Mock>();
+            mocks = [];
         }
 
         public Mock<T> Mock<T>() where T : class {

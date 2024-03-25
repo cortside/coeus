@@ -36,7 +36,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
 
         // testId is created outside of the options so that it's constant and not reevaluated at instance creation time
         private readonly string testId = Guid.NewGuid().ToString();
-        public MockHttpServer MockServer { get; private set; }
+        public MockHttpServer MockServer { get; }
         public JsonSerializerSettings SerializerSettings { get; private set; }
 
         public IConfiguration Configuration { get; private set; }

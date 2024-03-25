@@ -12,7 +12,7 @@ namespace Acme.ShoppingCart.Health {
         public ExampleCheck(IMemoryCache cache, ILogger<Check> logger, IAvailabilityRecorder recorder) : base(cache, logger, recorder) {
         }
 
-        public override async Task<ServiceStatusModel> ExecuteAsync() {
+        public override Task<ServiceStatusModel> ExecuteAsync() {
             // add custom logic here
             var model = new ServiceStatusModel() {
                 Healthy = true,
@@ -21,7 +21,7 @@ namespace Acme.ShoppingCart.Health {
                 Timestamp = DateTime.UtcNow
             };
 
-            return await Task.FromResult<ServiceStatusModel>(model).ConfigureAwait(false);
+            return Task.FromResult<ServiceStatusModel>(model);
         }
     }
 }

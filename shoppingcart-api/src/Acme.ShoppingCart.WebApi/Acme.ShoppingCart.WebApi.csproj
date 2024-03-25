@@ -10,8 +10,8 @@
     <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="6.2.205" />
     <PackageReference Include="Cortside.AspNetCore.Common" Version="6.2.205" />
     <PackageReference Include="Cortside.AspNetCore.Swagger" Version="6.2.205" />
-    <PackageReference Include="Cortside.Common.Correlation" Version="6.2.408" />
-    <PackageReference Include="Cortside.Common.Hosting" Version="6.2.408" />
+    <PackageReference Include="Cortside.Common.Correlation" Version="6.3.410-develop" />
+    <PackageReference Include="Cortside.Common.Hosting" Version="6.3.410-develop" />
     <PackageReference Include="Cortside.Health" Version="6.0.86" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.3" />

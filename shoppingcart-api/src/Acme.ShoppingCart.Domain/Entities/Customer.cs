@@ -9,6 +9,8 @@ using Cortside.Common.Messages.MessageExceptions;
 namespace Acme.ShoppingCart.Domain.Entities {
     [Table("Customer")]
     public class Customer : AuditableEntity {
+        const string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
+
         public Customer(string firstName, string lastName, string email) {
             Update(firstName, lastName, email);
             CustomerResourceId = Guid.NewGuid();
@@ -31,7 +33,6 @@ namespace Acme.ShoppingCart.Domain.Entities {
             var messages = new MessageList();
             messages.Aggregate(() => string.IsNullOrWhiteSpace(firstName) || firstName.Length < 2, () => new InvalidValueError(nameof(firstName), firstName));
             messages.Aggregate(() => string.IsNullOrWhiteSpace(lastName) || lastName.Length < 2, () => new InvalidValueError(nameof(lastName), lastName));
-            string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
             messages.Aggregate(() => string.IsNullOrWhiteSpace(email) || !Regex.IsMatch(email, regex, RegexOptions.IgnoreCase), () => new InvalidValueError(nameof(email), email));
             messages.ThrowIfAny<ValidationListException>();
 

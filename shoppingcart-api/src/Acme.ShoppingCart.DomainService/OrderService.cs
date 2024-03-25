@@ -62,9 +62,7 @@ namespace Acme.ShoppingCart.DomainService {
 
             // remove items not in dto
             var itemsToRemove = new List<OrderItem>();
-            foreach (var item in entity.Items.Where(x => !dto.Items.Any(i => i.Sku == x.Sku))) {
-                itemsToRemove.Add(item);
-            }
+            itemsToRemove.AddRange(entity.Items.Where(x => !dto.Items.Exists(i => i.Sku == x.Sku)));
             entity.RemoveItems(itemsToRemove);
 
             // add items not already on order

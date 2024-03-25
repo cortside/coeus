@@ -6,17 +6,17 @@ namespace Acme.ShoppingCart.DomainService.Tests {
         private readonly List<Mock> mocks;
 
         public UnitTestFixture() {
-            mocks = new List<Mock>();
+            mocks = [];
         }
 
         public Mock<T> Mock<T>() where T : class {
             var mock = new Mock<T>();
-            this.mocks.Add(mock);
+            mocks.Add(mock);
             return mock;
         }
 
         public void TearDown() {
-            this.mocks.ForEach(m => m.VerifyAll());
+            mocks.ForEach(m => m.VerifyAll());
         }
     }
 }

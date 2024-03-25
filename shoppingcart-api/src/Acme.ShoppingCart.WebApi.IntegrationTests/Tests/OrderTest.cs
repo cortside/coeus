@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -38,9 +37,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
                     Country = "USA",
                     ZipCode = "84009"
                 },
-                Items = new System.Collections.Generic.List<CreateOrderItemModel>() {
-                     new CreateOrderItemModel() { Sku = "123", Quantity= 1 }
-                 }
+                Items = [new CreateOrderItemModel() { Sku = "123", Quantity = 1 }]
             };
 
             //act
@@ -73,9 +70,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
                     Country = "USA",
                     ZipCode = "84009"
                 },
-                Items = new List<CreateOrderItemModel>() {
-                     new CreateOrderItemModel() { Sku = "123", Quantity= 1 }
-                 }
+                Items = [new CreateOrderItemModel() { Sku = "123", Quantity = 1 }]
             };
 
             //act
@@ -189,10 +184,10 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
                     Country = "USA",
                     ZipCode = "84009"
                 },
-                Items = new System.Collections.Generic.List<CreateOrderItemModel>() {
-                     new CreateOrderItemModel() { Sku = "123", Quantity= 1 },
-                     new CreateOrderItemModel() { Sku = "456", Quantity= 2 }
-                 }
+                Items = [
+                    new CreateOrderItemModel() { Sku = "123", Quantity = 1 },
+                    new CreateOrderItemModel() { Sku = "456", Quantity = 2 }
+                ]
             };
 
             //act

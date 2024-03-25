@@ -8,13 +8,9 @@ using Xunit.Abstractions;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
     public class SettingsTest : IClassFixture<WebApiApplicationFactory> {
-        private readonly WebApiApplicationFactory webApi;
-        private readonly ITestOutputHelper output;
         private readonly RestApiClient client;
 
         public SettingsTest(WebApiApplicationFactory webApi, ITestOutputHelper output) {
-            this.webApi = webApi;
-            this.output = output;
             client = webApi.CreateRestApiClient(output);
         }
 

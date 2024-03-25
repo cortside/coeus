@@ -32,7 +32,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// <param name="configuration"></param>
         public AuthorizationController(ILogger<AuthorizationController> logger, IPolicyServerRuntimeClient client, IConfiguration configuration) {
             this.logger = logger;
-            this.policyClient = client;
+            policyClient = client;
             this.configuration = configuration;
         }
 

@@ -6,7 +6,7 @@
   <ItemGroup>
     <PackageReference Include="Cortside.AspNetCore.Common" Version="6.2.205" />
     <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="6.2.205" />
-    <PackageReference Include="Cortside.Common.Security" Version="6.2.408" />
+    <PackageReference Include="Cortside.Common.Security" Version="6.3.410-develop" />
     <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="6.2.301" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.3" />

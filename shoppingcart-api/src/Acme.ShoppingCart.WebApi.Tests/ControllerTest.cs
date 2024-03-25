@@ -12,13 +12,15 @@ namespace Acme.ShoppingCart.WebApi.Tests {
         }
 
         protected ControllerContext GetControllerContext() {
-            var controllerContext = new ControllerContext();
-            controllerContext.HttpContext = new DefaultHttpContext();
+            var controllerContext = new ControllerContext {
+                HttpContext = new DefaultHttpContext()
+            };
             return controllerContext;
         }
 
         public void Dispose() {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         protected virtual void Dispose(bool disposing) {
