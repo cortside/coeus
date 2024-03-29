@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.2.205" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.3.208-develop" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.9.28">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

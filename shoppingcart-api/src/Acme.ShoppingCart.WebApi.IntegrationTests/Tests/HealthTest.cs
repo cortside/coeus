@@ -9,13 +9,13 @@ using Newtonsoft.Json;
 using Xunit;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
-    public class HealthTest : IClassFixture<IntegrationTestFactory<Startup>> {
-        private readonly IntegrationTestFactory<Startup> fixture;
+    public class HealthTest : IClassFixture<WebApiApplicationFactory> {
+        private readonly WebApiApplicationFactory webApi;
         private readonly HttpClient testServerClient;
 
-        public HealthTest(IntegrationTestFactory<Startup> fixture) {
-            this.fixture = fixture;
-            testServerClient = fixture.CreateClient(new WebApplicationFactoryClientOptions {
+        public HealthTest(WebApiApplicationFactory webApi) {
+            this.webApi = webApi;
+            testServerClient = this.webApi.CreateClient(new WebApplicationFactoryClientOptions {
                 AllowAutoRedirect = false
             });
         }
@@ -37,7 +37,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
 
             //assert
             var content = await response.Content.ReadAsStringAsync();
-            var respObj = JsonConvert.DeserializeObject<HealthModel>(content, fixture.SerializerSettings);
+            var respObj = JsonConvert.DeserializeObject<HealthModel>(content, webApi.SerializerSettings);
             Assert.True(respObj.Healthy, content);
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }

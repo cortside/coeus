@@ -11,11 +11,11 @@ using Newtonsoft.Json;
 using Xunit;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
-    public class CustomerTest : IClassFixture<IntegrationTestFactory<Startup>> {
-        private readonly IntegrationTestFactory<Startup> fixture;
+    public class CustomerTest : IClassFixture<WebApiApplicationFactory> {
+        private readonly WebApiApplicationFactory fixture;
         private readonly HttpClient testServerClient;
 
-        public CustomerTest(IntegrationTestFactory<Startup> fixture) {
+        public CustomerTest(WebApiApplicationFactory fixture) {
             this.fixture = fixture;
             testServerClient = fixture.CreateAuthorizedClient("api");
         }
@@ -28,7 +28,6 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
                 LastName = "last",
                 Email = "email@gmail.com"
             };
-
             var requestBody = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
 
             //act

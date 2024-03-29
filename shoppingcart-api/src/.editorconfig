@@ -243,8 +243,10 @@ dotnet_diagnostic.RCS1021.severity = none
 dotnet_diagnostic.PH_P013.severity = none
 
 # IDE0290: Use Primary Constructor
-dotnet_diagnostic.IDE0290.severity                                       = none
+dotnet_diagnostic.IDE0290.severity = none
 
-# for dotnet-format to help cleanup IDE0005 unnecessary import warnings
+# RCS1129: Remove redundant field initialization
+dotnet_diagnostic.RCS1129.severity = none
+
 [*.{cs,vb}]
 dotnet_diagnostic.IDE0005.severity = warning

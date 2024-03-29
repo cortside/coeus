@@ -5,7 +5,10 @@ namespace Acme.ShoppingCart.WebApi {
     /// <summary>
     /// Program
     /// </summary>
-    public static class Program {
+    public class Program {
+        protected Program() {
+        }
+
         /// <summary>
         /// Main
         /// </summary>

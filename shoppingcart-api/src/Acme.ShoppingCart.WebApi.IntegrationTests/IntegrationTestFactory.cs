@@ -124,7 +124,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
 
         private void SetupConfiguration() {
             Configuration = new ConfigurationBuilder()
-                 .AddJsonFile("appsettings.integration.json", optional: false, reloadOnChange: true)
+                 .AddJsonFile("integrationsettings.json", optional: false, reloadOnChange: true)
                  .AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true)
                  .Build();
         }

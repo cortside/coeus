@@ -56,7 +56,7 @@
   "Seq": {
     "ServerUrl": ""
   },
-  "HealthCheckHostedService": {
+  "xHealthCheckHostedService": {
     "Name": "{{Service:Name}}",
     "Enabled": true,
     "Interval": 5,
@@ -106,10 +106,10 @@
     "Enabled": true,
     "Interval": 60
   },
-  "Database": {
+  "xDatabase": {
     "ConnectionString": "Data Source=localhost;Initial Catalog=ShoppingCart;Integrated Security=True"
   },
-  "ServiceBus": {
+  "xServiceBus": {
     "Protocol": "amqp",
     "Namespace": "localhost",
     "Policy": "admin",
@@ -118,7 +118,7 @@
     "Topic": "/exchange/ShoppingCart/",
     "Credits": 5
   },
-  "IdentityServer": {
+  "xIdentityServer": {
     "Authority": "http://localhost:5001",
     "ApiName": "ShoppingCart-api",
     "ApiSecret": "secret",
@@ -131,7 +131,7 @@
       "SlidingExpiration": 30
     }
   },
-  "PolicyServer": {
+  "xPolicyServer": {
     "CacheDuration": "0.00:05:00",
     "BasePolicy": "ShoppingCart",
     "PolicyServerUrl": "http://localhost:5001",
