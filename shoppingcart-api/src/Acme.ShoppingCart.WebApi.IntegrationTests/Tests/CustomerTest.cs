@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.WebApi.Models.Responses;
 using Cortside.AspNetCore.Common.Paging;
 using FluentAssertions;
@@ -11,11 +12,11 @@ using Newtonsoft.Json;
 using Xunit;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
-    public class CustomerTest : IClassFixture<WebApiApplicationFactory> {
-        private readonly WebApiApplicationFactory fixture;
+    public class CustomerTest : IClassFixture<IntegrationTest> {
+        private readonly IntegrationTest fixture;
         private readonly HttpClient testServerClient;
 
-        public CustomerTest(WebApiApplicationFactory fixture) {
+        public CustomerTest(IntegrationTest fixture) {
             this.fixture = fixture;
             testServerClient = fixture.CreateAuthorizedClient("api");
         }
@@ -45,7 +46,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         [Fact]
         public async Task ShouldGetCustomerAsync() {
             //arrange
-            var db = fixture.NewScopedDbContext();
+            var db = fixture.NewScopedDbContext<DatabaseContext>();
             var id = db.Customers.First().CustomerResourceId;
 
             //act
@@ -58,7 +59,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         [Fact]
         public async Task ShouldSearchCustomersAsync() {
             //arrange
-            var db = fixture.NewScopedDbContext();
+            var db = fixture.NewScopedDbContext<DatabaseContext>();
             var id = db.Customers.First();
 
             var model = new Models.Requests.CustomerSearchModel() {
