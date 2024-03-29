@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq.Dynamic.Core;
 using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.WebApi.IntegrationTests.Mocks;
+using Cortside.AspNetCore.Testing;
 using Cortside.MockServer.AccessControl;
 using Cortside.MockServer.AccessControl.Models;
 using Cortside.MockServer.Builder;
@@ -15,8 +16,8 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests {
-    public class IntegrationTest : WebApiIntegrationTest<Startup> {
-        public IntegrationTest() {
+    public class IntegrationFixture : WebApiFixture<Startup> {
+        public IntegrationFixture() {
             Subjects = JsonConvert.DeserializeObject<Subjects>(File.ReadAllText("./Data/subjects.json"));
         }
 
@@ -35,10 +36,8 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
                         ["HealthCheckHostedService:Checks:2:Value"] = $"{MockServer.Url}/api/health",
                         ["HealthCheckHostedService:Checks:4:Value"] = $"{MockServer.Url}/api/health",
                         ["IdentityServer:Authority"] = MockServer.Url,
-                        ["IdentityServer:RequireHttpsMetadata"] = "false",
                         ["PolicyServer:TokenClient:Authority"] = MockServer.Url,
                         ["PolicyServer:PolicyServerUrl"] = MockServer.Url,
-                        ["DistributedLock:UseRedisLockProvider"] = "false",
                         ["CatalogApi:ServiceUrl"] = $"{MockServer.Url}",
                         ["CatalogApi:Authentication:Url"] = $"{MockServer.Url}/connect/token"
                     });

@@ -7,11 +7,11 @@ using Xunit;
 using Xunit.Abstractions;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
-    public class SettingsTest : IClassFixture<IntegrationTest> {
+    public class SettingsTest : IClassFixture<IntegrationFixture> {
         private readonly RestApiClient client;
-        private readonly IntegrationTest api;
+        private readonly IntegrationFixture api;
 
-        public SettingsTest(IntegrationTest api, ITestOutputHelper output) {
+        public SettingsTest(IntegrationFixture api, ITestOutputHelper output) {
             this.api = api;
             api.TestOutputHelper = output;
             client = api.CreateRestApiClient(output);

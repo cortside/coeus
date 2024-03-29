@@ -9,11 +9,11 @@ using Newtonsoft.Json;
 using Xunit;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
-    public class HealthTest : IClassFixture<IntegrationTest> {
-        private readonly IntegrationTest webApi;
+    public class HealthTest : IClassFixture<IntegrationFixture> {
+        private readonly IntegrationFixture webApi;
         private readonly HttpClient testServerClient;
 
-        public HealthTest(IntegrationTest webApi) {
+        public HealthTest(IntegrationFixture webApi) {
             this.webApi = webApi;
             testServerClient = webApi.Api.CreateClient(new WebApplicationFactoryClientOptions {
                 AllowAutoRedirect = false

@@ -12,11 +12,11 @@ using Newtonsoft.Json;
 using Xunit;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
-    public class CustomerTest : IClassFixture<IntegrationTest> {
-        private readonly IntegrationTest fixture;
+    public class CustomerTest : IClassFixture<IntegrationFixture> {
+        private readonly IntegrationFixture fixture;
         private readonly HttpClient testServerClient;
 
-        public CustomerTest(IntegrationTest fixture) {
+        public CustomerTest(IntegrationFixture fixture) {
             this.fixture = fixture;
             testServerClient = fixture.CreateAuthorizedClient("api");
         }

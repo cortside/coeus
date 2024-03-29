@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.WebApi.Models.Requests;
 using Acme.ShoppingCart.WebApi.Models.Responses;
@@ -12,11 +13,11 @@ using Newtonsoft.Json;
 using Xunit;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
-    public class OrderTest : IClassFixture<IntegrationTestFactory<Startup>> {
-        private readonly IntegrationTestFactory<Startup> fixture;
+    public class OrderTest : IClassFixture<IntegrationFixture> {
+        private readonly IntegrationFixture fixture;
         private readonly HttpClient client;
 
-        public OrderTest(IntegrationTestFactory<Startup> fixture) {
+        public OrderTest(IntegrationFixture fixture) {
             this.fixture = fixture;
             client = fixture.CreateAuthorizedClient("api");
         }
@@ -93,7 +94,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         [Fact]
         public async Task ShouldGetOrderAsync() {
             //arrange
-            var db = fixture.NewScopedDbContext();
+            var db = fixture.NewScopedDbContext<DatabaseContext>();
             var customer = db.Customers.First();
             var order = new Order(customer, "", "", "", "", "");
             db.Orders.Add(order);
@@ -109,7 +110,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         [Fact]
         public async Task ShouldAddOrderItemAsync() {
             //arrange
-            var db = fixture.NewScopedDbContext();
+            var db = fixture.NewScopedDbContext<DatabaseContext>();
             var customer = db.Customers.First();
             var orderRequest = new Order(customer, "", "", "", "", "");
             db.Orders.Add(orderRequest);
@@ -153,7 +154,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         [Fact]
         public async Task ShouldGetPagedOrdersAsync() {
             //arrange
-            var db = fixture.NewScopedDbContext();
+            var db = fixture.NewScopedDbContext<DatabaseContext>();
             var customer = db.Customers.First();
             for (int i = 0; i < 10; i++) {
                 var order = new Order(customer, "", "", "", "", "");

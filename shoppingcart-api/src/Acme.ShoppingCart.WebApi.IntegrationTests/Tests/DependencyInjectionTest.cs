@@ -17,11 +17,11 @@ using Xunit;
 using Xunit.Abstractions;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
-    public class DependencyInjectionTest : IClassFixture<IntegrationTest> {
-        private readonly IntegrationTest webApi;
+    public class DependencyInjectionTest : IClassFixture<IntegrationFixture> {
+        private readonly IntegrationFixture webApi;
         private readonly ITestOutputHelper testOutputHelper;
 
-        public DependencyInjectionTest(IntegrationTest webApi, ITestOutputHelper testOutputHelper) {
+        public DependencyInjectionTest(IntegrationFixture webApi, ITestOutputHelper testOutputHelper) {
             this.webApi = webApi;
             this.testOutputHelper = testOutputHelper;
         }

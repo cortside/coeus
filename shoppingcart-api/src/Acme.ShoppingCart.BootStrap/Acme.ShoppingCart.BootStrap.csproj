@@ -4,8 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore" Version="6.3.208-develop" />
-    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.3.208-develop" />
+    <PackageReference Include="Cortside.AspNetCore" Version="6.3.211-develop" />
+    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.3.211-develop" />
     <PackageReference Include="Cortside.Common.BootStrap" Version="6.3.410-develop" />
     <PackageReference Include="Cortside.Common.Cryptography" Version="6.3.410-develop" />
     <PackageReference Include="DistributedLock.SqlServer" Version="1.0.4" />
