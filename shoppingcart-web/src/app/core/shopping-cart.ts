@@ -17,11 +17,11 @@ export class ShoppingCart {
         this.items$ = this.items.asObservable();
     }
 
-    getCartItems(): Observable<CartItemModel[]> {
+    stateChanges(): Observable<CartItemModel[]> {
         return this.items$;
     }
 
-    getCurrentCartItems(): CartItemModel[] {
+    getSnaptshot(): CartItemModel[] {
         return [...this.items.value];
     }
 
@@ -31,7 +31,7 @@ export class ShoppingCart {
         if (item) {
             item.quantity += quantity;
         } else {
-            list.push({ sku: itemSku, quantity: quantity });
+            list.push({ sku: itemSku, quantity: quantity, unitPrice: 0 });
         }
 
         this.document.defaultView?.localStorage.setItem(this.ITEMS_KEY, JSON.stringify(list));

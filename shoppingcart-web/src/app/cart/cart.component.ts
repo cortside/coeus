@@ -26,7 +26,7 @@ export class CartComponent implements AfterViewInit {
     modelState!: NgFormModelState<CreateOrderModel>;
     @ViewChild('cartForm', { static: true }) cartForm!: NgForm;
     constructor(private service: ShoppingCart, private modelStateFactory: NgFormModelStateFactory, private orderService: OrderService, private router: Router, private auth: AuthenticationService) {
-        this.items$ = this.service.getCartItems();
+        this.items$ = this.service.stateChanges();
         this.model = new CreateOrderModel();
         this.model.address = new AddressInputModel();
         this.model.customer = new CustomerInputModel();

@@ -11,7 +11,7 @@ import { ShoppingCart } from '../core/shopping-cart';
 export class CheckoutComponent {
     items$: Observable<CartItemModel[]>;
     constructor(private service: ShoppingCart) {
-        this.items$ = this.service.getCartItems();
+        this.items$ = this.service.stateChanges();
     }
 
     checkout(): void {

@@ -36,7 +36,7 @@ export class OrderService {
         model.address.street = "Street";
 
         const request = assembleCreateOrderRequest(model);
-        request.items = this.cart.getCurrentCartItems();
+        request.items = this.cart.getSnaptshot();
         return this.client.createOrders(request).pipe(
             tap(x=>{
                 this.cart.clear();

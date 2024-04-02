@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
     user: AuthenticatedUser | undefined;
     itemCount$: Observable<number>;
     constructor(private auth: AuthenticationService, private cart: ShoppingCart) {
-      this.itemCount$ = this.cart.getCartItems().pipe(map((items)=>items.length));
+      this.itemCount$ = this.cart.stateChanges().pipe(map((items)=>items.length));
     }
 
     async ngOnInit(): Promise<void> {
