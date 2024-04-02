@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Reflection;
 using Acme.ShoppingCart.Facade;
@@ -10,7 +11,7 @@ namespace Acme.ShoppingCart.BootStrap.Installer {
     public class FacadeInstaller : IInstaller {
         public void Install(IServiceCollection services, IConfiguration configuration) {
             typeof(OrderFacade).GetTypeInfo().Assembly.GetTypes()
-                .Where(x => (x.Name.EndsWith("Facade"))
+                .Where(x => (x.Name.EndsWith("Facade", StringComparison.InvariantCulture))
                     && x.GetTypeInfo().IsClass
                     && !x.GetTypeInfo().IsAbstract)
                 .ToList()
@@ -20,7 +21,7 @@ namespace Acme.ShoppingCart.BootStrap.Installer {
                 });
 
             typeof(OrderMapper).GetTypeInfo().Assembly.GetTypes()
-                .Where(x => (x.Name.EndsWith("Mapper"))
+                .Where(x => (x.Name.EndsWith("Mapper", StringComparison.InvariantCulture))
                     && x.GetTypeInfo().IsClass
                     && !x.GetTypeInfo().IsAbstract)
                 .ToList()

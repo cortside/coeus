@@ -2,6 +2,9 @@ using System;
 using Cortside.AspNetCore.Common.Models;
 
 namespace Acme.ShoppingCart.WebApi.Models.Responses {
+    /// <summary>
+    /// An Item on an Order
+    /// </summary>
     public class OrderItemModel : AuditableEntityModel {
         /// <summary>
         /// Gets or sets the order item identifier.

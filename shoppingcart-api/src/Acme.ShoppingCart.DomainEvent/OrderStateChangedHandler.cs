@@ -45,7 +45,7 @@ namespace Acme.ShoppingCart.DomainEvent {
                         var entity = await facade.SendNotificationAsync(@event.Data.OrderResourceId).ConfigureAwait(false);
                         logger.LogInformation("Emailing customer at {Email} for change to order {OrderResourceId}", entity.Customer.Email, entity.OrderResourceId);
                         logger.LogDebug("Handling change event for order {@order}", entity);
-                        logger.LogInformation("order was observed changing it's state with body: {body} and entity: {entity}", JsonConvert.SerializeObject(@event.Data), JsonConvert.SerializeObject(entity));
+                        logger.LogInformation("order was observed changing it's state with body: {Body} and entity: {Entity}", JsonConvert.SerializeObject(@event.Data), JsonConvert.SerializeObject(entity));
                     }
                 }
 

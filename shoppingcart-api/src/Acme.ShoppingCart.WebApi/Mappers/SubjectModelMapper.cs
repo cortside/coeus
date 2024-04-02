@@ -1,3 +1,5 @@
+#pragma warning disable CS1591 // Missing XML comments
+
 using Cortside.AspNetCore.Common.Dtos;
 using Cortside.AspNetCore.Common.Models;
 

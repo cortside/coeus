@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Reflection;
 using Acme.ShoppingCart.DomainService;
@@ -10,7 +11,7 @@ namespace Acme.ShoppingCart.BootStrap.Installer {
         public void Install(IServiceCollection services, IConfiguration configuration) {
             // register domain services
             typeof(OrderService).GetTypeInfo().Assembly.GetTypes()
-                .Where(x => (x.Name.EndsWith("Service"))
+                .Where(x => (x.Name.EndsWith("Service", StringComparison.InvariantCulture))
                     && x.GetTypeInfo().IsClass
                     && !x.GetTypeInfo().IsAbstract
                     && x.GetInterfaces().Length > 0)

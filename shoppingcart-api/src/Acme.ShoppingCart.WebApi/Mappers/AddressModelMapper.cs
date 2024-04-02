@@ -1,3 +1,5 @@
+#pragma warning disable CS1591 // Missing XML comments
+
 using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.WebApi.Models;
 

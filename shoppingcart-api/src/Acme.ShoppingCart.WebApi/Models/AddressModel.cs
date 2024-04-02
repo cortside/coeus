@@ -1,6 +1,9 @@
 using System;
 
 namespace Acme.ShoppingCart.WebApi.Models {
+    /// <summary>
+    /// An address
+    /// </summary>
     public class AddressModel {
         /// <summary>
         /// Initializes a new instance of the <see cref="AddressModel"/> class.
