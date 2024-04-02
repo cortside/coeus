@@ -1,6 +1,9 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, Route, Router } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
+import { ItemDetailComponent } from './item-detail/item-detail.component';
+import { ItemListComponent } from './item-list/item-list.component';
+import { ItemComponent } from './item.component';
 import { ItemService } from './item.service';
 
 const canActivateGuard = (snapshot: ActivatedRouteSnapshot) => {
@@ -17,15 +20,12 @@ const canActivateGuard = (snapshot: ActivatedRouteSnapshot) => {
 
 export const itemRoutes: Route[] = [
     {
-        path: 'items',
+        path: '',
+        component: ItemComponent,
         providers: [ItemService],
         children: [
-            { path: '', loadComponent: () => import('./item-list/item-list.component').then((x) => x.ItemListComponent) },
-            {
-                path: ':sku',
-                loadComponent: () => import('./item-detail/item-detail.component').then((x) => x.ItemDetailComponent),
-                canActivate: [canActivateGuard],
-            },
+            { path: '', component: ItemListComponent },
+            { path: ':sku', component: ItemDetailComponent, canActivate: [canActivateGuard] },
         ],
     },
-];
+] satisfies Route[];
