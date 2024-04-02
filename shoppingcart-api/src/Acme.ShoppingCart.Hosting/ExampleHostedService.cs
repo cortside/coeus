@@ -13,7 +13,7 @@ namespace Acme.ShoppingCart.Hosting {
             var correlationId = CorrelationContext.GetCorrelationId();
 
             // run something async in async method
-            return Task.Run(() => logger.LogInformation("CorrelationId: {correlationId}", correlationId));
+            return Task.Run(() => logger.LogInformation("CorrelationId: {CorrelationId}", correlationId));
         }
     }
 }

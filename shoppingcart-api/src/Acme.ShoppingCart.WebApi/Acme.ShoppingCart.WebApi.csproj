@@ -3,7 +3,9 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <DocumentationFile>bin\Acme.ShoppingCart.WebApi.xml</DocumentationFile>
-    <NoWarn>1701;1702;1591;</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AnalysisMode>Recommended</AnalysisMode>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.3.211-develop" />

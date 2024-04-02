@@ -10,7 +10,6 @@ using Cortside.AspNetCore.ApplicationInsights;
 using Cortside.AspNetCore.Auditable;
 using Cortside.AspNetCore.Auditable.Entities;
 using Cortside.AspNetCore.Builder;
-using Cortside.AspNetCore.Common;
 using Cortside.AspNetCore.EntityFramework;
 using Cortside.AspNetCore.Swagger;
 using Cortside.Common.Messages.Filters;
@@ -39,6 +38,9 @@ namespace Acme.ShoppingCart.WebApi {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// Startup
+        /// </summary>
         public Startup() {
         }
 
@@ -47,6 +49,10 @@ namespace Acme.ShoppingCart.WebApi {
         /// </summary>
         private IConfiguration Configuration { get; set; }
 
+        /// <summary>
+        /// Sets the Configuration to be used
+        /// </summary>
+        /// <param name="config"></param>
         public void UseConfiguration(IConfiguration config) {
             Configuration = config;
         }
@@ -95,7 +101,7 @@ namespace Acme.ShoppingCart.WebApi {
             services.AddAccessControl(Configuration);
 
             // Add swagger with versioning and OpenID Connect configuration using Newtonsoft
-            services.AddSwagger(Configuration, "Acme.ShoppingCart API", "Acme.ShoppingCart API", new[] { "v1", "v2" });
+            services.AddSwagger(Configuration, "Acme.ShoppingCart API", "Acme.ShoppingCart API", ["v1", "v2"]);
 
             // add service for handling encryption of search parameters
             services.AddEncryptionService(Configuration["Encryption:Secret"]);

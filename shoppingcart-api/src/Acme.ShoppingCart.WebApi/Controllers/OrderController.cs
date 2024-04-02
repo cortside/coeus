@@ -166,9 +166,9 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// </summary>
         /// <param name="resourceId"></param>
         [HttpPost("{resourceId}/publish")]
-        [Authorize(Constants.Authorization.Permissions.UpdateCustomer)]
+        [Authorize(Constants.Authorization.Permissions.PublishOrder)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> PublishCustomerStateChangedEventAsync(Guid resourceId) {
+        public async Task<IActionResult> PublishOrderStateChangedEventAsync(Guid resourceId) {
             using (LogContext.PushProperty("OrderResourceId", resourceId)) {
                 await facade.PublishOrderStateChangedEventAsync(resourceId).ConfigureAwait(false);
                 return StatusCode((int)HttpStatusCode.NoContent);

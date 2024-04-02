@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { catchError, map, Observable } from 'rxjs';
 import { CatalogClient } from '../api/catalog/catalog.client';
 import { ItemResponse } from '../api/catalog/models/responses/item.response';
@@ -9,11 +9,18 @@ import { PagedModel } from '../common/paged.model';
 import { ShoppingCart } from '../core/shopping-cart';
 
 @Injectable()
-export class ItemService {
+export class ItemService implements OnDestroy {
+
     constructor(
         private cart: ShoppingCart,
         private client: CatalogClient
-    ) {}
+    ) {
+
+    }
+
+    ngOnDestroy(): void {
+        console.log('destroying item service');
+    }
 
     getItem(sku: string): Observable<ItemModel> {
         return this.client.getItem(sku).pipe(
@@ -42,6 +49,7 @@ export class ItemService {
         this.cart.addItem(sku, quantity);
         return Promise.resolve();
     }
+    
 }
 
 export const assembleItemModel = (response: ItemResponse): ItemModel => {

@@ -1,3 +1,7 @@
+#pragma warning disable CA1724 // Unused type parameters should be removed
+#pragma warning disable CA1034 // Do not nest public type
+#pragma warning disable CS1591 // Missing XML comments
+
 namespace Acme.ShoppingCart.WebApi {
     /// <summary>
     /// Constanst for webapi

@@ -21,8 +21,8 @@ const canActivateGuard = (snapshot: ActivatedRouteSnapshot) => {
 export const itemRoutes: Route[] = [
     {
         path: '',
-        component: ItemComponent,
         providers: [ItemService],
+        component: ItemComponent,
         children: [
             { path: '', component: ItemListComponent },
             { path: ':sku', component: ItemDetailComponent, canActivate: [canActivateGuard] },

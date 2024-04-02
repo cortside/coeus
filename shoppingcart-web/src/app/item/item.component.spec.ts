@@ -1,21 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ItemComponent } from './item.component';
+import { ItemService } from './item.service';
 
 describe('ItemComponent', () => {
-  let component: ItemComponent;
-  let fixture: ComponentFixture<ItemComponent>;
+    let component: ItemComponent;
+    let fixture: ComponentFixture<ItemComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [ItemComponent]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [ItemComponent],
+            providers: [ItemService],
+        });
+        fixture = TestBed.createComponent(ItemComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
     });
-    fixture = TestBed.createComponent(ItemComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

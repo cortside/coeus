@@ -5,6 +5,9 @@
             <span class="sr-only">Acme Systems</span>
         </a>
     </div>
+    <div>
+        <a routerLink="/items">Items</a>
+    </div>
     <div *ngIf="user">
         <a routerLink="/orders" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Orders</a>
     </div>
