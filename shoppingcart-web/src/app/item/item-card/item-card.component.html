@@ -2,7 +2,7 @@
     <img src="{{ item.imageUrl }}" alt="{{ item.name }}" class="h-full w-full object-cover object-center lg:h-full lg:w-full" />
 </a>
 <div class="block truncate text-ellipsis">
-    <a [routerLink]="[item.sku]">{{ item.name }}</a>
+    <a [routerLink]="[item.sku]" title="{{item.name}}">{{ item.name }}</a>
 </div>
 <div class="block">
     {{ item.unitPrice | currency }}

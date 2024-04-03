@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ItemModel } from '../models/item.model';
 import { PagedModel } from 'src/app/common/paged.model';
-import { Observable } from 'rxjs';
 import { ItemCardComponent } from '../item-card/item-card.component';
 import { ItemFacade } from '../item.facade';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-item-list',
@@ -14,8 +14,8 @@ import { ItemFacade } from '../item.facade';
     styleUrls: ['./item-list.component.scss'],
 })
 export class ItemListComponent {
-    items$: Observable<PagedModel<ItemModel>>;
+    items: Signal<PagedModel<ItemModel> | undefined>;
     constructor(private facade: ItemFacade) {
-        this.items$ = facade.getItems();
+        this.items = toSignal(facade.getItems());
     }
 }
