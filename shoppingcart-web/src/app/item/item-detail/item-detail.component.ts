@@ -6,10 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule as MuziehFormsModule } from '@muziehdesign/forms'; 
 import { AddToCartModel } from '../models/add-to-cart.model';
-import { ViewChild, AfterViewInit } from '@angular/core';
+import { ViewChild } from '@angular/core';
 import { NgFormModelState, NgFormModelStateFactory } from '@muziehdesign/forms';
-import { ShoppingCart } from 'src/app/core/shopping-cart';
-import { ItemService } from '../item.service';
 import { ItemFacade } from '../item.facade';
 
 @Component({

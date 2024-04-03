@@ -4,7 +4,7 @@ import { ItemModel } from '../models/item.model';
 import { PagedModel } from 'src/app/common/paged.model';
 import { Observable } from 'rxjs';
 import { ItemCardComponent } from '../item-card/item-card.component';
-import { ItemService } from '../item.service';
+import { ItemFacade } from '../item.facade';
 
 @Component({
     selector: 'app-item-list',
@@ -15,7 +15,7 @@ import { ItemService } from '../item.service';
 })
 export class ItemListComponent {
     items$: Observable<PagedModel<ItemModel>>;
-    constructor(private service: ItemService) {
-        this.items$ = service.getItems();
+    constructor(private facade: ItemFacade) {
+        this.items$ = facade.getItems();
     }
 }

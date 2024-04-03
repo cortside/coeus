@@ -3,7 +3,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { ItemService } from './item.service';
 import { CatalogClient } from '../api/catalog/catalog.client';
-import { ShoppingCart } from '../core/shopping-cart';
 
 describe('ItemService', () => {
     let service: ItemService;
@@ -13,7 +12,6 @@ describe('ItemService', () => {
             imports: [HttpClientTestingModule],
             providers: [
                 { provide: CatalogClient, useValue: {} },
-                { provide: ShoppingCart, useValue: {} },
                 ItemService
             ],
         });

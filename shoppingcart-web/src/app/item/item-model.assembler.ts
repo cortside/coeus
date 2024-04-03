@@ -1,4 +1,6 @@
 import { ItemResponse } from "../api/catalog/models/responses/item.response";
+import { PagedResponse } from "../api/paged.response";
+import { PagedModel } from "../common/paged.model";
 import { ItemModel } from "./models/item.model";
 
 export class ItemModelAssembler {
@@ -10,5 +12,14 @@ export class ItemModelAssembler {
             unitPrice: item.unitPrice,
             imageUrl: item.imageUrl
         };
+    }
+
+    toPagedItemModels(response: PagedResponse<ItemResponse>): PagedModel<ItemModel> {
+        return {
+            totalItems: response.totalItems,
+            pageNumber: response.pageNumber,
+            pageSize: response.pageSize,
+            items: response.items.map((i) => this.toItemModel(i)),
+        } satisfies PagedModel<ItemModel>;
     }
 }

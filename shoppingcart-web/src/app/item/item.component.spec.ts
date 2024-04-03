@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ItemComponent } from './item.component';
-import { ItemService } from './item.service';
+import { ItemFacade } from './item.facade';
 
 describe('ItemComponent', () => {
     let component: ItemComponent;
@@ -10,7 +10,7 @@ describe('ItemComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ItemComponent],
-            providers: [ItemService],
+            providers: [ItemFacade],
         });
         fixture = TestBed.createComponent(ItemComponent);
         component = fixture.componentInstance;

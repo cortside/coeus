@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, pluck, switchMap, tap } from 'rxjs';
-import { ObservableStore } from '../core/observable-store';
+import { map, Observable } from 'rxjs';
+import { PagedModel } from '../common/paged.model';
 import { ShoppingCart } from '../core/shopping-cart';
 import { ItemModelAssembler } from './item-model.assembler';
 import { ItemService } from './item.service';
-import { ItemState } from './item.state';
 import { ItemModel } from './models/item.model';
 
 @Injectable()
@@ -12,9 +11,15 @@ export class ItemFacade {
     constructor(
         private service: ItemService,
         private assembler: ItemModelAssembler,
-        private featureStore: ObservableStore<ItemState>,
+        //private featureStore: ObservableStore<ItemState>,
         private cart: ShoppingCart
     ) {}
+
+    getItems(): Observable<PagedModel<ItemModel>> {
+        return this.service.getItems().pipe(
+            map(x=>this.assembler.toPagedItemModels(x))
+        );
+    }
 
     getItem(sku: string): Observable<ItemModel> {
         return this.service.getItem(sku).pipe(

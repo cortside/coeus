@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
-import { ItemService } from '../item.service';
+import { ItemFacade } from '../item.facade';
 
 import { ItemListComponent } from './item-list.component';
 
@@ -11,7 +11,7 @@ describe('ItemListComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [ItemListComponent],
-            providers: [{ provide: ItemService, useValue: { getItems: (): Observable<null> => of(null) } }],
+            providers: [{ provide: ItemFacade, useValue: { getItems: (): Observable<null> => of(null) } }],
         }).compileComponents();
 
         fixture = TestBed.createComponent(ItemListComponent);
