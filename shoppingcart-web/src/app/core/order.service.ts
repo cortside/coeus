@@ -9,22 +9,17 @@ import { ShoppingCartClient } from '../api/shopping-cart/shopping-cart.client';
 import { AddressInputModel } from '../cart/address-input.model';
 import { CreateOrderModel } from '../cart/create-order.model';
 import { CustomerInputModel } from '../cart/customer-input.model';
+import { CartItemModel } from '../common/cart-item.model';
 import { PagedModel } from '../common/paged.model';
 import { CustomerModel, OrderSummaryModel } from '../models/models';
-import { ShoppingCart } from './shopping-cart';
 
 @Injectable({
     providedIn: 'root',
 })
 export class OrderService {
-    constructor(private cart: ShoppingCart, private client: ShoppingCartClient) {}
+    constructor(private client: ShoppingCartClient) {}
 
-    debug(): void {
-        console.log('debug');
-    }
-
-    createOrder(model: CreateOrderModel): Observable<OrderSummaryModel> {
-
+    createOrder(items: CartItemModel[], model: CreateOrderModel): Observable<OrderSummaryModel> {
         // TODO
         model.customer = new CustomerInputModel();
         model.customer.firstName = "Jane";
@@ -36,11 +31,8 @@ export class OrderService {
         model.address.street = "Street";
 
         const request = assembleCreateOrderRequest(model);
-        request.items = this.cart.getSnaptshot();
+        request.items = items;
         return this.client.createOrders(request).pipe(
-            tap(x=>{
-                this.cart.clear();
-            }),
             map((x) => {
                 return {
                     orderResourceId: x.orderResourceId,

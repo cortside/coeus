@@ -7,12 +7,12 @@ import { CartItemModel } from '../common/cart-item.model';
     providedIn: 'root',
 })
 export class ShoppingCart {
-    private items:BehaviorSubject<CartItemModel[]>;
-    private items$:Observable<CartItemModel[]>;
+    private items: BehaviorSubject<CartItemModel[]>;
+    private items$: Observable<CartItemModel[]>;
     readonly ITEMS_KEY = 'ShoppingCart.items';
 
     constructor(@Inject(DOCUMENT) private document: Document) {
-        const existing = JSON.parse(this.document.defaultView?.localStorage.getItem(this.ITEMS_KEY) || "[]");
+        const existing = JSON.parse(this.document.defaultView?.localStorage.getItem(this.ITEMS_KEY) || '[]');
         this.items = new BehaviorSubject<CartItemModel[]>(existing);
         this.items$ = this.items.asObservable();
     }
@@ -23,6 +23,15 @@ export class ShoppingCart {
 
     getSnaptshot(): CartItemModel[] {
         return [...this.items.value];
+    }
+
+    removeItem(sku: string): void {
+        const list = this.getSnaptshot();
+        const i = list.findIndex((i) => i.sku === sku);
+        if (i > -1) {
+            list.splice(i, 1)
+            this.items.next(list);
+        }
     }
 
     addItem(itemSku: string, quantity: number): void {

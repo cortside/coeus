@@ -10,3 +10,8 @@ export interface CustomerModel {
     lastName: string;
     email: string;
 }
+
+export interface CreateOrderResultModel {
+    orderResourceId: string;
+    status: string;
+}
