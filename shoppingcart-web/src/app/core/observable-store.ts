@@ -7,6 +7,10 @@ export class ObservableStore<T> {
         this.state$ = new BehaviorSubject(initialValues);
     }
 
+    patch(partial: Partial<T>) {
+        // TODO
+    }
+
     set(newValue: T) {
         this.state$.next(newValue);
     }
