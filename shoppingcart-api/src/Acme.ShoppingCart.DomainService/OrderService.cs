@@ -53,7 +53,7 @@ namespace Acme.ShoppingCart.DomainService {
         }
 
         public Task<PagedList<Order>> SearchOrdersAsync(int pageSize, int pageNumber, string sortParams, OrderSearch search) {
-            return orderRepository.SearchAsync(pageSize, pageNumber, sortParams, search);
+            return orderRepository.SearchAsync(pageSize, pageNumber, sortParams ?? $"-{nameof(Order.CreatedDate)}", search);
         }
 
         public async Task<Order> UpdateOrderAsync(OrderDto dto) {
