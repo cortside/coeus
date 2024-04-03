@@ -1,12 +1,9 @@
 <nav class="flex gap-5 px-4">
     <div class="grow">
-        <a href="/">
+        <a routerLink="/">
             <img src="/assets/logo.svg" class="h-[24px]" alt="Acme Systems" />
             <span class="sr-only">Acme Systems</span>
         </a>
-    </div>
-    <div>
-        <a routerLink="/items">Items</a>
     </div>
     <div *ngIf="user">
         <a routerLink="/orders" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Orders</a>
