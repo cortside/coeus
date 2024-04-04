@@ -2,7 +2,7 @@
 
 ## Setup
 
-1. create file `config.user.json` in `/src`. Body example:
+1. create file `config.local.json` in `/src`. Body example:
 
     ```
     {
