@@ -5,7 +5,9 @@ import { CatalogClient } from '../api/catalog/catalog.client';
 import { ItemResponse } from '../api/catalog/models/responses/item.response';
 import { PagedResponse } from '../api/paged.response';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class ItemService implements OnDestroy {
     constructor(private client: CatalogClient) {}
 

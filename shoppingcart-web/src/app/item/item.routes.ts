@@ -1,10 +1,10 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, Route, Router } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
+import { ItemService } from '../core/item.service';
 import { ItemDetailComponent } from './item-detail/item-detail.component';
 import { ItemListComponent } from './item-list/item-list.component';
 import { ItemComponent } from './item.component';
-import { ItemService } from './item.service';
 
 const canActivateGuard = (snapshot: ActivatedRouteSnapshot) => {
     const service = inject(ItemService);

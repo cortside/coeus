@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { PagedModel } from '../common/paged.model';
+import { ItemService } from '../core/item.service';
 import { ShoppingCart } from '../core/shopping-cart';
 import { ItemModelAssembler } from './item-model.assembler';
-import { ItemService } from './item.service';
 import { ItemModel } from './models/item.model';
 
 @Injectable()
