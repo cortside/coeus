@@ -15,6 +15,10 @@ export class AuthorizationService {
         this.authorizations = data;
     }
 
+    register(key: string, data: AuthorizationData) {
+        this.authorizations.set(key, data);
+    }
+
     /**
      * Resets all authorization data stored in the service.
      */
