@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { NgFormModelStateFactory } from '@muziehdesign/forms';
 import { of } from 'rxjs';
 import { ItemFacade } from '../item.facade';
-import { ItemService } from '../item.service';
 import { ItemDetailComponent } from './item-detail.component';
 
 describe('ItemDetailComponent', () => {

@@ -8,17 +8,15 @@ import { CartItemModel } from '../common/cart-item.model';
 })
 export class ShoppingCart {
     private items: BehaviorSubject<CartItemModel[]>;
-    private items$: Observable<CartItemModel[]>;
     readonly ITEMS_KEY = 'ShoppingCart.items';
 
     constructor(@Inject(DOCUMENT) private document: Document) {
         const existing = JSON.parse(this.document.defaultView?.localStorage.getItem(this.ITEMS_KEY) || '[]');
         this.items = new BehaviorSubject<CartItemModel[]>(existing);
-        this.items$ = this.items.asObservable();
     }
 
     stateChanges(): Observable<CartItemModel[]> {
-        return this.items$;
+        return this.items.asObservable();
     }
 
     getSnaptshot(): CartItemModel[] {
@@ -30,6 +28,7 @@ export class ShoppingCart {
         const i = list.findIndex((i) => i.sku === sku);
         if (i > -1) {
             list.splice(i, 1)
+            this.document.defaultView?.localStorage.setItem(this.ITEMS_KEY, JSON.stringify(list));
             this.items.next(list);
         }
     }

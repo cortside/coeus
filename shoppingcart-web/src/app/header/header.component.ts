@@ -11,8 +11,11 @@ import { ShoppingCart } from '../core/shopping-cart';
 export class HeaderComponent implements OnInit {
     user: AuthenticatedUser | undefined;
     itemCount$: Observable<number>;
-    constructor(private auth: AuthenticationService, private cart: ShoppingCart) {
-      this.itemCount$ = this.cart.stateChanges().pipe(map((items)=>items.length));
+    constructor(
+        private auth: AuthenticationService,
+        private cart: ShoppingCart
+    ) {
+        this.itemCount$ = this.cart.stateChanges().pipe(map((items) => items.length === 0 ? 0 : items.map((i) => i.quantity).reduce((a, b) => a + b)));
     }
 
     async ngOnInit(): Promise<void> {
@@ -20,7 +23,7 @@ export class HeaderComponent implements OnInit {
     }
 
     async signIn() {
-      await this.auth.login();
-      return false;
+        await this.auth.login();
+        return false;
     }
 }
