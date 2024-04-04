@@ -9,7 +9,6 @@ import { CustomerInputModel } from './customer-input.model';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CreateOrderModel } from './create-order.model';
 import { AddressInputModel } from './address-input.model';
-import { OrderService } from '../core/order.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@muziehdesign/core';
 import { CartFacade } from './cart.facade';
@@ -28,7 +27,7 @@ export class CartComponent implements AfterViewInit {
     model: CreateOrderModel;
     modelState!: NgFormModelState<CreateOrderModel>;
     @ViewChild('cartForm', { static: true }) cartForm!: NgForm;
-    constructor(private modelStateFactory: NgFormModelStateFactory, private facade: CartFacade, private router: Router, private auth: AuthenticationService) {
+    constructor(private modelStateFactory: NgFormModelStateFactory, private facade: CartFacade, private router: Router) {
         this.items = toSignal(this.facade.getItems());
         this.model = new CreateOrderModel();
         this.model.address = new AddressInputModel();
@@ -40,10 +39,10 @@ export class CartComponent implements AfterViewInit {
     }
 
     public async createOrder() {
-        if(!(await this.auth.isAuthenticated())) {
-            await this.auth.login(); // TODO: should redirect to `/cart`
+        if(!(await this.facade.loginIfNeeded())) {
             return;
         }
+
         // TODO: troubleshoot needed for undefined form error
         this.modelState = this.modelState || this.modelStateFactory.create(this.cartForm, this.model);
         const result = await this.modelState.validate();
