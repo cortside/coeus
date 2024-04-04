@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { requireAuthentication } from '@muziehdesign/core';
 import { cartRoutes } from './cart/cart.routes';
 import { checkoutLazyLoadingRoutes } from './checkout/checkout-routing.module';
-import { orderLazyLoadingRoutes } from './order';
+import { orderLazyLoadingRoutes } from './order/order-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProfileComponent } from './profile/profile.component';
 

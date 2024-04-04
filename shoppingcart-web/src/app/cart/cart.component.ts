@@ -1,8 +1,6 @@
 import { AfterViewInit, Component, Signal, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
 import { CartItemModel } from '../common/cart-item.model';
-import { ShoppingCart } from '../core/shopping-cart';
 import { RouterModule } from '@angular/router';
 import { FormsModule as MuziehFormsModule, NgFormModelState, NgFormModelStateFactory } from '@muziehdesign/forms';
 import { CustomerInputModel } from './customer-input.model';
@@ -10,7 +8,6 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { CreateOrderModel } from './create-order.model';
 import { AddressInputModel } from './address-input.model';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '@muziehdesign/core';
 import { CartFacade } from './cart.facade';
 import { toSignal } from '@angular/core/rxjs-interop';
 
