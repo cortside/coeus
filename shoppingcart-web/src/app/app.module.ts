@@ -1,7 +1,7 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AuthenticationTokenInterceptor, AuthorizationService, LOGGER } from '@muziehdesign/core';
+import { AuthenticationService, AuthenticationTokenInterceptor, AuthorizationService, LOGGER } from '@muziehdesign/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,7 +27,7 @@ import { ShoppingCartClient } from './api/shopping-cart/shopping-cart.client';
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthenticationTokenInterceptor, multi: true },
         { provide: APP_INITIALIZER, useFactory: initializeApplication, multi: true, deps: [LOGGER] },
-        { provide: APP_INITIALIZER, useFactory: initializeAuthorization, multi: true, deps: [AuthorizationService, ShoppingCartClient] },
+        { provide: APP_INITIALIZER, useFactory: initializeAuthorization, multi: true, deps: [AuthenticationService, AuthorizationService, ShoppingCartClient] },
     ],
     bootstrap: [AppComponent],
 })

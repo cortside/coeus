@@ -26,9 +26,9 @@ export class AuthorizationService {
         this.authorizations = new Map<string, AuthorizationData>();
     }
 
-    authorize(policyName: string): boolean {
+    authorize(policyName: string): Promise<boolean> {
         const data = [...this.authorizations.values()];
         const policy = this.policies.find((a) => a.authorize(policyName, { authorizationData: data }) == false);
-        return policy == undefined;
+        return Promise.resolve(policy == undefined);
     }
 }
