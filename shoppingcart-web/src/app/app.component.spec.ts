@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService } from '@muziehdesign/core';
 import { AppConfig } from 'src/environments/app-config';
 import { AppComponent } from './app.component';
-import { FooterComponent } from './footer/footer.component';
+import { FooterComponent } from './layout/footer/footer.component';
 
 describe('AppComponent', () => {
     beforeEach(async () => {

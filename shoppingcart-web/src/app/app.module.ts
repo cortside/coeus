@@ -6,20 +6,20 @@ import { AuthenticationService, AuthenticationTokenInterceptor, AuthorizationSer
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { HeaderComponent } from './header/header.component';
 import { ProfileComponent } from './profile/profile.component';
-import { FooterComponent } from './footer/footer.component';
 import { CoreModule } from './core/core.module';
 import { APP_INITIALIZER } from '@angular/core';
 import { initializeApplication, initializeAuthorization } from './app-initializer';
 import { ShoppingCartClient } from './api/shopping-cart/shopping-cart.client';
+import { LayoutModule } from './layout/layout.module';
 
 @NgModule({
-    declarations: [AppComponent, PageNotFoundComponent, HeaderComponent, ProfileComponent, FooterComponent],
+    declarations: [AppComponent, PageNotFoundComponent, ProfileComponent],
     imports: [
         BrowserModule,
         HttpClientModule,
         CoreModule,
+        LayoutModule,
 
         // route
         AppRoutingModule,
