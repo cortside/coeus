@@ -4,7 +4,8 @@ import { catchError, map, of } from 'rxjs';
 import { ItemService } from '../core/item.service';
 import { ItemDetailComponent } from './item-detail/item-detail.component';
 import { ItemListComponent } from './item-list/item-list.component';
-import { ItemComponent } from './item.component';
+import { ItemModelAssembler } from './item-model.assembler';
+import { ItemFacade } from './item.facade';
 
 const canActivateGuard = (snapshot: ActivatedRouteSnapshot) => {
     const service = inject(ItemService);
@@ -21,8 +22,7 @@ const canActivateGuard = (snapshot: ActivatedRouteSnapshot) => {
 export const itemRoutes: Route[] = [
     {
         path: '',
-        providers: [ItemService],
-        component: ItemComponent,
+        providers: [ItemService, ItemFacade, ItemModelAssembler],
         children: [
             { path: '', component: ItemListComponent },
             { path: ':sku', component: ItemDetailComponent, canActivate: [canActivateGuard] },
