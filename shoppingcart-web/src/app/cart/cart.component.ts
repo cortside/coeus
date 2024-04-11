@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Signal, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartItemModel } from '../common/cart-item.model';
+import { CartItemModel } from '../models/cart-item.model';
 import { RouterModule } from '@angular/router';
 import { FormsModule as MuziehFormsModule, NgFormModelState, NgFormModelStateFactory } from '@muziehdesign/forms';
 import { CustomerInputModel } from './customer-input.model';

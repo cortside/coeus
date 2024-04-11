@@ -1,6 +1,6 @@
 import { ItemResponse } from "../api/catalog/models/responses/item.response";
 import { PagedResponse } from "../api/paged.response";
-import { PagedModel } from "../common/paged.model";
+import { PagedModel } from "../models/paged.model";
 import { ItemModel } from "./models/item.model";
 
 export class ItemModelAssembler {

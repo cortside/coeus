@@ -9,9 +9,9 @@ import { ShoppingCartClient } from '../api/shopping-cart/shopping-cart.client';
 import { AddressInputModel } from '../cart/address-input.model';
 import { CreateOrderModel } from '../cart/create-order.model';
 import { CustomerInputModel } from '../cart/customer-input.model';
-import { CartItemModel } from '../common/cart-item.model';
-import { PagedModel } from '../common/paged.model';
+import { CartItemModel } from '../models/cart-item.model';
 import { CustomerModel, OrderSummaryModel } from '../models/models';
+import { PagedModel } from '../models/paged.model';
 
 @Injectable({
     providedIn: 'root',

@@ -1,10 +1,10 @@
 import { Component, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ItemModel } from '../models/item.model';
-import { PagedModel } from 'src/app/common/paged.model';
 import { ItemCardComponent } from '../item-card/item-card.component';
 import { ItemFacade } from '../item.facade';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { PagedModel } from 'src/app/models/paged.model';
 
 @Component({
     selector: 'app-item-list',

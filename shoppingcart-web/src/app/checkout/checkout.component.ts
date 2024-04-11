@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CartItemModel } from '../common/cart-item.model';
+import { CartItemModel } from '../models/cart-item.model';
 import { ShoppingCart } from '../core/shopping-cart';
 
 @Component({

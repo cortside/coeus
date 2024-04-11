@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AuthenticationService } from "@muziehdesign/core";
 import { firstValueFrom, Observable } from "rxjs";
-import { CartItemModel } from "../common/cart-item.model";
+import { CartItemModel } from "../models/cart-item.model";
 import { OrderService } from "../core/order.service";
 import { ShoppingCart } from "../core/shopping-cart";
 import { CreateOrderModel } from "./create-order.model";
