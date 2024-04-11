@@ -1,5 +1,7 @@
 <h1>Orders</h1>
 
 <div *ngIf="orders$ | async as orders">
+    where's my order?
+    <a *ngFor="let order of orders.items" [routerLink]="[order.orderResourceId]">{{order.orderResourceId}}</a>
     <pre>{{orders | json}}</pre>
 </div>
