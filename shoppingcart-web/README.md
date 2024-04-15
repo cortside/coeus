@@ -47,6 +47,7 @@ This project follows [Muzieh Design System](https://ruifang.github.io/designsyst
 -   [ ] bootstrap failure
 -   [ ] page service lifecycle
 -   [ ] separation of ui and domain
+-   [ ] state management
 
 ## Tasks
 
