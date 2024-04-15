@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import { PagedModel } from 'src/app/common/paged.model';
+import { PagedModel } from 'src/app/models/paged.model';
 import { ItemCardComponent } from '../item-card/item-card.component';
 import { ItemFacade } from '../item.facade';
 import { ItemModel } from '../models/item.model';
