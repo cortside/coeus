@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Data } from '@angular/router';
+import { map, Observable, of } from 'rxjs';
 import { ItemService } from '../core/item.service';
 import { ShoppingCart } from '../core/shopping-cart';
 import { PagedModel } from '../models/paged.model';
@@ -21,9 +22,14 @@ export class ItemFacade {
         );
     }
 
+    loadItem(resolvedData: Data): Observable<ItemModel> {
+        console.log(resolvedData);
+        return of(this.assembler.toItemModel(resolvedData['item']));
+    }
+
     getItem(sku: string): Observable<ItemModel> {
         return this.service.getItem(sku).pipe(
-            map(x=>this.assembler.toItemModel(x))
+            map(x=>this.assembler.toItemModel(x!))
         );
     }
 

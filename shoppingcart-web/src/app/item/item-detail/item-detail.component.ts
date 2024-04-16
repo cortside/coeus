@@ -24,6 +24,8 @@ export class ItemDetailComponent {
   @ViewChild('cartForm', {static: false}) cartForm!: NgForm;
   constructor(private route: ActivatedRoute, private modelStateFactory: NgFormModelStateFactory, private facade: ItemFacade) {
       this.item = toSignal(facade.getItem(route.snapshot.params['sku']));
+      //console.log('in component', route.snapshot.data['item']);
+      //this.item = toSignal(facade.loadItem(route.snapshot.data));
       this.model = new AddToCartModel();
       this.model.quantity = 1;
   }
