@@ -4,6 +4,7 @@ import { catchError, Observable, of, throwError } from 'rxjs';
 import { CatalogClient } from '../api/catalog/catalog.client';
 import { ItemResponse } from '../api/catalog/models/responses/item.response';
 import { PagedResponse } from '../api/paged.response';
+import { UnexpectedError } from './errors';
 
 @Injectable({
     providedIn: 'root',
@@ -17,7 +18,7 @@ export class ItemService {
                 if(error.status === HttpStatusCode.NotFound) {
                     return of(undefined);
                 }
-                return throwError(() => error);
+                return throwError(() => new UnexpectedError(error));
             })
         );
     }
