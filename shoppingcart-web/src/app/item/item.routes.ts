@@ -28,8 +28,7 @@ const canActivateGuard2 = (route: ActivatedRouteSnapshot, state: RouterStateSnap
 
 const itemResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
     const service = inject(ItemDetailRouteService);
-    console.log('resolving');
-    return service.resolveItem(route, state);
+    return service.resolve(route, state);
 };
 
 const titleResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
@@ -47,8 +46,8 @@ export const itemRoutes: Route[] = [
                 path: ':sku',
                 component: ItemDetailComponent,
                 canActivate: [canActivateGuard2],
-                resolve: { item: itemResolver, test: () => Promise.resolve('static string') },
-                //title: titleResolver
+                resolve: { data: itemResolver },
+                title: titleResolver
             },
         ],
     },

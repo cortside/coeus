@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Router, RouterEvent } from '@angular/router';
+import { NavigationStart, Router, RouterEvent } from '@angular/router';
 import { filter } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -12,7 +12,7 @@ export class RouteContextData {
         this.router.events
             .pipe(
                 takeUntilDestroyed(),
-                filter((e) => e instanceof RouterEvent)
+                filter((e) => e instanceof RouterEvent && e instanceof NavigationStart)
             )
             .subscribe(() => this.data.clear());
     }

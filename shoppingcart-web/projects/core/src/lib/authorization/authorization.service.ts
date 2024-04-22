@@ -7,7 +7,7 @@ import { AuthorizationPolicy, AUTHORIZATION_POLICY } from './authorization-polic
 })
 export class AuthorizationService {
     private authorizations: Map<string, AuthorizationData>;
-    constructor(@Inject(AUTHORIZATION_POLICY) private policies: AuthorizationPolicy[]) {
+    constructor(@Inject(AUTHORIZATION_POLICY) private authorizationPolicies: AuthorizationPolicy[]) {
         this.authorizations = new Map<string, AuthorizationData>();
     }
 
@@ -26,9 +26,21 @@ export class AuthorizationService {
         this.authorizations = new Map<string, AuthorizationData>();
     }
 
-    authorize(policyName: string): Promise<boolean> {
+    // authorizes based on snapshot
+    authorize(policy: string): boolean {
+        const result = this.authorizePolicies([policy]);
+        return result.length > 0;
+    }
+
+    authorizePolicies(policies: string[]): string[] {
         const data = [...this.authorizations.values()];
-        const policy = this.policies.find((a) => a.authorize(policyName, { authorizationData: data }) == false);
-        return Promise.resolve(policy == undefined);
+        const results: string[] = [];
+        for (const policy of policies) {
+            const result = data.find((d) => d.permissions.includes(policy));
+            if (result) {
+                results.push(policy);
+            }
+        }
+        return results;
     }
 }

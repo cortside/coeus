@@ -25,7 +25,7 @@ export const initializeAuthorization = (authentication: AuthenticationService, a
         if (!authenticated) {
             return Promise.resolve(true);
         }
-        
+
         return firstValueFrom(
             client.getAuthorization().pipe(
                 tap((x) => authorization.register('ShoppingCartClient', x as AuthorizationData)),

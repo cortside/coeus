@@ -1,4 +1,4 @@
 export interface AuthorizationData {
-    roles: [];
-    permissions: [];
+    roles: string[];
+    permissions: string[];
 }
