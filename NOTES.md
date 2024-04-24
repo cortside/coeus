@@ -1,5 +1,15 @@
 TODO:
 
+* use nameof() in ForeignKey
+* add event handlers to service tier responsibilities image
+	* https://github.com/cortside/coeus/blob/develop/shoppingcart-api/docs/ServiceTierResponsibilities.png
+* support adding before and after request
+	* onBeforeRequest
+	* onAfterRequest
+* middleware to save request and responses
+	* based on configuration
+	* will need tables, similar to outbox
+	* cortside.aspnetcore.entityframework
 * update templates and libraries to treat warnings as errors
 * SVC-2887 
 * extentions methods to setup LogEvent logger in serviceCollection

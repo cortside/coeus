@@ -16,8 +16,8 @@ docker pull cortside/dotnet-sdk:8.0-alpine
 docker pull cortside/dotnet-runtime:8.0-alpine
 docker pull cortside/dotnet-sdk:6.0-alpine
 docker pull cortside/dotnet-runtime:6.0-alpine
-docker pull cortside/ng-cli:14-alpine
-docker pull cortside/ng-nginx:1.15-alpine
+docker pull cortside/ng-cli:16-alpine
+docker pull cortside/ng-nginx:1.24-alpine
 
 docker images | grep -i cortside
 
