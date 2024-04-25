@@ -11,17 +11,17 @@ using Acme.ShoppingCart.Dto;
 using Cortside.AspNetCore.Common.Paging;
 using Cortside.Common.Messages.MessageExceptions;
 using Cortside.Common.Validation;
-using Cortside.DomainEvent.EntityFramework;
+using Cortside.DomainEvent;
 using Microsoft.Extensions.Logging;
 
 namespace Acme.ShoppingCart.DomainService {
     public class OrderService : IOrderService {
-        private readonly IDomainEventOutboxPublisher publisher;
+        private readonly IDomainEventPublisher publisher;
         private readonly ILogger<OrderService> logger;
         private readonly IOrderRepository orderRepository;
         private readonly ICatalogClient catalog;
 
-        public OrderService(IOrderRepository orderRepository, IDomainEventOutboxPublisher publisher, ILogger<OrderService> logger, ICatalogClient catalog) {
+        public OrderService(IOrderRepository orderRepository, IDomainEventPublisher publisher, ILogger<OrderService> logger, ICatalogClient catalog) {
             this.publisher = publisher;
             this.logger = logger;
             this.orderRepository = orderRepository;

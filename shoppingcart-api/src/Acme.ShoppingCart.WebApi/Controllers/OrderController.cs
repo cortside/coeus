@@ -97,7 +97,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         }
 
         /// <summary>
-        /// Update a order
+        /// Update an order
         /// </summary>
         /// <param name="id"></param>
         /// <param name="input"></param>
@@ -125,7 +125,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         }
 
         /// <summary>
-        /// Update a order
+        /// Update an order
         /// </summary>
         /// <param name="resourceId"></param>
         [HttpPost("{resourceId}/publish")]
