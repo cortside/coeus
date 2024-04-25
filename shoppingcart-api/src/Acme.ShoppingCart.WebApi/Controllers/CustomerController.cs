@@ -2,7 +2,6 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
-using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.Facade;
 using Acme.ShoppingCart.WebApi.Mappers;
 using Acme.ShoppingCart.WebApi.Models.Requests;
@@ -114,11 +113,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [Authorize(Constants.Authorization.Permissions.CreateCustomer)]
         [ProducesResponseType(typeof(CustomerModel), StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateCustomerAsync([FromBody] UpdateCustomerModel input) {
-            var inputDto = new UpdateCustomerDto() {
-                FirstName = input.FirstName,
-                LastName = input.LastName,
-                Email = input.Email
-            };
+            var inputDto = customerMapper.MapToDto(input);
             var dto = await facade.CreateCustomerAsync(inputDto).ConfigureAwait(false);
             return CreatedAtAction(nameof(GetCustomerAsync), new { id = dto.CustomerResourceId }, customerMapper.Map(dto));
         }
@@ -133,11 +128,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [ProducesResponseType(typeof(CustomerModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateCustomerAsync(Guid id, UpdateCustomerModel input) {
             using (LogContext.PushProperty("CustomerResourceId", id)) {
-                var dto = new UpdateCustomerDto() {
-                    FirstName = input.FirstName,
-                    LastName = input.LastName,
-                    Email = input.Email
-                };
+                var dto = customerMapper.MapToDto(input);
 
                 var result = await facade.UpdateCustomerAsync(id, dto).ConfigureAwait(false);
                 return Ok(customerMapper.Map(result));

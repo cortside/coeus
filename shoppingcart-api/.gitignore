@@ -239,7 +239,6 @@ Logs/
 /src/c7.auth/wwwroot/lib
 *.css
 
-build.json
 coverage.opencover.xml
 coverage.xml
 .sonarqube/*

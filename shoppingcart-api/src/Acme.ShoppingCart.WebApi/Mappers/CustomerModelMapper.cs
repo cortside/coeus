@@ -43,5 +43,17 @@ namespace Acme.ShoppingCart.WebApi.Mappers {
                 Sort = model.Sort
             };
         }
+
+        public UpdateCustomerDto MapToDto(UpdateCustomerModel model) {
+            if (model == null) {
+                return null;
+            }
+
+            return new UpdateCustomerDto() {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email
+            };
+        }
     }
 }

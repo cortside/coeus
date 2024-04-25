@@ -14,7 +14,6 @@ namespace Acme.ShoppingCart.Data.Migrations {
     [Migration("20220310204012_Initial")]
     partial class Initial {
         protected override void BuildTargetModel(ModelBuilder modelBuilder) {
-#pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("dbo")
                 .HasAnnotation("ProductVersion", "6.0.3")
@@ -393,7 +392,6 @@ namespace Acme.ShoppingCart.Data.Migrations {
             modelBuilder.Entity("Acme.ShoppingCart.Domain.Entities.Order", b => {
                 b.Navigation("Items");
             });
-#pragma warning restore 612, 618
         }
     }
 }

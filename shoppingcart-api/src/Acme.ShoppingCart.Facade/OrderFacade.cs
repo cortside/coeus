@@ -86,8 +86,8 @@ namespace Acme.ShoppingCart.Facade {
             }
         }
 
-        public async Task<OrderDto> UpdateOrderAsync(OrderDto dto) {
-            var order = await orderService.UpdateOrderAsync(dto).ConfigureAwait(false);
+        public async Task<OrderDto> UpdateOrderAsync(Guid id, UpdateOrderDto dto) {
+            var order = await orderService.UpdateOrderAsync(id, dto).ConfigureAwait(false);
             await uow.SaveChangesAsync().ConfigureAwait(false);
 
             return mapper.MapToDto(order);

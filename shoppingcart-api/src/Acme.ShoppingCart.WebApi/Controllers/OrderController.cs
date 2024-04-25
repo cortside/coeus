@@ -73,23 +73,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [Authorize(Constants.Authorization.Permissions.CreateOrder)]
         [ProducesResponseType(typeof(OrderModel), StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateOrderAsync([FromBody] CreateOrderModel input) {
-            // mapper
-            var dto = new CreateOrderDto() {
-                Customer = new CreateOrderCustomerDto() {
-                    FirstName = input.Customer.FirstName,
-                    LastName = input.Customer.LastName,
-                    Email = input.Customer.Email
-                },
-                Address = new AddressDto() {
-                    Street = input.Address.Street,
-                    City = input.Address.City,
-                    State = input.Address.State,
-                    Country = input.Address.Country,
-                    ZipCode = input.Address.ZipCode
-                },
-                Items = input.Items?.ConvertAll(x => new UpdateOrderItemDto() { Sku = x.Sku, Quantity = x.Quantity })
-            };
-
+            var dto = orderMapper.MapToDto(input);
             var order = await facade.CreateOrderAsync(dto).ConfigureAwait(false);
             return CreatedAtAction(nameof(GetOrderAsync), new { id = order.OrderResourceId }, orderMapper.Map(order));
         }
@@ -104,19 +88,8 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [ProducesResponseType(typeof(OrderModel), StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateCustomerOrderAsync([FromBody] CreateCustomerOrderModel input, Guid resourceId) {
             using (LogContext.PushProperty("CustomerResourceId", resourceId)) {
-                var dto = new CreateOrderDto() {
-                    Customer = new CreateOrderCustomerDto() {
-                        CustomerResourceId = resourceId,
-                    },
-                    Address = new AddressDto() {
-                        Street = input.Address.Street,
-                        City = input.Address.City,
-                        State = input.Address.State,
-                        Country = input.Address.Country,
-                        ZipCode = input.Address.ZipCode
-                    },
-                    Items = input.Items?.ConvertAll(x => new UpdateOrderItemDto() { Sku = x.Sku, Quantity = x.Quantity })
-                };
+                var dto = orderMapper.MapToDto(input);
+                dto.Customer.CustomerResourceId = resourceId;
 
                 var order = await facade.CreateOrderAsync(dto).ConfigureAwait(false);
                 return CreatedAtAction(nameof(GetOrderAsync), new { id = order.OrderResourceId }, orderMapper.Map(order));
@@ -137,21 +110,11 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
             await using (await lockProvider.AcquireLockAsync(lockName).ConfigureAwait(false)) {
                 logger.LogDebug("Acquired lock for {LockName}", lockName);
                 using (LogContext.PushProperty("OrderResourceId", id)) {
-                    var dto = new OrderDto() {
-                        OrderResourceId = id,
-                        Address = new AddressDto() {
-                            Street = input.Address.Street,
-                            City = input.Address.City,
-                            State = input.Address.State,
-                            Country = input.Address.Country,
-                            ZipCode = input.Address.ZipCode
-                        },
-                        Items = input.Items?.ConvertAll(x => new OrderItemDto() { Sku = x.Sku, Quantity = x.Quantity })
-                    };
+                    var dto = orderMapper.MapToDto(input);
 
                     OrderDto result;
                     try {
-                        result = await facade.UpdateOrderAsync(dto).ConfigureAwait(false);
+                        result = await facade.UpdateOrderAsync(id, dto).ConfigureAwait(false);
                     } catch (Exception ex) {
                         throw new InternalServerErrorResponseException("Unable to update order", ex);
                     }
@@ -185,13 +148,9 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [ProducesResponseType(typeof(OrderModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> AddOrderItemAsync(Guid id, CreateOrderItemModel input) {
             using (LogContext.PushProperty("OrderResourceId", id)) {
-                var dto = new OrderItemDto() {
-                    Sku = input.Sku,
-                    Quantity = input.Quantity
-                };
-
+                var dto = orderMapper.MapToDto(input);
                 var result = await facade.AddOrderItemAsync(id, dto).ConfigureAwait(false);
-                return Ok(result);
+                return Ok(orderMapper.Map(result));
             }
         }
     }

@@ -57,8 +57,8 @@ namespace Acme.ShoppingCart.DomainService {
             return orderRepository.SearchAsync(search);
         }
 
-        public async Task<Order> UpdateOrderAsync(OrderDto dto) {
-            var entity = await orderRepository.GetAsync(dto.OrderResourceId).ConfigureAwait(false);
+        public async Task<Order> UpdateOrderAsync(Guid id, UpdateOrderDto dto) {
+            var entity = await orderRepository.GetAsync(id).ConfigureAwait(false);
             entity.UpdateAddress(dto.Address.Street, dto.Address.City, dto.Address.State, dto.Address.Country, dto.Address.ZipCode);
 
             // remove items not in dto

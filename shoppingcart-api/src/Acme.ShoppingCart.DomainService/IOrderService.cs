@@ -11,7 +11,7 @@ namespace Acme.ShoppingCart.DomainService {
         Task<Order> GetOrderAsync(Guid id);
         Task<PagedList<Order>> SearchOrdersAsync(OrderSearch search);
         Task PublishOrderStateChangedEventAsync(Guid id);
-        Task<Order> UpdateOrderAsync(OrderDto dto);
+        Task<Order> UpdateOrderAsync(Guid id, UpdateOrderDto dto);
         Task<Order> AddOrderItemAsync(Guid id, OrderItemDto dto);
         Task<Order> SendNotificationAsync(Guid id);
     }

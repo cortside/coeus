@@ -62,7 +62,7 @@ namespace Acme.ShoppingCart.Data.Repositories {
         }
 
         public void RemoveItems(List<OrderItem> itemsToRemove) {
-            ((DbContext)context).RemoveRange(itemsToRemove);
+            context.RemoveRange(itemsToRemove);
         }
     }
 }
