@@ -28,7 +28,7 @@ namespace Acme.ShoppingCart.DomainService {
             this.catalog = catalog;
         }
 
-        public async Task<Order> CreateOrderAsync(Customer customer, OrderDto dto) {
+        public async Task<Order> CreateOrderAsync(Customer customer, CreateOrderDto dto) {
             Guard.From.Null<BadRequestResponseException>(customer, "customer not found");
 
             var entity = new Order(customer, dto.Address.Street, dto.Address.City, dto.Address.State, dto.Address.Country, dto.Address.ZipCode);
@@ -52,8 +52,9 @@ namespace Acme.ShoppingCart.DomainService {
             return entity;
         }
 
-        public Task<PagedList<Order>> SearchOrdersAsync(int pageSize, int pageNumber, string sortParams, OrderSearch search) {
-            return orderRepository.SearchAsync(pageSize, pageNumber, sortParams ?? $"-{nameof(Order.CreatedDate)}", search);
+        public Task<PagedList<Order>> SearchOrdersAsync(OrderSearch search) {
+            search.Sort ??= $"-{nameof(Order.CreatedDate)}";
+            return orderRepository.SearchAsync(search);
         }
 
         public async Task<Order> UpdateOrderAsync(OrderDto dto) {
@@ -63,6 +64,7 @@ namespace Acme.ShoppingCart.DomainService {
             // remove items not in dto
             var itemsToRemove = new List<OrderItem>();
             itemsToRemove.AddRange(entity.Items.Where(x => !dto.Items.Exists(i => i.Sku == x.Sku)));
+            orderRepository.RemoveItems(itemsToRemove);
             entity.RemoveItems(itemsToRemove);
 
             // add items not already on order

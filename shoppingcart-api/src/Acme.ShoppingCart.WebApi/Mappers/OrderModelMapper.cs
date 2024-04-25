@@ -1,6 +1,7 @@
 #pragma warning disable CS1591 // Missing XML comments
 
 using Acme.ShoppingCart.Dto;
+using Acme.ShoppingCart.WebApi.Models.Requests;
 using Acme.ShoppingCart.WebApi.Models.Responses;
 
 namespace Acme.ShoppingCart.WebApi.Mappers {
@@ -45,6 +46,21 @@ namespace Acme.ShoppingCart.WebApi.Mappers {
                 Sku = dto.Sku,
                 Quantity = dto.Quantity,
                 UnitPrice = dto.UnitPrice
+            };
+        }
+
+        public OrderSearchDto MapToDto(OrderSearchModel model) {
+            if (model == null) {
+                return null;
+            }
+
+            return new OrderSearchDto() {
+                CustomerResourceId = model.CustomerResourceId,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PageNumber = model.PageNumber,
+                PageSize = model.PageSize,
+                Sort = model.Sort
             };
         }
     }

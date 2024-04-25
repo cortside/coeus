@@ -32,7 +32,7 @@ namespace Acme.ShoppingCart.DomainService.Tests {
         public async Task ShouldCreateOrderAsync() {
             // Arrange
             var customer = await databaseContext.Customers.FirstAsync();
-            var order = new OrderDto() {
+            var order = new CreateOrderDto() {
                 Address = new AddressDto() {
                     Street = Guid.NewGuid().ToString(),
                     City = "Salt Lake City",

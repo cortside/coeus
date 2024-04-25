@@ -5,7 +5,15 @@ namespace Acme.ShoppingCart.WebApi.Models.Requests {
     /// <summary>
     /// Request information to create a new customer
     /// </summary>
-    public class CreateCustomerModel {
+    public class UpdateOrderCustomerModel {
+        /// <summary>
+        /// Gets or sets the customer resource identifier.
+        /// </summary>
+        /// <value>
+        /// The customer resource identifier.
+        /// </value>
+        public Guid CustomerResourceId { get; set; }
+
         /// <summary>
         /// Gets or sets the first name.
         /// </summary>
@@ -14,6 +22,7 @@ namespace Acme.ShoppingCart.WebApi.Models.Requests {
         /// </value>
         [Required]
         public string FirstName { get; set; }
+
         /// <summary>
         /// Gets or sets the last name.
         /// </summary>

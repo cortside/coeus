@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Acme.ShoppingCart.Health {
     public class ExampleCheck : Check {
-        public ExampleCheck(IMemoryCache cache, ILogger<Check> logger, IAvailabilityRecorder recorder) : base(cache, logger, recorder) {
+        public ExampleCheck(IMemoryCache cache, ILogger<ExampleCheck> logger, IAvailabilityRecorder recorder) : base(cache, logger, recorder) {
         }
 
         public override Task<ServiceStatusModel> ExecuteAsync() {

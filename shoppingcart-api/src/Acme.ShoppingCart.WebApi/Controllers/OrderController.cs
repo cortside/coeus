@@ -1,7 +1,6 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.Facade;
 using Acme.ShoppingCart.WebApi.Mappers;
@@ -47,16 +46,17 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [HttpGet("")]
         [Authorize(Constants.Authorization.Permissions.GetOrders)]
         [ProducesResponseType(typeof(PagedList<OrderModel>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetOrdersAsync([FromQuery] OrderSearch search, int pageNumber = 1, int pageSize = 30, string sort = null) {
-            var results = await facade.SearchOrdersAsync(pageSize, pageNumber, sort, search).ConfigureAwait(false);
+        public async Task<IActionResult> GetOrdersAsync([FromQuery] OrderSearchModel search, int pageNumber = 1, int pageSize = 30, string sort = null) {
+            var searchDto = orderMapper.MapToDto(search);
+            var results = await facade.SearchOrdersAsync(searchDto).ConfigureAwait(false);
             return Ok(results.Convert(x => orderMapper.Map(x)));
         }
 
         /// <summary>
-        /// Gets a order by id
+        /// Gets an order by id
         /// </summary>
         /// <param name="id">the id of the order to get</param>
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         [ActionName(nameof(GetOrderAsync))]
         [Authorize(Constants.Authorization.Permissions.GetOrder)]
         [ProducesResponseType(typeof(OrderModel), StatusCodes.Status200OK)]
@@ -74,8 +74,8 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [ProducesResponseType(typeof(OrderModel), StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateOrderAsync([FromBody] CreateOrderModel input) {
             // mapper
-            var dto = new OrderDto() {
-                Customer = new CustomerDto() {
+            var dto = new CreateOrderDto() {
+                Customer = new CreateOrderCustomerDto() {
                     FirstName = input.Customer.FirstName,
                     LastName = input.Customer.LastName,
                     Email = input.Customer.Email
@@ -87,7 +87,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                     Country = input.Address.Country,
                     ZipCode = input.Address.ZipCode
                 },
-                Items = input.Items?.ConvertAll(x => new OrderItemDto() { Sku = x.Sku, Quantity = x.Quantity })
+                Items = input.Items?.ConvertAll(x => new UpdateOrderItemDto() { Sku = x.Sku, Quantity = x.Quantity })
             };
 
             var order = await facade.CreateOrderAsync(dto).ConfigureAwait(false);
@@ -99,13 +99,13 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// </summary>
         /// <param name="input"></param>
         /// <param name="resourceId"></param>
-        [HttpPost("/api/v{version:apiVersion}/customers/{resourceId}/orders")]
+        [HttpPost("/api/v{version:apiVersion}/customers/{resourceId:guid}/orders")]
         [Authorize(Constants.Authorization.Permissions.CreateOrder)]
         [ProducesResponseType(typeof(OrderModel), StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateCustomerOrderAsync([FromBody] CreateCustomerOrderModel input, Guid resourceId) {
             using (LogContext.PushProperty("CustomerResourceId", resourceId)) {
-                var dto = new OrderDto() {
-                    Customer = new CustomerDto() {
+                var dto = new CreateOrderDto() {
+                    Customer = new CreateOrderCustomerDto() {
                         CustomerResourceId = resourceId,
                     },
                     Address = new AddressDto() {
@@ -115,7 +115,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                         Country = input.Address.Country,
                         ZipCode = input.Address.ZipCode
                     },
-                    Items = input.Items?.ConvertAll(x => new OrderItemDto() { Sku = x.Sku, Quantity = x.Quantity })
+                    Items = input.Items?.ConvertAll(x => new UpdateOrderItemDto() { Sku = x.Sku, Quantity = x.Quantity })
                 };
 
                 var order = await facade.CreateOrderAsync(dto).ConfigureAwait(false);
@@ -131,7 +131,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [HttpPut("{id}")]
         [Authorize(Constants.Authorization.Permissions.UpdateOrder)]
         [ProducesResponseType(typeof(OrderModel), StatusCodes.Status200OK)]
-        public async Task<IActionResult> UpdateOrderAsync(Guid id, CreateOrderModel input) {
+        public async Task<IActionResult> UpdateOrderAsync(Guid id, UpdateOrderModel input) {
             var lockName = $"OrderResourceId:{id}";
             logger.LogDebug("Acquiring lock for {LockName}", lockName);
             await using (await lockProvider.AcquireLockAsync(lockName).ConfigureAwait(false)) {

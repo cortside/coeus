@@ -35,7 +35,7 @@ namespace Acme.ShoppingCart.CatalogApi {
         }
 
         public async Task<CatalogItem> GetItemAsync(string sku) {
-            logger.LogInformation("Getting item by sku: {sku}", sku);
+            logger.LogInformation("Getting item by sku: {Sku}", sku);
             RestApiRequest request = new RestApiRequest($"api/v1/items/{sku}", Method.Get) {
                 Policy = PolicyBuilderExtensions
                     .HandleTransientHttpError()

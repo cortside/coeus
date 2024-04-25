@@ -24,7 +24,7 @@ namespace Acme.ShoppingCart.DomainService.Tests {
         [Fact]
         public async Task ShouldCreateCustomerAsync() {
             // Arrange
-            var dto = new CustomerDto() {
+            var dto = new UpdateCustomerDto() {
                 FirstName = Guid.NewGuid().ToString(),
                 LastName = Guid.NewGuid().ToString(),
                 Email = Guid.NewGuid().ToString() + "@gmail.com"
