@@ -51,7 +51,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                     Suffix = build.GetValue<string>("suffix")
                 },
                 Configuration = new ConfigurationModel() {
-                    ServiceBus = new ServicebusModel {
+                    ServiceBus = new ServiceBusModel {
                         Exchange = serviceBus.GetValue<string>("Exchange"),
                         NameSpace = serviceBus.GetValue<string>("Namespace"),
                         Queue = serviceBus.GetValue<string>("Queue"),

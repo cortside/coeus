@@ -50,7 +50,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                 Roles = authProperties.Roles.ToList()
             };
             var permissionsPrefix = configuration.GetSection("PolicyServer").GetValue<string>("BasePolicyPrefix");
-            responseModel.Permissions = responseModel.Permissions.Select(p => $"{permissionsPrefix}.{p}").ToList();
+            responseModel.Permissions = responseModel.Permissions.ConvertAll(p => $"{permissionsPrefix}.{p}");
             responseModel.Principal = SubjectPrincipal.From(ControllerContext.HttpContext.User);
             return Ok(responseModel);
         }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.Domain.Entities;
@@ -15,17 +14,17 @@ namespace Acme.ShoppingCart.Data.Repositories {
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<PagedList<Customer>> SearchAsync(int pageSize, int pageNumber, string sortParams, CustomerSearch model) {
+        public async Task<PagedList<Customer>> SearchAsync(CustomerSearch model) {
             var customers = model.Build(context.Customers.Include(x => x.CreatedSubject).Include(x => x.LastModifiedSubject));
             var result = new PagedList<Customer> {
-                PageNumber = pageNumber,
-                PageSize = pageSize,
+                PageNumber = model.PageNumber,
+                PageSize = model.PageSize,
                 TotalItems = await customers.CountAsync().ConfigureAwait(false),
-                Items = new List<Customer>(),
+                Items = [],
             };
 
-            customers = customers.ToSortedQuery(sortParams);
-            result.Items = await customers.ToPagedQuery(pageNumber, pageSize).ToListAsync().ConfigureAwait(false);
+            customers = customers.ToSortedQuery(model.Sort);
+            result.Items = await customers.ToPagedQuery(model.PageNumber, model.PageSize).ToListAsync().ConfigureAwait(false);
 
             return result;
         }

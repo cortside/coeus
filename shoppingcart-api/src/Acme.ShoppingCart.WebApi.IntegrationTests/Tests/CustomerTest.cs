@@ -24,7 +24,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         [Fact]
         public async Task ShouldCreateCustomerAsync() {
             //arrange
-            var request = new Models.Requests.CreateCustomerModel() {
+            var request = new Models.Requests.UpdateCustomerModel() {
                 FirstName = Guid.NewGuid().ToString(),
                 LastName = "last",
                 Email = "email@gmail.com"

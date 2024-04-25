@@ -6,7 +6,7 @@ namespace Acme.ShoppingCart.WebApi.Models.Responses {
         /// <summary>
         /// Service bus configuration
         /// </summary>
-        public ServicebusModel ServiceBus { get; set; }
+        public ServiceBusModel ServiceBus { get; set; }
         /// <summary>
         /// Identity Server configuration
         /// </summary>

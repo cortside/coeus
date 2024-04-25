@@ -18,6 +18,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Acme.ShoppingCart.Domain\Acme.ShoppingCart.Domain.csproj" />
+    <ProjectReference Include="..\Acme.ShoppingCart.Enumerations\Acme.ShoppingCart.Enumerations.csproj" />
   </ItemGroup>
 </Project>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Acme.ShoppingCart.CatalogApi.Models.Responses;
-using Acme.ShoppingCart.Domain.Enumerations;
+using Acme.ShoppingCart.Enumerations;
 using Acme.ShoppingCart.Exceptions;
 using Cortside.AspNetCore.Auditable.Entities;
 using Cortside.Common.Validation;
@@ -37,10 +37,12 @@ namespace Acme.ShoppingCart.Domain.Entities {
         [Comment("Order status (created, paid, shipped, cancelled)")]
         public OrderStatus Status { get; private set; }
 
+        [Required]
         [ForeignKey("CustomerId")]
         [Comment("FK to Customer")]
         public Customer Customer { get; private set; }
 
+        [Required]
         [Comment("FK to Address")]
         [ForeignKey("AddressId")]
         public Address Address { get; private set; }

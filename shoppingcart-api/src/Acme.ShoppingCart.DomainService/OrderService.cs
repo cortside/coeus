@@ -11,24 +11,24 @@ using Acme.ShoppingCart.Dto;
 using Cortside.AspNetCore.Common.Paging;
 using Cortside.Common.Messages.MessageExceptions;
 using Cortside.Common.Validation;
-using Cortside.DomainEvent.EntityFramework;
+using Cortside.DomainEvent;
 using Microsoft.Extensions.Logging;
 
 namespace Acme.ShoppingCart.DomainService {
     public class OrderService : IOrderService {
-        private readonly IDomainEventOutboxPublisher publisher;
+        private readonly IDomainEventPublisher publisher;
         private readonly ILogger<OrderService> logger;
         private readonly IOrderRepository orderRepository;
         private readonly ICatalogClient catalog;
 
-        public OrderService(IOrderRepository orderRepository, IDomainEventOutboxPublisher publisher, ILogger<OrderService> logger, ICatalogClient catalog) {
+        public OrderService(IOrderRepository orderRepository, IDomainEventPublisher publisher, ILogger<OrderService> logger, ICatalogClient catalog) {
             this.publisher = publisher;
             this.logger = logger;
             this.orderRepository = orderRepository;
             this.catalog = catalog;
         }
 
-        public async Task<Order> CreateOrderAsync(Customer customer, OrderDto dto) {
+        public async Task<Order> CreateOrderAsync(Customer customer, CreateOrderDto dto) {
             Guard.From.Null<BadRequestResponseException>(customer, "customer not found");
 
             var entity = new Order(customer, dto.Address.Street, dto.Address.City, dto.Address.State, dto.Address.Country, dto.Address.ZipCode);
@@ -52,17 +52,19 @@ namespace Acme.ShoppingCart.DomainService {
             return entity;
         }
 
-        public Task<PagedList<Order>> SearchOrdersAsync(int pageSize, int pageNumber, string sortParams, OrderSearch search) {
-            return orderRepository.SearchAsync(pageSize, pageNumber, sortParams ?? $"-{nameof(Order.CreatedDate)}", search);
+        public Task<PagedList<Order>> SearchOrdersAsync(OrderSearch search) {
+            search.Sort ??= $"-{nameof(Order.CreatedDate)}";
+            return orderRepository.SearchAsync(search);
         }
 
-        public async Task<Order> UpdateOrderAsync(OrderDto dto) {
-            var entity = await orderRepository.GetAsync(dto.OrderResourceId).ConfigureAwait(false);
+        public async Task<Order> UpdateOrderAsync(Guid id, UpdateOrderDto dto) {
+            var entity = await orderRepository.GetAsync(id).ConfigureAwait(false);
             entity.UpdateAddress(dto.Address.Street, dto.Address.City, dto.Address.State, dto.Address.Country, dto.Address.ZipCode);
 
             // remove items not in dto
             var itemsToRemove = new List<OrderItem>();
             itemsToRemove.AddRange(entity.Items.Where(x => !dto.Items.Exists(i => i.Sku == x.Sku)));
+            orderRepository.RemoveItems(itemsToRemove);
             entity.RemoveItems(itemsToRemove);
 
             // add items not already on order

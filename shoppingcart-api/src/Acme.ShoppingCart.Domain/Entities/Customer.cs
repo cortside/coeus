@@ -11,6 +11,8 @@ namespace Acme.ShoppingCart.Domain.Entities {
     public class Customer : AuditableEntity {
         const string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
 
+        // note: no protected empty arg constructor needed because ef knows how to deal with these properties
+
         public Customer(string firstName, string lastName, string email) {
             Update(firstName, lastName, email);
             CustomerResourceId = Guid.NewGuid();
@@ -24,8 +26,10 @@ namespace Acme.ShoppingCart.Domain.Entities {
 
         [StringLength(50)]
         public string FirstName { get; private set; }
+
         [StringLength(50)]
         public string LastName { get; private set; }
+
         [StringLength(250)]
         public string Email { get; private set; }
 

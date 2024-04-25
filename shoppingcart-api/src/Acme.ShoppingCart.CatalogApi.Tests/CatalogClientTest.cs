@@ -17,7 +17,7 @@ using RichardSzalay.MockHttp;
 using Xunit;
 
 namespace Acme.ShoppingCart.CatalogApi.Tests {
-    public class CatalogClientTest {
+    public class CatalogClientTest : IDisposable {
         private readonly CatalogClient catalogClient;
         private readonly CatalogClientConfiguration config;
 
@@ -40,7 +40,7 @@ namespace Acme.ShoppingCart.CatalogApi.Tests {
         }
 
         [Fact]
-        public async Task WireMock_ShouldGetUserAsync() {
+        public async Task WireMockShouldGetUserAsync() {
             //arrange
             string sku = Guid.NewGuid().ToString();
 
@@ -52,7 +52,7 @@ namespace Acme.ShoppingCart.CatalogApi.Tests {
         }
 
         [Fact]
-        public async Task MockHttpMessageHandler_ShouldGetUserAsync() {
+        public async Task MockHttpMessageHandlerShouldGetUserAsync() {
             // arrange
             var item = new CatalogItem() {
                 ItemId = Guid.NewGuid(),
@@ -81,6 +81,15 @@ namespace Acme.ShoppingCart.CatalogApi.Tests {
 
             //assert
             response.Should().BeEquivalentTo(item);
+        }
+
+        public void Dispose() {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing) {
+            catalogClient.Dispose();
         }
     }
 }
