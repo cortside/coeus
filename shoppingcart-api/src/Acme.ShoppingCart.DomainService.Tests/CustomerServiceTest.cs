@@ -18,7 +18,7 @@ namespace Acme.ShoppingCart.DomainService.Tests {
 
             var publisher = new Mock<IDomainEventOutboxPublisher>();
             var customerRepository = new CustomerRepository(databaseContext);
-            service = new CustomerService(customerRepository, publisher.Object, NullLogger<CustomerService>.Instance);
+            Service = new CustomerService(customerRepository, publisher.Object, NullLogger<CustomerService>.Instance);
         }
 
         [Fact]
@@ -31,7 +31,7 @@ namespace Acme.ShoppingCart.DomainService.Tests {
             };
 
             // Act
-            await service.CreateCustomerAsync(dto);
+            await Service.CreateCustomerAsync(dto);
             await databaseContext.SaveChangesAsync();
 
             // Assert

@@ -42,6 +42,5 @@ namespace Acme.ShoppingCart.Facade.Mappers {
                 Sort = dto.Sort
             };
         }
-
     }
 }

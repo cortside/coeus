@@ -46,7 +46,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [HttpGet("")]
         [Authorize(Constants.Authorization.Permissions.GetOrders)]
         [ProducesResponseType(typeof(PagedList<OrderModel>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetOrdersAsync([FromQuery] OrderSearchModel search, int pageNumber = 1, int pageSize = 30, string sort = null) {
+        public async Task<IActionResult> GetOrdersAsync([FromQuery] OrderSearchModel search) {
             var searchDto = orderMapper.MapToDto(search);
             var results = await facade.SearchOrdersAsync(searchDto).ConfigureAwait(false);
             return Ok(results.Convert(x => orderMapper.Map(x)));

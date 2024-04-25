@@ -20,7 +20,7 @@ namespace Acme.ShoppingCart.DomainService.Tests {
             databaseContext = GetDatabaseContext();
             var publisher = new Mock<IDomainEventOutboxPublisher>();
             var orderRepository = new OrderRepository(databaseContext);
-            service = new OrderService(orderRepository, publisher.Object, NullLogger<OrderService>.Instance, new Mock<ICatalogClient>().Object);
+            Service = new OrderService(orderRepository, publisher.Object, NullLogger<OrderService>.Instance, new Mock<ICatalogClient>().Object);
 
             var name = Guid.NewGuid().ToString();
             var customer = new Customer(name, name, name + "@gmail.com");
@@ -44,7 +44,7 @@ namespace Acme.ShoppingCart.DomainService.Tests {
             };
 
             // Act
-            await service.CreateOrderAsync(customer, order);
+            await Service.CreateOrderAsync(customer, order);
             await databaseContext.SaveChangesAsync();
 
             // Assert
