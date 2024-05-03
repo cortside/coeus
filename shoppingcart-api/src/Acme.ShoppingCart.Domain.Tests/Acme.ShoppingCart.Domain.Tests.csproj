@@ -30,5 +30,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Acme.ShoppingCart.Domain\Acme.ShoppingCart.Domain.csproj" />
+    <ProjectReference Include="..\Acme.ShoppingCart.TestUtilities\Acme.ShoppingCart.TestUtilities.csproj" />
   </ItemGroup>
 </Project>

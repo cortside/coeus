@@ -48,6 +48,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Acme.ShoppingCart.Data\Acme.ShoppingCart.Data.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.CatalogApi\Acme.ShoppingCart.CatalogApi.csproj" />
+    <ProjectReference Include="..\Acme.ShoppingCart.TestUtilities\Acme.ShoppingCart.TestUtilities.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.WebApi\Acme.ShoppingCart.WebApi.csproj" />
   </ItemGroup>
   <ItemGroup>

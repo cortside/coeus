@@ -1,4 +1,5 @@
-using Acme.ShoppingCart.Domain.Entities;
+using Acme.ShoppingCart.TestUtilities;
+using FluentAssertions;
 using Xunit;
 
 namespace Acme.ShoppingCart.Domain.Tests {
@@ -6,13 +7,15 @@ namespace Acme.ShoppingCart.Domain.Tests {
         [Fact]
         public void Foo() {
             // Arrange
-            var customer = new Customer("foo", "bar", "foo@baz.com");
+            var customer = EntityBuilder.GetCustomerEntity();
 
             // Act
             customer.Update("elmer", "fudd", "elmer@fudd.org");
 
             // Assert
-            Assert.Equal("elmer", customer.FirstName);
+            customer.FirstName.Should().Be("elmer");
+            customer.LastName.Should().Be("fudd");
+            customer.Email.Should().Be("elmer@fudd.org");
         }
     }
 }
