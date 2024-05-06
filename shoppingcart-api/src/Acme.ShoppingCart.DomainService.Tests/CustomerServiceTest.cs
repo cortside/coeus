@@ -1,9 +1,8 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.Data.Repositories;
-using Acme.ShoppingCart.Dto;
+using Acme.ShoppingCart.TestUtilities;
 using Cortside.DomainEvent;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
@@ -24,11 +23,7 @@ namespace Acme.ShoppingCart.DomainService.Tests {
         [Fact]
         public async Task ShouldCreateCustomerAsync() {
             // Arrange
-            var dto = new UpdateCustomerDto() {
-                FirstName = Guid.NewGuid().ToString(),
-                LastName = Guid.NewGuid().ToString(),
-                Email = Guid.NewGuid().ToString() + "@gmail.com"
-            };
+            var dto = DtoBuilder.GetUpdateCustomerDto();
 
             // Act
             await Service.CreateCustomerAsync(dto);

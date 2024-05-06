@@ -45,6 +45,11 @@ namespace Acme.ShoppingCart.TestUtilities {
             return new CreateOrderItemModel() { Sku = RandomValues.CreateRandomString(), Quantity = RandomValues.Number(1, 50) };
         }
 
+        /// <summary>
+        /// This method is needed because the random generator uses random strings for the domain extension
+        /// There is a code check for adding customers that expects a limited range of domain extensions in this repository
+        /// </summary>
+        /// <returns></returns>
         public static string GetEmail() {
             var email = RandomValues.EmailAddress;
             return $"{email.Split('.')[0]}.com";

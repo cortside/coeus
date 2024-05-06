@@ -1,6 +1,6 @@
 using System;
 using Acme.ShoppingCart.Data;
-using Acme.ShoppingCart.Domain.Entities;
+using Acme.ShoppingCart.TestUtilities;
 using Cortside.AspNetCore.Auditable.Entities;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests {
@@ -9,7 +9,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
             var subject = new Subject(Guid.Empty, string.Empty, string.Empty, string.Empty, "system");
             dbContext.Subjects.Add(subject);
 
-            var customer = new Customer("elmer", "fudd", "elmer.fudd@gmail.com");
+            var customer = EntityBuilder.GetCustomerEntity();
             dbContext.Customers.Add(customer);
 
             // intentionally using this override to avoid the not implemented exception
