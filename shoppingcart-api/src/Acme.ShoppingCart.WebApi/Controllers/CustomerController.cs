@@ -2,8 +2,6 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
-using Acme.ShoppingCart.Data.Searches;
-using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.Facade;
 using Acme.ShoppingCart.WebApi.Mappers;
 using Acme.ShoppingCart.WebApi.Models.Requests;
@@ -47,8 +45,9 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [HttpGet("")]
         [Authorize(Constants.Authorization.Permissions.GetCustomers)]
         [ProducesResponseType(typeof(PagedList<CustomerModel>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetCustomersAsync([FromQuery] CustomerSearch search, int pageNumber = 1, int pageSize = 30, string sort = null) {
-            var results = await facade.SearchCustomersAsync(pageSize, pageNumber, sort ?? "", search).ConfigureAwait(false);
+        public async Task<IActionResult> GetCustomersAsync([FromQuery] CustomerSearchModel search) {
+            var searchDto = customerMapper.MapToDto(search);
+            var results = await facade.SearchCustomersAsync(searchDto).ConfigureAwait(false);
             var models = results.Convert(x => customerMapper.Map(x));
             return Ok(models);
         }
@@ -86,13 +85,9 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
             }
 
             var param = encryptionService.DecryptObject<CustomerSearchModel>(encryptedParams);
-            var search = new CustomerSearch() {
-                CustomerResourceId = param.CustomerResourceId,
-                FirstName = param.FirstName,
-                LastName = param.LastName
-            };
+            var search = customerMapper.MapToDto(param);
 
-            var results = await facade.SearchCustomersAsync(param.PageSize, param.PageNumber, param.Sort, search).ConfigureAwait(false);
+            var results = await facade.SearchCustomersAsync(search).ConfigureAwait(false);
             var models = results.Convert(x => customerMapper.Map(x));
             return Ok(models);
         }
@@ -117,14 +112,10 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [HttpPost("")]
         [Authorize(Constants.Authorization.Permissions.CreateCustomer)]
         [ProducesResponseType(typeof(CustomerModel), StatusCodes.Status201Created)]
-        public async Task<IActionResult> CreateCustomerAsync([FromBody] CreateCustomerModel input) {
-            var dto = new CustomerDto() {
-                FirstName = input.FirstName,
-                LastName = input.LastName,
-                Email = input.Email
-            };
-            var dto2 = await facade.CreateCustomerAsync(dto).ConfigureAwait(false);
-            return CreatedAtAction(nameof(GetCustomerAsync), new { id = dto.CustomerResourceId }, customerMapper.Map(dto2));
+        public async Task<IActionResult> CreateCustomerAsync([FromBody] UpdateCustomerModel input) {
+            var inputDto = customerMapper.MapToDto(input);
+            var dto = await facade.CreateCustomerAsync(inputDto).ConfigureAwait(false);
+            return CreatedAtAction(nameof(GetCustomerAsync), new { id = dto.CustomerResourceId }, customerMapper.Map(dto));
         }
 
         /// <summary>
@@ -135,16 +126,11 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [HttpPut("{id}")]
         [Authorize(Constants.Authorization.Permissions.UpdateCustomer)]
         [ProducesResponseType(typeof(CustomerModel), StatusCodes.Status200OK)]
-        public async Task<IActionResult> UpdateCustomerAsync(Guid id, CreateCustomerModel input) {
+        public async Task<IActionResult> UpdateCustomerAsync(Guid id, UpdateCustomerModel input) {
             using (LogContext.PushProperty("CustomerResourceId", id)) {
-                var dto = new CustomerDto() {
-                    CustomerResourceId = id,
-                    FirstName = input.FirstName,
-                    LastName = input.LastName,
-                    Email = input.Email
-                };
+                var dto = customerMapper.MapToDto(input);
 
-                var result = await facade.UpdateCustomerAsync(dto).ConfigureAwait(false);
+                var result = await facade.UpdateCustomerAsync(id, dto).ConfigureAwait(false);
                 return Ok(customerMapper.Map(result));
             }
         }

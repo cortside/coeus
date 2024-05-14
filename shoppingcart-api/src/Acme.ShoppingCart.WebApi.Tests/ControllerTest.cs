@@ -1,21 +1,27 @@
 using System;
+using Acme.ShoppingCart.Data;
+using Cortside.AspNetCore.Auditable;
+using Cortside.Common.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Moq;
 
 namespace Acme.ShoppingCart.WebApi.Tests {
     public abstract class ControllerTest<T> : IDisposable where T : ControllerBase {
-        protected T controller;
-        protected UnitTestFixture testFixture;
-
-        protected ControllerTest() {
-            testFixture = new UnitTestFixture();
-        }
+        protected T Controller { get; set; }
+        protected Mock<IHttpContextAccessor> HttpContextAccessorMock { get; set; } = new Mock<IHttpContextAccessor>();
 
         protected ControllerContext GetControllerContext() {
             var controllerContext = new ControllerContext {
                 HttpContext = new DefaultHttpContext()
             };
             return controllerContext;
+        }
+
+        public DatabaseContext GetDatabaseContext() {
+            var databaseContextOptions = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase($"db-{Guid.NewGuid():d}").Options;
+            return new DatabaseContext(databaseContextOptions, SubjectPrincipal.From(HttpContextAccessorMock.Object.HttpContext.User), new DefaultSubjectFactory());
         }
 
         public void Dispose() {
@@ -25,7 +31,6 @@ namespace Acme.ShoppingCart.WebApi.Tests {
 
         protected virtual void Dispose(bool disposing) {
             // Cleanup
-            testFixture.TearDown();
         }
     }
 }

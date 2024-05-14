@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.Domain.Entities;
+using Acme.ShoppingCart.Enumerations;
 using Acme.ShoppingCart.WebApi.Models.Requests;
 using Acme.ShoppingCart.WebApi.Models.Responses;
 using FluentAssertions;
@@ -26,7 +27,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         public async Task ShouldCreateOrderAsync() {
             //arrange
             var orderRequest = new CreateOrderModel() {
-                Customer = new CreateCustomerModel() {
+                Customer = new UpdateOrderCustomerModel() {
                     FirstName = "Elmer",
                     LastName = "Fudd",
                     Email = "elmer.fudd@gmail.com"
@@ -56,7 +57,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         [Fact]
         public async Task ShouldCreateCustomerOrderAsync() {
             //arrange
-            var request = new CreateCustomerModel() {
+            var request = new UpdateCustomerModel() {
                 FirstName = Guid.NewGuid().ToString(),
                 LastName = "last",
                 Email = "email@gmail.com"
@@ -126,7 +127,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             order.Customer.CustomerResourceId.Should().NotBeEmpty();
             order.OrderResourceId.Should().NotBeEmpty();
             order.Items.Count.Should().Be(0);
-            order.Status.Should().Be(Models.Enumerations.OrderStatus.Created);
+            order.Status.Should().Be(OrderStatus.Created);
 
             // act
             var itemRequest = new CreateOrderItemModel() { Sku = "123", Quantity = 1 };
@@ -148,7 +149,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             order.Customer.CustomerResourceId.Should().NotBeEmpty();
             order.OrderResourceId.Should().NotBeEmpty();
             order.Items.Count.Should().Be(1);
-            order.Status.Should().Be(Models.Enumerations.OrderStatus.Created);
+            order.Status.Should().Be(OrderStatus.Created);
         }
 
         [Fact]
@@ -173,7 +174,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         public async Task ShouldUpdateOrderAsync() {
             //arrange
             var orderRequest = new CreateOrderModel() {
-                Customer = new CreateCustomerModel() {
+                Customer = new UpdateOrderCustomerModel() {
                     FirstName = "Elmer",
                     LastName = "Fudd",
                     Email = "elmer.fudd@gmail.com"

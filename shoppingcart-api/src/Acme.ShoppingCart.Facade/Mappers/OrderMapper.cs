@@ -1,4 +1,5 @@
 using System.Linq;
+using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.Dto;
 
@@ -48,6 +49,21 @@ namespace Acme.ShoppingCart.Facade.Mappers {
                 CreatedSubject = subjectMapper.MapToDto(entity.CreatedSubject),
                 LastModifiedDate = entity.LastModifiedDate,
                 LastModifiedSubject = subjectMapper.MapToDto(entity.LastModifiedSubject)
+            };
+        }
+
+        public OrderSearch Map(OrderSearchDto dto) {
+            if (dto == null) {
+                return null;
+            }
+
+            return new OrderSearch {
+                CustomerResourceId = dto.CustomerResourceId,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                PageNumber = dto.PageNumber,
+                PageSize = dto.PageSize,
+                Sort = dto.Sort
             };
         }
     }
