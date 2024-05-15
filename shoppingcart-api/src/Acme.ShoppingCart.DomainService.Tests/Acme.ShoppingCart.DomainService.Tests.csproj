@@ -11,7 +11,7 @@
     <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.Auditable" Version="6.3.211-develop" />
+    <PackageReference Include="Cortside.AspNetCore.Auditable" Version="6.3.212-develop" />
     <PackageReference Include="coverlet.collector" Version="6.0.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

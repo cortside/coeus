@@ -11,8 +11,8 @@
     <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.Auditable" Version="6.3.211-develop" />
-    <PackageReference Include="Cortside.Common.Validation" Version="6.3.410-develop" />
+    <PackageReference Include="Cortside.AspNetCore.Auditable" Version="6.3.212-develop" />
+    <PackageReference Include="Cortside.Common.Validation" Version="6.3.413-develop" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.5" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.10.48">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
