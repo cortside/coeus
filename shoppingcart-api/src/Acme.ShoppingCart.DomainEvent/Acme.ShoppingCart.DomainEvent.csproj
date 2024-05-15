@@ -13,7 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Cortside.DomainEvent" Version="6.2.301" />
     <PackageReference Include="DistributedLock.SqlServer" Version="1.0.4" />
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.9.28">
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.10.48">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
