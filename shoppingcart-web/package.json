@@ -30,7 +30,7 @@
         "@muziehdesign/forms": "^17.0.720",
         "@tailwindcss/forms": "^0.5.2",
         "lodash.merge": "^4.6.2",
-        "muzieh-ngcomponents": "^16.0.1591",
+        "muzieh-ngcomponents": "^17.0.1603",
         "oidc-client": "^1.11.5",
         "rxjs": "~7.5.0",
         "subsink": "^1.0.2",
