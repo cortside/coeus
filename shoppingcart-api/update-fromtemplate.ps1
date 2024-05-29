@@ -43,6 +43,9 @@ mkdir temp
 # make sure latest version of cortside.templates is installed
 #dotnet new --install cortside.templates
 git clone https://github.com/cortside/coeus.git temp/coeus
+cd temp/coeus/shoppingcart-api
+(get-item .\update-fromtemplate.ps1).LastAccessTime = get-date((git log -1 --format=%aI .\update-fromtemplate.ps1))
+cd ../../..
 
 Update-Myself .\temp\coeus\shoppingcart-api\update-fromtemplate.ps1
 
