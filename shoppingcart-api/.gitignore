@@ -253,3 +253,6 @@ coverage.opencover.xml
 *.local.json
 .refsignored
 .NCrunch*/
+
+docker.env
+buildconfig.json
