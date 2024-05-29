@@ -3,15 +3,6 @@
 
 $ErrorActionPreference = "Stop"
 
-# make sure latest version of cortside.templates is installed
-#dotnet new --install cortside.templates
-
-# update powershell scripts from root
-#dotnet new cortside-api-powershell --force --output ./ --name Enerbank.Calendar --company Enerbank --product Calendar
-
-# update .editorconfig
-#dotnet new cortside-api-editorconfig --force --output ./ --name Enerbank.Calendar --company Enerbank --product Calendar
-
 function Update-Myself {
     [CmdletBinding()]
     param
@@ -49,9 +40,11 @@ if ((Test-Path -path temp)) {
 }
 
 mkdir temp
+# make sure latest version of cortside.templates is installed
+#dotnet new --install cortside.templates
 git clone https://github.com/cortside/coeus.git temp/coeus
 
-#Update-Myself .\temp\coeus\shoppingcart-api\update-fromtemplate.ps1
+Update-Myself .\temp\coeus\shoppingcart-api\update-fromtemplate.ps1
 
 $config = get-content $configfile | ConvertFrom-Json 
 
