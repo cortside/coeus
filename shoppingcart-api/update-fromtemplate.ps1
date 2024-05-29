@@ -17,7 +17,7 @@ function Update-Myself {
 		$CurrentScript = $MyInvocation.ScriptName
 		if (!($SourcePath -eq $CurrentScript )) {
 			if ($(Get-Item $SourcePath).LastWriteTimeUtc -gt $(Get-Item $CurrentScript ).LastWriteTimeUtc) {
-				write-host "Updating..."
+				write-host "Updating $SourcePath"
 				Copy-Item $SourcePath $CurrentScript 
 				#If the script was updated, run it with orginal parameters
 				&$CurrentScript $script:args
@@ -44,7 +44,7 @@ mkdir temp
 #dotnet new --install cortside.templates
 git clone https://github.com/cortside/coeus.git temp/coeus
 cd temp/coeus/shoppingcart-api
-(get-item .\update-fromtemplate.ps1).LastAccessTime = get-date((git log -1 --format=%aI .\update-fromtemplate.ps1))
+(get-item .\update-fromtemplate.ps1).LastWriteTime = get-date((git log -1 --format=%aI .\update-fromtemplate.ps1))
 cd ../../..
 
 Update-Myself .\temp\coeus\shoppingcart-api\update-fromtemplate.ps1
