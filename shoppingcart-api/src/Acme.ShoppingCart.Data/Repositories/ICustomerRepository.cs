@@ -6,7 +6,7 @@ using Cortside.AspNetCore.Common.Paging;
 
 namespace Acme.ShoppingCart.Data.Repositories {
     public interface ICustomerRepository {
-        Customer Add(Customer customer);
+        Task<Customer> AddAsync(Customer customer);
         Task<Customer> GetAsync(Guid id);
         Task<PagedList<Customer>> SearchAsync(CustomerSearch model);
     }

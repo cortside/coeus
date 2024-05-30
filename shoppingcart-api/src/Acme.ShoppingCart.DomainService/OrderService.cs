@@ -39,7 +39,7 @@ namespace Acme.ShoppingCart.DomainService {
                 }
                 logger.LogInformation("Created new order");
 
-                orderRepository.Add(entity);
+                await orderRepository.AddAsync(entity);
                 var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = entity.LastModifiedDate };
                 await publisher.PublishAsync(@event).ConfigureAwait(false);
 

@@ -25,7 +25,7 @@ namespace Acme.ShoppingCart.DomainService {
         public async Task<Customer> CreateCustomerAsync(UpdateCustomerDto dto) {
             var entity = new Customer(dto.FirstName, dto.LastName, dto.Email);
             using (logger.BeginScope(new Dictionary<string, object> { ["CustomerResourceId"] = entity.CustomerResourceId })) {
-                customerRepository.Add(entity);
+                await customerRepository.AddAsync(entity);
                 logger.LogInformation("Created new customer");
 
                 var @event = new CustomerStateChangedEvent() { CustomerResourceId = entity.CustomerResourceId, Timestamp = entity.LastModifiedDate };

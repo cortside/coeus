@@ -28,6 +28,15 @@ function Update-Myself {
     write-host "No update required"
 }
 
+# Remove a file or folder quietly
+# Like linux "rm -rf"
+function Remove-IfItemExists($item) {
+  if (Test-Path $item) {
+    echo "Removing $item"
+    Remove-Item $item  -r -force
+  }
+}
+
 $configfile = "repository.json"
 if (!(Test-Path -path $configfile)) {
 	Write-Output "repository.json not found"
@@ -78,6 +87,8 @@ cp .\temp\coeus\shoppingcart-api\generate-changelog.ps1
 cp .\temp\coeus\shoppingcart-api\update-nugetpackages.ps1
 cp .\temp\coeus\shoppingcart-api\src\.editorconfig .\src\.editorconfig
 cp .\temp\coeus\shoppingcart-api\.gitignore
+
+Remove-IfItemExists update-template.ps1
 
 #cp .\temp\coeus\shoppingcart-api\.gitattributes
 #git commit -m "Saving files before refreshing line endings" .gitattributes
