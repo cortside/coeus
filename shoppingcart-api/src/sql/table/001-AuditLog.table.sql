@@ -91,9 +91,14 @@ IF NOT EXISTS (SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NA
 		SELECT @Command = 'ALTER TABLE [Audit].[AuditLogTransaction] DROP CONSTRAINT ' + @PrimaryKeyName
 		EXECUTE (@Command)
 	END
+
+    DROP INDEX IF EXISTS [IDX_AuditLogTransaction_AuditDate] ON [Audit].[AuditLogTransaction]
+    DROP INDEX IF EXISTS [IDX_AuditLogTransaction_TableName] ON [Audit].[AuditLogTransaction]
+
     ALTER TABLE [Audit].[AuditLogTransaction] ALTER COLUMN AuditLogTransactionId BIGINT
     DROP INDEX IF EXISTS IDX_AuditLog_AuditLogTransactionId ON [Audit].[AuditLog]
     DROP INDEX IF EXISTS IDX_AuditLog_ColumnName ON [Audit].[AuditLog]
+    
     ALTER TABLE [audit].[AuditLog] DROP CONSTRAINT IF EXISTS [FK_AuditLog_AuditLogTransactionId]
     ALTER TABLE [audit].[AuditLog] DROP CONSTRAINT IF EXISTS [FK_AuditLog_TransactionId]
 	ALTER TABLE [Audit].[AuditLog] ALTER COLUMN AuditLogTransactionId BIGINT
@@ -171,3 +176,22 @@ if (@pk != 'audit.AuditLog.PK_AuditLog')
   BEGIN   
     EXEC sp_rename @pk, 'PK_AuditLog'
   END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'IDX_AuditLogTransaction_AuditDate' AND object_id = OBJECT_ID('audit.AuditLogTransaction'))
+  BEGIN
+    CREATE INDEX [IDX_AuditLogTransaction_AuditDate] ON [audit].[AuditLogTransaction]
+    (
+	    [AuditDate], [AuditLogTransactionId]  ASC
+    )
+  END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'IDX_AuditLogTransaction_TableName' AND object_id = OBJECT_ID('audit.AuditLogTransaction'))
+  BEGIN
+    CREATE INDEX [IDX_AuditLogTransaction_TableName] ON [audit].[AuditLogTransaction]
+    (
+	    [TableName], [AuditLogTransactionId]  ASC
+    )
+  END
+GO
