@@ -269,3 +269,8 @@ csharp_style_prefer_top_level_statements = true:silent
 csharp_style_prefer_primary_constructors = true:suggestion
 csharp_style_allow_blank_lines_between_consecutive_braces_experimental = true:silent
 dotnet_diagnostic.IDE0011.severity = warning
+
+# Warnings from Visual Studio Spell Checker that can be treated as informational
+# https://marketplace.visualstudio.com/items?itemName=EWoodruff.VisualStudioSpellCheckerVS2022andLater
+dotnet_diagnostic.VSSpell001.severity = suggestion
+dotnet_diagnostic.VSSpell002.severity = suggestion
