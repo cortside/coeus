@@ -7,6 +7,10 @@
 # top-most EditorConfig file
 root = true
 
+# Ignore paths
+[*/Migrations/*]
+generated_code = true
+
 # Default settings:
 # A newline ending every file
 # Use 4 spaces as indentation
