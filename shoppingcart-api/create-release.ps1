@@ -47,8 +47,8 @@ Function Get-Version {
 			}
 		}	
 	} else {
-		$a = Get-Content './repository.json' -raw | ConvertFrom-Json
-		return $a.version
+		$config = Get-Content './repository.json' -raw | ConvertFrom-Json
+		return $config.version
 	}
 }
 
@@ -73,20 +73,24 @@ Function Update-Version {
 		} | Set-Content appveyor.yml	
 		
 		git commit -m "update version" appveyor.yml
-	} else {
-		$a = Get-Content './repository.json' -raw | ConvertFrom-Json
-		$version = [version] $a.version
+	} else {	
+		$config = Get-Content './repository.json' -raw | ConvertFrom-Json
+		$version = [version] $config.version
 		$versionStringIncremented =  [string] [version]::new(
 		  $version.Major,
 		  $version.Minor+1
 		)
-		$a.version = $versionStringIncremented
+		$config.version = $versionStringIncremented
 
-		$a | ConvertTo-Json -depth 32| set-content './repository.json'
+		$config | ConvertTo-Json -depth 32 | set-content './repository.json'
+		$config | ConvertTo-Json -depth 32 | Format-Json | Out-File -FilePath './repository.json' -Encoding utf8
 		
 		git commit -m "update version" ./repository.json
 	}
 }
+
+# common repository functions
+Import-Module .\Repository.psm1
 
 Invoke-Exe -cmd git -args "checkout master"
 Invoke-Exe -cmd git -args "pull"
