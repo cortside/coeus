@@ -46,13 +46,26 @@ $changes = (git status --porcelain)
 if ($changes.Count -ne 0 -and -not $ignoreChanges.IsPresent) {
 	Write-Output "Exiting, sandbox has $($changes.Count) changes"
 	Write-Output $changes
-	exit 1 
+	exit 1
 }
-git status
 
 # make sure this is done from current develop branch
 Invoke-Exe git -args "checkout develop"
 Invoke-Exe git -args "pull"
+
+# check for branch first
+$bot = "BOT-{0:yyyyMMdd}" -f (Get-Date)
+$branch = "feature/$bot"
+if ($package -ne "") {
+	$branch = "feature/$bot-$package"
+}
+
+$exists = (git branch -r | sls $branch)
+if ($exists -ne $null) {
+	Write-Output "Exiting, $branch already exists"
+	Write-Output $exists
+	exit 1
+}
 
 echo "prepping"
 
