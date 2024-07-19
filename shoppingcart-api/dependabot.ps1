@@ -2,7 +2,7 @@
 Param 
 (
     [Parameter(Mandatory = $false)][string]$package = "",
-	[Parameter(Mandatory = $false)][string]$preupdatescript = "",
+	[Parameter(Mandatory = $false)][string]$preupdateexpression = "",
 	[Parameter(Mandatory = $false)][switch]$createpullrequest
 )
 
@@ -60,7 +60,7 @@ $result = check-result
 
 echo "preupdate"
 
-if (#preupdateexpression -ne "") {
+if ($preupdateexpression -ne "") {
 	Invoke-Expression "& $command"
 }
 
