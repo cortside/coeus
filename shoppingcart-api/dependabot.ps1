@@ -63,7 +63,6 @@ if ($package -ne "") {
 $exists = (git branch -r | sls $branch)
 if ($exists -ne $null) {
 	Write-Output "Exiting, $branch already exists"
-	Write-Output $exists
 	exit 1
 }
 
