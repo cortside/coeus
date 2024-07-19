@@ -2,6 +2,7 @@
 Param 
 (
     [Parameter(Mandatory = $false)][string]$package = "",
+	[Parameter(Mandatory = $false)][string]$preupdatescript = "",
 	[Parameter(Mandatory = $false)][switch]$createpullrequest
 )
 
@@ -57,6 +58,12 @@ echo "prepping"
 .\clean.ps1 -quiet
 $result = check-result
 
+echo "preupdate"
+
+if (#preupdateexpression -ne "") {
+	Invoke-Expression "& $command"
+}
+
 echo "about to restore"
 
 Invoke-Exe dotnet -args "restore src --verbosity quiet"
@@ -86,7 +93,7 @@ if ($changes.Count -ne 0) {
 		$branch = "feature/$bot-$package"
 	}
 
-	git add *
+	git add -u -u
 	git status
 	git checkout -b $branch
 	if ($package -eq "") { 
