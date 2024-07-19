@@ -40,7 +40,12 @@ Function Invoke-Exe {
 }
 
 # check for uncommitted changed files
-git checkout -- *
+$changes = (git status --porcelain)
+if ($changes.Count -ne 0) {
+	Write-Output "Exiting, sandbox has $($changes.Count) changes"
+	Write-Output $changes
+	exit 1 
+}
 git status
 
 # make sure this is done from current develop branch
@@ -68,8 +73,8 @@ $result = check-result
 
 echo "checking to see if anything changed"
 
-$files = (git status *.csproj | grep "modified:" | wc -l)
-if ($files -ne "0") {
+$changes = (git status --porcelain)
+if ($changes.Count -ne 0) {
 	dotnet test src
 	$result = check-result
 
@@ -81,7 +86,7 @@ if ($files -ne "0") {
 		$branch = "feature/$bot-$package"
 	}
 
-	git add *.csproj
+	git add *
 	git status
 	git checkout -b $branch
 	if ($package -eq "") { 
@@ -92,7 +97,8 @@ if ($files -ne "0") {
 	git push --set-upstream origin $branch
 
 	$remote = (git remote -v)
-	if ($remote -like "*github.com*") {
+	$ghexists = if (Get-Command "gh.exe" -ErrorAction SilentlyContinue) { $true } else { $false }
+	if ($remote -like "*github.com*" -and $ghexists) {
 		gh repo set-default
 		gh pr create --title "$bot" --body "$body" --base develop
 	} else {
@@ -102,8 +108,6 @@ if ($files -ne "0") {
 
 	.\clean.ps1
 	git checkout develop
-
-	
 } else {
 	echo "no files changed"
 }

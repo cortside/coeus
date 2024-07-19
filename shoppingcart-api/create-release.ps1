@@ -113,7 +113,7 @@ if ($exists.Length -eq 0) {
 	git push --set-upstream origin $branch
 	
 	$remote = (git remote -v)
-	$ghexists = if (Get-Command "xgh.exe" -ErrorAction SilentlyContinue) { $true } else { $false }
+	$ghexists = if (Get-Command "gh.exe" -ErrorAction SilentlyContinue) { $true } else { $false }
 	if ($remote -like "*github.com*" -and $ghexists) {
 		gh repo set-default
 		gh pr create --title "Release $version" --body "$releaseNotes" --base master
