@@ -73,7 +73,7 @@ Function Update-Version {
 		} | Set-Content appveyor.yml	
 		
 		git commit -m "update version" appveyor.yml
-	} else {	
+	} else {
 		$config = Get-Content './repository.json' -raw | ConvertFrom-Json
 		$version = [version] $config.version
 		$versionStringIncremented =  [string] [version]::new(
