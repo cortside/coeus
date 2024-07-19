@@ -2,8 +2,9 @@
 Param 
 (
     [Parameter(Mandatory = $false)][string]$package = "",
-	[Parameter(Mandatory = $false)][string]$preupdateexpression = "",
-	[Parameter(Mandatory = $false)][switch]$createpullrequest
+	[Parameter(Mandatory = $false)][string]$preupdateExpression = "",
+	[Parameter(Mandatory = $false)][switch]$createPullRequest,
+	[Parameter(Mandatory = $false)][switch]$ignoreChanges
 )
 
 $ErrorActionPreference = "Stop"
@@ -42,7 +43,7 @@ Function Invoke-Exe {
 
 # check for uncommitted changed files
 $changes = (git status --porcelain)
-if ($changes.Count -ne 0) {
+if ($changes.Count -ne 0 -and -not $ignoreChanges.IsPresent) {
 	Write-Output "Exiting, sandbox has $($changes.Count) changes"
 	Write-Output $changes
 	exit 1 
@@ -60,8 +61,9 @@ $result = check-result
 
 echo "preupdate"
 
-if ($preupdateexpression -ne "") {
-	Invoke-Expression "& $command"
+if ($preupdateExpression -ne "") {
+	echo "running $preupdateExpression"
+	Invoke-Expression "& $preupdateExpression"
 }
 
 echo "about to restore"
