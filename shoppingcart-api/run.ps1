@@ -1,8 +1,9 @@
 [cmdletBinding()]
 Param()
 
-Push-Location "$PSScriptRoot/src/Acme.ShoppingCart.WebApi"
+$path = (gci -Recurse -Directory *.WebApi).Name
+Push-Location "$PSScriptRoot/src/$path"
 
-cmd /c start cmd /k "title Acme.ShoppingCart.WebApi & dotnet run"
+cmd /c start cmd /k "title $path & dotnet run"
 
 Pop-Location
