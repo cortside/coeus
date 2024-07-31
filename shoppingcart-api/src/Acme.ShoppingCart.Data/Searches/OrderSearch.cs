@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Acme.ShoppingCart.Domain.Entities;
+using Cortside.AspNetCore.EntityFramework.Searches;
 
 namespace Acme.ShoppingCart.Data.Searches {
     public class OrderSearch : Search, IOrderSearch {

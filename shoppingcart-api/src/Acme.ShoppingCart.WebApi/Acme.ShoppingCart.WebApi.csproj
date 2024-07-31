@@ -8,16 +8,16 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.3.212-develop" />
-    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="6.3.212-develop" />
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.3.212-develop" />
-    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="6.3.212-develop" />
-    <PackageReference Include="Cortside.Common.Correlation" Version="6.3.413-develop" />
-    <PackageReference Include="Cortside.Common.Hosting" Version="6.3.413-develop" />
+    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.3.234-search-models" />
+    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="6.3.234-search-models" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.3.234-search-models" />
+    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="6.3.234-search-models" />
+    <PackageReference Include="Cortside.Common.Correlation" Version="6.3.415-separate-exceptions" />
+    <PackageReference Include="Cortside.Common.Hosting" Version="6.3.421-develop" />
     <PackageReference Include="Cortside.Health" Version="6.0.86" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.5">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -25,7 +25,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.3" />
     <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.3.8" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Serilog" Version="3.1.1" />
@@ -35,7 +35,7 @@
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.3.0" />
     <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
     <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
-    <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.2" />
     <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />

@@ -11,11 +11,11 @@
     <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore" Version="6.3.212-develop" />
-    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.3.212-develop" />
-    <PackageReference Include="Cortside.Common.BootStrap" Version="6.3.413-develop" />
-    <PackageReference Include="Cortside.Common.Cryptography" Version="6.3.413-develop" />
-    <PackageReference Include="DistributedLock.SqlServer" Version="1.0.4" />
+    <PackageReference Include="Cortside.AspNetCore" Version="6.3.234-search-models" />
+    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.3.234-search-models" />
+    <PackageReference Include="Cortside.Common.BootStrap" Version="6.3.421-develop" />
+    <PackageReference Include="Cortside.Common.Cryptography" Version="6.3.421-develop" />
+    <PackageReference Include="DistributedLock.SqlServer" Version="1.0.5" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.10.48">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
