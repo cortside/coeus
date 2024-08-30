@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Cortside.AspNetCore.Common.Dtos;
 
 namespace Acme.ShoppingCart.Dto {
