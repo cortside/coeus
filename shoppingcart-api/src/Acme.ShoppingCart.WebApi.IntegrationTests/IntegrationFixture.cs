@@ -5,6 +5,7 @@ using System.Linq.Dynamic.Core;
 using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.WebApi.IntegrationTests.Mocks;
 using Cortside.AspNetCore.Testing;
+using Cortside.Common.Testing.Logging.Xunit;
 using Cortside.MockServer.AccessControl;
 using Cortside.MockServer.AccessControl.Models;
 using Cortside.MockServer.Builder;
@@ -43,8 +44,28 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
                     });
         }
 
+#pragma warning disable S125
         protected override void ConfigureServices(IServiceCollection services) {
-            services.AddLogging(builder => builder.ClearProviders().AddConsole().AddDebug());
+            services.AddLogging(builder => {
+                builder.ClearProviders();
+                //builder.AddConsole().AddDebug();
+
+                builder.AddXunit(TestOutputHelper);
+
+                //var serverUrl = Configuration["Seq:ServerUrl"];
+                //var logFile =  Configuration["LogFile:Path"];
+
+                //if (!string.IsNullOrWhiteSpace(serverUrl) || !string.IsNullOrWhiteSpace(logFile)) {
+                //    var configuration = new LoggerConfiguration()
+                //        .ReadFrom.Configuration(Configuration);
+
+                //    if (!string.IsNullOrWhiteSpace(serverUrl)) {
+                //        configuration.WriteTo.Seq(serverUrl);
+                //    }
+
+                //    builder.AddSerilog();
+                //}
+            });
 
             var useInMemory = bool.Parse(Configuration["IntegrationTestFactory:InMemoryDatabase"] ?? "false");
             if (useInMemory) {

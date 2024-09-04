@@ -2,6 +2,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.WebApi.Models.Responses;
+using Asp.Versioning;
 using Cortside.Common.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -10,14 +10,16 @@ using Cortside.AspNetCore.Common.Paging;
 using FluentAssertions;
 using Newtonsoft.Json;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
     public class CustomerTest : IClassFixture<IntegrationFixture> {
         private readonly IntegrationFixture fixture;
         private readonly HttpClient testServerClient;
 
-        public CustomerTest(IntegrationFixture fixture) {
+        public CustomerTest(IntegrationFixture fixture, ITestOutputHelper output) {
             this.fixture = fixture;
+            this.fixture.TestOutputHelper = output;
             testServerClient = fixture.CreateAuthorizedClient("api");
         }
 

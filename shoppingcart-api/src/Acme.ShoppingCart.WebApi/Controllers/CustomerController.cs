@@ -6,11 +6,12 @@ using Acme.ShoppingCart.Facade;
 using Acme.ShoppingCart.WebApi.Mappers;
 using Acme.ShoppingCart.WebApi.Models.Requests;
 using Acme.ShoppingCart.WebApi.Models.Responses;
+using Asp.Versioning;
 using Cortside.AspNetCore;
 using Cortside.AspNetCore.Common.Paging;
+using Cortside.AspNetCore.Filters.Models;
 using Cortside.Common.Cryptography;
 using Cortside.Common.Messages.MessageExceptions;
-using Cortside.Common.Messages.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
     [Produces("application/json")]
     [ApiController]
     [Route("api/v{version:apiVersion}/customers")]
-    public class CustomerController : Controller {
+    public class CustomerController : ControllerBase {
         private readonly ICustomerFacade facade;
         private readonly CustomerModelMapper customerMapper;
         private readonly IEncryptionService encryptionService;

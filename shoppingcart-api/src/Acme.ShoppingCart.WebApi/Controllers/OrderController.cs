@@ -6,6 +6,7 @@ using Acme.ShoppingCart.Facade;
 using Acme.ShoppingCart.WebApi.Mappers;
 using Acme.ShoppingCart.WebApi.Models.Requests;
 using Acme.ShoppingCart.WebApi.Models.Responses;
+using Asp.Versioning;
 using Cortside.AspNetCore.Common.Paging;
 using Cortside.Common.Messages.MessageExceptions;
 using Medallion.Threading;
@@ -24,7 +25,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
     [Produces("application/json")]
     [ApiController]
     [Route("api/v{version:apiVersion}/orders")]
-    public class OrderController : Controller {
+    public class OrderController : ControllerBase {
         private readonly OrderModelMapper orderMapper;
         private readonly IOrderFacade facade;
         private readonly IDistributedLockProvider lockProvider;

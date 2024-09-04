@@ -3,7 +3,7 @@
     "ConnectionString": ""
   },
   "Seq": {
-    "ServerUrl": ""
+    "ServerUrl": "http://mitterhorn:5341"
   },
   "HealthCheckHostedService": {
     "Enabled": true

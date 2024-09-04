@@ -4,9 +4,9 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="6.3.321-develop" />
-    <PackageReference Include="Cortside.RestApiClient" Version="6.2.171" />
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.10.48">
+    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="6.3.324-6.3" />
+    <PackageReference Include="Cortside.RestApiClient" Version="6.3.186-6.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.11.20">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
