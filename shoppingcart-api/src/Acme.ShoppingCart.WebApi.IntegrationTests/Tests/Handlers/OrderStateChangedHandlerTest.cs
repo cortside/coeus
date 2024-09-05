@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
 using Acme.ShoppingCart.Data;
-using Acme.ShoppingCart.Domain.Entities;
+using Acme.ShoppingCart.TestUtilities;
 using Cortside.Common.Threading;
 using Cortside.DomainEvent;
 using Cortside.DomainEvent.Stub;
@@ -27,8 +27,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests.Handlers {
         public async Task ShouldSendNotificationAsync() {
             //arrange
             var db = fixture.NewScopedDbContext<DatabaseContext>();
-            var customer = db.Customers.First();
-            var order = new Order(customer, "", "", "", "", "");
+            var order = EntityBuilder.GetOrderEntity();
             db.Orders.Add(order);
             await db.SaveChangesAsync();
 
