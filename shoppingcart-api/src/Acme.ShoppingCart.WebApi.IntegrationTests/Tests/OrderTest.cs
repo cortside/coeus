@@ -1,12 +1,11 @@
-using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Data;
-using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.Enumerations;
+using Acme.ShoppingCart.TestUtilities;
 using Acme.ShoppingCart.WebApi.Models.Requests;
 using Acme.ShoppingCart.WebApi.Models.Responses;
 using FluentAssertions;
@@ -26,21 +25,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         [Fact]
         public async Task ShouldCreateOrderAsync() {
             //arrange
-            var orderRequest = new CreateOrderModel() {
-                Customer = new UpdateOrderCustomerModel() {
-                    FirstName = "Elmer",
-                    LastName = "Fudd",
-                    Email = "elmer.fudd@gmail.com"
-                },
-                Address = new Models.AddressModel() {
-                    Street = "123 Main",
-                    City = "Salt Lake City",
-                    State = "UT",
-                    Country = "USA",
-                    ZipCode = "84009"
-                },
-                Items = [new CreateOrderItemModel() { Sku = "123", Quantity = 1 }]
-            };
+            var orderRequest = ModelBuilder.GetCreateOrderModel();
 
             //act
             var orderBody = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");
@@ -57,23 +42,10 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         [Fact]
         public async Task ShouldCreateCustomerOrderAsync() {
             //arrange
-            var request = new UpdateCustomerModel() {
-                FirstName = Guid.NewGuid().ToString(),
-                LastName = "last",
-                Email = "email@gmail.com"
-            };
+            var request = ModelBuilder.GetUpdateCustomerModel();
             var requestBody = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
 
-            var orderRequest = new CreateCustomerOrderModel() {
-                Address = new Models.AddressModel() {
-                    Street = "123 Main",
-                    City = "Salt Lake City",
-                    State = "UT",
-                    Country = "USA",
-                    ZipCode = "84009"
-                },
-                Items = [new CreateOrderItemModel() { Sku = "123", Quantity = 1 }]
-            };
+            var orderRequest = ModelBuilder.GetCreateOrderModel();
 
             //act
             var response = await client.PostAsync("/api/v1/customers", requestBody);
@@ -96,8 +68,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         public async Task ShouldGetOrderAsync() {
             //arrange
             var db = fixture.NewScopedDbContext<DatabaseContext>();
-            var customer = db.Customers.First();
-            var order = new Order(customer, "", "", "", "", "");
+            var order = EntityBuilder.GetOrderEntity();
             db.Orders.Add(order);
             await db.SaveChangesAsync();
 
@@ -112,13 +83,12 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         public async Task ShouldAddOrderItemAsync() {
             //arrange
             var db = fixture.NewScopedDbContext<DatabaseContext>();
-            var customer = db.Customers.First();
-            var orderRequest = new Order(customer, "", "", "", "", "");
-            db.Orders.Add(orderRequest);
+            var orderEntity = EntityBuilder.GetOrderEntity();
+            db.Orders.Add(orderEntity);
             await db.SaveChangesAsync();
 
             //act
-            var orderResponse = await client.GetAsync($"api/v1/orders/{orderRequest.OrderResourceId}");
+            var orderResponse = await client.GetAsync($"api/v1/orders/{orderEntity.OrderResourceId}");
 
             //assert
             var orderContent = await orderResponse.Content.ReadAsStringAsync();
@@ -130,17 +100,17 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             order.Status.Should().Be(OrderStatus.Created);
 
             // act
-            var itemRequest = new CreateOrderItemModel() { Sku = "123", Quantity = 1 };
+            var itemRequest = ModelBuilder.GetCreateOrderItemModel();
             var orderBody = new StringContent(JsonConvert.SerializeObject(itemRequest), Encoding.UTF8, "application/json");
-            orderResponse = await client.PostAsync($"api/v1/orders/{orderRequest.OrderResourceId}/items", orderBody);
+            orderResponse = await client.PostAsync($"api/v1/orders/{orderEntity.OrderResourceId}/items", orderBody);
 
             //assert
             orderContent = await orderResponse.Content.ReadAsStringAsync();
             orderResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-            Assert.Contains(orderRequest.OrderResourceId.ToString(), orderContent);
+            Assert.Contains(orderEntity.OrderResourceId.ToString(), orderContent);
 
             //act
-            orderResponse = await client.GetAsync($"api/v1/orders/{orderRequest.OrderResourceId}");
+            orderResponse = await client.GetAsync($"api/v1/orders/{orderEntity.OrderResourceId}");
 
             //assert
             orderContent = await orderResponse.Content.ReadAsStringAsync();
@@ -156,9 +126,8 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         public async Task ShouldGetPagedOrdersAsync() {
             //arrange
             var db = fixture.NewScopedDbContext<DatabaseContext>();
-            var customer = db.Customers.First();
             for (int i = 0; i < 10; i++) {
-                var order = new Order(customer, "", "", "", "", "");
+                var order = EntityBuilder.GetOrderEntity();
                 db.Orders.Add(order);
             }
             await db.SaveChangesAsync();
@@ -173,24 +142,8 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         [Fact]
         public async Task ShouldUpdateOrderAsync() {
             //arrange
-            var orderRequest = new CreateOrderModel() {
-                Customer = new UpdateOrderCustomerModel() {
-                    FirstName = "Elmer",
-                    LastName = "Fudd",
-                    Email = "elmer.fudd@gmail.com"
-                },
-                Address = new Models.AddressModel() {
-                    Street = "123 Main",
-                    City = "Salt Lake City",
-                    State = "UT",
-                    Country = "USA",
-                    ZipCode = "84009"
-                },
-                Items = [
-                    new CreateOrderItemModel() { Sku = "123", Quantity = 1 },
-                    new CreateOrderItemModel() { Sku = "456", Quantity = 2 }
-                ]
-            };
+            var orderRequest = ModelBuilder.GetCreateOrderModel();
+            orderRequest.Items.Add(ModelBuilder.GetCreateOrderItemModel());
 
             //act
             var orderBody = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");

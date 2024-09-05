@@ -1,10 +1,10 @@
-using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Data;
+using Acme.ShoppingCart.TestUtilities;
 using Acme.ShoppingCart.WebApi.Models.Responses;
 using Cortside.AspNetCore.Common.Paging;
 using FluentAssertions;
@@ -26,11 +26,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         [Fact]
         public async Task ShouldCreateCustomerAsync() {
             //arrange
-            var request = new Models.Requests.UpdateCustomerModel() {
-                FirstName = Guid.NewGuid().ToString(),
-                LastName = "last",
-                Email = "email@gmail.com"
-            };
+            var request = ModelBuilder.GetUpdateCustomerModel();
             var requestBody = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
 
             //act
