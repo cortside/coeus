@@ -1,5 +1,16 @@
 TODO:
 
+* microsoft identity
+	* https://www.codeproject.com/Articles/5378824/Decouple-ASP-NET-Core-Identity-Authentication-and
+* base62
+	* https://www.codeproject.com/Tips/5380920/A-Unique-Identifier-Usable-Across-Disconnected-Sys
+* repo based vs settings
+	* https://www.codeproject.com/Tips/5380771/Saving-Visual-Studio-Settings-for-All-Your-Project
+	* https://learn.microsoft.com/en-us/visualstudio/install/import-export-installation-configurations?view=vs-2022#use-a-configuration-file-to-automatically-install-missing-components
+* JsonPathToModel
+	* https://www.codeproject.com/Tips/5387099/JsonPathToModel-project
+	* https://www.codeproject.com/Articles/5387406/JsonPathToModel-Generic-Data-Importer
+	* https://github.com/Binoculars-X/JsonPathToModel
 * cortside.authorization -- simplest implementation -- policy, policyrole, permissions, rolepermission where policyrole maps to a role claim
 	* uses only role claims?  
 * cortside.storage that has blobs and files -- may somehow be related to restfs

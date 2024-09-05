@@ -78,7 +78,6 @@ namespace Acme.IdentityServer.WebApi.IntegrationTests {
 
             builder.ConfigureLogging(x => {
                 x.AddSerilog(Log.Logger);
-
             });
             testserver = new TestServer(builder);
             Acme.IdentityServer.WebApi.Startup.Handler = testserver.CreateHandler();
