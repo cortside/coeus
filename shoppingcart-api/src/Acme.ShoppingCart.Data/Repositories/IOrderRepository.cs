@@ -8,7 +8,7 @@ using Cortside.AspNetCore.Common.Paging;
 namespace Acme.ShoppingCart.Data.Repositories {
     public interface IOrderRepository {
         Task<PagedList<Order>> SearchAsync(IOrderSearch model);
-        Order Add(Order order);
+        Task<Order> AddAsync(Order order);
         Task<Order> GetAsync(Guid id);
         void RemoveItems(List<OrderItem> itemsToRemove);
     }

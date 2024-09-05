@@ -1,5 +1,70 @@
 TODO:
 
+* cortside.authorization -- simplest implementation -- policy, policyrole, permissions, rolepermission where policyrole maps to a role claim
+	* uses only role claims?  
+* cortside.storage that has blobs and files -- may somehow be related to restfs
+* domainevent -- try to publish message with property that is 26MB
+* add attempt count to outbox and fail after some configurable number
+	* will need method to reset outbox messages to retry again
+* practicality of using x.sln.DotSettings file for those with resharper installed
+* add RCS1163 to .editorconfig -- unused parameter
+* update restapiclient to latest restsharp
+* add default policy for catalogapi client in shoppingcart -- highlighting ability to have default, different than authenication and different than an individual request
+* public static class ServiceIdentification
+{
+    public static string? Name => Assembly.GetExecutingAssembly().GetName().Name;
+
+    public static string Version
+    {
+        get
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            // Get the AssemblyInformationalVersionAttribute
+            var informationalVersionAttribute = Attribute.GetCustomAttribute(
+                assembly,
+                typeof(AssemblyInformationalVersionAttribute)
+                ) as AssemblyInformationalVersionAttribute;
+
+            // Extract the version from the attribute
+            string packageVersion = informationalVersionAttribute?.InformationalVersion ?? string.Empty;
+            SemanticVersion version = SemanticVersion.Parse(packageVersion);
+            return version.ToNormalizedString();
+        }
+    }
+
+    private static string OSIdentifier
+    {
+        get
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return "win";
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) return "linux";
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) return "osx";
+            return "unknown";
+        }
+    }
+
+    public static string BasicRID => $"{OSIdentifier}-{RuntimeInformation.ProcessArchitecture.ToString().ToLowerInvariant()}";
+Use like this:
+
+Console.WriteLine($"{ServiceIdentification.Name} {ServiceIdentification.Version} {ServiceIdentification.BasicRID}");
+
+* arc-200 -- search options
+	* nested properties
+	* define ordering of strings, i.e. one, two, three, four, five
+		* select FinancialProductID, productcat, PATINDEX( +productcat+'*' 'SAC, YES') from FinanciatProduct order by 'SAC,
+* find missing indexes
+	* https://blog.sqlauthority.com/2011/01/03/sql-server-2008-missing-index-script-download/
+	* https://learn.microsoft.com/en-us/sql/relational-databases/indexes/tune-nonclustered-missing-index-suggestions?view=sql-server-ver16
+* non-alphabetic sort example for repositories (executes on sql server)
+	* https://www.codeproject.com/Articles/106570/Custom-Sort-a-List-of-Objects-by-Any-Order
+	* arc-200
+* ARC-184 - conditionally discard malformed messages
+* ARC-185 - publish amqptools.core for other services to be able to manage queues
+	* delete by filter
+* personal access tokens in identityserver
+	* https://ideasof.andersaberg.com/development/personal-access-tokens-with-identityserver
+	* https://github.com/DuendeSoftware/Samples/tree/main/IdentityServer/v5/PAT/src
+* is there a benefit of IDomainEventOutboxPublisher?
 * use nameof() in ForeignKey
 * add event handlers to service tier responsibilities image
 	* https://github.com/cortside/coeus/blob/develop/shoppingcart-api/docs/ServiceTierResponsibilities.png
@@ -11,7 +76,6 @@ TODO:
 	* will need tables, similar to outbox
 	* cortside.aspnetcore.entityframework
 * update templates and libraries to treat warnings as errors
-* SVC-2887 
 * extentions methods to setup LogEvent logger in serviceCollection
 	* ILoggingBuilder
 * complete query-by-post guideline

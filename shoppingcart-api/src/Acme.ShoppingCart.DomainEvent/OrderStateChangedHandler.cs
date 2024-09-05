@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 using Serilog.Context;
 
 namespace Acme.ShoppingCart.DomainEvent {
-    /// <summary>
+    /// <summary>ok
     /// Handles domain event <see cref="OrderStateChangedEvent"/>
     /// </summary>
     public class OrderStateChangedHandler : IDomainEventHandler<OrderStateChangedEvent> {
@@ -29,8 +29,6 @@ namespace Acme.ShoppingCart.DomainEvent {
         }
 
         public async Task<HandlerResult> HandleAsync(DomainEventMessage<OrderStateChangedEvent> @event) {
-            using (LogContext.PushProperty("MessageId", @event.MessageId))
-            using (LogContext.PushProperty("CorrelationId", @event.CorrelationId))
             using (LogContext.PushProperty("OrderResourceId", @event.Data.OrderResourceId)) {
                 logger.LogDebug("Handling {EventName} for ShoppingCart {OrderResourceId}", typeof(OrderStateChangedEvent).Name, @event.Data.OrderResourceId);
 

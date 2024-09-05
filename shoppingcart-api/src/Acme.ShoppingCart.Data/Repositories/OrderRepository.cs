@@ -41,8 +41,8 @@ namespace Acme.ShoppingCart.Data.Repositories {
             return result;
         }
 
-        public Order Add(Order order) {
-            var entity = context.Orders.Add(order);
+        public async Task<Order> AddAsync(Order order) {
+            var entity = await context.Orders.AddAsync(order);
             return entity.Entity;
         }
 

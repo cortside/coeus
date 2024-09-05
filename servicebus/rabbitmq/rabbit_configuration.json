@@ -1,0 +1,80 @@
+{
+  "rabbit_version": "3.6.15",
+  "users": [
+    {
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "administrator",
+      "name": "admin",
+      "password_hash": "9X8QnCA+uDWKwxV+7WeE0IA4eqR32gtjjgikdiJYhqfQskmk"
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "permissions": [
+    {
+      "write": ".*",
+      "read": ".*",
+      "user": "admin",
+      "configure": ".*",
+      "vhost": "/"
+    }
+  ],
+  "parameters": [],
+  "global_parameters": [
+    {
+      "name": "cluster_name",
+      "value": "rabbit@rabbitmq"
+    }
+  ],
+  "policies": [],
+  "queues": [
+    {
+      "durable": true,
+      "name": "shoppingcart.queue",
+      "auto_delete": false,
+      "vhost": "/",
+      "arguments": {}
+    }
+  ],
+  "exchanges": [
+    {
+      "durable": true,
+      "auto_delete": false,
+      "name": "identityserver",
+      "type": "topic",
+      "internal": false,
+      "vhost": "/",
+      "arguments": {}
+    },
+    {
+      "durable": true,
+      "auto_delete": false,
+      "name": "shoppingcart",
+      "type": "topic",
+      "internal": false,
+      "vhost": "/",
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "identityserver",
+      "vhost": "/",
+      "destination": "shoppingcart.queue",
+      "destination_type": "queue",
+      "routing_key": "UserStateChangedEvent",
+      "arguments": {}
+    },
+    {
+      "source": "shoppingcart",
+      "vhost": "/",
+      "destination": "shoppingcart.queue",
+      "destination_type": "queue",
+      "routing_key": "OrderStateChangedEvent",
+      "arguments": {}
+    }
+  ]
+}

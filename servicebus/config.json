@@ -1,0 +1,58 @@
+{
+  "namespaceAuthorizationRules": [
+    {
+      "name": "SendListen",
+      "rights": ["Listen", "Send"]
+    }
+  ],
+  "queues": [
+    {
+      "name": "shoppingcart.queue",
+      "maxSizeInMegabytes": 1024,
+      "enableBatchedOperations": false,
+      "rules": {},
+      "enableDuplicateDetection": false,
+      "duplicateDetectionHistoryTimeWindow": "PT10M",
+      "lockDuration": "PT30S"
+    }
+  ],
+  "topics": [
+    {
+      "name": "identityserver.UserStateChangedEvent",
+      "maxSizeInMegabytes": 1024,
+      "enableBatchedOperations": false,
+      "supportOrdering": false,
+      "enableDuplicateDetection": false,
+      "duplicateDetectionHistoryTimeWindow": "PT10M",
+      "subscriptions": [
+        {
+          "name": "shoppingcart.subscription",
+          "deadLetteringOnFilterEvaluationExceptions": false,
+          "enableBatchedOperations": false,
+          "forwardTo": "shoppingcart.queue",
+          "lockDuration": "PT1M"
+        }
+      ],
+      "rules": {}
+    },
+
+    {
+      "name": "shoppingcart.OrderStateChangedEvent",
+      "maxSizeInMegabytes": 1024,
+      "enableBatchedOperations": false,
+      "supportOrdering": false,
+      "enableDuplicateDetection": false,
+      "duplicateDetectionHistoryTimeWindow": "PT10M",
+      "subscriptions": [
+        {
+          "name": "shoppingcart.subscription",
+          "deadLetteringOnFilterEvaluationExceptions": false,
+          "enableBatchedOperations": false,
+          "forwardTo": "shoppingcart.queue",
+          "lockDuration": "PT1M"
+        }
+      ],
+      "rules": {}
+    }
+  ]
+}
