@@ -7,16 +7,16 @@ using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.Dto;
 using Cortside.AspNetCore.Common.Paging;
-using Cortside.DomainEvent;
+using Cortside.DomainEvent.EntityFramework;
 using Microsoft.Extensions.Logging;
 
 namespace Acme.ShoppingCart.DomainService {
     public class CustomerService : ICustomerService {
-        private readonly IDomainEventPublisher publisher;
+        private readonly IDomainEventOutboxPublisher publisher;
         private readonly ILogger<CustomerService> logger;
         private readonly ICustomerRepository customerRepository;
 
-        public CustomerService(ICustomerRepository customerRepository, IDomainEventPublisher publisher, ILogger<CustomerService> logger) {
+        public CustomerService(ICustomerRepository customerRepository, IDomainEventOutboxPublisher publisher, ILogger<CustomerService> logger) {
             this.publisher = publisher;
             this.logger = logger;
             this.customerRepository = customerRepository;

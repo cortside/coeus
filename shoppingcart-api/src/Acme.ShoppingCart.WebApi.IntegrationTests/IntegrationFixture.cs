@@ -48,23 +48,9 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
         protected override void ConfigureServices(IServiceCollection services) {
             services.AddLogging(builder => {
                 builder.ClearProviders();
-                //builder.AddConsole().AddDebug();
 
+                builder.AddConsole().AddDebug();
                 builder.AddXunit(TestOutputHelper);
-
-                //var serverUrl = Configuration["Seq:ServerUrl"];
-                //var logFile =  Configuration["LogFile:Path"];
-
-                //if (!string.IsNullOrWhiteSpace(serverUrl) || !string.IsNullOrWhiteSpace(logFile)) {
-                //    var configuration = new LoggerConfiguration()
-                //        .ReadFrom.Configuration(Configuration);
-
-                //    if (!string.IsNullOrWhiteSpace(serverUrl)) {
-                //        configuration.WriteTo.Seq(serverUrl);
-                //    }
-
-                //    builder.AddSerilog();
-                //}
             });
 
             var useInMemory = bool.Parse(Configuration["IntegrationTestFactory:InMemoryDatabase"] ?? "false");
@@ -83,6 +69,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
             }
 
             services.RegisterDomainEventPublisher();
+
             SerializerSettings = services.ResolveSerializerSettings();
         }
     }

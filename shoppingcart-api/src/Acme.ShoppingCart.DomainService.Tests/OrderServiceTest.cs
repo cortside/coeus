@@ -5,7 +5,7 @@ using Acme.ShoppingCart.CatalogApi;
 using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.Data.Repositories;
 using Acme.ShoppingCart.TestUtilities;
-using Cortside.DomainEvent;
+using Cortside.DomainEvent.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
@@ -17,7 +17,7 @@ namespace Acme.ShoppingCart.DomainService.Tests {
 
         public OrderServiceTest() : base() {
             databaseContext = GetDatabaseContext();
-            var publisher = new Mock<IDomainEventPublisher>();
+            var publisher = new Mock<IDomainEventOutboxPublisher>();
             var orderRepository = new OrderRepository(databaseContext);
             Service = new OrderService(orderRepository, publisher.Object, NullLogger<OrderService>.Instance, new Mock<ICatalogClient>().Object);
 
