@@ -18,3 +18,8 @@
 * Startup: IApiVersionDescriptionProvider is referenced from Asp.Versioning.ApiExplorer
 * Controllers: ApiVersion and ApiVersionNeutral attributes needs to be referenced from Asp.Versioning
 * ErrorsModel and ErrorModel should be referenced from Cortside.AspNetCore.Filters.Models
+* Remove any references to
+	* PolicyServer.Runtime.Client.AspNetCore
+	* RestSharp
+	* System.IdentityModel.*
+	* IdentityServer4.*
