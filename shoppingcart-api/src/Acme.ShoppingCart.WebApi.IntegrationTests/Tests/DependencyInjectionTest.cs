@@ -17,12 +17,12 @@ using Xunit;
 using Xunit.Abstractions;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
-    public class DependencyInjectionTest : IClassFixture<IntegrationTestFactory<Startup>> {
-        private readonly IntegrationTestFactory<Startup> fixture;
+    public class DependencyInjectionTest : IClassFixture<IntegrationFixture> {
+        private readonly IntegrationFixture webApi;
         private readonly ITestOutputHelper testOutputHelper;
 
-        public DependencyInjectionTest(IntegrationTestFactory<Startup> fixture, ITestOutputHelper testOutputHelper) {
-            this.fixture = fixture;
+        public DependencyInjectionTest(IntegrationFixture webApi, ITestOutputHelper testOutputHelper) {
+            this.webApi = webApi;
             this.testOutputHelper = testOutputHelper;
         }
 
@@ -34,8 +34,9 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             controllersAssembly = typeof(AuthorizationController).Assembly;
             controllers.AddRange(controllersAssembly.ExportedTypes.Where(x => typeof(ControllerBase).IsAssignableFrom(x) && !x.IsAbstract));
 
-            var activator = fixture.Services.GetService<IControllerActivator>();
-            var serviceProvider = fixture.Services.GetService<IServiceProvider>();
+            var activator = webApi.Services.GetService<IControllerActivator>();
+            var sp = webApi.Services.GetService<IServiceProvider>();
+            var serviceProvider = sp.CreateScope().ServiceProvider;
             var errors = new Dictionary<Type, Exception>();
 
             var count = 0;
@@ -48,6 +49,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
                 try {
                     var stopwatch = new Stopwatch();
                     stopwatch.Start();
+
                     var actionContext = new ActionContext(
                         new DefaultHttpContext {
                             RequestServices = serviceProvider
@@ -83,7 +85,9 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
 
         [Fact]
         public void VerifyFacadeResolution() {
-            var serviceProvider = fixture.Services.GetService<IServiceProvider>();
+            var sp = webApi.Services.GetService<IServiceProvider>();
+            var serviceProvider = sp.CreateScope().ServiceProvider;
+
             int count = FindAndVerifyTypeResolution(typeof(CustomerFacade), serviceProvider);
 
             // assert that types were found and no exceptions happened before now
@@ -92,7 +96,9 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
 
         [Fact]
         public void VerifyHandlerResolution() {
-            var serviceProvider = fixture.Services.GetService<IServiceProvider>();
+            var sp = webApi.Services.GetService<IServiceProvider>();
+            var serviceProvider = sp.CreateScope().ServiceProvider;
+
             int count = FindAndVerifyTypeResolution(typeof(OrderStateChangedHandler), serviceProvider);
 
             // assert that types were found and no exceptions happened before now

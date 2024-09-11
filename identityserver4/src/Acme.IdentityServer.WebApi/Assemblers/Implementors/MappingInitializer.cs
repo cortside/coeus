@@ -1,6 +1,6 @@
 using System;
-using AutoMapper;
 using Acme.IdentityServer.WebApi.Assemblers.Implementors.Profiles;
+using AutoMapper;
 
 namespace Acme.IdentityServer.WebApi.Assemblers.Implementors {
     public sealed class MappingInitializer {

@@ -1,4 +1,7 @@
 namespace Acme.ShoppingCart.WebApi.Models.Requests {
+    /// <summary>
+    /// Request to add an item to an order
+    /// </summary>
     public class CreateOrderItemModel {
         /// <summary>
         /// Gets or sets the sku.

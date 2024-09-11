@@ -1,48 +1,35 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable } from 'rxjs';
+import { AuthorizationService } from '@muziehdesign/core';
+import { catchError, Observable, of, throwError } from 'rxjs';
 import { CatalogClient } from '../api/catalog/catalog.client';
 import { ItemResponse } from '../api/catalog/models/responses/item.response';
 import { PagedResponse } from '../api/paged.response';
-import { ItemModel } from '../catalog/models/item.model';
-import { PagedModel } from '../common/paged.model';
+import { UnexpectedError } from './errors';
+import { SHOPPING_CART_PERMISSIONS } from './permissions';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ItemService {
-    constructor(private client: CatalogClient) {}
+    constructor(private authorization: AuthorizationService, private client: CatalogClient) {}
 
-    getItem(sku: string): Observable<ItemModel> {
+    getItem(sku: string): Observable<ItemResponse | undefined> {
         return this.client.getItem(sku).pipe(
             catchError((error: HttpErrorResponse) => {
-                console.log(error);
-                throw new Error('not yet implemeted');
-            }),
-            map((x:ItemResponse) => assembleItemModel(x))
-        );
-    } 
-
-    getItems(): Observable<PagedModel<ItemModel>> {
-        return this.client.getItems().pipe(
-            map((x: PagedResponse<ItemResponse>) => {
-                return {
-                    totalItems: x.totalItems,
-                    pageNumber: x.pageNumber,
-                    pageSize: x.pageSize,
-                    items: x.items.map((i) => assembleItemModel(i)),
-                } as PagedModel<ItemModel>;
+                if(error.status === HttpStatusCode.NotFound) {
+                    return of(undefined);
+                }
+                return throwError(() => new UnexpectedError(error));
             })
         );
     }
-}
 
-export const assembleItemModel = (response: ItemResponse): ItemModel => {
-    return {
-        itemId: response.itemId,
-        name: response.name,
-        sku: response.sku,
-        unitPrice: response.unitPrice,
-        imageUrl: response.imageUrl,
-    } as ItemResponse;
-};
+    getItems(): Observable<PagedResponse<ItemResponse>> {
+        return this.client.getItems();
+    }
+
+    getItemRelatedAuthorizations(): string[] {
+        return this.authorization.authorizePolicies([SHOPPING_CART_PERMISSIONS.createOrder, SHOPPING_CART_PERMISSIONS.updateOrder]);
+    }
+}

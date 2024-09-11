@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CartItemModel } from '../common/cart-item.model';
-import { ShoppingCartService } from '../core/shopping-cart.service';
+import { CartItemModel } from '../models/cart-item.model';
+import { ShoppingCart } from '../core/shopping-cart';
 
 @Component({
     selector: 'app-checkout',
@@ -10,8 +10,8 @@ import { ShoppingCartService } from '../core/shopping-cart.service';
 })
 export class CheckoutComponent {
     items$: Observable<CartItemModel[]>;
-    constructor(private service: ShoppingCartService) {
-        this.items$ = this.service.getCartItems();
+    constructor(private service: ShoppingCart) {
+        this.items$ = this.service.stateChanges();
     }
 
     checkout(): void {

@@ -1,8 +1,6 @@
-#pragma warning disable CS1591
-
 using System;
 using System.Collections.Generic;
-using Acme.ShoppingCart.WebApi.Models.Enumerations;
+using Acme.ShoppingCart.Enumerations;
 using Cortside.AspNetCore.Common.Models;
 
 namespace Acme.ShoppingCart.WebApi.Models.Responses {

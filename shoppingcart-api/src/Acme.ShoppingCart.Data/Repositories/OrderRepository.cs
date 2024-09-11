@@ -16,7 +16,7 @@ namespace Acme.ShoppingCart.Data.Repositories {
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<PagedList<Order>> SearchAsync(int pageSize, int pageNumber, string sortParams, IOrderSearch model) {
+        public async Task<PagedList<Order>> SearchAsync(IOrderSearch model) {
             var orders = (IQueryable<Order>)context.Orders
                 .Include(x => x.Address)
                 .Include(x => x.Customer)
@@ -29,20 +29,20 @@ namespace Acme.ShoppingCart.Data.Repositories {
 
             orders = model.Build(orders);
             var result = new PagedList<Order> {
-                PageNumber = pageNumber,
-                PageSize = pageSize,
+                PageNumber = model.PageNumber,
+                PageSize = model.PageSize,
                 TotalItems = await orders.CountAsync().ConfigureAwait(false),
-                Items = new List<Order>(),
+                Items = [],
             };
 
-            orders = orders.ToSortedQuery(sortParams);
-            result.Items = await orders.ToPagedQuery(pageNumber, pageSize).ToListAsync().ConfigureAwait(false);
+            orders = orders.ToSortedQuery(model.Sort);
+            result.Items = await orders.ToPagedQuery(model.PageNumber, model.PageSize).ToListAsync().ConfigureAwait(false);
 
             return result;
         }
 
-        public Order Add(Order order) {
-            var entity = context.Orders.Add(order);
+        public async Task<Order> AddAsync(Order order) {
+            var entity = await context.Orders.AddAsync(order);
             return entity.Entity;
         }
 
@@ -59,6 +59,10 @@ namespace Acme.ShoppingCart.Data.Repositories {
                 .FirstOrDefaultAsync(o => o.OrderResourceId == id).ConfigureAwait(false);
 
             return order;
+        }
+
+        public void RemoveItems(List<OrderItem> itemsToRemove) {
+            context.RemoveRange(itemsToRemove);
         }
     }
 }

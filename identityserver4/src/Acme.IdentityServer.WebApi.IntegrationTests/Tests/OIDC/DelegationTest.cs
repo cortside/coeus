@@ -96,7 +96,7 @@ namespace Acme.IdentityServer.WebApi.IntegrationTests.Tests.OIDC {
             Assert.Equal("roadrunnercorp", client_id);
             Assert.Equal("application-api", act_client_id);
 
-            Assert.False(jwtSecurityToken.Claims.Any(x => x.Type.StartsWith("act_act_")));
+            Assert.DoesNotContain(jwtSecurityToken.Claims, x => x.Type.StartsWith("act_act_"));
         }
 
         private async Task<string> GetToken(string clientId, string scope, string tokenToDelegate) {

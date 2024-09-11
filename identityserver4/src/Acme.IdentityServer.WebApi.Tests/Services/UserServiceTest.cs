@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Cortside.DomainEvent.EntityFramework;
 using Acme.DomainEvent.Events;
 using Acme.IdentityServer.WebApi.Controllers.Account;
 using Acme.IdentityServer.WebApi.Data;
@@ -12,6 +11,7 @@ using Acme.IdentityServer.WebApi.Exceptions;
 using Acme.IdentityServer.WebApi.Models;
 using Acme.IdentityServer.WebApi.Models.Input;
 using Acme.IdentityServer.WebApi.Services;
+using Cortside.DomainEvent.EntityFramework;
 using FluentAssertions;
 using IdentityModel;
 using Microsoft.AspNetCore.Http;
@@ -54,14 +54,14 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
         }
 
         [Fact]
-        public void ShouldValidateUserExistenceWhenUpdatingPassword() {
+        public Task ShouldValidateUserExistenceWhenUpdatingPassword() {
             // arrange
             Guid subjectId = Guid.NewGuid();
             UpdatePasswordModel model = new UpdatePasswordModel();
             idsDbContextMock.Setup(c => c.Users).Returns(new List<User>().AsQueryable());
 
             // act & assert
-            Assert.Throws<ResourceNotFoundMessage>(() => service.UpdatePassword(subjectId, model));
+            return Assert.ThrowsAsync<ResourceNotFoundMessage>(async () => await service.UpdatePassword(subjectId, model));
         }
 
         [Fact]
@@ -116,7 +116,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
         }
 
         [Fact]
-        public async Task ShouldValidateExistenceWhenUpdatingUserAsync() {
+        public Task ShouldValidateExistenceWhenUpdatingUserAsync() {
             // arrange
             Guid userId = Guid.NewGuid();
             UpdateUserModel model = new UpdateUserModel() {
@@ -125,7 +125,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             idsDbContextMock.Setup(c => c.Users).Returns(new List<User>().AsQueryable());
 
             // act & assert
-            await Assert.ThrowsAsync<ResourceNotFoundMessage>(() => service.UpdateUser(userId, model));
+            return Assert.ThrowsAsync<ResourceNotFoundMessage>(() => service.UpdateUser(userId, model));
         }
 
         [Fact]
@@ -152,7 +152,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
                     }
                 }
             }.AsQueryable());
-            idsDbContextMock.Setup(c => c.SaveChanges());
+            idsDbContextMock.Setup(c => c.SaveChangesAsync());
             domainEventPublisherMock.Setup(d => d.PublishAsync(It.Is<UserStateChangedEvent>(u => u.SubjectId == userId && u.GivenName.Equals("Jane") && u.FamilyName.Equals("Doe")))).Returns(Task.CompletedTask);
 
             // act
@@ -170,7 +170,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
         }
 
         [Fact]
-        public void ShouldGenerate32Digit2FaKey() {
+        public async Task ShouldGenerate32Digit2FaKey() {
             // arrange
             Guid userId = Guid.NewGuid();
             idsDbContextMock.Setup(c => c.Users).Returns(new List<User>
@@ -184,18 +184,17 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
                     }
                 }
             }.AsQueryable());
-            idsDbContextMock.Setup(c => c.SaveChanges());
+            idsDbContextMock.Setup(c => c.SaveChangesAsync());
 
             // act
-            var result = service.GenerateAndSetNewTOTPCode(userId);
-
+            var result = await service.GenerateAndSetNewTOTPCode(userId);
 
             // assert
             Assert.Equal(32, result.Length);
         }
 
         [Fact]
-        public void ShouldValidateGenerated2FaCodeWithSavedKey() {
+        public async Task ShouldValidateGenerated2FaCodeWithSavedKey() {
             // arrange
             Guid userId = Guid.NewGuid();
             idsDbContextMock.Setup(c => c.Users).Returns(new List<User>
@@ -209,10 +208,10 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
                     }
                 }
             }.AsQueryable());
-            idsDbContextMock.Setup(c => c.SaveChanges());
+            idsDbContextMock.Setup(c => c.SaveChangesAsync());
 
             //generate code
-            var resultCode = service.GenerateAndSetNewTOTPCode(userId);
+            var resultCode = await service.GenerateAndSetNewTOTPCode(userId);
 
             //use code to check what new key should be 
             Assert.Equal(32, resultCode.Length);
@@ -220,12 +219,12 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             OtpNet.Totp totp = new Totp(base32Bytes);
             var currentTotp = totp.ComputeTotp();
             //check key with what is saved on user
-            var validated = service.VerifyCurrentTOTP(userId, currentTotp);
+            var validated = await service.VerifyCurrentTOTP(userId, currentTotp);
             //if not validated, recalculate to check again just in case of time drift and rotation
             if (!validated) {
                 currentTotp = totp.ComputeTotp();
                 //check key with what is saved on user
-                validated = service.VerifyCurrentTOTP(userId, currentTotp);
+                validated = await service.VerifyCurrentTOTP(userId, currentTotp);
             }
             Assert.True(validated);
         }
@@ -314,7 +313,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             };
             idsDbContextMock.Setup(c => c.Users).Returns(new List<User>().AsQueryable());
             idsDbContextMock.Setup(c => c.AddUser(It.IsAny<User>()));
-            idsDbContextMock.Setup(c => c.SaveChanges());
+            idsDbContextMock.Setup(c => c.SaveChangesAsync());
             string salt = "salt";
             string hashedPassword = "hashedPassword";
             hashProviderMock.Setup(h => h.GenerateSalt()).Returns(salt);
@@ -366,7 +365,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
         }
 
         [Fact]
-        public void ShouldValidateExistenceWhenLockingUser() {
+        public Task ShouldValidateExistenceWhenLockingUser() {
             // arrange
             Guid userId = Guid.NewGuid();
             UpdateLockModel model = new UpdateLockModel() {
@@ -375,11 +374,11 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             idsDbContextMock.Setup(c => c.Users).Returns(new List<User>().AsQueryable());
 
             // act & assert
-            Assert.Throws<ResourceNotFoundMessage>(() => service.UpdateUserLock(userId, model));
+            return Assert.ThrowsAsync<ResourceNotFoundMessage>(async () => await service.UpdateUserLock(userId, model));
         }
 
         [Fact]
-        public void ShouldLockUserLock() {
+        public async Task ShouldLockUserLock() {
             // arrange
             string reason = "System hard locked the user due to too many failed login attempts.";
 
@@ -393,21 +392,21 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
                 IsLocked = false
             };
             idsDbContextMock.Setup(c => c.Users).Returns(new List<User>() { user }.AsQueryable());
-            idsDbContextMock.Setup(c => c.SaveChanges());
+            idsDbContextMock.Setup(c => c.SaveChangesAsync());
 
             // act
-            var result = service.UpdateUserLock(userId, model);
+            var result = await service.UpdateUserLock(userId, model);
 
             // assert
             Assert.Equal(model.IsLocked, result.IsLocked);
-            Assert.Equal(0, user.LoginAttempts.Count);
+            Assert.Empty(user.LoginAttempts);
             Assert.Equal(reason, user.LockedReason);
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void ShouldUnlockUserLock(bool doesUserHaveALockReason) {
+        public async Task ShouldUnlockUserLock(bool doesUserHaveALockReason) {
             // arrange
             Guid userId = Guid.NewGuid();
             string oldLockReason = doesUserHaveALockReason ? "LockReason" : null;
@@ -422,14 +421,14 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
                 LockedReason = oldLockReason
             };
             idsDbContextMock.Setup(c => c.Users).Returns(new List<User>() { user }.AsQueryable());
-            idsDbContextMock.Setup(c => c.SaveChanges());
+            idsDbContextMock.Setup(c => c.SaveChangesAsync());
 
             // act
-            var result = service.UpdateUserLock(userId, model);
+            var result = await service.UpdateUserLock(userId, model);
 
             // assert
             Assert.Equal(model.IsLocked, result.IsLocked);
-            Assert.Equal(1, user.LoginAttempts.Count);
+            Assert.Single(user.LoginAttempts);
 
             //Due to being an unlock the reason is cleared
             Assert.Empty(user.LockedReason);

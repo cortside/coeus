@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Acme.IdentityServer.Data;
 using Acme.IdentityServer.WebApi.Assemblers.Implementors;
 using Acme.IdentityServer.WebApi.Data;
 using Acme.IdentityServer.WebApi.Models.Output;

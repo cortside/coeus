@@ -1,5 +1,4 @@
 using System.IO.Abstractions;
-using Cortside.Common.BootStrap;
 using Acme.IdentityServer.WebApi.Assemblers;
 using Acme.IdentityServer.WebApi.Assemblers.Implementors;
 using Acme.IdentityServer.WebApi.Controllers.Account;
@@ -8,6 +7,7 @@ using Acme.IdentityServer.WebApi.Helpers;
 using Acme.IdentityServer.WebApi.Models;
 using Acme.IdentityServer.WebApi.Services;
 using Acme.IdentityServer.WebApi.Services.ExtensionGrantValidators;
+using Cortside.Common.BootStrap;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

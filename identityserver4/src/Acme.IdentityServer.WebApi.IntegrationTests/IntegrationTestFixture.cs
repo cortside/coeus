@@ -20,6 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Moq;
 using Serilog;
+using Serilog.Extensions.Hosting;
 using ApiScope = IdentityServer4.Models.ApiScope;
 using Client = IdentityServer4.Models.Client;
 using ClientClaim = IdentityServer4.Models.ClientClaim;
@@ -58,7 +59,6 @@ namespace Acme.IdentityServer.WebApi.IntegrationTests {
             }
             Log.Logger = loggerConfiguration.CreateLogger();
             IWebHostBuilder builder = new WebHostBuilder()
-                .UseSerilog(Log.Logger)
                 .UseConfiguration(configuration)
                 .UseStartup<Acme.IdentityServer.WebApi.Startup>()
                 .UseEnvironment(Environments.Development)
@@ -68,7 +68,17 @@ namespace Acme.IdentityServer.WebApi.IntegrationTests {
 
                     RegisterDbContext(sc);
                     sc.AddSingleton<IDomainEventOutboxPublisher>(publisherStub);
+
+                    // Registered to provide two services...            
+                    // Consumed by e.g. middleware
+                    sc.AddSingleton(services => new DiagnosticContext(Log.Logger));
+                    // Consumed by user code
+                    sc.AddSingleton<IDiagnosticContext>(services => services.GetRequiredService<DiagnosticContext>());
                 });
+
+            builder.ConfigureLogging(x => {
+                x.AddSerilog(Log.Logger);
+            });
             testserver = new TestServer(builder);
             Acme.IdentityServer.WebApi.Startup.Handler = testserver.CreateHandler();
             Client = testserver.CreateClient();

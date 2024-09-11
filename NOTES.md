@@ -1,5 +1,164 @@
 TODO:
 
+* microsoft identity
+	* https://www.codeproject.com/Articles/5378824/Decouple-ASP-NET-Core-Identity-Authentication-and
+* base62
+	* https://www.codeproject.com/Tips/5380920/A-Unique-Identifier-Usable-Across-Disconnected-Sys
+* repo based vs settings
+	* https://www.codeproject.com/Tips/5380771/Saving-Visual-Studio-Settings-for-All-Your-Project
+	* https://learn.microsoft.com/en-us/visualstudio/install/import-export-installation-configurations?view=vs-2022#use-a-configuration-file-to-automatically-install-missing-components
+* JsonPathToModel
+	* https://www.codeproject.com/Tips/5387099/JsonPathToModel-project
+	* https://www.codeproject.com/Articles/5387406/JsonPathToModel-Generic-Data-Importer
+	* https://github.com/Binoculars-X/JsonPathToModel
+* cortside.authorization -- simplest implementation -- policy, policyrole, permissions, rolepermission where policyrole maps to a role claim
+	* uses only role claims?  
+* cortside.storage that has blobs and files -- may somehow be related to restfs
+* domainevent -- try to publish message with property that is 26MB
+* add attempt count to outbox and fail after some configurable number
+	* will need method to reset outbox messages to retry again
+* practicality of using x.sln.DotSettings file for those with resharper installed
+* add RCS1163 to .editorconfig -- unused parameter
+* update restapiclient to latest restsharp
+* add default policy for catalogapi client in shoppingcart -- highlighting ability to have default, different than authenication and different than an individual request
+* public static class ServiceIdentification
+{
+    public static string? Name => Assembly.GetExecutingAssembly().GetName().Name;
+
+    public static string Version
+    {
+        get
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            // Get the AssemblyInformationalVersionAttribute
+            var informationalVersionAttribute = Attribute.GetCustomAttribute(
+                assembly,
+                typeof(AssemblyInformationalVersionAttribute)
+                ) as AssemblyInformationalVersionAttribute;
+
+            // Extract the version from the attribute
+            string packageVersion = informationalVersionAttribute?.InformationalVersion ?? string.Empty;
+            SemanticVersion version = SemanticVersion.Parse(packageVersion);
+            return version.ToNormalizedString();
+        }
+    }
+
+    private static string OSIdentifier
+    {
+        get
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return "win";
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) return "linux";
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) return "osx";
+            return "unknown";
+        }
+    }
+
+    public static string BasicRID => $"{OSIdentifier}-{RuntimeInformation.ProcessArchitecture.ToString().ToLowerInvariant()}";
+Use like this:
+
+Console.WriteLine($"{ServiceIdentification.Name} {ServiceIdentification.Version} {ServiceIdentification.BasicRID}");
+
+* arc-200 -- search options
+	* nested properties
+	* define ordering of strings, i.e. one, two, three, four, five
+		* select FinancialProductID, productcat, PATINDEX( +productcat+'*' 'SAC, YES') from FinanciatProduct order by 'SAC,
+* find missing indexes
+	* https://blog.sqlauthority.com/2011/01/03/sql-server-2008-missing-index-script-download/
+	* https://learn.microsoft.com/en-us/sql/relational-databases/indexes/tune-nonclustered-missing-index-suggestions?view=sql-server-ver16
+* non-alphabetic sort example for repositories (executes on sql server)
+	* https://www.codeproject.com/Articles/106570/Custom-Sort-a-List-of-Objects-by-Any-Order
+	* arc-200
+* ARC-184 - conditionally discard malformed messages
+* ARC-185 - publish amqptools.core for other services to be able to manage queues
+	* delete by filter
+* personal access tokens in identityserver
+	* https://ideasof.andersaberg.com/development/personal-access-tokens-with-identityserver
+	* https://github.com/DuendeSoftware/Samples/tree/main/IdentityServer/v5/PAT/src
+* is there a benefit of IDomainEventOutboxPublisher?
+* use nameof() in ForeignKey
+* add event handlers to service tier responsibilities image
+	* https://github.com/cortside/coeus/blob/develop/shoppingcart-api/docs/ServiceTierResponsibilities.png
+* support adding before and after request
+	* onBeforeRequest
+	* onAfterRequest
+* middleware to save request and responses
+	* based on configuration
+	* will need tables, similar to outbox
+	* cortside.aspnetcore.entityframework
+* update templates and libraries to treat warnings as errors
+* extentions methods to setup LogEvent logger in serviceCollection
+	* ILoggingBuilder
+* complete query-by-post guideline
+* swagger docs should show the required permission
+* test out having multiple domainevents with common base type handled by single handler
+* api rate limiting
+	* https://learn.microsoft.com/en-us/aspnet/core/performance/rate-limit?view=aspnetcore-8.0#rate-limiter-samples
+* package AmqpCommon from AmqpTools for use by AmqpService-api
+* Add peek and receive to AmqpTools
+* Add delete to AmqpTools
+	* figure out if there is way to not have to receive all messages and then either accept or release
+		* filters	
+		* https://github.com/Azure/amqpnetlite/blob/master/docs/articles/azure_eventhubs.md
+		* https://gist.github.com/scholzj/8a79abc31fc3b1224637#file-requestresponse-cs-L55
+		* https://github.com/amqp/rhea/issues/55
+* use of reference tokens for api clients
+* ITimeProvider
+	* https://steven-giesel.com/blogPost/4d5b70fe-35c1-43c7-bebe-49194195ffcb
+* Use of DateOnly and TimeOnly
+	* https://code-maze.com/csharp-map-dateonly-timeonly-types-to-sql/
+	* https://stackoverflow.com/questions/52254740/entity-framework-migrate-from-datetime-to-datetimeoffset
+	* https://learn.microsoft.com/en-us/dotnet/standard/datetime/converting-between-datetime-and-offset
+* DateTimeOffset
+	* https://ardalis.com/why-use-datetimeoffset/
+* Use ef interceptor instead of derived dbcontext class to set audit stamps
+	```csharp
+	public sealed class UpdateEntityLifetimeInterceptor : SaveChangesInterceptor
+	{
+		public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
+		{
+		   DbContext? dbContext = eventData.Context;
+		   if (dbContext is null)
+		   {
+			   return await base.SavingChangesAsync(eventData, result, cancellationToken);
+		   }
+
+		   var entities = dbContext.ChangeTracker.Entries<Entity>();
+
+		   foreach (var entity in entities)
+		   {
+			   if (entity.CreatedOn == DateTime.MinValue)
+				   entity.CreatedOn = DateTime.Now;
+			   else
+				   entity.ModifiedOn = DateTime.Now;
+		   }
+
+		   return await base.SavingChangesAsync(eventData, result, cancellationToken);
+		}
+	}
+	```
+* (OR-284) Expose service bus message consumption stats in health check
+	* shoppingcart-api
+		* messages consumed
+		* messages accepted
+		* messages rejected
+		* messages published
+		* datetime last message consume
+		* datetme last message accepted
+		* datetime last message rejected
+		* datetime last message published
+* injectable services in EF entity Class
+	* https://community.abp.io/posts/injecting-service-dependencies-to-entities-with-entity-framework-core-7.0-db6vdh4s
+	* could use attribute to denote properties to inject
+		* properties wouldn't be available to constructor, unless an argument in constructor
+	* https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-implementation-entity-framework-core#infrastructure-in-entity-framework-core-from-a-ddd-perspective
+	* https://medium.com/@sergiis/domain-entity-projections-in-efcore-2dbd6a9116ff
+	* https://www.reddit.com/r/dotnet/comments/14lfbb3/how_can_a_rich_domain_model_be_implemented_in/
+	* Separation of concerns. Entity deals with the entity. Service deals with things that use the entity.
+	* https://www.thereformedprogrammer.net/creating-domain-driven-design-entity-classes-with-entity-framework-core/
+	* https://www.thereformedprogrammer.net/architecture-of-business-layer-working-with-entity-framework-core-and-v6-revisited/
+* object graph walker
+	* https://stackoverflow.com/questions/61944125/traversing-a-graph-of-unknown-object-types-and-mutating-some-object-properties
 * guidelines page for common test data	
 	* https://developer.wepay.com/docs/articles/testing
 * domaineventreceiver to add stopwatch and report proccessing time

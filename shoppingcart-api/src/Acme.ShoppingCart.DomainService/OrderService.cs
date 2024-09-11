@@ -28,7 +28,7 @@ namespace Acme.ShoppingCart.DomainService {
             this.catalog = catalog;
         }
 
-        public async Task<Order> CreateOrderAsync(Customer customer, OrderDto dto) {
+        public async Task<Order> CreateOrderAsync(Customer customer, CreateOrderDto dto) {
             Guard.From.Null<BadRequestResponseException>(customer, "customer not found");
 
             var entity = new Order(customer, dto.Address.Street, dto.Address.City, dto.Address.State, dto.Address.Country, dto.Address.ZipCode);
@@ -39,7 +39,7 @@ namespace Acme.ShoppingCart.DomainService {
                 }
                 logger.LogInformation("Created new order");
 
-                orderRepository.Add(entity);
+                await orderRepository.AddAsync(entity);
                 var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = entity.LastModifiedDate };
                 await publisher.PublishAsync(@event).ConfigureAwait(false);
 
@@ -52,19 +52,19 @@ namespace Acme.ShoppingCart.DomainService {
             return entity;
         }
 
-        public Task<PagedList<Order>> SearchOrdersAsync(int pageSize, int pageNumber, string sortParams, OrderSearch search) {
-            return orderRepository.SearchAsync(pageSize, pageNumber, sortParams, search);
+        public Task<PagedList<Order>> SearchOrdersAsync(OrderSearch search) {
+            search.Sort ??= $"-{nameof(Order.CreatedDate)}";
+            return orderRepository.SearchAsync(search);
         }
 
-        public async Task<Order> UpdateOrderAsync(OrderDto dto) {
-            var entity = await orderRepository.GetAsync(dto.OrderResourceId).ConfigureAwait(false);
+        public async Task<Order> UpdateOrderAsync(Guid id, UpdateOrderDto dto) {
+            var entity = await orderRepository.GetAsync(id).ConfigureAwait(false);
             entity.UpdateAddress(dto.Address.Street, dto.Address.City, dto.Address.State, dto.Address.Country, dto.Address.ZipCode);
 
             // remove items not in dto
             var itemsToRemove = new List<OrderItem>();
-            foreach (var item in entity.Items.Where(x => !dto.Items.Any(i => i.Sku == x.Sku))) {
-                itemsToRemove.Add(item);
-            }
+            itemsToRemove.AddRange(entity.Items.Where(x => !dto.Items.Exists(i => i.Sku == x.Sku)));
+            orderRepository.RemoveItems(itemsToRemove);
             entity.RemoveItems(itemsToRemove);
 
             // add items not already on order

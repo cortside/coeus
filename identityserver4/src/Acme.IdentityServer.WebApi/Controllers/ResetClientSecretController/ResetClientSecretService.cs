@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Acme.IdentityServer.WebApi.Services;
 
 namespace Acme.IdentityServer.WebApi.Controllers.ResetClientSecretController {
@@ -35,10 +36,10 @@ namespace Acme.IdentityServer.WebApi.Controllers.ResetClientSecretController {
             return vm;
         }
 
-        public SecretKeyModel BuildSecretKeyViewModel(Guid requestId) {
+        public async Task<SecretKeyModel> BuildSecretKeyViewModel(Guid requestId) {
             var vm = new SecretKeyModel();
 
-            vm.SecretKey = clientSecretService.GetClientSecretKey(requestId);
+            vm.SecretKey = await clientSecretService.GetClientSecretKey(requestId);
 
             return vm;
         }

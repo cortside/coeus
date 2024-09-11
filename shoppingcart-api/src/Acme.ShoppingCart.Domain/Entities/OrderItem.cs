@@ -27,13 +27,26 @@ namespace Acme.ShoppingCart.Domain.Entities {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Comment("Primary Key")]
         public int OrderItemId { get; private set; }
+
+        /// <summary>
+        /// FK to Order that the OrderItem belongs to
+        /// </summary>
+        /// <remarks>OrderId added explicitly here so that it does not become nullable when inferred by relationships</remarks>
+        [Comment("FK to Order that the OrderItem belongs to")]
+        [ForeignKey(nameof(OrderId))]
+        public int OrderId { get; private set; }
+
         [Comment("FK to Item in Catalog service")]
         public Guid ItemId { get; private set; }
+
+        [Required]
         [StringLength(10)]
         [Comment("Item Sku")]
         public string Sku { get; private set; }
+
         [Comment("Quantity of Sku")]
         public int Quantity { get; private set; }
+
         [Column(TypeName = "money")]
         [Comment("Per quantity price")]
         public decimal UnitPrice { get; private set; }

@@ -1,34 +1,32 @@
-using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Acme.ShoppingCart.Data;
+using Acme.ShoppingCart.TestUtilities;
 using Acme.ShoppingCart.WebApi.Models.Responses;
 using Cortside.AspNetCore.Common.Paging;
 using FluentAssertions;
 using Newtonsoft.Json;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
-    public class CustomerTest : IClassFixture<IntegrationTestFactory<Startup>> {
-        private readonly IntegrationTestFactory<Startup> fixture;
+    public class CustomerTest : IClassFixture<IntegrationFixture> {
+        private readonly IntegrationFixture fixture;
         private readonly HttpClient testServerClient;
 
-        public CustomerTest(IntegrationTestFactory<Startup> fixture) {
+        public CustomerTest(IntegrationFixture fixture, ITestOutputHelper output) {
             this.fixture = fixture;
+            this.fixture.TestOutputHelper = output;
             testServerClient = fixture.CreateAuthorizedClient("api");
         }
 
         [Fact]
         public async Task ShouldCreateCustomerAsync() {
             //arrange
-            var request = new Models.Requests.CreateCustomerModel() {
-                FirstName = Guid.NewGuid().ToString(),
-                LastName = "last",
-                Email = "email@gmail.com"
-            };
-
+            var request = ModelBuilder.GetUpdateCustomerModel();
             var requestBody = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
 
             //act
@@ -46,7 +44,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         [Fact]
         public async Task ShouldGetCustomerAsync() {
             //arrange
-            var db = fixture.NewScopedDbContext();
+            var db = fixture.NewScopedDbContext<DatabaseContext>();
             var id = db.Customers.First().CustomerResourceId;
 
             //act
@@ -59,7 +57,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
         [Fact]
         public async Task ShouldSearchCustomersAsync() {
             //arrange
-            var db = fixture.NewScopedDbContext();
+            var db = fixture.NewScopedDbContext<DatabaseContext>();
             var id = db.Customers.First();
 
             var model = new Models.Requests.CustomerSearchModel() {

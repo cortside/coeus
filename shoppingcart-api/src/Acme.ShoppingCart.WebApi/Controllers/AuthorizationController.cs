@@ -2,6 +2,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.WebApi.Models.Responses;
+using Asp.Versioning;
 using Cortside.Common.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +33,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         /// <param name="configuration"></param>
         public AuthorizationController(ILogger<AuthorizationController> logger, IPolicyServerRuntimeClient client, IConfiguration configuration) {
             this.logger = logger;
-            this.policyClient = client;
+            policyClient = client;
             this.configuration = configuration;
         }
 
@@ -50,7 +51,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                 Roles = authProperties.Roles.ToList()
             };
             var permissionsPrefix = configuration.GetSection("PolicyServer").GetValue<string>("BasePolicyPrefix");
-            responseModel.Permissions = responseModel.Permissions.Select(p => $"{permissionsPrefix}.{p}").ToList();
+            responseModel.Permissions = responseModel.Permissions.ConvertAll(p => $"{permissionsPrefix}.{p}");
             responseModel.Principal = SubjectPrincipal.From(ControllerContext.HttpContext.User);
             return Ok(responseModel);
         }

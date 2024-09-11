@@ -21,6 +21,7 @@ namespace Acme.ShoppingCart.Data {
             modelBuilder.HasDefaultSchema("dbo");
             modelBuilder.AddDomainEventOutbox();
 
+            // TOTO: make modelBuilder extensions
             SetDateTime(modelBuilder);
             SetCascadeDelete(modelBuilder);
         }

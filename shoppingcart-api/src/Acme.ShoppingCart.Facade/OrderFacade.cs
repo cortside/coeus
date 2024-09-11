@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.DomainService;
 using Acme.ShoppingCart.Dto;
@@ -36,10 +35,15 @@ namespace Acme.ShoppingCart.Facade {
             return mapper.MapToDto(order);
         }
 
-        public async Task<OrderDto> CreateOrderAsync(OrderDto input) {
+        public async Task<OrderDto> CreateOrderAsync(CreateOrderDto input) {
             Customer customer;
             if (input.Customer.CustomerResourceId == Guid.Empty) {
-                customer = await customerService.CreateCustomerAsync(input.Customer).ConfigureAwait(false);
+                var createCustomerDto = new UpdateCustomerDto() {
+                    FirstName = input.Customer.FirstName,
+                    LastName = input.Customer.LastName,
+                    Email = input.Customer.Email
+                };
+                customer = await customerService.CreateCustomerAsync(createCustomerDto).ConfigureAwait(false);
             } else {
                 customer = await customerService.GetCustomerAsync(input.Customer.CustomerResourceId).ConfigureAwait(false);
             }
@@ -51,7 +55,9 @@ namespace Acme.ShoppingCart.Facade {
         }
 
         public async Task<OrderDto> GetOrderAsync(Guid id) {
-            using (var tx = uow.BeginNoTracking()) {
+            // Using BeginNoTracking on GET endpoints for a single entity so that data is read committed
+            // with assumption that it might be used for changes in future calls
+            await using (var tx = uow.BeginNoTracking()) {
                 var order = await orderService.GetOrderAsync(id).ConfigureAwait(false);
 
                 return mapper.MapToDto(order);
@@ -63,9 +69,11 @@ namespace Acme.ShoppingCart.Facade {
             await uow.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task<PagedList<OrderDto>> SearchOrdersAsync(int pageSize, int pageNumber, string sortParams, OrderSearch search) {
-            using (var tx = await uow.BeginReadUncommitedAsync().ConfigureAwait(false)) {
-                var orders = await orderService.SearchOrdersAsync(pageSize, pageNumber, sortParams, search).ConfigureAwait(false);
+        public async Task<PagedList<OrderDto>> SearchOrdersAsync(OrderSearchDto search) {
+            // Using BeginReadUncommittedAsync on GET endpoints that return a list, this will read uncommitted and
+            // as notracking in ef core.  this will result in a non-blocking dirty read, which is accepted best practice for mssql
+            await using (var tx = await uow.BeginReadUncommitedAsync().ConfigureAwait(false)) {
+                var orders = await orderService.SearchOrdersAsync(mapper.Map(search)).ConfigureAwait(false);
 
                 var results = new PagedList<OrderDto> {
                     PageNumber = orders.PageNumber,
@@ -78,8 +86,8 @@ namespace Acme.ShoppingCart.Facade {
             }
         }
 
-        public async Task<OrderDto> UpdateOrderAsync(OrderDto dto) {
-            var order = await orderService.UpdateOrderAsync(dto).ConfigureAwait(false);
+        public async Task<OrderDto> UpdateOrderAsync(Guid id, UpdateOrderDto dto) {
+            var order = await orderService.UpdateOrderAsync(id, dto).ConfigureAwait(false);
             await uow.SaveChangesAsync().ConfigureAwait(false);
 
             return mapper.MapToDto(order);

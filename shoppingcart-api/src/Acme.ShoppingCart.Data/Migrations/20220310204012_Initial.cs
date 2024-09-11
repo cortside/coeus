@@ -11,7 +11,6 @@ namespace Acme.ShoppingCart.Data.Migrations {
 
             migrationBuilder.CreateTable(
                 name: "Outbox",
-                schema: "dbo",
                 columns: table => new {
                     OutboxId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
@@ -28,13 +27,13 @@ namespace Acme.ShoppingCart.Data.Migrations {
                     LockId = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
+                schema: "dbo",
                 constraints: table => {
                     table.PrimaryKey("PK_Outbox", x => x.OutboxId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Subject",
-                schema: "dbo",
                 columns: table => new {
                     SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
@@ -43,13 +42,13 @@ namespace Acme.ShoppingCart.Data.Migrations {
                     UserPrincipalName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
+                schema: "dbo",
                 constraints: table => {
                     table.PrimaryKey("PK_Subject", x => x.SubjectId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Address",
-                schema: "dbo",
                 columns: table => new {
                     AddressId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
@@ -63,25 +62,25 @@ namespace Acme.ShoppingCart.Data.Migrations {
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedSubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
+                schema: "dbo",
                 constraints: table => {
                     table.PrimaryKey("PK_Address", x => x.AddressId);
                     table.ForeignKey(
                         name: "FK_Address_Subject_CreateSubjectId",
                         column: x => x.CreateSubjectId,
-                        principalSchema: "dbo",
                         principalTable: "Subject",
-                        principalColumn: "SubjectId");
+                        principalColumn: "SubjectId",
+                        principalSchema: "dbo");
                     table.ForeignKey(
                         name: "FK_Address_Subject_LastModifiedSubjectId",
                         column: x => x.LastModifiedSubjectId,
-                        principalSchema: "dbo",
                         principalTable: "Subject",
-                        principalColumn: "SubjectId");
+                        principalColumn: "SubjectId",
+                        principalSchema: "dbo");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Customer",
-                schema: "dbo",
                 columns: table => new {
                     CustomerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
@@ -94,25 +93,25 @@ namespace Acme.ShoppingCart.Data.Migrations {
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedSubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
+                schema: "dbo",
                 constraints: table => {
                     table.PrimaryKey("PK_Customer", x => x.CustomerId);
                     table.ForeignKey(
                         name: "FK_Customer_Subject_CreateSubjectId",
                         column: x => x.CreateSubjectId,
-                        principalSchema: "dbo",
                         principalTable: "Subject",
-                        principalColumn: "SubjectId");
+                        principalColumn: "SubjectId",
+                        principalSchema: "dbo");
                     table.ForeignKey(
                         name: "FK_Customer_Subject_LastModifiedSubjectId",
                         column: x => x.LastModifiedSubjectId,
-                        principalSchema: "dbo",
                         principalTable: "Subject",
-                        principalColumn: "SubjectId");
+                        principalColumn: "SubjectId",
+                        principalSchema: "dbo");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Order",
-                schema: "dbo",
                 columns: table => new {
                     OrderId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
@@ -125,37 +124,37 @@ namespace Acme.ShoppingCart.Data.Migrations {
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedSubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
+                schema: "dbo",
                 constraints: table => {
                     table.PrimaryKey("PK_Order", x => x.OrderId);
                     table.ForeignKey(
                         name: "FK_Order_Address_AddressId",
                         column: x => x.AddressId,
-                        principalSchema: "dbo",
                         principalTable: "Address",
-                        principalColumn: "AddressId");
+                        principalColumn: "AddressId",
+                        principalSchema: "dbo");
                     table.ForeignKey(
                         name: "FK_Order_Customer_CustomerId",
                         column: x => x.CustomerId,
-                        principalSchema: "dbo",
                         principalTable: "Customer",
-                        principalColumn: "CustomerId");
+                        principalColumn: "CustomerId",
+                        principalSchema: "dbo");
                     table.ForeignKey(
                         name: "FK_Order_Subject_CreateSubjectId",
                         column: x => x.CreateSubjectId,
-                        principalSchema: "dbo",
                         principalTable: "Subject",
-                        principalColumn: "SubjectId");
+                        principalColumn: "SubjectId",
+                        principalSchema: "dbo");
                     table.ForeignKey(
                         name: "FK_Order_Subject_LastModifiedSubjectId",
                         column: x => x.LastModifiedSubjectId,
-                        principalSchema: "dbo",
                         principalTable: "Subject",
-                        principalColumn: "SubjectId");
+                        principalColumn: "SubjectId",
+                        principalSchema: "dbo");
                 });
 
             migrationBuilder.CreateTable(
                 name: "OrderItem",
-                schema: "dbo",
                 columns: table => new {
                     OrderItemId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
@@ -169,113 +168,114 @@ namespace Acme.ShoppingCart.Data.Migrations {
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedSubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
+                schema: "dbo",
                 constraints: table => {
                     table.PrimaryKey("PK_OrderItem", x => x.OrderItemId);
                     table.ForeignKey(
                         name: "FK_OrderItem_Order_OrderId",
                         column: x => x.OrderId,
-                        principalSchema: "dbo",
                         principalTable: "Order",
-                        principalColumn: "OrderId");
+                        principalColumn: "OrderId",
+                        principalSchema: "dbo");
                     table.ForeignKey(
                         name: "FK_OrderItem_Subject_CreateSubjectId",
                         column: x => x.CreateSubjectId,
-                        principalSchema: "dbo",
                         principalTable: "Subject",
-                        principalColumn: "SubjectId");
+                        principalColumn: "SubjectId",
+                        principalSchema: "dbo");
                     table.ForeignKey(
                         name: "FK_OrderItem_Subject_LastModifiedSubjectId",
                         column: x => x.LastModifiedSubjectId,
-                        principalSchema: "dbo",
                         principalTable: "Subject",
-                        principalColumn: "SubjectId");
+                        principalColumn: "SubjectId",
+                        principalSchema: "dbo");
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Address_CreateSubjectId",
-                schema: "dbo",
                 table: "Address",
-                column: "CreateSubjectId");
+                column: "CreateSubjectId",
+                schema: "dbo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Address_LastModifiedSubjectId",
-                schema: "dbo",
                 table: "Address",
-                column: "LastModifiedSubjectId");
+                column: "LastModifiedSubjectId",
+                schema: "dbo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customer_CreateSubjectId",
-                schema: "dbo",
                 table: "Customer",
-                column: "CreateSubjectId");
+                column: "CreateSubjectId",
+                schema: "dbo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customer_LastModifiedSubjectId",
-                schema: "dbo",
                 table: "Customer",
-                column: "LastModifiedSubjectId");
+                column: "LastModifiedSubjectId",
+                schema: "dbo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_AddressId",
-                schema: "dbo",
                 table: "Order",
-                column: "AddressId");
+                column: "AddressId",
+                schema: "dbo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_CreateSubjectId",
-                schema: "dbo",
                 table: "Order",
-                column: "CreateSubjectId");
+                column: "CreateSubjectId",
+                schema: "dbo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_CustomerId",
-                schema: "dbo",
                 table: "Order",
-                column: "CustomerId");
+                column: "CustomerId",
+                schema: "dbo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_LastModifiedSubjectId",
-                schema: "dbo",
                 table: "Order",
-                column: "LastModifiedSubjectId");
+                column: "LastModifiedSubjectId",
+                schema: "dbo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItem_CreateSubjectId",
-                schema: "dbo",
                 table: "OrderItem",
-                column: "CreateSubjectId");
+                column: "CreateSubjectId",
+                schema: "dbo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItem_LastModifiedSubjectId",
-                schema: "dbo",
                 table: "OrderItem",
-                column: "LastModifiedSubjectId");
+                column: "LastModifiedSubjectId",
+                schema: "dbo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItem_OrderId",
-                schema: "dbo",
                 table: "OrderItem",
-                column: "OrderId");
+                column: "OrderId",
+                schema: "dbo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Outbox_MessageId",
-                schema: "dbo",
                 table: "Outbox",
                 column: "MessageId",
+                schema: "dbo",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ScheduleDate_Status",
-                schema: "dbo",
                 table: "Outbox",
-                columns: new[] { "ScheduledDate", "Status" })
+                columns: ["ScheduledDate", "Status"],
+                schema: "dbo")
                 .Annotation("SqlServer:Include", new[] { "EventType" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Status_LockId_ScheduleDate",
-                schema: "dbo",
                 table: "Outbox",
-                columns: new[] { "Status", "LockId", "ScheduledDate" });
+                columns: ["Status", "LockId", "ScheduledDate"],
+                schema: "dbo");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder) {

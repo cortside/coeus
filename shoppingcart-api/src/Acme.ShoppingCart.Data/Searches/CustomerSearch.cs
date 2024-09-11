@@ -1,38 +1,39 @@
 using System;
 using System.Linq;
 using Acme.ShoppingCart.Domain.Entities;
+using Cortside.AspNetCore.EntityFramework.Searches;
 
 namespace Acme.ShoppingCart.Data.Searches {
-    public class CustomerSearch : ISearchBuilder<Customer>, ICustomerSearch {
+    public class CustomerSearch : Search, ICustomerSearch {
         public Guid? CustomerResourceId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public IQueryable<Customer> Build(IQueryable<Customer> customers) {
+        public IQueryable<Customer> Build(IQueryable<Customer> entities) {
             if (CustomerResourceId.HasValue) {
-                customers = customers.Where(x => x.CustomerResourceId == CustomerResourceId);
+                entities = entities.Where(x => x.CustomerResourceId == CustomerResourceId);
             }
 
-            customers = FirstNameFilter(customers);
-            customers = LastNameFilter(customers);
+            entities = FirstNameFilter(entities);
+            entities = LastNameFilter(entities);
 
-            return customers;
+            return entities;
         }
 
-        private IQueryable<Customer> FirstNameFilter(IQueryable<Customer> customers) {
+        private IQueryable<Customer> FirstNameFilter(IQueryable<Customer> entities) {
             if (!string.IsNullOrEmpty(FirstName)) {
-                customers = customers.Where(x => x.FirstName.StartsWith(FirstName));
+                entities = entities.Where(x => x.FirstName.StartsWith(FirstName));
             }
 
-            return customers;
+            return entities;
         }
 
-        private IQueryable<Customer> LastNameFilter(IQueryable<Customer> customers) {
+        private IQueryable<Customer> LastNameFilter(IQueryable<Customer> entities) {
             if (!string.IsNullOrEmpty(LastName)) {
-                customers = customers.Where(x => x.LastName.StartsWith(LastName));
+                entities = entities.Where(x => x.LastName.StartsWith(LastName));
             }
 
-            return customers;
+            return entities;
         }
     }
 }

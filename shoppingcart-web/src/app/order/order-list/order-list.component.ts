@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PagedModel } from 'src/app/common/paged.model';
 import { OrderService } from 'src/app/core/order.service';
 import { OrderSummaryModel } from 'src/app/models/models';
+import { PagedModel } from 'src/app/models/paged.model';
 
 @Component({
     selector: 'app-order-list',

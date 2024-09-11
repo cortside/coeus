@@ -1,5 +1,6 @@
 using System;
 using Acme.ShoppingCart.WebApi.Models.Responses;
+using Asp.Versioning;
 using Cortside.Health.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -38,7 +39,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         }
 
         private SettingsModel GetSettingsModel() {
-            var ServiceBus = Configuration.GetSection("ServiceBus");
+            var serviceBus = Configuration.GetSection("ServiceBus");
             var authConfig = Configuration.GetSection("IdentityServer");
             var policyServer = Configuration.GetSection("PolicyServer");
             var build = Configuration.GetSection("Build");
@@ -51,10 +52,10 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
                     Suffix = build.GetValue<string>("suffix")
                 },
                 Configuration = new ConfigurationModel() {
-                    ServiceBus = new ServicebusModel {
-                        Exchange = ServiceBus.GetValue<string>("Exchange"),
-                        NameSpace = ServiceBus.GetValue<string>("Namespace"),
-                        Queue = ServiceBus.GetValue<string>("Queue"),
+                    ServiceBus = new ServiceBusModel {
+                        Exchange = serviceBus.GetValue<string>("Exchange"),
+                        NameSpace = serviceBus.GetValue<string>("Namespace"),
+                        Queue = serviceBus.GetValue<string>("Queue"),
                     },
                     IdentityServer = new IdentityServerModel {
                         Apiname = authConfig.GetValue<string>("ApiName"),

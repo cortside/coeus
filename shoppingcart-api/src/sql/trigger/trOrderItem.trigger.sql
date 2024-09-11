@@ -63,6 +63,25 @@ CREATE TRIGGER trOrderItem
 			set @inserted = @inserted + @@ROWCOUNT
 		END
 
+	-- [OrderId]
+	IF UPDATE([OrderId]) OR @action in ('INSERT', 'DELETE')      
+		BEGIN       
+			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
+			SELECT
+				@AuditLogTransactionId,
+				convert(nvarchar(1500), IsNull('[[OrderItemId]]='+CONVERT(nvarchar(4000), IsNull(OLD.[OrderItemId], NEW.[OrderItemId]), 0), '[[OrderItemId]] Is Null')),
+				'[OrderId]',
+				CONVERT(nvarchar(4000), OLD.[OrderId], 126),
+				CONVERT(nvarchar(4000), NEW.[OrderId], 126),
+				convert(nvarchar(4000), COALESCE(OLD.[OrderItemId], NEW.[OrderItemId], null))
+			FROM deleted OLD 
+			LEFT JOIN inserted NEW On (NEW.[OrderItemId] = OLD.[OrderItemId] or (NEW.[OrderItemId] Is Null and OLD.[OrderItemId] Is Null))
+			WHERE ((NEW.[OrderId] <> OLD.[OrderId]) 
+					Or (NEW.[OrderId] Is Null And OLD.[OrderId] Is Not Null)
+					Or (NEW.[OrderId] Is Not Null And OLD.[OrderId] Is Null))
+			set @inserted = @inserted + @@ROWCOUNT
+		END
+
 	-- [ItemId]
 	IF UPDATE([ItemId]) OR @action in ('INSERT', 'DELETE')      
 		BEGIN       
@@ -136,25 +155,6 @@ CREATE TRIGGER trOrderItem
 			WHERE ((NEW.[UnitPrice] <> OLD.[UnitPrice]) 
 					Or (NEW.[UnitPrice] Is Null And OLD.[UnitPrice] Is Not Null)
 					Or (NEW.[UnitPrice] Is Not Null And OLD.[UnitPrice] Is Null))
-			set @inserted = @inserted + @@ROWCOUNT
-		END
-
-	-- [OrderId]
-	IF UPDATE([OrderId]) OR @action in ('INSERT', 'DELETE')      
-		BEGIN       
-			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
-			SELECT
-				@AuditLogTransactionId,
-				convert(nvarchar(1500), IsNull('[[OrderItemId]]='+CONVERT(nvarchar(4000), IsNull(OLD.[OrderItemId], NEW.[OrderItemId]), 0), '[[OrderItemId]] Is Null')),
-				'[OrderId]',
-				CONVERT(nvarchar(4000), OLD.[OrderId], 126),
-				CONVERT(nvarchar(4000), NEW.[OrderId], 126),
-				convert(nvarchar(4000), COALESCE(OLD.[OrderItemId], NEW.[OrderItemId], null))
-			FROM deleted OLD 
-			LEFT JOIN inserted NEW On (NEW.[OrderItemId] = OLD.[OrderItemId] or (NEW.[OrderItemId] Is Null and OLD.[OrderItemId] Is Null))
-			WHERE ((NEW.[OrderId] <> OLD.[OrderId]) 
-					Or (NEW.[OrderId] Is Null And OLD.[OrderId] Is Not Null)
-					Or (NEW.[OrderId] Is Not Null And OLD.[OrderId] Is Null))
 			set @inserted = @inserted + @@ROWCOUNT
 		END
 

@@ -7,15 +7,14 @@ using Xunit;
 using Xunit.Abstractions;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
-    public class SettingsTest : IClassFixture<WebApiApplicationFactory> {
-        private readonly WebApiApplicationFactory webApi;
-        private readonly ITestOutputHelper output;
+    public class SettingsTest : IClassFixture<IntegrationFixture> {
         private readonly RestApiClient client;
+        private readonly IntegrationFixture api;
 
-        public SettingsTest(WebApiApplicationFactory webApi, ITestOutputHelper output) {
-            this.webApi = webApi;
-            this.output = output;
-            client = webApi.CreateRestApiClient(output);
+        public SettingsTest(IntegrationFixture api, ITestOutputHelper output) {
+            this.api = api;
+            api.TestOutputHelper = output;
+            client = api.CreateRestApiClient(output);
         }
 
         [Fact]
@@ -28,6 +27,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
 
             //assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
+            response.Content.Should().Contain(api.MockServer.Url);
         }
     }
 }

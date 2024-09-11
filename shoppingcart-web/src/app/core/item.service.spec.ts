@@ -3,6 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { ItemService } from './item.service';
 import { CatalogClient } from '../api/catalog/catalog.client';
+import { AuthorizationService } from '@muziehdesign/core';
 
 describe('ItemService', () => {
     let service: ItemService;
@@ -10,7 +11,7 @@ describe('ItemService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
-            providers: [{ provide: CatalogClient, useValue: {} }],
+            providers: [{ provide: CatalogClient, useValue: {} }, ItemService, { provide: AuthorizationService, useValue: {} }],
         });
         service = TestBed.inject(ItemService);
     });

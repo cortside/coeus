@@ -29,7 +29,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Controllers {
                 IsValid = true
             };
 
-            clientSecretServiceMock.Setup(x => x.IsVerificationCodeValid(It.IsAny<Guid>(), It.IsAny<string>())).Returns(isVerificationCodeOutput);
+            clientSecretServiceMock.Setup(x => x.IsVerificationCodeValid(It.IsAny<Guid>(), It.IsAny<string>())).ReturnsAsync(isVerificationCodeOutput);
 
             resetClientSecretServiceMock = new Mock<IResetClientSecretService>();
             var verifyIdentityModel = new VerifyIdentityModel() {
@@ -80,7 +80,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Controllers {
         }
 
         [Fact]
-        public void VerifyIdentity_ShouldReturnSecretKeyView() {
+        public async Task VerifyIdentity_ShouldReturnSecretKeyView() {
             // Arrange
             var requestId = Guid.NewGuid().ToString();
             var verificationCode = "123456";
@@ -88,7 +88,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Controllers {
             var button = "submit";
 
             // Act
-            var result = sut.VerifyIdentity(requestId, verificationCode, tokenHash, button) as ViewResult;
+            var result = await sut.VerifyIdentity(requestId, verificationCode, tokenHash, button) as ViewResult;
 
             // Assert
             Assert.Equal("SecretKey", result.ViewName);

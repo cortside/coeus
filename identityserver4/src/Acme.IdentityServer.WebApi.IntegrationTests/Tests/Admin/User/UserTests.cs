@@ -43,6 +43,7 @@ namespace Acme.IdentityServer.WebApi.IntegrationTests.Tests.Admin.User {
         public async Task ShouldCreateUserAsync() {
             // arrange
             var createUserRequestBody = getUserRequestBody();
+            integrationTestFixture.Client.DefaultRequestHeaders.Authorization = await GetTokenHeaderAsync();
 
             // act
             var response = await CreateUserAsync(user: createUserRequestBody);
@@ -55,6 +56,7 @@ namespace Acme.IdentityServer.WebApi.IntegrationTests.Tests.Admin.User {
         public async Task ShouldUpdateUserAsync() {
             // create user
             var createUserRequestBody = getUserRequestBody();
+            integrationTestFixture.Client.DefaultRequestHeaders.Authorization = await GetTokenHeaderAsync();
             var createUserRespData = await CreateUserAsync(user: createUserRequestBody);
 
             // update user
@@ -84,7 +86,7 @@ namespace Acme.IdentityServer.WebApi.IntegrationTests.Tests.Admin.User {
             StringContent putRequestBody = new StringContent(putBodyString, Encoding.UTF8, "application/json");
             var updateUserResp = await integrationTestFixture.Client.PutAsync("/api/Users/" + createUserRespData.UserId.ToString(), putRequestBody);
             updateUserResp.Headers.FirstOrDefault(h => h.Key == "Location'").Should().NotBeNull();
-            var updateUserRespData = JsonConvert.DeserializeObject<Acme.IdentityServer.WebApi.Models.Output.UserOutputModel>(await updateUserResp.Content.ReadAsStringAsync().ConfigureAwait(false));
+            var updateUserRespData = JsonConvert.DeserializeObject<Acme.IdentityServer.WebApi.Models.Output.UserOutputModel>(await updateUserResp.Content.ReadAsStringAsync());
             updateUserResp.StatusCode.Should().Be(HttpStatusCode.OK);
             updateUserRespData.Username.Should().Be(updateModel.Username);
             updateUserRespData.UserId.Should().Be(createUserRespData.UserId);
@@ -108,6 +110,7 @@ namespace Acme.IdentityServer.WebApi.IntegrationTests.Tests.Admin.User {
         [Fact]
         public async Task ShouldDeleteUserAsync() {
             var createUserRequestBody = getUserRequestBody();
+            integrationTestFixture.Client.DefaultRequestHeaders.Authorization = await GetTokenHeaderAsync();
             var createUserRespData = await CreateUserAsync(user: createUserRequestBody);
             var request = new HttpRequestMessage {
                 Method = HttpMethod.Delete,

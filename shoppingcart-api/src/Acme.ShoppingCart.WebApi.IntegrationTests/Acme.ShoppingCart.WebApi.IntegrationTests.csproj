@@ -1,45 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AnalysisMode>Recommended</AnalysisMode>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <!-- Remove this to get a warning how to enable IDE0005 (Remove unnecessary usings/imports) on build; that warning describes a workaround for https://github.com/dotnet/roslyn/issues/41640 -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <CopyDocumentationFileToOutputDirectory>false</CopyDocumentationFileToOutputDirectory>
+    <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
   </PropertyGroup>
-
+  <ItemGroup>
+    <Content Remove="C:\Users\cort\.nuget\packages\cortside.common.testing\6.3.410-develop\contentFiles\any\net6.0\testhost.dll" />
+    <Content Remove="C:\Users\cort\.nuget\packages\cortside.common.testing\6.3.410-develop\contentFiles\any\net6.0\testhost.exe" />
+    <Content Remove="C:\Users\cort\.nuget\packages\microsoft.testplatform.testhost\17.9.0\build\netcoreapp3.1\x64\testhost.dll" />
+    <Content Remove="C:\Users\cort\.nuget\packages\microsoft.testplatform.testhost\17.9.0\build\netcoreapp3.1\x64\testhost.exe" />
+  </ItemGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Cortside.Common.Testing" Version="6.2.408" />
-    <PackageReference Include="Cortside.DomainEvent.Stub" Version="6.2.301" />
-    <PackageReference Include="Cortside.MockServer.AccessControl" Version="6.1.62" />
-    <PackageReference Include="coverlet.collector" Version="6.0.0">
+    <PackageReference Include="Cortside.AspNetCore.Testing" Version="6.3.253" />
+    <PackageReference Include="Cortside.Common.Testing" Version="6.3.456" />
+    <PackageReference Include="Cortside.Common.Testing.EntityFramework" Version="6.3.456" />
+    <PackageReference Include="Cortside.DomainEvent.Stub" Version="6.3.327" />
+    <PackageReference Include="Cortside.MockServer.AccessControl" Version="6.2.74" />
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="EFCore.Seeder" Version="3.1.0" />
-    <PackageReference Include="FluentAssertions" Version="6.12.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.26" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.26" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.8.14">
+    <PackageReference Include="FluentAssertions" Version="6.12.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.8" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.11.20">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="WireMock.Net" Version="1.5.46" />
-    <PackageReference Include="xunit" Version="2.6.6" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.6">
+    <PackageReference Include="WireMock.Net" Version="1.6.3" />
+    <PackageReference Include="xunit" Version="2.9.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="DistributedLock.FileSystem" Version="1.0.1" />
+    <PackageReference Include="DistributedLock.FileSystem" Version="1.0.2" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Acme.ShoppingCart.Data\Acme.ShoppingCart.Data.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.CatalogApi\Acme.ShoppingCart.CatalogApi.csproj" />
+    <ProjectReference Include="..\Acme.ShoppingCart.TestUtilities\Acme.ShoppingCart.TestUtilities.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.WebApi\Acme.ShoppingCart.WebApi.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <None Update="Data\*.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

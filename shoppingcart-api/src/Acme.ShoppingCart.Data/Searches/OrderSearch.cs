@@ -1,38 +1,39 @@
 using System;
 using System.Linq;
 using Acme.ShoppingCart.Domain.Entities;
+using Cortside.AspNetCore.EntityFramework.Searches;
 
 namespace Acme.ShoppingCart.Data.Searches {
-    public class OrderSearch : ISearchBuilder<Order>, IOrderSearch {
+    public class OrderSearch : Search, IOrderSearch {
         public Guid? CustomerResourceId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public IQueryable<Order> Build(IQueryable<Order> orders) {
+        public IQueryable<Order> Build(IQueryable<Order> entities) {
             if (CustomerResourceId.HasValue) {
-                orders = orders.Where(x => x.Customer.CustomerResourceId == CustomerResourceId);
+                entities = entities.Where(x => x.Customer.CustomerResourceId == CustomerResourceId);
             }
 
-            orders = FirstNameFilter(orders);
-            orders = LastNameFilter(orders);
+            entities = FirstNameFilter(entities);
+            entities = LastNameFilter(entities);
 
-            return orders;
+            return entities;
         }
 
-        private IQueryable<Order> FirstNameFilter(IQueryable<Order> orders) {
+        private IQueryable<Order> FirstNameFilter(IQueryable<Order> entities) {
             if (!string.IsNullOrEmpty(FirstName)) {
-                orders = orders.Where(x => x.Customer.FirstName.StartsWith(FirstName));
+                entities = entities.Where(x => x.Customer.FirstName.StartsWith(FirstName));
             }
 
-            return orders;
+            return entities;
         }
 
-        private IQueryable<Order> LastNameFilter(IQueryable<Order> orders) {
+        private IQueryable<Order> LastNameFilter(IQueryable<Order> entities) {
             if (!string.IsNullOrEmpty(LastName)) {
-                orders = orders.Where(x => x.Customer.LastName.StartsWith(LastName));
+                entities = entities.Where(x => x.Customer.LastName.StartsWith(LastName));
             }
 
-            return orders;
+            return entities;
         }
     }
 }

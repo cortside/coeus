@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Acme.ShoppingCart.Domain.Enumerations;
+using Acme.ShoppingCart.Enumerations;
 using Cortside.AspNetCore.Common.Dtos;
 
 namespace Acme.ShoppingCart.Dto {

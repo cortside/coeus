@@ -1,6 +1,10 @@
 <h1>Cart</h1>
 
-{{ items$ | async | json }}
+<div *ngFor="let item of items() as list" class="grid grid-cols-3">
+    <a [routerLink]="['items', item.sku]">{{item.sku}}</a>
+    <div>{{item.quantity}}</div>
+    <button (click)="removeItem(item)">Remove</button>
+</div>
 
 <form #cartForm="ngForm" (ngSubmit)="createOrder()" class="form">
     <fieldset ngModelGroup="model.customer">

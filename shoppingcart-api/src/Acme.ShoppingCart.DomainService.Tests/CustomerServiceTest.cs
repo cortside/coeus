@@ -1,9 +1,8 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.Data.Repositories;
-using Acme.ShoppingCart.Dto;
+using Acme.ShoppingCart.TestUtilities;
 using Cortside.DomainEvent.EntityFramework;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
@@ -18,20 +17,16 @@ namespace Acme.ShoppingCart.DomainService.Tests {
 
             var publisher = new Mock<IDomainEventOutboxPublisher>();
             var customerRepository = new CustomerRepository(databaseContext);
-            service = new CustomerService(customerRepository, publisher.Object, NullLogger<CustomerService>.Instance);
+            Service = new CustomerService(customerRepository, publisher.Object, NullLogger<CustomerService>.Instance);
         }
 
         [Fact]
         public async Task ShouldCreateCustomerAsync() {
             // Arrange
-            var dto = new CustomerDto() {
-                FirstName = Guid.NewGuid().ToString(),
-                LastName = Guid.NewGuid().ToString(),
-                Email = Guid.NewGuid().ToString() + "@gmail.com"
-            };
+            var dto = DtoBuilder.GetUpdateCustomerDto();
 
             // Act
-            await service.CreateCustomerAsync(dto);
+            await Service.CreateCustomerAsync(dto);
             await databaseContext.SaveChangesAsync();
 
             // Assert

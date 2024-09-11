@@ -2,7 +2,7 @@
 
 ## Setup
 
-1. create file `config.user.json` in `/src`. Body example:
+1. create file `config.local.json` in `/src`. Body example:
 
     ```
     {
@@ -47,6 +47,7 @@ This project follows [Muzieh Design System](https://ruifang.github.io/designsyst
 -   [ ] bootstrap failure
 -   [ ] page service lifecycle
 -   [ ] separation of ui and domain
+-   [ ] state management
 
 ## Tasks
 

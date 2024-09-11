@@ -2,7 +2,7 @@ namespace Acme.ShoppingCart.WebApi.Models.Responses {
     /// <summary>
     /// Service bus model
     /// </summary>
-    public class ServicebusModel {
+    public class ServiceBusModel {
         /// <summary>
         /// Name Space
         /// </summary>

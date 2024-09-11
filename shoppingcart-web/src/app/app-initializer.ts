@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// TODO
-import { AuthenticationService, AuthorizationService } from '@muziehdesign/core';
+import { AuthenticationService, AuthorizationData, AuthorizationService, Logger } from '@muziehdesign/core';
+import { delay, firstValueFrom, map, tap } from 'rxjs';
 import { ShoppingCartClient } from './api/shopping-cart/shopping-cart.client';
 
-export const initializeApplication = (authenticationService: AuthenticationService, client: ShoppingCartClient, authorizationService: AuthorizationService): (() => Promise<void>) => {
+export const initializeApplication = (logger: Logger): (() => Promise<void>) => {
     return (): Promise<void> => {
         /*authenticationService.onUserSignedOut().pipe(tap((x) => authorizationService.reset()));
         authenticationService.onUserSignedIn().pipe(    
@@ -17,5 +16,21 @@ export const initializeApplication = (authenticationService: AuthenticationServi
 
         return authenticationService.initialize();*/
         return Promise.resolve();
+    };
+};
+
+export const initializeAuthorization = (authentication: AuthenticationService, authorization: AuthorizationService, client: ShoppingCartClient): (() => Promise<boolean>) => {
+    return async (): Promise<boolean> => {
+        const authenticated = await authentication.isAuthenticated();
+        if (!authenticated) {
+            return Promise.resolve(true);
+        }
+
+        return firstValueFrom(
+            client.getAuthorization().pipe(
+                tap((x) => authorization.register('ShoppingCartClient', x as AuthorizationData)),
+                map((x) => true)
+            )
+        );
     };
 };

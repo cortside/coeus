@@ -22,10 +22,10 @@ namespace Acme.ShoppingCart.DomainService {
             this.customerRepository = customerRepository;
         }
 
-        public async Task<Customer> CreateCustomerAsync(CustomerDto dto) {
+        public async Task<Customer> CreateCustomerAsync(UpdateCustomerDto dto) {
             var entity = new Customer(dto.FirstName, dto.LastName, dto.Email);
             using (logger.BeginScope(new Dictionary<string, object> { ["CustomerResourceId"] = entity.CustomerResourceId })) {
-                customerRepository.Add(entity);
+                await customerRepository.AddAsync(entity);
                 logger.LogInformation("Created new customer");
 
                 var @event = new CustomerStateChangedEvent() { CustomerResourceId = entity.CustomerResourceId, Timestamp = entity.LastModifiedDate };
@@ -40,12 +40,12 @@ namespace Acme.ShoppingCart.DomainService {
             return entity;
         }
 
-        public Task<PagedList<Customer>> SearchCustomersAsync(int pageSize, int pageNumber, string sortParams, CustomerSearch search) {
-            return customerRepository.SearchAsync(pageSize, pageNumber, sortParams, search);
+        public Task<PagedList<Customer>> SearchCustomersAsync(CustomerSearch search) {
+            return customerRepository.SearchAsync(search);
         }
 
-        public async Task<Customer> UpdateCustomerAsync(CustomerDto dto) {
-            var entity = await customerRepository.GetAsync(dto.CustomerResourceId).ConfigureAwait(false);
+        public async Task<Customer> UpdateCustomerAsync(Guid resourceId, UpdateCustomerDto dto) {
+            var entity = await customerRepository.GetAsync(resourceId).ConfigureAwait(false);
             using (logger.BeginScope(new Dictionary<string, object> { ["CustomerResourceId"] = entity.CustomerResourceId })) {
                 entity.Update(dto.FirstName, dto.LastName, dto.Email);
                 logger.LogInformation("Updated existing customer");

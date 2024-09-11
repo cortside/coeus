@@ -49,7 +49,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{A16D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Facade", "Acme.ShoppingCart.Facade\Acme.ShoppingCart.Facade.csproj", "{4CF087AD-556B-4AE2-A5F6-1AAB3D911157}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acme.ShoppingCart.Facade.Tests", "Acme.ShoppingCart.Facade.Tests\Acme.ShoppingCart.Facade.Tests.csproj", "{BF18D118-E5C7-48ED-AC61-9714ED725B11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Facade.Tests", "Acme.ShoppingCart.Facade.Tests\Acme.ShoppingCart.Facade.Tests.csproj", "{BF18D118-E5C7-48ED-AC61-9714ED725B11}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.ShoppingCart.Enumerations", "Acme.ShoppingCart.Enumerations\Acme.ShoppingCart.Enumerations.csproj", "{E6DEC066-4C26-429B-AE77-24EB10B37B01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acme.ShoppingCart.TestUtilities", "Acme.ShoppingCart.TestUtilities\Acme.ShoppingCart.TestUtilities.csproj", "{9221604F-4C57-4FB3-BD42-6BD040B5485C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -301,6 +305,30 @@ Global
 		{BF18D118-E5C7-48ED-AC61-9714ED725B11}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF18D118-E5C7-48ED-AC61-9714ED725B11}.Staging|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF18D118-E5C7-48ED-AC61-9714ED725B11}.Staging|Any CPU.Build.0 = Debug|Any CPU
+		{E6DEC066-4C26-429B-AE77-24EB10B37B01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6DEC066-4C26-429B-AE77-24EB10B37B01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6DEC066-4C26-429B-AE77-24EB10B37B01}.Develop|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6DEC066-4C26-429B-AE77-24EB10B37B01}.Develop|Any CPU.Build.0 = Debug|Any CPU
+		{E6DEC066-4C26-429B-AE77-24EB10B37B01}.Production|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6DEC066-4C26-429B-AE77-24EB10B37B01}.Production|Any CPU.Build.0 = Debug|Any CPU
+		{E6DEC066-4C26-429B-AE77-24EB10B37B01}.QA|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6DEC066-4C26-429B-AE77-24EB10B37B01}.QA|Any CPU.Build.0 = Debug|Any CPU
+		{E6DEC066-4C26-429B-AE77-24EB10B37B01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6DEC066-4C26-429B-AE77-24EB10B37B01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6DEC066-4C26-429B-AE77-24EB10B37B01}.Staging|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6DEC066-4C26-429B-AE77-24EB10B37B01}.Staging|Any CPU.Build.0 = Debug|Any CPU
+		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Develop|Any CPU.ActiveCfg = Debug|Any CPU
+		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Develop|Any CPU.Build.0 = Debug|Any CPU
+		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Production|Any CPU.ActiveCfg = Debug|Any CPU
+		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Production|Any CPU.Build.0 = Debug|Any CPU
+		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.QA|Any CPU.ActiveCfg = Debug|Any CPU
+		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.QA|Any CPU.Build.0 = Debug|Any CPU
+		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Staging|Any CPU.ActiveCfg = Debug|Any CPU
+		{9221604F-4C57-4FB3-BD42-6BD040B5485C}.Staging|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

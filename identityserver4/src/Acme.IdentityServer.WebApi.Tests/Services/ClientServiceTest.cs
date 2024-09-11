@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cortside.AspNetCore.Auditable;
-using Cortside.Common.Messages.MessageExceptions;
+using System.Threading.Tasks;
 using Acme.IdentityServer.WebApi.Controllers.Client;
 using Acme.IdentityServer.WebApi.Data;
 using Acme.IdentityServer.WebApi.Helpers;
 using Acme.IdentityServer.WebApi.Models;
 using Acme.IdentityServer.WebApi.Models.Input;
 using Acme.IdentityServer.WebApi.Services;
+using Cortside.AspNetCore.Auditable;
+using Cortside.Common.Messages.MessageExceptions;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -45,7 +46,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
 
         [Fact]
         [Trait("TestRail", "C296324")]
-        public void UpdateClient_ShouldInsertNewClientIntoDatabase_WithSettingsBasedOnRequestObject() {
+        public async Task UpdateClient_ShouldInsertNewClientIntoDatabase_WithSettingsBasedOnRequestObject() {
 
             var clientId = "testID";
             var accessTokenType = 0;
@@ -80,7 +81,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
                 Scopes = scopes
             };
 
-            var newClient = clientsService.UpdateClient(clientId, updateClientRequest);
+            var newClient = await clientsService.UpdateClient(clientId, updateClientRequest);
 
             Assert.Equal(accessTokenType, newClient.AccessTokenType);
             Assert.Equal(clientName, newClient.ClientName);
@@ -94,7 +95,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
 
         [Fact]
         [Trait("TestRail", "C296324")]
-        public void UpdateClient_ShouldUpdateClient_WithSettingsBasedOnRequestObject() {
+        public async Task UpdateClient_ShouldUpdateClient_WithSettingsBasedOnRequestObject() {
             var clientId = "testId";
             var clientIdPrimaryKey = InsertTestClientIntoDbContext(clientId, Guid.NewGuid());
             var newClient = IdentityServerDbContext.Clients.Where(x => x.ClientId == clientId).FirstOrDefault();
@@ -118,7 +119,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
                 "role"
             };
 
-            var updatedClient = clientsService.UpdateClient(clientId, updateClientRequest);
+            var updatedClient = await clientsService.UpdateClient(clientId, updateClientRequest);
 
             // intact from initial new client
             Assert.Equal(newClient.AccessTokenType, updatedClient.AccessTokenType);
@@ -233,7 +234,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
         }
 
         [Fact]
-        public void ShouldCreateClient() {
+        public async Task ShouldCreateClient() {
             //arrange
             var request = new CreateClientModel {
                 ClientId = "clientId",
@@ -258,7 +259,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             };
 
             //act
-            var client = clientsService.CreateClient(request);
+            var client = await clientsService.CreateClient(request);
 
             //assert
             client.Should().NotBeNull();
@@ -269,7 +270,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
         }
 
         [Fact]
-        public void ShouldNotCreateClient_DuplicateClientId() {
+        public Task ShouldNotCreateClient_DuplicateClientId() {
             //arrange
             var guid = Guid.NewGuid();
             InsertTestClientIntoDbContext("clientId", guid);
@@ -294,11 +295,11 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             };
 
             //act/assert
-            Assert.Throws<BadRequestResponseException>(() => clientsService.CreateClient(request));
+            return Assert.ThrowsAsync<BadRequestResponseException>(async () => await clientsService.CreateClient(request));
         }
 
         [Fact]
-        public void ShouldNotCreateClient_NullEmail() {
+        public Task ShouldNotCreateClient_NullEmail() {
             //arrange
             var guid = Guid.NewGuid();
             InsertTestClientIntoDbContext("clientId", guid);
@@ -323,11 +324,11 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             };
 
             //act/assert
-            Assert.Throws<BadRequestResponseException>(() => clientsService.CreateClient(request));
+            return Assert.ThrowsAsync<BadRequestResponseException>(async () => await clientsService.CreateClient(request));
         }
 
         [Fact]
-        public void ShouldNotCreateClient_NullSubjectId() {
+        public Task ShouldNotCreateClient_NullSubjectId() {
             //arrange
             var guid = Guid.NewGuid();
             InsertTestClientIntoDbContext("clientId", guid);
@@ -352,11 +353,11 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             };
 
             //act/assert
-            Assert.Throws<BadRequestResponseException>(() => clientsService.CreateClient(request));
+            return Assert.ThrowsAsync<BadRequestResponseException>(async () => await clientsService.CreateClient(request));
         }
 
         [Fact]
-        public void ShouldNotCreateClient_NullClientId() {
+        public Task ShouldNotCreateClient_NullClientId() {
             //arrange
             var guid = Guid.NewGuid();
             InsertTestClientIntoDbContext("clientId", guid);
@@ -381,11 +382,11 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             };
 
             //act/assert
-            Assert.Throws<BadRequestResponseException>(() => clientsService.CreateClient(request));
+            return Assert.ThrowsAsync<BadRequestResponseException>(async () => await clientsService.CreateClient(request));
         }
 
         [Fact]
-        public void ShouldUpdateClient() {
+        public async Task ShouldUpdateClient() {
             //arrange
             var id = InsertTestClientIntoDbContext("clientId", Guid.NewGuid());
             var request = new UpdateClientModel {
@@ -404,7 +405,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             };
 
             //act
-            var client = clientsService.UpdateClient(id, request);
+            var client = await clientsService.UpdateClient(id, request);
 
             //assert
             client.Should().NotBeNull();
@@ -417,7 +418,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
         }
 
         [Fact]
-        public void ShouldNotUpdateClientSubClaim() {
+        public Task ShouldNotUpdateClientSubClaim() {
             //arrange
             var id = InsertTestClientIntoDbContext("clientId", Guid.NewGuid());
             var request = new UpdateClientModel {
@@ -433,11 +434,11 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             //act
 
             //assert
-            Assert.Throws<BadRequestResponseException>(() => clientsService.UpdateClient(id, request));
+            return Assert.ThrowsAsync<BadRequestResponseException>(async () => await clientsService.UpdateClient(id, request));
         }
 
         [Fact]
-        public void ShouldNotUpdateInvalidClient() {
+        public Task ShouldNotUpdateInvalidClient() {
             //arrange
             var id = InsertTestClientIntoDbContext("clientId", Guid.NewGuid());
             var request = new UpdateClientModel {
@@ -453,11 +454,11 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             //act
 
             //assert
-            Assert.Throws<BadRequestResponseException>(() => clientsService.UpdateClient(id + 1, request)); //id+1 should not exist and throw
+            return Assert.ThrowsAsync<BadRequestResponseException>(async () => await clientsService.UpdateClient(id + 1, request)); //id+1 should not exist and throw
         }
 
         [Fact]
-        public void ShouldUpdateClientScopes() {
+        public async Task ShouldUpdateClientScopes() {
             // Arrange
             var id = InsertTestClientIntoDbContext("clientId", Guid.NewGuid());
             var request = new UpdateClientScopesModel {
@@ -467,7 +468,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             };
 
             // Act
-            var clientScopes = clientsService.UpdateClientScopes(id, request);
+            var clientScopes = await clientsService.UpdateClientScopes(id, request);
 
             // Assert
             clientScopes.Should().NotBeNull();
@@ -547,7 +548,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
         }
 
         [Fact]
-        public void UpdateClientClaims_UpdatingSub_ShouldThrowError() {
+        public Task UpdateClientClaims_UpdatingSub_ShouldThrowError() {
             // Arrange
             var model = new UpdateClientClaimsModel() {
                 Claims = new List<UserClaimModel>() {
@@ -561,7 +562,7 @@ namespace Acme.IdentityServer.WebApi.Tests.Services {
             var id = InsertTestClientIntoDbContext("clientId", Guid.NewGuid());
 
             // Act / Assert
-            Assert.Throws<BadRequestResponseException>(() => clientsService.UpdateClientClaims(id, model));
+            return Assert.ThrowsAsync<BadRequestResponseException>(async () => await clientsService.UpdateClientClaims(id, model));
         }
 
         private UpdateClientClaimsModel GetDefaultClientClaims() {

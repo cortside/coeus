@@ -1,0 +1,20 @@
+{
+  "ApplicationInsights": {
+    "ConnectionString": ""
+  },
+  "Seq": {
+    "ServerUrl": "http://mitterhorn:5341"
+  },
+  "HealthCheckHostedService": {
+    "Enabled": true
+  },
+  "IdentityServer": {
+    "RequireHttpsMetadata": false
+  },
+  "ReceiverHostedService": {
+    "Enabled": true
+  },
+  "IntegrationTestFactory": {
+    "InMemoryDatabase": true
+  }
+}

@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.DomainService;
 using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.Facade.Mappers;
@@ -19,18 +18,18 @@ namespace Acme.ShoppingCart.Facade {
             this.mapper = mapper;
         }
 
-        public async Task<CustomerDto> CreateCustomerAsync(CustomerDto dto) {
+        public async Task<CustomerDto> CreateCustomerAsync(UpdateCustomerDto dto) {
             var customer = await customerService.CreateCustomerAsync(dto).ConfigureAwait(false);
             await uow.SaveChangesAsync().ConfigureAwait(false);
 
             return mapper.MapToDto(customer);
         }
 
-        public async Task<CustomerDto> GetCustomerAsync(Guid customerResourceId) {
+        public async Task<CustomerDto> GetCustomerAsync(Guid resourceId) {
             // Using BeginNoTracking on GET endpoints for a single entity so that data is read committed
             // with assumption that it might be used for changes in future calls
-            using (var tx = uow.BeginNoTracking()) {
-                var customer = await customerService.GetCustomerAsync(customerResourceId);
+            await using (var tx = uow.BeginNoTracking()) {
+                var customer = await customerService.GetCustomerAsync(resourceId);
                 return mapper.MapToDto(customer);
             }
         }
@@ -40,11 +39,12 @@ namespace Acme.ShoppingCart.Facade {
             await uow.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task<PagedList<CustomerDto>> SearchCustomersAsync(int pageSize, int pageNumber, string sortParams, CustomerSearch search) {
+        public async Task<PagedList<CustomerDto>> SearchCustomersAsync(CustomerSearchDto search) {
+            var customerSearch = mapper.Map(search);
             // Using BeginReadUncommittedAsync on GET endpoints that return a list, this will read uncommitted and
             // as notracking in ef core.  this will result in a non-blocking dirty read, which is accepted best practice for mssql
-            using (var tx = await uow.BeginReadUncommitedAsync().ConfigureAwait(false)) {
-                var customers = await customerService.SearchCustomersAsync(pageSize, pageNumber, sortParams, search).ConfigureAwait(false);
+            await using (var tx = await uow.BeginReadUncommitedAsync().ConfigureAwait(false)) {
+                var customers = await customerService.SearchCustomersAsync(customerSearch).ConfigureAwait(false);
 
                 return new PagedList<CustomerDto> {
                     PageNumber = customers.PageNumber,
@@ -55,8 +55,8 @@ namespace Acme.ShoppingCart.Facade {
             }
         }
 
-        public async Task<CustomerDto> UpdateCustomerAsync(CustomerDto dto) {
-            var customer = await customerService.UpdateCustomerAsync(dto).ConfigureAwait(false);
+        public async Task<CustomerDto> UpdateCustomerAsync(Guid resourceId, UpdateCustomerDto dto) {
+            var customer = await customerService.UpdateCustomerAsync(resourceId, dto).ConfigureAwait(false);
             await uow.SaveChangesAsync().ConfigureAwait(false);
 
             return mapper.MapToDto(customer);

@@ -26,3 +26,41 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[audit].[
 	) 
   END
 GO
+
+DROP INDEX IF EXISTS NC_auditdate ON [Audit].[AuditLogTransaction]
+GO
+
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'IDX_AuditLogTransaction_AuditDate' AND object_id = OBJECT_ID('audit.AuditLogTransaction'))
+  BEGIN
+    CREATE INDEX [IDX_AuditLogTransaction_AuditDate] ON [audit].[AuditLogTransaction]
+    (
+	    [AuditDate], [AuditLogTransactionId]  ASC
+    )
+  END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'IDX_AuditLogTransaction_TableName' AND object_id = OBJECT_ID('audit.AuditLogTransaction'))
+  BEGIN
+    CREATE INDEX [IDX_AuditLogTransaction_TableName] ON [audit].[AuditLogTransaction]
+    (
+	    [TableName], [AuditLogTransactionId]  ASC
+    )
+  END
+GO
+
+declare @pk varchar(100)
+select @pk = schema_name+'.'+table_name+'.'+pk_name
+from (
+    select schema_name(tab.schema_id) as [schema_name], pk.[name] as pk_name, tab.[name] as table_name
+    from sys.tables tab
+    inner join sys.indexes pk on tab.object_id = pk.object_id 
+        and pk.is_primary_key = 1
+    where schema_name(tab.schema_id)='audit'
+        and tab.[name]='AuditLogTransaction'
+    --order by schema_name(tab.schema_id), pk.[name]
+) x
+
+if (@pk != 'audit.AuditLogTransaction.PK_AuditLogTransaction')
+  BEGIN
+    EXEC sp_rename @pk, 'PK_AuditLogTransaction'
+  END

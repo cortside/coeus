@@ -3,7 +3,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
-using Acme.ShoppingCart.Domain.Entities;
+using Acme.ShoppingCart.Data;
+using Acme.ShoppingCart.TestUtilities;
 using Cortside.Common.Threading;
 using Cortside.DomainEvent;
 using Cortside.DomainEvent.Stub;
@@ -11,12 +12,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests.Handlers {
-    public class OrderStateChangedHandlerTest : IClassFixture<IntegrationTestFactory<Startup>> {
+    public class OrderStateChangedHandlerTest : IClassFixture<IntegrationFixture> {
         private readonly IStubBroker broker;
         private readonly IDomainEventPublisher publisher;
-        private readonly IntegrationTestFactory<Startup> fixture;
+        private readonly IntegrationFixture fixture;
 
-        public OrderStateChangedHandlerTest(IntegrationTestFactory<Startup> fixture) {
+        public OrderStateChangedHandlerTest(IntegrationFixture fixture) {
             broker = fixture.Services.GetService<IStubBroker>();
             publisher = fixture.Services.GetService<IDomainEventPublisher>();
             this.fixture = fixture;
@@ -25,9 +26,8 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests.Handlers {
         [Fact]
         public async Task ShouldSendNotificationAsync() {
             //arrange
-            var db = fixture.NewScopedDbContext();
-            var customer = db.Customers.First();
-            var order = new Order(customer, "", "", "", "", "");
+            var db = fixture.NewScopedDbContext<DatabaseContext>();
+            var order = EntityBuilder.GetOrderEntity();
             db.Orders.Add(order);
             await db.SaveChangesAsync();
 
@@ -41,7 +41,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests.Handlers {
             await AsyncUtil.WaitUntilAsync(new CancellationTokenSource(TimeSpan.FromSeconds(10)).Token, () => !broker.HasItems);
 
             // assert
-            db = fixture.NewScopedDbContext();
+            db = fixture.NewScopedDbContext<DatabaseContext>();
             var entity = db.Orders.FirstOrDefault(x => x.OrderResourceId == message.OrderResourceId);
             Assert.NotNull(entity);
             Assert.NotNull(entity.LastNotified);

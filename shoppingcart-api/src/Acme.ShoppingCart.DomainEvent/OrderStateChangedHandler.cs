@@ -29,10 +29,8 @@ namespace Acme.ShoppingCart.DomainEvent {
         }
 
         public async Task<HandlerResult> HandleAsync(DomainEventMessage<OrderStateChangedEvent> @event) {
-            using (LogContext.PushProperty("MessageId", @event.MessageId))
-            using (LogContext.PushProperty("CorrelationId", @event.CorrelationId))
             using (LogContext.PushProperty("OrderResourceId", @event.Data.OrderResourceId)) {
-                logger.LogDebug("Handling {EventName} for ShoppingCart {OrderResourceId}", typeof(OrderStateChangedEvent).Name, @event.Data.OrderResourceId);
+                logger.LogDebug("Handling {EventName} for ShoppingCart {OrderResourceId}", nameof(OrderStateChangedEvent), @event.Data.OrderResourceId);
 
                 using (IServiceScope scope = serviceProvider.CreateScope()) {
                     var facade = scope.ServiceProvider.GetRequiredService<IOrderFacade>();
@@ -44,8 +42,8 @@ namespace Acme.ShoppingCart.DomainEvent {
                         logger.LogDebug("Acquired lock for {LockName}", lockName);
                         var entity = await facade.SendNotificationAsync(@event.Data.OrderResourceId).ConfigureAwait(false);
                         logger.LogInformation("Emailing customer at {Email} for change to order {OrderResourceId}", entity.Customer.Email, entity.OrderResourceId);
-                        logger.LogDebug("Handling change event for order {@order}", entity);
-                        logger.LogInformation("order was observed changing it's state with body: {body} and entity: {entity}", JsonConvert.SerializeObject(@event.Data), JsonConvert.SerializeObject(entity));
+                        logger.LogDebug("Handling change event for order {@Order}", entity);
+                        logger.LogInformation("order was observed changing it's state with body: {Body} and entity: {Entity}", JsonConvert.SerializeObject(@event.Data), JsonConvert.SerializeObject(entity));
                     }
                 }
 

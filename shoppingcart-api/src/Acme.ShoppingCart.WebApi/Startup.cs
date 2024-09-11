@@ -4,22 +4,23 @@ using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.DomainEvent;
 using Acme.ShoppingCart.Health;
 using Acme.ShoppingCart.WebApi.Installers;
+using Asp.Versioning.ApiExplorer;
 using Cortside.AspNetCore;
 using Cortside.AspNetCore.AccessControl;
 using Cortside.AspNetCore.ApplicationInsights;
 using Cortside.AspNetCore.Auditable;
 using Cortside.AspNetCore.Auditable.Entities;
 using Cortside.AspNetCore.Builder;
+using Cortside.AspNetCore.Common;
 using Cortside.AspNetCore.EntityFramework;
+using Cortside.AspNetCore.Filters;
 using Cortside.AspNetCore.Swagger;
-using Cortside.Common.Messages.Filters;
 using Cortside.DomainEvent;
 using Cortside.DomainEvent.EntityFramework;
 using Cortside.Health;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -38,6 +39,9 @@ namespace Acme.ShoppingCart.WebApi {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// Startup
+        /// </summary>
         public Startup() {
         }
 
@@ -46,6 +50,10 @@ namespace Acme.ShoppingCart.WebApi {
         /// </summary>
         private IConfiguration Configuration { get; set; }
 
+        /// <summary>
+        /// Sets the Configuration to be used
+        /// </summary>
+        /// <param name="config"></param>
         public void UseConfiguration(IConfiguration config) {
             Configuration = config;
         }
@@ -94,7 +102,7 @@ namespace Acme.ShoppingCart.WebApi {
             services.AddAccessControl(Configuration);
 
             // Add swagger with versioning and OpenID Connect configuration using Newtonsoft
-            services.AddSwagger(Configuration, "Acme.ShoppingCart API", "Acme.ShoppingCart API", new[] { "v1", "v2" });
+            services.AddSwagger(Configuration, "Acme.ShoppingCart API", "Acme.ShoppingCart API", ["v1", "v2"]);
 
             // add service for handling encryption of search parameters
             services.AddEncryptionService(Configuration["Encryption:Secret"]);
@@ -114,7 +122,7 @@ namespace Acme.ShoppingCart.WebApi {
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider) {
             // Can be used for more analytic information if not using an APM of some kind.
             // Need to add installer MiniProfilerInstaller to default bootstrapper or as an installer above
-            // app.UseMiniProfiler();
+            // uncomment: app.UseMiniProfiler()
 
             app.UseApiDefaults(Configuration);
             app.UseSwagger("Acme.ShoppingCart Api", provider);

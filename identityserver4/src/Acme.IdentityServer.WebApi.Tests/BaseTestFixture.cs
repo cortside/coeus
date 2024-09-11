@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Acme.IdentityServer.WebApi.Data;
 using Cortside.AspNetCore.Auditable;
 using Cortside.Common.Security;
-using Acme.IdentityServer.WebApi.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
