@@ -11,3 +11,10 @@
 * Make use of WebApiFixture<T> for setting up integration tests
 	* Allows for simpler test setup and for simpler configuration by only overriding what is needed
 * Convert to using Asp.Versioning
+
+## Migration notes
+
+* Create migration for change to Outbox table from Cortside.DomainEvent.EntityFramework and for change to column name from CreateSubjectId to CreatedSubjectId from Cortside.AspNetCore.Audit
+* Startup: IApiVersionDescriptionProvider is referenced from Asp.Versioning.ApiExplorer
+* Controllers: ApiVersion and ApiVersionNeutral attributes needs to be referenced from Asp.Versioning
+* ErrorsModel and ErrorModel should be referenced from Cortside.AspNetCore.Filters.Models

@@ -12,11 +12,11 @@ namespace Acme.ShoppingCart.TestUtilities {
             return new Address(RandomValues.AddressLine1, RandomValues.City, RandomValues.State, "U.S.A.", RandomValues.ZipCode);
         }
 
-        public static Order GetOrderEntity(Customer? customer = null) {
+        public static Order GetOrderEntity(Customer customer = null) {
             return new Order(customer ?? GetCustomerEntity(), RandomValues.AddressLine1, RandomValues.City, RandomValues.State, "U.S.A.", RandomValues.ZipCode);
         }
 
-        public static OrderItem GetOrderItemEntity(CatalogItem? catalogItem = null) {
+        public static OrderItem GetOrderItemEntity(CatalogItem catalogItem = null) {
             return new OrderItem(catalogItem ?? ModelBuilder.GetCatalogItem(), RandomValues.Number(1, 50));
         }
     }

@@ -11,10 +11,10 @@
     <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.3.251-6.3" />
-    <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="6.3.251-6.3" />
-    <PackageReference Include="Cortside.Common.Security" Version="6.3.444-release-6.3" />
-    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="6.3.324-6.3" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.3.253" />
+    <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="6.3.253" />
+    <PackageReference Include="Cortside.Common.Security" Version="6.3.456" />
+    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="6.3.327" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
