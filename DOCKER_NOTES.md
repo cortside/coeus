@@ -1,3 +1,11 @@
+# resize partition
+https://blog.mylab.cc/2022/02/26/How-to-resize-the-root-LVM-partition-of-Ubuntu/
+
+df -Th
+lsblk --fs
+sudo lvextend -l +100%FREE -r /dev/mapper/ubuntu--vg-ubuntu--lv
+
+
 # allow non-root docker access
 * after installing docker on ubuntu host, run following so that non-root user can run docker commands:
 sudo groupadd docker

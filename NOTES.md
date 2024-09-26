@@ -1,7 +1,14 @@
 TODO:
 
+* new .net 8 auth
+	* https://devblogs.microsoft.com/dotnet/improvements-auth-identity-aspnetcore-8/
+	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/
+	* https://www.codeproject.com/Articles/5370795/Microservices-using-ASP-NET-Core-8-Ocelot-MongoDB#identity-microservice
+	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/
 * microsoft identity
+	* https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-8.0&tabs=visual-studio
 	* https://www.codeproject.com/Articles/5378824/Decouple-ASP-NET-Core-Identity-Authentication-and
+	* https://github.com/dotnet/AspNetCore/tree/main/src/Identity
 * base62
 	* https://www.codeproject.com/Tips/5380920/A-Unique-Identifier-Usable-Across-Disconnected-Sys
 * repo based vs settings
@@ -346,11 +353,6 @@ Console.WriteLine($"{ServiceIdentification.Name} {ServiceIdentification.Version}
 	* https://github.com/cortside/c6-dcms/blob/develop/src/Domain/Entity/Blob.cs
 	* https://github.com/cortside/c6-dcms/blob/develop/src/Domain/Entity/File.cs
 	* https://github.com/spring2/spring2.common/tree/master/src/Spring2.Common.Storage
-* new .net 8 auth
-	* https://devblogs.microsoft.com/dotnet/improvements-auth-identity-aspnetcore-8/
-	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/
-	* https://www.codeproject.com/Articles/5370795/Microservices-using-ASP-NET-Core-8-Ocelot-MongoDB#identity-microservice
-	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/
 * EF concurrency example
 * ETag example
 * Add schema parameter to AddDomainEventOutbox()

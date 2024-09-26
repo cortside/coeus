@@ -80,6 +80,8 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
                 }
             }
 
+
+            testOutputHelper.WriteLine($"Slowest controller resolution: {slowest}");
             Assert.True(errors.Count == 0, string.Join(Environment.NewLine, errors.Select(x => $"Failed to resolve controller {x.Key.Name} due to {x.Value}")));
         }
 

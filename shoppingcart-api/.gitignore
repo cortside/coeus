@@ -256,3 +256,4 @@ coverage.opencover.xml
 
 docker.env
 buildconfig.json
+coveragereport
