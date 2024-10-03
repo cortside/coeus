@@ -19,10 +19,6 @@ gci *.csproj -Recurse | %{ if (-not (select-string -inputobject $_ -Pattern "Ros
 gci *.csproj -Recurse | %{ if (-not (select-string -inputobject $_ -Pattern "AsyncFixer")){ echo "add AsyncFixer to $_.Fullname"; dotnet add $_.FullName package AsyncFixer }}
 gci *.csproj -Recurse | %{ if (-not (select-string -inputobject $_ -Pattern "ParallelHelper")){ echo "add ParallelHelper to $_.Fullname"; dotnet add $_.FullName package ParallelHelper }}
 
-
-
-
-
 # remove older packages for test projects
 gci *Test*.csproj -Recurse | %{ if (select-string -inputobject $_ -Pattern "coverlet.msbuild") { echo "remove coverlet.msbuild from $_.Fullname"; dotnet remove $_.FullName package coverlet.msbuild } }
 gci *Test*.csproj -Recurse | %{ if (select-string -inputobject $_ -Pattern "xunit.runner.console") { echo "remove coverlet.msbuild from $_.Fullname"; dotnet remove $_.FullName package xunit.runner.console } }
