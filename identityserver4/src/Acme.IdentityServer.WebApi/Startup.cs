@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Acme.IdentityServer.BootStrap;
 using Acme.IdentityServer.WebApi.Data;
 using Acme.IdentityServer.WebApi.Installers;
+using Asp.Versioning.ApiExplorer;
 using Cortside.AspNetCore;
 using Cortside.AspNetCore.ApplicationInsights;
 using Cortside.AspNetCore.Auditable;
@@ -12,7 +13,6 @@ using Cortside.AspNetCore.Builder;
 using Cortside.AspNetCore.EntityFramework;
 using Cortside.AspNetCore.Middleware;
 using Cortside.AspNetCore.Swagger;
-using Cortside.Common.Correlation;
 using Cortside.DomainEvent;
 using Cortside.DomainEvent.EntityFramework;
 using Cortside.Health;
@@ -23,7 +23,6 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -99,7 +98,7 @@ namespace Acme.IdentityServer.WebApi {
             services.AddTransient<ISubjectFactory<Subject>, DefaultSubjectFactory>();
 
             // Add swagger with versioning and OpenID Connect configuration using Newtonsoft
-            services.AddSwagger(Configuration, "IdentityServer API", "IdentityServer API", new[] { "v1" });
+            services.AddSwagger(Configuration, "IdentityServer API", "IdentityServer API", ["v1"]);
 
             // from Startup before update
             services.AddCors();

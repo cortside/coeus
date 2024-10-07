@@ -5,6 +5,7 @@ using Acme.IdentityServer.WebApi.Data;
 using Acme.IdentityServer.WebApi.Exceptions;
 using Acme.IdentityServer.WebApi.Models.Input;
 using Acme.IdentityServer.WebApi.Services;
+using Asp.Versioning;
 using Cortside.Common.Messages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;

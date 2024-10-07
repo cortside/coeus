@@ -1,5 +1,7 @@
 TODO:
 
+* add example of extended Subject Entity
+	* see communication-api for code examples
 * new .net 8 auth
 	* https://devblogs.microsoft.com/dotnet/improvements-auth-identity-aspnetcore-8/
 	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/

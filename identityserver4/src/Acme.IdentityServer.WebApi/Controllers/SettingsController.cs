@@ -1,4 +1,5 @@
 using Acme.IdentityServer.WebApi.Models;
+using Asp.Versioning;
 using Cortside.DomainEvent;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;

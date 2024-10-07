@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Cortside.AspNetCore.Auditable;
 using Cortside.AspNetCore.Auditable.Entities;
 using Cortside.AspNetCore.EntityFramework;
+using Cortside.AspNetCore.EntityFramework.Conventions;
 using Cortside.Common.Security;
 using Cortside.DomainEvent.EntityFramework;
 using Microsoft.AspNetCore.Http;
@@ -20,6 +21,12 @@ namespace Acme.IdentityServer.WebApi.Data {
         public IdentityServerDbContext(DbContextOptions<IdentityServerDbContext> options, ISubjectPrincipal subjectPrincipal, IHttpContextAccessor httpContextAccessor, ISubjectFactory<Subject> subjectFactory) : base(options) {
             this.subjectPrincipal = subjectPrincipal;
             _httpContextAccessor = httpContextAccessor;
+        }
+
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder) {
+            configurationBuilder.Properties<decimal>()
+                .HavePrecision(18, 6);
+            configurationBuilder.Conventions.Add(_ => new BlankTriggerAddingConvention());
         }
 
         //TODO: Move these registrations into their own mapping classes as in prior versions of EF.
