@@ -35,16 +35,25 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests.Handlers {
                 OrderResourceId = order.OrderResourceId,
                 Timestamp = DateTime.UtcNow
             };
-            await publisher.PublishAsync(message);
+
+            var correlationId = Guid.NewGuid().ToString();
+            await publisher.PublishAsync(message, correlationId);
 
             // act
-            await AsyncUtil.WaitUntilAsync(new CancellationTokenSource(TimeSpan.FromSeconds(10)).Token, () => !broker.HasItems);
+            await ReceiveAndWaitAsync(correlationId, 10);
 
             // assert
             db = fixture.NewScopedDbContext<DatabaseContext>();
             var entity = db.Orders.FirstOrDefault(x => x.OrderResourceId == message.OrderResourceId);
             Assert.NotNull(entity);
             Assert.NotNull(entity.LastNotified);
+        }
+
+        private async Task ReceiveAndWaitAsync(string correlationId, int timeout) {
+            await AsyncUtil.WaitUntilAsync(new CancellationTokenSource(TimeSpan.FromSeconds(timeout)).Token, () => !broker.HasItems);
+
+            var message = broker.AcceptedItems.FirstOrDefault(x => x.Properties.CorrelationId == correlationId);
+            Assert.NotNull(message);
         }
     }
 }

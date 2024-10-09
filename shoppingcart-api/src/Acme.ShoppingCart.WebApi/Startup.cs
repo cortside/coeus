@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 
 namespace Acme.ShoppingCart.WebApi {
@@ -126,6 +127,10 @@ namespace Acme.ShoppingCart.WebApi {
 
             app.UseApiDefaults(Configuration);
             app.UseSwagger("Acme.ShoppingCart Api", provider);
+
+            if (env.IsDevelopment()) {
+                app.UseDeveloperExceptionPage();
+            }
 
             // order of the following matters
             app.UseAuthentication();
