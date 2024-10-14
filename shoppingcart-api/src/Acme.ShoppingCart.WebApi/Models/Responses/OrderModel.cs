@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Acme.ShoppingCart.Enumerations;
 using Cortside.AspNetCore.Common.Models;
+using OrderStatus = Acme.ShoppingCart.WebApi.Enumerations.OrderStatus;
 
 namespace Acme.ShoppingCart.WebApi.Models.Responses {
     /// <summary>

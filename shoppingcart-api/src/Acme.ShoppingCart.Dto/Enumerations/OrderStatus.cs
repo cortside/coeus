@@ -1,4 +1,4 @@
-namespace Acme.ShoppingCart.Enumerations {
+namespace Acme.ShoppingCart.Dto.Enumerations {
     public enum OrderStatus {
         Created,
         Paid,

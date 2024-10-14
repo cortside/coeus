@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -21,7 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Acme.ShoppingCart.CatalogApi\Acme.ShoppingCart.CatalogApi.csproj" />
-    <ProjectReference Include="..\Acme.ShoppingCart.Enumerations\Acme.ShoppingCart.Enumerations.csproj" />
+    <ProjectReference Include="..\Acme.ShoppingCart.Dto\Acme.ShoppingCart.Dto.csproj" />
     <ProjectReference Include="..\Acme.ShoppingCart.Exceptions\Acme.ShoppingCart.Exceptions.csproj" />
   </ItemGroup>
 </Project>

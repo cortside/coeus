@@ -4,13 +4,13 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.Data;
-using Acme.ShoppingCart.Enumerations;
 using Acme.ShoppingCart.TestUtilities;
 using Acme.ShoppingCart.WebApi.Models.Requests;
 using Acme.ShoppingCart.WebApi.Models.Responses;
 using FluentAssertions;
 using Newtonsoft.Json;
 using Xunit;
+using OrderStatus = Acme.ShoppingCart.WebApi.Enumerations.OrderStatus;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
     public class OrderTest : IClassFixture<IntegrationFixture> {
@@ -168,6 +168,38 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             order.Customer.CustomerResourceId.Should().NotBeEmpty();
             order.Items.Count.Should().Be(2);
             order.Items.Where(x => x.Sku == "789").Should().NotBeEmpty();
+        }
+
+        [Fact]
+        public async Task ShouldCancelOrderAsync() {
+            //arrange
+            var orderRequest = ModelBuilder.GetCreateOrderModel();
+            orderRequest.Items.Add(ModelBuilder.GetCreateOrderItemModel());
+
+            //act
+            var orderBody = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");
+            var orderResponse = await client.PostAsync("/api/v1/orders", orderBody);
+
+            //assert
+            var orderContent = await orderResponse.Content.ReadAsStringAsync();
+            orderResponse.StatusCode.Should().Be(HttpStatusCode.Created);
+            var order = JsonConvert.DeserializeObject<OrderModel>(orderContent);
+
+            // act
+            orderResponse = await client.PostAsync($"/api/v1/orders/{order.OrderResourceId}/cancel", orderBody);
+
+            //assert
+            orderResponse.StatusCode.Should().Be(HttpStatusCode.NoContent);
+
+            //act
+            var response = await client.GetAsync($"api/v1/orders/{order.OrderResourceId}");
+
+            //assert
+            orderContent = await response.Content.ReadAsStringAsync();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            order = JsonConvert.DeserializeObject<OrderModel>(orderContent);
+
+            order.Status.Should().Be(OrderStatus.Cancelled);
         }
     }
 }

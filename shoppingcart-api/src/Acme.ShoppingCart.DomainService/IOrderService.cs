@@ -14,5 +14,6 @@ namespace Acme.ShoppingCart.DomainService {
         Task<Order> UpdateOrderAsync(Guid id, UpdateOrderDto dto);
         Task<Order> AddOrderItemAsync(Guid id, OrderItemDto dto);
         Task<Order> SendNotificationAsync(Guid id);
+        Task CancelOrderAsync(Guid id);
     }
 }

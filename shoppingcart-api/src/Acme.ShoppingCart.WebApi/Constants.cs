@@ -24,6 +24,7 @@ namespace Acme.ShoppingCart.WebApi {
                 public const string CreateOrder = "CreateOrder";
                 public const string UpdateOrder = "UpdateOrder";
                 public const string PublishOrder = "PublishOrder";
+                public const string CancelOrder = "CancelOrder";
             }
         }
     }

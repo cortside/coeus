@@ -1,5 +1,7 @@
 TODO:
 
+* add guideliens on cognitive load
+	* https://github.com/zakirullin/cognitive-load
 * add example of extended Subject Entity
 	* see communication-api for code examples
 * new .net 8 auth

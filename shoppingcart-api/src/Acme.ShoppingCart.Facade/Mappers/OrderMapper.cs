@@ -2,6 +2,7 @@ using System.Linq;
 using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.Dto;
+using Acme.ShoppingCart.Dto.Enumerations;
 
 namespace Acme.ShoppingCart.Facade.Mappers {
     public class OrderMapper {
@@ -26,6 +27,7 @@ namespace Acme.ShoppingCart.Facade.Mappers {
                 Address = addressMapper.MapToDto(entity.Address),
                 Items = entity.Items.ToList().ConvertAll(x => MapToDto(x)),
                 Customer = customerMapper.MapToDto(entity.Customer),
+                Status = ((OrderStatus)(int)entity.Status),
                 CreatedDate = entity.CreatedDate,
                 LastModifiedDate = entity.LastModifiedDate,
                 CreatedSubject = subjectMapper.MapToDto(entity.CreatedSubject),

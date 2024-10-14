@@ -126,7 +126,7 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         }
 
         /// <summary>
-        /// Update an order
+        /// Publish order state
         /// </summary>
         /// <param name="resourceId"></param>
         [HttpPost("{resourceId}/publish")]
@@ -135,6 +135,20 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         public async Task<IActionResult> PublishOrderStateChangedEventAsync(Guid resourceId) {
             using (LogContext.PushProperty("OrderResourceId", resourceId)) {
                 await facade.PublishOrderStateChangedEventAsync(resourceId).ConfigureAwait(false);
+                return StatusCode((int)HttpStatusCode.NoContent);
+            }
+        }
+
+        /// <summary>
+        /// Cancel an order
+        /// </summary>
+        /// <param name="resourceId"></param>
+        [HttpPost("{resourceId}/cancel")]
+        [Authorize(Constants.Authorization.Permissions.CancelOrder)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> CancelOrderAsync(Guid resourceId) {
+            using (LogContext.PushProperty("OrderResourceId", resourceId)) {
+                await facade.CancelOrderAsync(resourceId).ConfigureAwait(false);
                 return StatusCode((int)HttpStatusCode.NoContent);
             }
         }
