@@ -92,5 +92,10 @@ namespace Acme.ShoppingCart.Facade {
 
             return mapper.MapToDto(order);
         }
+
+        public async Task CancelOrderAsync(Guid id) {
+            await orderService.CancelOrderAsync(id).ConfigureAwait(false);
+            await uow.SaveChangesAsync().ConfigureAwait(false);
+        }
     }
 }

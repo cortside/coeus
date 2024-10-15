@@ -12,5 +12,6 @@ namespace Acme.ShoppingCart.Facade {
         Task<OrderDto> UpdateOrderAsync(Guid id, UpdateOrderDto dto);
         Task<OrderDto> AddOrderItemAsync(Guid id, OrderItemDto dto);
         Task<OrderDto> SendNotificationAsync(Guid id);
+        Task CancelOrderAsync(Guid id);
     }
 }

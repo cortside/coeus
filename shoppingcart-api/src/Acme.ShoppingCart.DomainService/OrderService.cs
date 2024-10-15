@@ -59,7 +59,7 @@ namespace Acme.ShoppingCart.DomainService {
 
         public async Task<Order> UpdateOrderAsync(Guid id, UpdateOrderDto dto) {
             var entity = await orderRepository.GetAsync(id).ConfigureAwait(false);
-            entity.UpdateAddress(dto.Address.Street, dto.Address.City, dto.Address.State, dto.Address.Country, dto.Address.ZipCode);
+            entity.UpdateAddress(dto.Address);
 
             // remove items not in dto
             var itemsToRemove = new List<OrderItem>();
@@ -108,6 +108,14 @@ namespace Acme.ShoppingCart.DomainService {
             var entity = await orderRepository.GetAsync(id).ConfigureAwait(false);
             entity.SendNotification();
             return entity;
+        }
+
+        public async Task CancelOrderAsync(Guid id) {
+            var entity = await orderRepository.GetAsync(id).ConfigureAwait(false);
+            entity.Cancel();
+
+            var @event = new OrderStateChangedEvent() { OrderResourceId = entity.OrderResourceId, Timestamp = DateTime.UtcNow };
+            await publisher.PublishAsync(@event).ConfigureAwait(false);
         }
     }
 }

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Acme.ShoppingCart.CatalogApi.Models.Responses;
-using Acme.ShoppingCart.Enumerations;
+using Acme.ShoppingCart.Dto;
+using Acme.ShoppingCart.Dto.Enumerations;
 using Acme.ShoppingCart.Exceptions;
 using Cortside.AspNetCore.Auditable.Entities;
 using Cortside.Common.Validation;
@@ -58,10 +59,10 @@ namespace Acme.ShoppingCart.Domain.Entities {
             Guard.Against(() => Status == OrderStatus.Cancelled || Status == OrderStatus.Shipped, () => throw new InvalidOrderStateChangeMessage($"Update not allowed when Status is {Status}"));
         }
 
-        public void UpdateAddress(string street, string city, string state, string country, string zipCode) {
+        public void UpdateAddress(AddressDto dto) {
             AssertOpenOrder();
 
-            Address.Update(street, city, state, country, zipCode);
+            Address.Update(dto.Street, dto.City, dto.State, dto.Country, dto.ZipCode);
         }
 
         public void AddItem(CatalogItem item, int quantity) {
@@ -103,6 +104,11 @@ namespace Acme.ShoppingCart.Domain.Entities {
 
         public void SendNotification() {
             LastNotified = DateTime.UtcNow;
+        }
+
+        public void Cancel() {
+            Guard.Against(() => Status == OrderStatus.Cancelled, () => throw new InvalidOrderStateChangeMessage($"Cancel not allowed when Status is {Status}"));
+            Status = OrderStatus.Cancelled;
         }
     }
 }

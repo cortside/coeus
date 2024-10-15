@@ -11,12 +11,6 @@
     <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Content Remove="C:\Users\cort\.nuget\packages\cortside.common.testing\6.3.410-develop\contentFiles\any\net6.0\testhost.dll" />
-    <Content Remove="C:\Users\cort\.nuget\packages\cortside.common.testing\6.3.410-develop\contentFiles\any\net6.0\testhost.exe" />
-    <Content Remove="C:\Users\cort\.nuget\packages\microsoft.testplatform.testhost\17.9.0\build\netcoreapp3.1\x64\testhost.dll" />
-    <Content Remove="C:\Users\cort\.nuget\packages\microsoft.testplatform.testhost\17.9.0\build\netcoreapp3.1\x64\testhost.exe" />
-  </ItemGroup>
-  <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>

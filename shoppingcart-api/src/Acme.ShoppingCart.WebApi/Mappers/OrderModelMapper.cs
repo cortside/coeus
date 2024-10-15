@@ -1,6 +1,7 @@
 #pragma warning disable CS1591 // Missing XML comments
 
 using Acme.ShoppingCart.Dto;
+using Acme.ShoppingCart.WebApi.Enumerations;
 using Acme.ShoppingCart.WebApi.Models.Requests;
 using Acme.ShoppingCart.WebApi.Models.Responses;
 
@@ -26,6 +27,7 @@ namespace Acme.ShoppingCart.WebApi.Mappers {
                 Address = addressMapper.Map(dto.Address),
                 Items = dto.Items.ConvertAll(x => Map(x)),
                 Customer = customerMapper.Map(dto.Customer),
+                Status = ((OrderStatus)(int)dto.Status),
                 CreatedDate = dto.CreatedDate,
                 LastModifiedDate = dto.LastModifiedDate,
                 CreatedSubject = subjectMapper.Map(dto.CreatedSubject),
