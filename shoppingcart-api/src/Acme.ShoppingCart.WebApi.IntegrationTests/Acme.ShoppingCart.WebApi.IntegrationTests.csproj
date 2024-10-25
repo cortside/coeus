@@ -14,9 +14,9 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.Testing" Version="6.3.266" />
-    <PackageReference Include="Cortside.Common.Testing" Version="6.3.458" />
-    <PackageReference Include="Cortside.Common.Testing.EntityFramework" Version="6.3.458" />
+    <PackageReference Include="Cortside.AspNetCore.Testing" Version="6.4.275-develop" />
+    <PackageReference Include="Cortside.Common.Testing" Version="6.4.464-develop" />
+    <PackageReference Include="Cortside.Common.Testing.EntityFramework" Version="6.4.464-develop" />
     <PackageReference Include="Cortside.DomainEvent.Stub" Version="6.3.330" />
     <PackageReference Include="Cortside.MockServer.AccessControl" Version="6.2.74" />
     <PackageReference Include="coverlet.collector" Version="6.0.2">
