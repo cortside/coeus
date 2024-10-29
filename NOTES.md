@@ -1,20 +1,52 @@
 TODO:
 
-* add guideliens on cognitive load
-	* https://github.com/zakirullin/cognitive-load
+* Add concurrency example with etag/RowVersion
+	* https://learn.microsoft.com/en-us/ef/core/saving/concurrency?tabs=data-annotations
+* complete query-by-post guideline
 * add example of extended Subject Entity
 	* see communication-api for code examples
-* new .net 8 auth
-	* https://devblogs.microsoft.com/dotnet/improvements-auth-identity-aspnetcore-8/
-	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/
-	* https://www.codeproject.com/Articles/5370795/Microservices-using-ASP-NET-Core-8-Ocelot-MongoDB#identity-microservice
-	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/
-* microsoft identity
-	* https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-8.0&tabs=visual-studio
-	* https://www.codeproject.com/Articles/5378824/Decouple-ASP-NET-Core-Identity-Authentication-and
-	* https://github.com/dotnet/AspNetCore/tree/main/src/Identity
+* add RCS1163 to .editorconfig -- unused parameter
+* EF concurrency example
+* ETag example
+* Add schema parameter to AddDomainEventOutbox()
+	* needed by ids
+* api client Generator
+	* https://github.com/RicoSuter/NSwag
+* dto generator
+	* https://blog.devgenius.io/net-source-generators-with-net-7-a68f29b46e74
+	* https://learn.microsoft.com/en-us/dotnet/api/system.codedom.compiler.generatedcodeattribute?view=net-7.0
+	* https://github.com/loresoft/EntityFrameworkCore.Generator
+	* https://learn.microsoft.com/en-us/ef/core/extensions/
+* domainevent outbox interceptor
+	* https://www.milanjovanovic.tech/blog/how-to-use-ef-core-interceptors
+* db column encryption with ef core
+	* https://blog.wiseowls.co.nz/index.php/2020/01/26/custom-functions-ef-core-3/  <<-- using custom functions and symmetric keys
+		* https://carstent.wordpress.com/tag/entity-framework/ <<-- examples of sql with creating and using certificates for keys
+	* https://github.com/emrekizildas/EntityFrameworkCore.EncryptColumn/tree/main
+	* https://github.com/Eastrall/EntityFrameworkCore.DataEncryption
+	* https://stackoverflow.com/questions/76726818/entity-framework-core-and-column-level-sql-server-encryption-with-stored-procedu
+	* https://stackoverflow.com/questions/66035987/decrypting-data-using-ef-core-3
+	* https://stackoverflow.com/questions/59191856/using-ef-core-2-2-to-decrypt-a-string-using-sql-server-decryptbykey
+		* https://www.thinktecture.com/en/entity-framework-core/custom-functions-using-imethodcalltranslator-in-2-1/
+		* https://github.com/tkhadimullin/ef-core-custom-functions/tree/master?tab=readme-ov-file
+		* https://github.com/tkhadimullin/ef-core-custom-functions/tree/feature/ef-3.1-version
+		* https://stackoverflow.com/questions/77160320/writing-custom-entity-framework-function-with-imethodcalltranslator
+		* https://github.com/npgsql/efcore.pg/issues/2186
+	* https://carstent.wordpress.com/tag/entity-framework/
+	* https://blog.wiseowls.co.nz/index.php/2020/01/26/custom-functions-ef-core-3/
+* test out having multiple domainevents with common base type handled by single handler
+* personal access tokens in identityserver
+	* https://ideasof.andersaberg.com/development/personal-access-tokens-with-identityserver
+	* https://github.com/DuendeSoftware/Samples/tree/main/IdentityServer/v5/PAT/src
+
+
+
+* add guideliens on cognitive load
+	* https://github.com/zakirullin/cognitive-load
 * base62
 	* https://www.codeproject.com/Tips/5380920/A-Unique-Identifier-Usable-Across-Disconnected-Sys
+	* https://github.com/aled/dotnet-base62/blob/master/GuidToBase62/Base62Extension.cs
+	* https://www.codeproject.com/Articles/1076295/Base-Encode
 * repo based vs settings
 	* https://www.codeproject.com/Tips/5380771/Saving-Visual-Studio-Settings-for-All-Your-Project
 	* https://learn.microsoft.com/en-us/visualstudio/install/import-export-installation-configurations?view=vs-2022#use-a-configuration-file-to-automatically-install-missing-components
@@ -25,12 +57,6 @@ TODO:
 * cortside.authorization -- simplest implementation -- policy, policyrole, permissions, rolepermission where policyrole maps to a role claim
 	* uses only role claims?  
 * cortside.storage that has blobs and files -- may somehow be related to restfs
-* domainevent -- try to publish message with property that is 26MB
-* add attempt count to outbox and fail after some configurable number
-	* will need method to reset outbox messages to retry again
-* practicality of using x.sln.DotSettings file for those with resharper installed
-* add RCS1163 to .editorconfig -- unused parameter
-* update restapiclient to latest restsharp
 * add default policy for catalogapi client in shoppingcart -- highlighting ability to have default, different than authenication and different than an individual request
 * public static class ServiceIdentification
 {
@@ -83,13 +109,7 @@ Console.WriteLine($"{ServiceIdentification.Name} {ServiceIdentification.Version}
 * ARC-184 - conditionally discard malformed messages
 * ARC-185 - publish amqptools.core for other services to be able to manage queues
 	* delete by filter
-* personal access tokens in identityserver
-	* https://ideasof.andersaberg.com/development/personal-access-tokens-with-identityserver
-	* https://github.com/DuendeSoftware/Samples/tree/main/IdentityServer/v5/PAT/src
-* is there a benefit of IDomainEventOutboxPublisher?
 * use nameof() in ForeignKey
-* add event handlers to service tier responsibilities image
-	* https://github.com/cortside/coeus/blob/develop/shoppingcart-api/docs/ServiceTierResponsibilities.png
 * support adding before and after request
 	* onBeforeRequest
 	* onAfterRequest
@@ -97,12 +117,8 @@ Console.WriteLine($"{ServiceIdentification.Name} {ServiceIdentification.Version}
 	* based on configuration
 	* will need tables, similar to outbox
 	* cortside.aspnetcore.entityframework
-* update templates and libraries to treat warnings as errors
 * extentions methods to setup LogEvent logger in serviceCollection
 	* ILoggingBuilder
-* complete query-by-post guideline
-* swagger docs should show the required permission
-* test out having multiple domainevents with common base type handled by single handler
 * api rate limiting
 	* https://learn.microsoft.com/en-us/aspnet/core/performance/rate-limit?view=aspnetcore-8.0#rate-limiter-samples
 * package AmqpCommon from AmqpTools for use by AmqpService-api
@@ -122,32 +138,6 @@ Console.WriteLine($"{ServiceIdentification.Name} {ServiceIdentification.Version}
 	* https://learn.microsoft.com/en-us/dotnet/standard/datetime/converting-between-datetime-and-offset
 * DateTimeOffset
 	* https://ardalis.com/why-use-datetimeoffset/
-* Use ef interceptor instead of derived dbcontext class to set audit stamps
-	```csharp
-	public sealed class UpdateEntityLifetimeInterceptor : SaveChangesInterceptor
-	{
-		public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
-		{
-		   DbContext? dbContext = eventData.Context;
-		   if (dbContext is null)
-		   {
-			   return await base.SavingChangesAsync(eventData, result, cancellationToken);
-		   }
-
-		   var entities = dbContext.ChangeTracker.Entries<Entity>();
-
-		   foreach (var entity in entities)
-		   {
-			   if (entity.CreatedOn == DateTime.MinValue)
-				   entity.CreatedOn = DateTime.Now;
-			   else
-				   entity.ModifiedOn = DateTime.Now;
-		   }
-
-		   return await base.SavingChangesAsync(eventData, result, cancellationToken);
-		}
-	}
-	```
 * (OR-284) Expose service bus message consumption stats in health check
 	* shoppingcart-api
 		* messages consumed
@@ -172,7 +162,6 @@ Console.WriteLine($"{ServiceIdentification.Name} {ServiceIdentification.Version}
 	* https://stackoverflow.com/questions/61944125/traversing-a-graph-of-unknown-object-types-and-mutating-some-object-properties
 * guidelines page for common test data	
 	* https://developer.wepay.com/docs/articles/testing
-* domaineventreceiver to add stopwatch and report proccessing time
 * script to help find open branches
 	* git branch --no-merged remotes/origin/develop -r --sort=committerdate --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:short)%(color:reset))'
 * set App=name; in connection string based on service.name
@@ -197,10 +186,6 @@ Console.WriteLine($"{ServiceIdentification.Name} {ServiceIdentification.Version}
 	csharp_style_prefer_top_level_statements = true:silent
 	csharp_style_prefer_primary_constructors = true:suggestion
 	```
-* update aspnetcore versioning libraries
-	* https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/tree/dev
-	* https://github.com/dotnet/aspnet-api-versioning/wiki/Migration
-	* https://github.com/dotnet/aspnet-api-versioning/discussions/808
 * restapiclient ip??
 	* "x-real-ip": "75.169.156.172"
 * add request rewind support in cortside.aspnetcore
@@ -222,23 +207,6 @@ Console.WriteLine($"{ServiceIdentification.Name} {ServiceIdentification.Version}
 	* http://ip-api.com/json/75.169.153.72?lang=en
 * EF core [NotMapped] usage and examples
 * add constants from userapi client constants.header to restapiclient
-* domainevent outbox interceptor
-	* https://www.milanjovanovic.tech/blog/how-to-use-ef-core-interceptors
-* db column encryption with ef core
-	* https://blog.wiseowls.co.nz/index.php/2020/01/26/custom-functions-ef-core-3/  <<-- using custom functions and symmetric keys
-		* https://carstent.wordpress.com/tag/entity-framework/ <<-- examples of sql with creating and using certificates for keys
-	* https://github.com/emrekizildas/EntityFrameworkCore.EncryptColumn/tree/main
-	* https://github.com/Eastrall/EntityFrameworkCore.DataEncryption
-	* https://stackoverflow.com/questions/76726818/entity-framework-core-and-column-level-sql-server-encryption-with-stored-procedu
-	* https://stackoverflow.com/questions/66035987/decrypting-data-using-ef-core-3
-	* https://stackoverflow.com/questions/59191856/using-ef-core-2-2-to-decrypt-a-string-using-sql-server-decryptbykey
-		* https://www.thinktecture.com/en/entity-framework-core/custom-functions-using-imethodcalltranslator-in-2-1/
-		* https://github.com/tkhadimullin/ef-core-custom-functions/tree/master?tab=readme-ov-file
-		* https://github.com/tkhadimullin/ef-core-custom-functions/tree/feature/ef-3.1-version
-		* https://stackoverflow.com/questions/77160320/writing-custom-entity-framework-function-with-imethodcalltranslator
-		* https://github.com/npgsql/efcore.pg/issues/2186
-	* https://carstent.wordpress.com/tag/entity-framework/
-	* https://blog.wiseowls.co.nz/index.php/2020/01/26/custom-functions-ef-core-3/
 * RandomValues class from comms
 	* https://github.com/dochoffiday/Lorem.NET/blob/master/Examples/Program.cs
 * capture of console/log from comms-api
@@ -304,16 +272,10 @@ Console.WriteLine($"{ServiceIdentification.Name} {ServiceIdentification.Version}
 	* https://www.codeproject.com/Articles/5322557/CodeProject-AI-Server-AI-the-easy-way
 * dynamic filters for search
 	* https://www.codeproject.com/Tips/5370451/A-Convenient-Way-of-Filtering-Objects-with-Objects
-* Add concurrency example with etag/RowVersion
 * for troy -- restapiclient deserialization handling with GetAsync
 	* not able to know it's a deserialization error
 	* class with property typed int where json has decimal, or class has non-nullable  property with null in json
 	* ThrowOnAnyError = true (nothing other than serializer set in options)
-* dto generator
-	* https://blog.devgenius.io/net-source-generators-with-net-7-a68f29b46e74
-	* https://learn.microsoft.com/en-us/dotnet/api/system.codedom.compiler.generatedcodeattribute?view=net-7.0
-	* https://github.com/loresoft/EntityFrameworkCore.Generator
-	* https://learn.microsoft.com/en-us/ef/core/extensions/
 * commit build.config and don't update with build.ps1
 	* i guess I just need to start committing that with projects, huh?
 	* 11:07
@@ -357,10 +319,6 @@ Console.WriteLine($"{ServiceIdentification.Name} {ServiceIdentification.Version}
 	* https://github.com/cortside/c6-dcms/blob/develop/src/Domain/Entity/Blob.cs
 	* https://github.com/cortside/c6-dcms/blob/develop/src/Domain/Entity/File.cs
 	* https://github.com/spring2/spring2.common/tree/master/src/Spring2.Common.Storage
-* EF concurrency example
-* ETag example
-* Add schema parameter to AddDomainEventOutbox()
-	* needed by ids
 * dotnet tool for sortprojectitems
 	* https://github.com/KirillOsenkov/CodeCleanupTools/tree/main/SortProjectItems
 	* https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools-how-to-create
@@ -414,18 +372,8 @@ Console.WriteLine($"{ServiceIdentification.Name} {ServiceIdentification.Version}
 	* https://docs.microsoft.com/en-us/aspnet/core/web-api/jsonpatch?view=aspnetcore-6.0
 * dotnet new options for picking features in api template
 * read slave aware dbcontext
-* extension methods in cortside.health for services setup
-* extension methods in cortisde.domainevent for services setup
-* extension method to make registering client easier in restsharpclient
-* cortside.aspnetcore.entityframework extension method for db setup with unit of work 
-* extension method for cortside.common.cryptography EncryptionService
-* cortside.aspnetcore extension method for registering types from assembly with name ending in x -- see repositoryinstaller
 * add services registration to webapi builder
 * add configure to webapi builder
-* integration test base classes/helpers/utilities in new aspnetcore package
-	* use of webapi builder?
-	* https://docs.microsoft.com/en-us/aspnet/core/migration/50-to-60-samples?view=aspnetcore-6.0#test-with-webapplicationfactory-or-testserver
-* aspnetcore extention method for use default stuff in setup, including controller registration
 * authorize controller in aspnetcore --- accesscontrol?
 * someway to get common settings controller that can expose subset of appsettings???
 	* bowdlerized version of appsettings?
@@ -441,8 +389,6 @@ Console.WriteLine($"{ServiceIdentification.Name} {ServiceIdentification.Version}
 * review net5 to net6 change suggestions
 * system test using docker images
 * https://github.com/cortside/serilog.bowdlerizer/issues/4
-* spectrum authenticator 
-* async everything
 * sonarcloud integration for all projects
 * templates project to check dotnet new and build/test results
 * if anyone hates powershell like I do and wants to run the nifty create release scripts in bash:
@@ -557,3 +503,62 @@ TODONE:
 * validate sonar branching and prs work
 	* https://www.jetbrains.com/help/teamcity/pull-requests.html#Bitbucket+Cloud+Pull+Requests
 * Move MockLogger from Cortside.DomainEvent.Tests as LogEventLogger to common testutilities 
+* new .net 8 auth
+	* https://devblogs.microsoft.com/dotnet/improvements-auth-identity-aspnetcore-8/
+	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/
+	* https://www.codeproject.com/Articles/5370795/Microservices-using-ASP-NET-Core-8-Ocelot-MongoDB#identity-microservice
+	* https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/
+* microsoft identity
+	* https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-8.0&tabs=visual-studio
+	* https://www.codeproject.com/Articles/5378824/Decouple-ASP-NET-Core-Identity-Authentication-and
+	* https://github.com/dotnet/AspNetCore/tree/main/src/Identity
+* domainevent -- try to publish message with property that is 26MB
+* add attempt count to outbox and fail after some configurable number
+	* will need method to reset outbox messages to retry again
+* update restapiclient to latest restsharp
+* Use ef interceptor instead of derived dbcontext class to set audit stamps
+	```csharp
+	public sealed class UpdateEntityLifetimeInterceptor : SaveChangesInterceptor
+	{
+		public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
+		{
+		   DbContext? dbContext = eventData.Context;
+		   if (dbContext is null)
+		   {
+			   return await base.SavingChangesAsync(eventData, result, cancellationToken);
+		   }
+
+		   var entities = dbContext.ChangeTracker.Entries<Entity>();
+
+		   foreach (var entity in entities)
+		   {
+			   if (entity.CreatedOn == DateTime.MinValue)
+				   entity.CreatedOn = DateTime.Now;
+			   else
+				   entity.ModifiedOn = DateTime.Now;
+		   }
+
+		   return await base.SavingChangesAsync(eventData, result, cancellationToken);
+		}
+	}
+	```
+* add event handlers to service tier responsibilities image
+	* https://github.com/cortside/coeus/blob/develop/shoppingcart-api/docs/ServiceTierResponsibilities.png
+* update templates and libraries to treat warnings as errors
+* swagger docs should show the required permission
+* domaineventreceiver to add stopwatch and report proccessing time
+* update aspnetcore versioning libraries
+	* https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/tree/dev
+	* https://github.com/dotnet/aspnet-api-versioning/wiki/Migration
+	* https://github.com/dotnet/aspnet-api-versioning/discussions/808
+* extension methods in cortside.health for services setup
+* extension methods in cortisde.domainevent for services setup
+* extension method to make registering client easier in restsharpclient
+* cortside.aspnetcore.entityframework extension method for db setup with unit of work 
+* extension method for cortside.common.cryptography EncryptionService
+* cortside.aspnetcore extension method for registering types from assembly with name ending in x -- see repositoryinstaller
+* async everything
+* integration test base classes/helpers/utilities in new aspnetcore package
+	* use of webapi builder?
+	* https://docs.microsoft.com/en-us/aspnet/core/migration/50-to-60-samples?view=aspnetcore-6.0#test-with-webapplicationfactory-or-testserver
+* aspnetcore extention method for use default stuff in setup, including controller registration

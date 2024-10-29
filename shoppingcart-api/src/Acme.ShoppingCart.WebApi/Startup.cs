@@ -108,7 +108,7 @@ namespace Acme.ShoppingCart.WebApi {
             // add service for handling encryption of search parameters
             services.AddEncryptionService(Configuration["Encryption:Secret"]);
 
-            // setup and register boostrapper and it's installers
+            // setup and register bootstrapper and it's installers
             services.AddBootStrapper<DefaultApplicationBootStrapper>(Configuration, o => {
                 o.AddInstaller(new ModelMapperInstaller());
             });
