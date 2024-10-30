@@ -1,4 +1,4 @@
-TODO:
+# TODO:
 
 * Add concurrency example with etag/RowVersion
 	* https://learn.microsoft.com/en-us/ef/core/saving/concurrency?tabs=data-annotations
@@ -39,7 +39,7 @@ TODO:
 	* https://ideasof.andersaberg.com/development/personal-access-tokens-with-identityserver
 	* https://github.com/DuendeSoftware/Samples/tree/main/IdentityServer/v5/PAT/src
 
-
+# TODO (sometime):
 
 * add guideliens on cognitive load
 	* https://github.com/zakirullin/cognitive-load
@@ -485,7 +485,7 @@ https://github.com/collector-bank/backuptogit/tree/master/BackupToGit
 
 https://github.com/collector-bank/common-swagger-extensions
 
-TODONE:
+# TODONE:
 
 * policyserver returns json with UpperCamelCase property names, can we have it as camelCase?
 * finish up work with restsharpclient
