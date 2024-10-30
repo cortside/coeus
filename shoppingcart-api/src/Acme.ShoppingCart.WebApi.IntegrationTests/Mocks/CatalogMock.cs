@@ -24,7 +24,8 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Mocks {
                             ItemId = Guid.NewGuid(),
                             Name = $"Item {r.PathSegments[3]}",
                             Sku = r.PathSegments[3],
-                            UnitPrice = new decimal(rnd.Next(10000) / 100.0)
+                            UnitPrice = new decimal(rnd.Next(10000) / 100.0),
+                            Status = (ItemStatus)rnd.Next(4)
                         }))
                 );
         }
