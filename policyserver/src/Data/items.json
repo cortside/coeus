@@ -1,6 +1,7 @@
 [
   {
     "itemId": "1ed35ab5-0055-4da2-b6fc-8721d136babf",
+    "status": "active",
     "sku": "pappy-10",
     "name": "Pappy Van Winkle 10 Year",
     "unitPrice": 999.99,
@@ -8,6 +9,7 @@
   },
   {
     "itemId": "2da19c38-6de0-4545-b6e9-3ebcb1ac5340",
+    "status": "active",
     "sku": "pappy-12",
     "name": "Pappy Van Winkle 12 Year",
     "unitPrice": 1039.99,
@@ -15,6 +17,7 @@
   },
   {
     "itemId": "04a61420-75aa-4aa9-a2c1-87a50ae14ea4",
+    "status": "active",
     "sku": "pappy-15",
     "name": "Pappy Van Winkle 15 Year",
     "unitPrice": 2219.95,
@@ -22,6 +25,7 @@
   },
   {
     "itemId": "d7843a1a-a16d-47a2-97b5-8620639462b4",
+    "status": "active",
     "sku": "pappy-20",
     "name": "Pappy Van Winkle's Family Reserve 20 Year",
     "unitPrice": 4989.99,
@@ -29,6 +33,7 @@
   },
   {
     "itemId": "c08dd0a1-7ba3-4499-abbb-feac2af85433",
+    "status": "active",
     "sku": "pappy-23",
     "name": "Pappy Van Winkle's Family Reserve 23 Year",
     "unitPrice": 5184.99,
@@ -36,6 +41,7 @@
   },
   {
     "itemId": "d6ab90f2-bf58-4919-a118-07b08f80f7cf",
+    "status": "active",
     "sku": "pappy-25",
     "name": "Pappy Van Winkle's Family Reserve 25 Year",
     "unitPrice": 59999,
@@ -43,6 +49,7 @@
   },
   {
     "itemId": "fe744229-317a-4631-b9d9-cd63009c54c7",
+    "status": "active",
     "sku": "piggy-f1",
     "name": "WhistlePig PiggyBack Legends Series: Alfa Romeo F1® Team Stake Barrel",
     "unitPrice": 59.99,
@@ -50,6 +57,7 @@
   },
   {
     "itemId": "6dc7e315-4f57-4618-8a6d-407cb2aa19b3",
+    "status": "active",
     "sku": "piggy-100",
     "name": "WhistlePig PiggyBack 100 Proof Bourbon",
     "unitPrice": 49.99,
@@ -57,6 +65,7 @@
   },
   {
     "itemId": "30357fff-f445-4d20-bcb6-90d34b5bcf8d",
+    "status": "active",
     "sku": "elijah-21",
     "name": "Elijah Craig 21 Year Old Single Barrel Kentucky Straight Bourbon Whiskey",
     "unitPrice": 3408.99,
@@ -64,6 +73,7 @@
   },
   {
     "itemId": "8ed45e7d-d8bc-49d1-9dcc-d08736c08917",
+    "status": "active",
     "sku": "eagle-20",
     "name": "Double Eagle Very Rare 20 Year Old Kentucky Straight Bourbon Whiskey",
     "unitPrice": 15151.99,
@@ -71,6 +81,7 @@
   },
   {
     "itemId": "2be13780-549a-4013-8a7d-0a8d82be8edd",
+    "status": "active",
     "sku": "eagle-17",
     "name": "Eagle Rare 17 Year Old 2020 Antique Collection Kentucky Straight Bourbon Whiskey",
     "unitPrice": 3180.99,
@@ -78,6 +89,7 @@
   },
   {
     "itemId": "9cc122ac-8ecb-4494-9da7-4aebe103e6ff",
+    "status": "active",
     "sku": "wf-masters",
     "name": "Woodford Reserve Masters Collection Sonoma Cutrer Pinot Noir Finish",
     "unitPrice": 794.99,
@@ -85,6 +97,7 @@
   },
   {
     "itemId": "f0675767-31a7-45c3-8264-321ca57f18f8",
+    "status": "active",
     "sku": "wf-2018",
     "name": "Woodford Reserve Batch Proof 2018 Release Kentucky Straight Bourbon Whiskey",
     "unitPrice": 567.99,
@@ -92,6 +105,7 @@
   },
   {
     "itemId": "40235943-bfff-4497-b5c8-c1f43235d597",
+    "status": "active",
     "sku": "wf-1838",
     "name": "Woodford Reserve Master's Collection 1838 Style White Corn Straight Bourbon Whiskey",
     "unitPrice": 567.99,
@@ -99,6 +113,7 @@
   },
   {
     "itemId": "977cc88c-fde4-40df-b38b-75f5f6a708e3",
+    "status": "active",
     "sku": "wf-choco",
     "name": "Woodford Reserve Master's Collection Chocolate Malted Rye Bourbon Whiskey",
     "unitPrice": 516.99,
