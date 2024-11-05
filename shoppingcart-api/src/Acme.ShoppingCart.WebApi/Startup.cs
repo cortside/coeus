@@ -17,6 +17,7 @@ using Cortside.AspNetCore.Filters;
 using Cortside.AspNetCore.Swagger;
 using Cortside.DomainEvent;
 using Cortside.DomainEvent.EntityFramework;
+using Cortside.DomainEvent.Health;
 using Cortside.Health;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -79,6 +80,7 @@ namespace Acme.ShoppingCart.WebApi {
             services.AddHealth(o => {
                 o.UseConfiguration(Configuration);
                 o.AddCustomCheck("example", typeof(ExampleCheck));
+                o.AddCustomCheck("domainevent", typeof(DomainEventCheck));
             });
 
             // add domain event receiver with handlers

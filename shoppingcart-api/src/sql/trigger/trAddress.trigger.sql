@@ -177,22 +177,22 @@ CREATE TRIGGER trAddress
 			set @inserted = @inserted + @@ROWCOUNT
 		END
 
-	-- [CreateSubjectId]
-	IF UPDATE([CreateSubjectId]) OR @action in ('INSERT', 'DELETE')      
+	-- [CreatedSubjectId]
+	IF UPDATE([CreatedSubjectId]) OR @action in ('INSERT', 'DELETE')      
 		BEGIN       
 			INSERT INTO audit.AuditLog (AuditLogTransactionId, PrimaryKey, ColumnName, OldValue, NewValue, Key1)
 			SELECT
 				@AuditLogTransactionId,
 				convert(nvarchar(1500), IsNull('[[AddressId]]='+CONVERT(nvarchar(4000), IsNull(OLD.[AddressId], NEW.[AddressId]), 0), '[[AddressId]] Is Null')),
-				'[CreateSubjectId]',
-				CONVERT(nvarchar(4000), OLD.[CreateSubjectId], 126),
-				CONVERT(nvarchar(4000), NEW.[CreateSubjectId], 126),
+				'[CreatedSubjectId]',
+				CONVERT(nvarchar(4000), OLD.[CreatedSubjectId], 126),
+				CONVERT(nvarchar(4000), NEW.[CreatedSubjectId], 126),
 				convert(nvarchar(4000), COALESCE(OLD.[AddressId], NEW.[AddressId], null))
 			FROM deleted OLD 
 			LEFT JOIN inserted NEW On (NEW.[AddressId] = OLD.[AddressId] or (NEW.[AddressId] Is Null and OLD.[AddressId] Is Null))
-			WHERE ((NEW.[CreateSubjectId] <> OLD.[CreateSubjectId]) 
-					Or (NEW.[CreateSubjectId] Is Null And OLD.[CreateSubjectId] Is Not Null)
-					Or (NEW.[CreateSubjectId] Is Not Null And OLD.[CreateSubjectId] Is Null))
+			WHERE ((NEW.[CreatedSubjectId] <> OLD.[CreatedSubjectId]) 
+					Or (NEW.[CreatedSubjectId] Is Null And OLD.[CreatedSubjectId] Is Not Null)
+					Or (NEW.[CreatedSubjectId] Is Not Null And OLD.[CreatedSubjectId] Is Null))
 			set @inserted = @inserted + @@ROWCOUNT
 		END
 
