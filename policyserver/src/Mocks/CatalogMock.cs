@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -74,6 +75,21 @@ namespace PolicyServer.Mocks {
 
         private CatalogItem GetItem(string sku) {
             var item = items.Items.FirstOrDefault(x => x.Sku == sku);
+
+            if (item == null) {
+                item = new CatalogItem() {
+                    ItemId = Guid.NewGuid(),
+                    Sku = sku,
+                    Name = $"Item {sku}",
+                    UnitPrice = 0,
+                    ImageUrl = "https://via.placeholder.com/150",
+                    Status = ItemStatus.Active
+                };
+
+                items.Items.Add(item);
+                return item;
+            }
+
             return item;
         }
 

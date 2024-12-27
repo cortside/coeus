@@ -19,6 +19,9 @@ using Newtonsoft.Json;
 namespace Acme.ShoppingCart.WebApi.IntegrationTests {
     public class IntegrationFixture : WebApiFixture<Startup> {
         public IntegrationFixture() {
+            // set the environment to Development so that development error pages are shown
+            Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Development");
+
             Subjects = JsonConvert.DeserializeObject<Subjects>(File.ReadAllText("./Data/subjects.json"));
         }
 
