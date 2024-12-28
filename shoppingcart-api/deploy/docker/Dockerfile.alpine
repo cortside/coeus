@@ -35,22 +35,28 @@ RUN cat /app/src/${publishableProject}/build.json
 # build, run tests and lint analysis
 WORKDIR /app/src
 RUN dotnet restore --source ${nugetfeed}
+RUN dotnet tool install --global dotnet-coverage
 
 RUN export SONAR_SCANNER_OPTS="-Xmx4096m" && \
-    echo "analysisArgs=$analysisArgs" && \
     dotnet sonarscanner begin \
     /k:"$(echo $sonarkey | tr '[:upper:]' '[:lower:]')" \
     /o:"$organization" \
     /d:sonar.host.url="$sonarhost" \
     /d:sonar.login="$sonartoken" \
     /v:"$imageversion" \
-    /d:sonar.cs.opencover.reportsPaths="**/*.opencover.xml" \
+    #/d:sonar.cs.opencover.reportsPaths="**/*.opencover.xml" \
+	/d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
     /d:sonar.coverage.exclusions="**/*Test*.cs,**/Migrations/*" \
     /d:sonar.exclusions="**/*Test*.cs,**/Migrations/*,**/*Api.xml" \
+	/d:sonar.dotnet.excludeTestProjects=true \
     $analysisArgs && \
-    dotnet build --no-restore && \
+    dotnet build --no-restore --no-incremental && \
     dotnet test --no-build --no-restore /p:Exclude="[xunit*]*" /p:ParallelizeTestCollections=false --collect:"XPlat Code Coverage" --settings coverlet.runsettings.xml && \
+	dotnet-coverage merge -f xml -o "coverage.xml" **/*.opencover.xml && \
     dotnet sonarscanner end /d:sonar.login="$sonartoken"
+
+RUN cat coverage.xml
+RUN ls -R
     
 # publish artifacts for runtime image    
 RUN dotnet publish ./${publishableProject} -p:Version=$version -o out -r linux-musl-x64
