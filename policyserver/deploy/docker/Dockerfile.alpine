@@ -68,11 +68,11 @@ RUN chmod -R a+rw /sql
 WORKDIR /app
 COPY --from=build /app/src/out ./
 COPY --from=build /app/src/"$publishableProject"/build.json ./
-RUN chown user:user *.json
+RUN chown appuser:appuser *.json
 RUN chmod a+rw *.json
-RUN chown -R user:user Data
+RUN chown -R appuser:appuser Data
 RUN chmod -R a+rw Data/*
 
-USER user
+USER appuser
 EXPOSE 5000/tcp
 CMD ["/startup.sh"]
