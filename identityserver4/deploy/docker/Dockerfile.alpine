@@ -1,21 +1,18 @@
 ARG buildimage
 ARG runtimeimage
 
+## ============================= 
 # use the sdk to build/test, but later we'll use runtime for published image
 FROM ${buildimage} AS build
 ARG buildconfiguration
 ARG nugetfeed
-ARG sonarscannerversion
-
-COPY src/ /app/src/
-WORKDIR /app/src
-
-RUN echo $nugetfeed
-RUN dotnet restore --source ${nugetfeed}
-
-# Run all tests
 ARG branch
+ARG branchTag
+ARG commit
+ARG commitdate
+ARG version
 ARG imageversion
+ARG sonarscannerversion
 ARG sonarhost
 ARG sonartoken
 ARG sonarkey
@@ -23,41 +20,68 @@ ARG projectname
 ARG analysisArgs
 ARG organization
 ARG publishableProject
+ARG service_name
 
-# set to use teamcity messaging for test logger
-#ENV TEAMCITY_VERSION="1.1" 
+# show dotnet version for debugging
+RUN dotnet --info
+
+# copy 
+COPY src/ /app/src/
+
+# update build.json
+RUN jq -n --arg version "$version" --arg timestamp $(date +"%Y-%m-%dT%H:%M:%S%:z") --arg tag "$imageversion" --arg suffix "$branchTag" '{"build":{"version":$version,"timestamp":$timestamp,"tag":$tag,"suffix":$suffix }}' > /app/src/${publishableProject}/build.json
+RUN cat /app/src/${publishableProject}/build.json
+
+# build, run tests and lint analysis
+WORKDIR /app/src
+RUN dotnet restore --source ${nugetfeed}
+RUN dotnet tool install --global dotnet-coverage
 
 RUN export SONAR_SCANNER_OPTS="-Xmx4096m" && \
-    echo "analysisArgs=$analysisArgs" && \
     dotnet sonarscanner begin \
     /k:"$(echo $sonarkey | tr '[:upper:]' '[:lower:]')" \
     /o:"$organization" \
     /d:sonar.host.url="$sonarhost" \
     /d:sonar.login="$sonartoken" \
     /v:"$imageversion" \
-    /d:sonar.cs.opencover.reportsPaths="**/*.opencover.xml" \
+    #/d:sonar.cs.opencover.reportsPaths="**/*.opencover.xml" \
+	/d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
     /d:sonar.coverage.exclusions="**/*Test*.cs,**/Migrations/*" \
     /d:sonar.exclusions="**/*Test*.cs,**/Migrations/*,**/*Api.xml" \
+	/d:sonar.dotnet.excludeTestProjects=true \
     $analysisArgs && \
-    dotnet build --no-restore && \
+    dotnet build --no-restore --no-incremental && \
     dotnet test --no-build --no-restore /p:Exclude="[xunit*]*" /p:ParallelizeTestCollections=false --collect:"XPlat Code Coverage" --settings coverlet.runsettings.xml && \
-	#--logger:"teamcity;verbosity=normal" && \
-    dotnet sonarscanner end /d:sonar.login="$sonartoken" && \
-    dotnet publish "$publishableProject" -p:Version=$(echo $imageversion | cut -f 1 -d '-') -o out -r linux-musl-x64
+	dotnet-coverage merge -f xml -o "coverage.xml" **/*.opencover.xml && \
+    dotnet sonarscanner end /d:sonar.login="$sonartoken"
 
+RUN cat coverage.xml
+RUN ls -R
+    
+# publish artifacts for runtime image    
+RUN dotnet publish ./${publishableProject} -p:Version=$version -o out -r linux-musl-x64
+
+## ============================= 
 ## Build the runtime environment
-FROM $runtimeimage AS runtime
+FROM ${runtimeimage} AS runtime
 ARG projectname
 ARG publishableProject
 ARG service_executable
 ARG service_name
+ARG timezone
 
-ENV configpath /app/appsettings.json
+ENV configpath=/app/appsettings.json
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 ENV ASPNETCORE_URLS=http://+:5000
 ENV ASPNETCORE_ENVIRONMENT=Deployment
 ENV SERVICE_NAME=$service_name
 ENV SERVICE_EXECUTABLE=$service_executable
+ENV TZ=$timezone
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# copy init.sh from deploy to image, if it exists (thus wildcards)
+COPY ./deploy/*.sh /app/
+RUN chmod a+x /app/*.sh
 
 COPY ./src/sql /sql/src/sql
 COPY ./update-database.ps1 /sql
@@ -68,8 +92,8 @@ RUN chmod -R a+rw /sql
 WORKDIR /app
 COPY --from=build /app/src/out ./
 COPY --from=build /app/src/"$publishableProject"/build.json ./
-RUN chown user:user appsettings.json
+RUN chown appuser:appuser appsettings.json
 
-USER user
+USER appuser
 EXPOSE 5000/tcp
 CMD ["/startup.sh"]

@@ -46,7 +46,7 @@ services:
     ports:
       - 6379:6379
   healthmonitor-api:
-    image: cortside/healthmonitor-api:develop
+    image: cortside/healthmonitor-api:1.1.63-develop-alpine
     restart: unless-stopped
     ports:
       - 5005:5000

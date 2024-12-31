@@ -4,12 +4,12 @@ Function Get-RepositoryConfiguration {
 	if (!(Test-Path $configfile)) {
 		throw "config file $configfile not found"
 	}
-	$config = get-content $configfile | ConvertFrom-Json 
+	$config = Get-Content $configfile -raw | ConvertFrom-Json 
 
 	$configfile = "repository.local.json"
 	if (Test-Path $configfile) {
-		$local = get-content $configfile | ConvertFrom-Json 
-		merge $config $local
+		$local = Get-Content $configfile -raw | ConvertFrom-Json 
+		Merge-Json $config $local
 	}
 	
 	#TODO: hack for now to get secrets into $config
@@ -18,17 +18,16 @@ Function Get-RepositoryConfiguration {
 	}
 
 	$envconfig = [System.Environment]::GetEnvironmentVariables() | convertto-json | convertfrom-json
-	merge $config $envconfig
+	Merge-Json $config $envconfig
 
 	return $config
 }
 
-function merge ($target, $source) {
+Function Merge-Json ($target, $source) {
     $source.psobject.Properties | % {
         if ($_.TypeNameOfValue -eq 'System.Management.Automation.PSCustomObject' -and $target."$($_.Name)" ) {
-            merge $target."$($_.Name)" $_.Value
-        }
-        else {
+            Merge-Json $target."$($_.Name)" $_.Value
+        } else {
             $target | Add-Member -MemberType $_.MemberType -Name $_.Name -Value $_.Value -Force
         }
     }
@@ -71,4 +70,22 @@ function ConvertTo-Hashtable {
             $InputObject
         }
     }
+}
+
+# Formats JSON in a nicer format than the built-in ConvertTo-Json does.
+function Format-Json([Parameter(Mandatory, ValueFromPipeline)][String] $json) {
+  $indent = 0;
+  ($json -Split '\n' |
+    % {
+      if ($_ -match '[\}\]]') {
+        # This line contains  ] or }, decrement the indentation level
+        $indent--
+      }
+      $line = (' ' * $indent * 2) + $_.TrimStart().Replace(':  ', ': ')
+      if ($_ -match '[\{\[]') {
+        # This line contains [ or {, increment the indentation level
+        $indent++
+      }
+      $line
+  }) -Join "`n"
 }

@@ -1,5 +1,17 @@
 # TODO:
 
+## todo:
+
+- publisher should return published message information -- at least messageId -- would make debugging easier
+- allow publisher to be used to publish multiple events withing a using statement without having to create new connection for each publish
+
+* correlationId in auditlogtransaction?
+* https://playwright.dev/
+	* could be used for apis too
+* find missing indexes
+	* https://blog.sqlauthority.com/2011/01/03/sql-server-2008-missing-index-script-download/
+	* https://learn.microsoft.com/en-us/sql/relational-databases/indexes/tune-nonclustered-missing-index-suggestions?view=sql-server-ver16
+	* https://www.sqlservercentral.com/blogs/embrace-the-missing-index-dmvs-but-proceed-with-caution
 * Add concurrency example with etag/RowVersion
 	* https://learn.microsoft.com/en-us/ef/core/saving/concurrency?tabs=data-annotations
 * complete query-by-post guideline
@@ -19,6 +31,10 @@
 	* https://learn.microsoft.com/en-us/ef/core/extensions/
 * domainevent outbox interceptor
 	* https://www.milanjovanovic.tech/blog/how-to-use-ef-core-interceptors
+* test out having multiple domainevents with common base type handled by single handler
+* personal access tokens in identityserver
+	* https://ideasof.andersaberg.com/development/personal-access-tokens-with-identityserver
+	* https://github.com/DuendeSoftware/Samples/tree/main/IdentityServer/v5/PAT/src
 * db column encryption with ef core
 	* https://blog.wiseowls.co.nz/index.php/2020/01/26/custom-functions-ef-core-3/  <<-- using custom functions and symmetric keys
 		* https://carstent.wordpress.com/tag/entity-framework/ <<-- examples of sql with creating and using certificates for keys
@@ -34,13 +50,11 @@
 		* https://github.com/npgsql/efcore.pg/issues/2186
 	* https://carstent.wordpress.com/tag/entity-framework/
 	* https://blog.wiseowls.co.nz/index.php/2020/01/26/custom-functions-ef-core-3/
-* test out having multiple domainevents with common base type handled by single handler
-* personal access tokens in identityserver
-	* https://ideasof.andersaberg.com/development/personal-access-tokens-with-identityserver
-	* https://github.com/DuendeSoftware/Samples/tree/main/IdentityServer/v5/PAT/src
 
 # TODO (sometime):
 
+* ids admin
+	* https://github.com/skoruba/IdentityServer4.Admin
 * add guideliens on cognitive load
 	* https://github.com/zakirullin/cognitive-load
 * base62
@@ -100,9 +114,6 @@ Console.WriteLine($"{ServiceIdentification.Name} {ServiceIdentification.Version}
 	* nested properties
 	* define ordering of strings, i.e. one, two, three, four, five
 		* select FinancialProductID, productcat, PATINDEX( +productcat+'*' 'SAC, YES') from FinanciatProduct order by 'SAC,
-* find missing indexes
-	* https://blog.sqlauthority.com/2011/01/03/sql-server-2008-missing-index-script-download/
-	* https://learn.microsoft.com/en-us/sql/relational-databases/indexes/tune-nonclustered-missing-index-suggestions?view=sql-server-ver16
 * non-alphabetic sort example for repositories (executes on sql server)
 	* https://www.codeproject.com/Articles/106570/Custom-Sort-a-List-of-Objects-by-Any-Order
 	* arc-200
@@ -138,16 +149,6 @@ Console.WriteLine($"{ServiceIdentification.Name} {ServiceIdentification.Version}
 	* https://learn.microsoft.com/en-us/dotnet/standard/datetime/converting-between-datetime-and-offset
 * DateTimeOffset
 	* https://ardalis.com/why-use-datetimeoffset/
-* (OR-284) Expose service bus message consumption stats in health check
-	* shoppingcart-api
-		* messages consumed
-		* messages accepted
-		* messages rejected
-		* messages published
-		* datetime last message consume
-		* datetme last message accepted
-		* datetime last message rejected
-		* datetime last message published
 * injectable services in EF entity Class
 	* https://community.abp.io/posts/injecting-service-dependencies-to-entities-with-entity-framework-core-7.0-db6vdh4s
 	* could use attribute to denote properties to inject
@@ -562,3 +563,14 @@ https://github.com/collector-bank/common-swagger-extensions
 	* use of webapi builder?
 	* https://docs.microsoft.com/en-us/aspnet/core/migration/50-to-60-samples?view=aspnetcore-6.0#test-with-webapplicationfactory-or-testserver
 * aspnetcore extention method for use default stuff in setup, including controller registration
+* (OR-284) Expose service bus message consumption stats in health check
+	* shoppingcart-api
+		* messages consumed
+		* messages accepted
+		* messages rejected
+		* messages published
+		* datetime last message consume
+		* datetme last message accepted
+		* datetime last message rejected
+		* datetime last message published
+* in outbox hosted service, thoughts on making the publishing retry seconds value a config and maybe also adding an index on lastmodifieddate?
