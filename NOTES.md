@@ -5,6 +5,12 @@
 - publisher should return published message information -- at least messageId -- would make debugging easier
 - allow publisher to be used to publish multiple events withing a using statement without having to create new connection for each publish
 
+- scaffolding (controller/facade/service/domain entity/dto/mappers)
+
+- wiremock from openapi
+	* https://docs.wiremock.io/openAPI/openapi
+	* https://github.com/WireMock-Net/WireMock.Net/blob/master/examples/WireMock.Net.OpenApiParser.ConsoleApp/Program.cs
+
 * correlationId in auditlogtransaction?
 * https://playwright.dev/
 	* could be used for apis too
