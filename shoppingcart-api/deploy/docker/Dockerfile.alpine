@@ -55,9 +55,6 @@ RUN export SONAR_SCANNER_OPTS="-Xmx4096m" && \
 	dotnet-coverage merge -f xml -o "coverage.xml" **/*.opencover.xml && \
     dotnet sonarscanner end /d:sonar.login="$sonartoken"
 
-RUN cat coverage.xml
-RUN ls -R
-    
 # publish artifacts for runtime image    
 RUN dotnet publish ./${publishableProject} -p:Version=$version -o out -r linux-musl-x64
 
