@@ -2,7 +2,7 @@
 using Cortside.Common.Testing;
 
 namespace Acme.ShoppingCart.TestUtilities {
-    public class DtoBuilder {
+    public static class DtoBuilder {
         public static UpdateCustomerDto GetUpdateCustomerDto() {
             return new UpdateCustomerDto() {
                 FirstName = RandomValues.FirstName,

@@ -80,7 +80,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
 
             var content = await customersResponse.Content.ReadAsStringAsync();
             var customers = JsonConvert.DeserializeObject<PagedList<CustomerModel>>(content);
-            customers.Items.Exists(x => x.CustomerResourceId == id.CustomerResourceId).Should().BeTrue();
+            customers.Items.ToList().Exists(x => x.CustomerResourceId == id.CustomerResourceId).Should().BeTrue();
         }
     }
 }

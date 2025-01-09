@@ -84,7 +84,7 @@ namespace Acme.ShoppingCart.WebApi.Mappers {
                     Country = model.Address.Country,
                     ZipCode = model.Address.ZipCode
                 },
-                Items = model.Items?.ConvertAll(x => new UpdateOrderItemDto() { Sku = x.Sku, Quantity = x.Quantity })
+                Items = model.Items?.ConvertAll(x => new UpdateOrderItemDto() { Sku = x.Sku, Quantity = x.Quantity.Value })
             };
         }
 
@@ -102,7 +102,7 @@ namespace Acme.ShoppingCart.WebApi.Mappers {
                     Country = model.Address.Country,
                     ZipCode = model.Address.ZipCode
                 },
-                Items = model.Items?.ConvertAll(x => new UpdateOrderItemDto() { Sku = x.Sku, Quantity = x.Quantity })
+                Items = model.Items?.ConvertAll(x => new UpdateOrderItemDto() { Sku = x.Sku, Quantity = x.Quantity.Value })
             };
         }
 
@@ -119,7 +119,7 @@ namespace Acme.ShoppingCart.WebApi.Mappers {
                     Country = model.Address.Country,
                     ZipCode = model.Address.ZipCode
                 },
-                Items = model.Items?.ConvertAll(x => new UpdateOrderItemDto() { Sku = x.Sku, Quantity = x.Quantity })
+                Items = model.Items?.ConvertAll(x => new UpdateOrderItemDto() { Sku = x.Sku, Quantity = x.Quantity.Value })
             };
         }
 
@@ -130,7 +130,7 @@ namespace Acme.ShoppingCart.WebApi.Mappers {
 
             return new OrderItemDto() {
                 Sku = model.Sku,
-                Quantity = model.Quantity
+                Quantity = model.Quantity.Value
             };
         }
     }

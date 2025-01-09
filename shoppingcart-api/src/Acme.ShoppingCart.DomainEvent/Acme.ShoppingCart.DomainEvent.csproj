@@ -11,13 +11,21 @@
     <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.DomainEvent" Version="6.4.335-healthcheck" />
-    <PackageReference Include="DistributedLock.SqlServer" Version="1.0.5" />
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.11.20">
+    <PackageReference Include="Cortside.DomainEvent" Version="6.4.348-develop" />
+    <PackageReference Include="DistributedLock.SqlServer" Version="1.0.6" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.12.19">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Serilog" Version="4.0.1" />
+    <PackageReference Include="Roslynator.Analyzers" Version="4.12.10">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Serilog" Version="4.2.0" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="10.4.0.108396">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Acme.DomainEvent.Events\Acme.DomainEvent.Events.csproj" />

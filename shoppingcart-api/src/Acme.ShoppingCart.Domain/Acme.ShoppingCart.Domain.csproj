@@ -11,10 +11,18 @@
     <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.Auditable" Version="6.4.275-develop" />
-    <PackageReference Include="Cortside.Common.Validation" Version="6.4.464-develop" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.8" />
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.11.20">
+    <PackageReference Include="Cortside.AspNetCore.Auditable" Version="6.4.296-develop" />
+    <PackageReference Include="Cortside.Common.Validation" Version="6.4.465-develop" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.11" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.12.19">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Roslynator.Analyzers" Version="4.12.10">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="10.4.0.108396">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

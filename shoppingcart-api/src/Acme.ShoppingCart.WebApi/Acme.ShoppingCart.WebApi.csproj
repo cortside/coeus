@@ -8,37 +8,45 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.4.275-develop" />
-    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="6.4.275-develop" />
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.4.275-develop" />
-    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="6.4.275-develop" />
-    <PackageReference Include="Cortside.Common.Correlation" Version="6.4.464-develop" />
-    <PackageReference Include="Cortside.Common.Hosting" Version="6.4.464-develop" />
-    <PackageReference Include="Cortside.DomainEvent.Health" Version="6.4.335-healthcheck" />
-    <PackageReference Include="Cortside.Health" Version="6.2.96-develop" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
+    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.4.296-develop" />
+    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="6.4.296-develop" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="6.4.296-develop" />
+    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="6.4.296-develop" />
+    <PackageReference Include="Cortside.Common.Correlation" Version="6.4.465-develop" />
+    <PackageReference Include="Cortside.Common.Hosting" Version="6.4.465-develop" />
+    <PackageReference Include="Cortside.DomainEvent.Health" Version="6.4.348-develop" />
+    <PackageReference Include="Cortside.Health" Version="6.2.101-develop" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.11.20">
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.12.19">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Serilog" Version="4.0.1" />
-    <PackageReference Include="Serilog.AspNetCore" Version="8.0.2" />
+    <PackageReference Include="Roslynator.Analyzers" Version="4.12.10">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Serilog" Version="4.2.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
     <PackageReference Include="Serilog.Bowdlerizer" Version="6.1.81" />
     <PackageReference Include="Serilog.Enrichers.AspNetCore" Version="1.0.0" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="3.0.1" />
     <PackageReference Include="Serilog.Enrichers.Thread" Version="4.0.0" />
     <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
-    <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.2" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.4" />
     <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="10.4.0.108396">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Acme.ShoppingCart.BootStrap\Acme.ShoppingCart.BootStrap.csproj" />

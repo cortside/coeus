@@ -46,12 +46,8 @@ namespace Acme.ShoppingCart.Facade {
             await using (var tx = await uow.BeginReadUncommitedAsync().ConfigureAwait(false)) {
                 var customers = await customerService.SearchCustomersAsync(customerSearch).ConfigureAwait(false);
 
-                return new PagedList<CustomerDto> {
-                    PageNumber = customers.PageNumber,
-                    PageSize = customers.PageSize,
-                    TotalItems = customers.TotalItems,
-                    Items = customers.Items.ConvertAll(x => mapper.MapToDto(x))
-                };
+                var result = customers.Convert(x => mapper.MapToDto(x));
+                return result;
             }
         }
 

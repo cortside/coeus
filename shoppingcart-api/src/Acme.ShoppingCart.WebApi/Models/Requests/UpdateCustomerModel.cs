@@ -38,7 +38,6 @@ namespace Acme.ShoppingCart.WebApi.Models.Requests {
         /// <value>
         /// The email.
         /// </value>
-        [Required]
-        public DateOnly BirthDate { get; set; }
+        public DateOnly? BirthDate { get; set; }
     }
 }

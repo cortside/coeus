@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Acme.ShoppingCart.WebApi.Models.Requests {
     /// <summary>
     /// Request to add an item to an order
@@ -9,6 +11,7 @@ namespace Acme.ShoppingCart.WebApi.Models.Requests {
         /// <value>
         /// The sku.
         /// </value>
+        [Required]
         public string Sku { get; set; }
         /// <summary>
         /// Gets or sets the quantity.
@@ -16,6 +19,7 @@ namespace Acme.ShoppingCart.WebApi.Models.Requests {
         /// <value>
         /// The quantity.
         /// </value>
-        public int Quantity { get; set; }
+        [Required]
+        public int? Quantity { get; set; }
     }
 }

@@ -14,30 +14,38 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.Testing" Version="6.4.275-develop" />
-    <PackageReference Include="Cortside.Common.Testing" Version="6.4.464-develop" />
-    <PackageReference Include="Cortside.Common.Testing.EntityFramework" Version="6.4.464-develop" />
-    <PackageReference Include="Cortside.DomainEvent.Stub" Version="6.4.335-healthcheck" />
+    <PackageReference Include="Cortside.AspNetCore.Testing" Version="6.4.296-develop" />
+    <PackageReference Include="Cortside.Common.Testing" Version="6.4.465-develop" />
+    <PackageReference Include="Cortside.Common.Testing.EntityFramework" Version="6.4.465-develop" />
+    <PackageReference Include="Cortside.DomainEvent.Stub" Version="6.4.348-develop" />
     <PackageReference Include="Cortside.MockServer.AccessControl" Version="6.2.74" />
-    <PackageReference Include="coverlet.collector" Version="6.0.2">
+    <PackageReference Include="coverlet.collector" Version="6.0.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="FluentAssertions" Version="6.12.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.8" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.11.20">
+    <PackageReference Include="FluentAssertions" Version="6.12.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.11" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.12.19">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="WireMock.Net" Version="1.6.4" />
-    <PackageReference Include="xunit" Version="2.9.1" />
+    <PackageReference Include="Roslynator.Analyzers" Version="4.12.10">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="10.4.0.108396">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="WireMock.Net" Version="1.6.11" />
+    <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="DistributedLock.FileSystem" Version="1.0.2" />
+    <PackageReference Include="DistributedLock.FileSystem" Version="1.0.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Acme.ShoppingCart.Data\Acme.ShoppingCart.Data.csproj" />

@@ -10,7 +10,9 @@ using Moq;
 
 namespace Acme.ShoppingCart.DomainService.Tests {
     public abstract class DomainServiceTest<T> : IDisposable {
+#pragma warning disable S2325
         protected DatabaseContext GetDatabaseContext() {
+#pragma warning restore S2325
             var databaseContextOptions = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseInMemoryDatabase($"db-{Guid.NewGuid():d}")
                 .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning))

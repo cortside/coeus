@@ -12,7 +12,7 @@ namespace Acme.ShoppingCart.WebApi.Models.Requests {
         /// <value>
         /// The customer resource identifier.
         /// </value>
-        public Guid CustomerResourceId { get; set; }
+        public Guid? CustomerResourceId { get; set; }
 
         /// <summary>
         /// Gets or sets the first name.
@@ -47,7 +47,6 @@ namespace Acme.ShoppingCart.WebApi.Models.Requests {
         /// <value>
         /// The email.
         /// </value>
-        [Required]
-        public DateOnly BirthDate { get; set; }
+        public DateOnly? BirthDate { get; set; }
     }
 }

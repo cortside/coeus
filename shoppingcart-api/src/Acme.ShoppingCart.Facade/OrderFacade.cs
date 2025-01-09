@@ -75,13 +75,7 @@ namespace Acme.ShoppingCart.Facade {
             await using (var tx = await uow.BeginReadUncommitedAsync().ConfigureAwait(false)) {
                 var orders = await orderService.SearchOrdersAsync(mapper.Map(search)).ConfigureAwait(false);
 
-                var results = new PagedList<OrderDto> {
-                    PageNumber = orders.PageNumber,
-                    PageSize = orders.PageSize,
-                    TotalItems = orders.TotalItems,
-                    Items = orders.Items.ConvertAll(x => mapper.MapToDto(x))
-                };
-
+                var results = orders.Convert(x => mapper.MapToDto(x));
                 return results;
             }
         }

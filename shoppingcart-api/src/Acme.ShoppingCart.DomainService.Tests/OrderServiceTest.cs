@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.CatalogApi;
 using Acme.ShoppingCart.Data;
@@ -21,7 +19,6 @@ namespace Acme.ShoppingCart.DomainService.Tests {
             var orderRepository = new OrderRepository(databaseContext);
             Service = new OrderService(orderRepository, publisher.Object, NullLogger<OrderService>.Instance, new Mock<ICatalogClient>().Object);
 
-            var name = Guid.NewGuid().ToString();
             var customer = EntityBuilder.GetCustomerEntity();
             databaseContext.Customers.Add(customer);
             databaseContext.SaveChanges(true);
@@ -38,7 +35,7 @@ namespace Acme.ShoppingCart.DomainService.Tests {
             await databaseContext.SaveChangesAsync();
 
             // Assert
-            Assert.True(databaseContext.Orders.Any(x => x.Address.Street == order.Address.Street));
+            Assert.True(await databaseContext.Orders.AnyAsync(x => x.Address.Street == order.Address.Street));
         }
     }
 }
