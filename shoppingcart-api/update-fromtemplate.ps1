@@ -71,10 +71,10 @@ if ($service -eq "" -or $repository -eq "") {
 }
 
 $hasDatabase = $false
-if ($database -ne "") {
+if ($database -ne "" -and $database -ne $null) {
 	$hasDatabase = $true
 }	
-		
+
 echo "service: $service"
 echo "repository: $repository"
 echo "database: $database"
