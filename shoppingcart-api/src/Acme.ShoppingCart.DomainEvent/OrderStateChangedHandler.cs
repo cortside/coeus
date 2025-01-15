@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
 using Acme.ShoppingCart.Facade;
@@ -8,7 +9,6 @@ using Medallion.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Serilog.Context;
 
 namespace Acme.ShoppingCart.DomainEvent {
     /// <summary>
@@ -29,7 +29,7 @@ namespace Acme.ShoppingCart.DomainEvent {
         }
 
         public async Task<HandlerResult> HandleAsync(DomainEventMessage<OrderStateChangedEvent> @event) {
-            using (LogContext.PushProperty("OrderResourceId", @event.Data.OrderResourceId)) {
+            using (logger.BeginScope(new Dictionary<string, object> { ["OrderResourceId"] = @event.Data.OrderResourceId })) {
                 logger.LogDebug("Handling {EventName} for ShoppingCart {OrderResourceId}", nameof(OrderStateChangedEvent), @event.Data.OrderResourceId);
 
                 using (IServiceScope scope = serviceProvider.CreateScope()) {
