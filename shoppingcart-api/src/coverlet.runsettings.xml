@@ -4,7 +4,7 @@
     <DataCollectors>
       <DataCollector friendlyName="XPlat code coverage">
         <Configuration>
-          <Format>opencover</Format>          
+          <Format>cobertura</Format>
           <!-- <Exclude>[coverlet.*.tests?]*,[*]Coverlet.Core*</Exclude> [Assembly-Filter]Type-Filter -->
           <!-- <Include>[coverlet.*]*,[*]Coverlet.Core*</Include> [Assembly-Filter]Type-Filter -->
           <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute</ExcludeByAttribute>

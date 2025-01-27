@@ -13,7 +13,7 @@ Param (
 
 $ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';
 # common repository functions
-Import-Module .\repository.psm1 -Force
+Import-Module .\repository.psm1
 
 # module to execute sql statements
 try {
@@ -21,7 +21,6 @@ try {
 	Import-Module SqlServer -ErrorAction Stop
 } catch {
 	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-	# better error handling here
 	Install-PackageProvider -Name PowershellGet -Force -Scope CurrentUser
 	Install-Module -Name SqlServer -AllowClobber -Force -Scope CurrentUser
 	Import-Module SqlServer
@@ -45,7 +44,7 @@ Function Execute-Sql {
 	} else {
 		$secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
 		$creds = New-Object System.Management.Automation.PSCredential ($username, $secpasswd)
-		$result = invoke-sqlcmd -Credential $creds -Server $server -Database $database -Query $sql -OutputSqlErrors $true -TrustServerCertificate
+		$result = invoke-sqlcmd -Credential $creds -Server $server -Database $database -Query $sql -OutputSqlErrors $true
 	}
 	
 	if ($error -ne $null) {
@@ -86,6 +85,7 @@ if ($connectionString -ne "") {
 	$conn.set_ConnectionString($ConnectionString)	
 	$database = $conn.Database;	
 	$server = $conn.Server
+	$username = $conn.UserID
 }
 if ($server -eq "") {
 	$server = "(LocalDB)\MSSQLLocalDB"
