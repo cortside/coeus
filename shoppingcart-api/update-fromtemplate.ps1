@@ -79,7 +79,8 @@ echo "service: $service"
 echo "repository: $repository"
 echo "database: $database"
 echo "hasDatabase: $hasDatabase"
-		
+
+cp .\temp\coeus\shoppingcart-api\update-fromtemplate.ps1		
 cp .\temp\coeus\shoppingcart-api\clean.ps1
 cp .\temp\coeus\shoppingcart-api\format.ps1
 cp .\temp\coeus\shoppingcart-api\create-release.ps1
