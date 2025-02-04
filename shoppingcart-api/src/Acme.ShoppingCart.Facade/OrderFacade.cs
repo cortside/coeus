@@ -27,6 +27,10 @@ namespace Acme.ShoppingCart.Facade {
             this.lockProvider = lockProvider;
         }
 
+        private static string GetLockName(Guid id) {
+            return $"OrderResourceId:{id}";
+        }
+
         public async Task<OrderDto> AddOrderItemAsync(Guid id, OrderItemDto dto) {
             var order = await orderService.AddOrderItemAsync(id, dto).ConfigureAwait(false);
             await uow.SaveChangesAsync().ConfigureAwait(false);
@@ -35,7 +39,7 @@ namespace Acme.ShoppingCart.Facade {
         }
 
         public async Task<OrderDto> SendNotificationAsync(Guid id) {
-            var lockName = $"OrderResourceId:{id}";
+            var lockName = GetLockName(id);
 
             logger.LogDebug("Acquiring lock for {LockName}", lockName);
             await using (await lockProvider.AcquireLockAsync(lockName).ConfigureAwait(false)) {
@@ -94,15 +98,28 @@ namespace Acme.ShoppingCart.Facade {
         }
 
         public async Task<OrderDto> UpdateOrderAsync(Guid id, UpdateOrderDto dto) {
-            var order = await orderService.UpdateOrderAsync(id, dto).ConfigureAwait(false);
-            await uow.SaveChangesAsync().ConfigureAwait(false);
+            var lockName = GetLockName(id);
 
-            return mapper.MapToDto(order);
+            logger.LogDebug("Acquiring lock for {LockName}", lockName);
+            await using (await lockProvider.AcquireLockAsync(lockName).ConfigureAwait(false)) {
+                logger.LogDebug("Acquired lock for {LockName}", lockName);
+
+                var order = await orderService.UpdateOrderAsync(id, dto).ConfigureAwait(false);
+                await uow.SaveChangesAsync().ConfigureAwait(false);
+
+                return mapper.MapToDto(order);
+            }
         }
 
         public async Task CancelOrderAsync(Guid id) {
-            await orderService.CancelOrderAsync(id).ConfigureAwait(false);
-            await uow.SaveChangesAsync().ConfigureAwait(false);
+            var lockName = GetLockName(id);
+
+            logger.LogDebug("Acquiring lock for {LockName}", lockName);
+            await using (await lockProvider.AcquireLockAsync(lockName).ConfigureAwait(false)) {
+                logger.LogDebug("Acquired lock for {LockName}", lockName);
+                await orderService.CancelOrderAsync(id).ConfigureAwait(false);
+                await uow.SaveChangesAsync().ConfigureAwait(false);
+            }
         }
     }
 }
