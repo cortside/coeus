@@ -9,6 +9,7 @@ using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.Domain.Entities;
 using Acme.ShoppingCart.Dto;
 using Cortside.AspNetCore.Common.Paging;
+using Cortside.Common.Logging;
 using Cortside.Common.Messages.MessageExceptions;
 using Cortside.Common.Validation;
 using Cortside.DomainEvent.EntityFramework;
@@ -32,7 +33,7 @@ namespace Acme.ShoppingCart.DomainService {
             Guard.From.Null<BadRequestResponseException>(customer, "customer not found");
 
             var entity = new Order(customer, dto.Address.Street, dto.Address.City, dto.Address.State, dto.Address.Country, dto.Address.ZipCode);
-            using (logger.BeginScope(new Dictionary<string, object> { ["OrderResourceId"] = entity.OrderResourceId })) {
+            using (logger.PushProperty("OrderResourceId", entity.OrderResourceId)) {
                 foreach (var i in dto.Items) {
                     var item = await catalog.GetItemAsync(i.Sku).ConfigureAwait(false);
                     entity.AddItem(item, i.Quantity);
