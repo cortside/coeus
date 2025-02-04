@@ -11,6 +11,7 @@
     <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Cortside.Common.Logging" Version="6.4.468-develop" />
     <PackageReference Include="Cortside.DomainEvent" Version="6.4.348-develop" />
     <PackageReference Include="DistributedLock.SqlServer" Version="1.0.6" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.12.19">
