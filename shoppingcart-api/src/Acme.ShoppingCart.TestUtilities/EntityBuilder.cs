@@ -1,4 +1,4 @@
-﻿using Acme.ShoppingCart.CatalogApi.Models.Responses;
+using Acme.ShoppingCart.CatalogApi.Models.Responses;
 using Acme.ShoppingCart.Domain.Entities;
 using Cortside.Common.Testing;
 

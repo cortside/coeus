@@ -1,4 +1,4 @@
-﻿namespace Acme.ShoppingCart.CatalogApi.Models.Responses {
+namespace Acme.ShoppingCart.CatalogApi.Models.Responses {
     public enum ItemStatus {
         Active,
         Inactive,

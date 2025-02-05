@@ -11,8 +11,8 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests {
             if (!dbContext.Subjects.Any(x => x.SubjectId == subject.SubjectId)) {
                 dbContext.Subjects.Add(subject);
 
-				var customer = EntityBuilder.GetCustomerEntity();
-				dbContext.Customers.Add(customer);
+                var customer = EntityBuilder.GetCustomerEntity();
+                dbContext.Customers.Add(customer);
 
                 // intentionally using this override to avoid the not implemented exception
                 dbContext.SaveChanges(true);
