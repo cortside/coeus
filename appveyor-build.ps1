@@ -8,7 +8,12 @@ $tokens = @{
 
 $buildNumber = $env:APPVEYOR_BUILD_NUMBER;
 
-if (-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
+if (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER) {
+	$branch = $Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH;
+	$target = $Env:APPVEYOR_REPO_BRANCH;
+	$commit = $Env:APPVEYOR_PULL_REQUEST_HEAD_COMMIT;
+	$pullRequestId = $Env:APPVEYOR_PULL_REQUEST_NUMBER;
+} else {
 	$branch = $Env:APPVEYOR_REPO_BRANCH;
 	if ($branch -ne "master") {
 		$target = "develop";
@@ -16,18 +21,13 @@ if (-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
 			$target = "master";
 		}
 	}
-} else {
-	$branch = $Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH;
-	$target = $Env:APPVEYOR_REPO_BRANCH;
-	$commit = $Env:APPVEYOR_PULL_REQUEST_HEAD_COMMIT;
-	$pullRequestId = $Env:APPVEYOR_PULL_REQUEST_NUMBER;
 }
 
 echo "building version $version from branch $branch targeting $target (pullRequestId=$pullRequestId, commit=$commit)";
 Write-Host Starting build
 
 $files = ""
-if ( $env:APPVEYOR_PULL_REQUEST_NUMBER ) {
+if (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER) {
   Write-Host Pull request $env:APPVEYOR_PULL_REQUEST_NUMBER
   $files = $(git --no-pager diff --name-only ..$target)
 } else {
