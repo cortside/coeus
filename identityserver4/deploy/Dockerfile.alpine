@@ -44,15 +44,13 @@ RUN export SONAR_SCANNER_OPTS="-Xmx4096m" && \
     /d:sonar.host.url="$sonarhost" \
     /d:sonar.login="$sonartoken" \
     /v:"$imageversion" \
-    #/d:sonar.cs.opencover.reportsPaths="**/*.opencover.xml" \
-	/d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
+    /d:sonar.cs.opencover.reportsPaths="**/*.opencover.xml" \
     /d:sonar.coverage.exclusions="**/*Test*.cs,**/Migrations/*" \
     /d:sonar.exclusions="**/*Test*.cs,**/Migrations/*,**/*Api.xml" \
 	/d:sonar.dotnet.excludeTestProjects=true \
     $analysisArgs && \
     dotnet build --no-restore --no-incremental && \
     dotnet test --no-build --no-restore /p:Exclude="[xunit*]*" /p:ParallelizeTestCollections=false --collect:"XPlat Code Coverage" --settings coverlet.runsettings.xml && \
-	dotnet-coverage merge -f xml -o "coverage.xml" **/*.opencover.xml && \
     dotnet sonarscanner end /d:sonar.login="$sonartoken"
 
 # publish artifacts for runtime image    

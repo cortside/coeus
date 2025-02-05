@@ -85,6 +85,7 @@ if ($connectionString -ne "") {
 	$conn.set_ConnectionString($ConnectionString)	
 	$database = $conn.Database;	
 	$server = $conn.Server
+	$username = $conn.UserID
 }
 if ($server -eq "") {
 	$server = "(LocalDB)\MSSQLLocalDB"

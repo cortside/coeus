@@ -9,11 +9,9 @@ using Acme.ShoppingCart.WebApi.Models.Responses;
 using Asp.Versioning;
 using Cortside.AspNetCore.Common.Paging;
 using Cortside.Common.Messages.MessageExceptions;
-using Medallion.Threading;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Serilog.Context;
 
 namespace Acme.ShoppingCart.WebApi.Controllers {
@@ -28,17 +26,13 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
     public class OrderController : ControllerBase {
         private readonly OrderModelMapper orderMapper;
         private readonly IOrderFacade facade;
-        private readonly IDistributedLockProvider lockProvider;
-        private readonly ILogger<OrderController> logger;
 
         /// <summary>
         /// Initializes a new instance of the OrderController
         /// </summary>
-        public OrderController(IOrderFacade facade, OrderModelMapper orderMapper, ILogger<OrderController> logger, IDistributedLockProvider lockProvider) {
+        public OrderController(IOrderFacade facade, OrderModelMapper orderMapper) {
             this.facade = facade;
             this.orderMapper = orderMapper;
-            this.lockProvider = lockProvider;
-            this.logger = logger;
         }
 
         /// <summary>
@@ -62,8 +56,10 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [Authorize(Constants.Authorization.Permissions.GetOrder)]
         [ProducesResponseType(typeof(OrderModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetOrderAsync(Guid id) {
-            var dto = await facade.GetOrderAsync(id).ConfigureAwait(false);
-            return Ok(orderMapper.Map(dto));
+            using (LogContext.PushProperty("OrderResourceId", id)) {
+                var dto = await facade.GetOrderAsync(id).ConfigureAwait(false);
+                return Ok(orderMapper.Map(dto));
+            }
         }
 
         /// <summary>
@@ -106,22 +102,17 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [Authorize(Constants.Authorization.Permissions.UpdateOrder)]
         [ProducesResponseType(typeof(OrderModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateOrderAsync(Guid id, UpdateOrderModel input) {
-            var lockName = $"OrderResourceId:{id}";
-            logger.LogDebug("Acquiring lock for {LockName}", lockName);
-            await using (await lockProvider.AcquireLockAsync(lockName).ConfigureAwait(false)) {
-                logger.LogDebug("Acquired lock for {LockName}", lockName);
-                using (LogContext.PushProperty("OrderResourceId", id)) {
-                    var dto = orderMapper.MapToDto(input);
+            using (LogContext.PushProperty("OrderResourceId", id)) {
+                var dto = orderMapper.MapToDto(input);
 
-                    OrderDto result;
-                    try {
-                        result = await facade.UpdateOrderAsync(id, dto).ConfigureAwait(false);
-                    } catch (Exception ex) {
-                        throw new InternalServerErrorResponseException("Unable to update order", ex);
-                    }
-
-                    return Ok(orderMapper.Map(result));
+                OrderDto result;
+                try {
+                    result = await facade.UpdateOrderAsync(id, dto).ConfigureAwait(false);
+                } catch (Exception ex) {
+                    throw new InternalServerErrorResponseException("Unable to update order", ex);
                 }
+
+                return Ok(orderMapper.Map(result));
             }
         }
 

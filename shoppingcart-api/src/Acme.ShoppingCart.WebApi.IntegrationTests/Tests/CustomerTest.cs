@@ -82,5 +82,22 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             var customers = JsonConvert.DeserializeObject<PagedList<CustomerModel>>(content);
             customers.Items.ToList().Exists(x => x.CustomerResourceId == id.CustomerResourceId).Should().BeTrue();
         }
+
+        [Fact]
+        public async Task ShouldGetCustomersAsync() {
+            //arrange
+            var db = fixture.NewScopedDbContext<DatabaseContext>();
+            var id = db.Customers.First();
+
+            //act
+            var response = await testServerClient.GetAsync($"/api/v1/customers?FirstName={id.FirstName}");
+
+            //assert
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var content = await response.Content.ReadAsStringAsync();
+            var customers = JsonConvert.DeserializeObject<PagedList<CustomerModel>>(content);
+            customers.Items.ToList().Exists(x => x.CustomerResourceId == id.CustomerResourceId).Should().BeTrue();
+        }
     }
 }

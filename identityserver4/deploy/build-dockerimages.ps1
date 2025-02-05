@@ -11,9 +11,9 @@
 [CmdletBinding()]
 Param 
 (
-	[Parameter(Mandatory = $false)][string]$branch,
+	[Parameter(Mandatory = $false)][string]$branch = "",
 	[Parameter(Mandatory = $false)][string]$target = "develop",
-	[Parameter(Mandatory = $false)][string]$commit = $env:CommitHash,
+	[Parameter(Mandatory = $false)][string]$commit = "",
 	[Parameter(Mandatory = $false)][string]$commitdate = "",
 	[Parameter(Mandatory = $false)][string]$pullRequestId = "",
 	[Parameter(Mandatory = $false)][string]$buildCounter = "0",
@@ -80,6 +80,10 @@ if ($buildCounter -eq "0") {
 }
 if ($branch -eq "") {
 	$branch = (git rev-parse --abbrev-ref HEAD)
+}
+
+if (Test-Path env:CommitHash) {
+	$commit = $env:CommitHash
 }
 if ($commit -eq "") {
 	$commit = (git rev-parse HEAD)
@@ -195,6 +199,8 @@ foreach ($dockerfile in $dockerFiles) {
 		#$pullRequestId = $Env:APPVEYOR_PULL_REQUEST_NUMBER;
 		$analysisArgs += " $($config.sonar.propertyPrefix)sonar.scm.revision=$commit $($config.sonar.propertyPrefix)sonar.pullrequest.key=$pullRequestId $($config.sonar.propertyPrefix)sonar.pullrequest.base=$target $($config.sonar.propertyPrefix)sonar.pullrequest.branch=$branch";
 	}
+
+echo $analysisArgs
 
 	#$sonarArgs = "--build-arg `"analysisArgs=$analysisArgs`" --build-arg `"sonarhost=$($config.sonar.host)`" --build-arg `"sonartoken=$($config.sonar.token)`" --build-arg `"sonarkey=$($config.sonar.key)`""
 	#}

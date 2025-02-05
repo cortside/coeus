@@ -7,17 +7,27 @@ using Acme.ShoppingCart.Dto.Search;
 using Acme.ShoppingCart.Facade.Mappers;
 using Cortside.AspNetCore.Common.Paging;
 using Cortside.AspNetCore.EntityFramework;
+using Medallion.Threading;
+using Microsoft.Extensions.Logging;
 
 namespace Acme.ShoppingCart.Facade {
     public class CustomerFacade : ICustomerFacade {
         private readonly IUnitOfWork uow;
         private readonly ICustomerService customerService;
         private readonly CustomerMapper mapper;
+        private readonly ILogger<CustomerFacade> logger;
+        private readonly IDistributedLockProvider lockProvider;
 
-        public CustomerFacade(IUnitOfWork uow, ICustomerService customerService, CustomerMapper mapper) {
+        public CustomerFacade(ILogger<CustomerFacade> logger, IUnitOfWork uow, ICustomerService customerService, CustomerMapper mapper, IDistributedLockProvider lockProvider) {
             this.uow = uow;
             this.customerService = customerService;
             this.mapper = mapper;
+            this.logger = logger;
+            this.lockProvider = lockProvider;
+        }
+
+        private static string GetLockName(Guid id) {
+            return $"CustomerResourceId:{id}";
         }
 
         public async Task<CustomerDto> CreateCustomerAsync(UpdateCustomerDto dto) {
@@ -44,7 +54,7 @@ namespace Acme.ShoppingCart.Facade {
         public async Task<PagedList<CustomerDto>> SearchCustomersAsync(CustomerSearchDto search) {
             var customerSearch = mapper.Map(search);
             // Using BeginReadUncommittedAsync on GET endpoints that return a list, this will read uncommitted and
-            // as notracking in ef core.  this will result in a non-blocking dirty read, which is accepted best practice for mssql
+            // AsNoTracking in ef core.  This will result in a non-blocking dirty read, which is accepted best practice for mssql.
             await using (var tx = await uow.BeginReadUncommitedAsync().ConfigureAwait(false)) {
                 var customers = await customerService.SearchCustomersAsync(customerSearch).ConfigureAwait(false);
 
@@ -54,10 +64,17 @@ namespace Acme.ShoppingCart.Facade {
         }
 
         public async Task<CustomerDto> UpdateCustomerAsync(Guid resourceId, UpdateCustomerDto dto) {
-            var customer = await customerService.UpdateCustomerAsync(resourceId, dto).ConfigureAwait(false);
-            await uow.SaveChangesAsync().ConfigureAwait(false);
+            var lockName = GetLockName(resourceId);
 
-            return mapper.MapToDto(customer);
+            logger.LogDebug("Acquiring lock for {LockName}", lockName);
+            await using (await lockProvider.AcquireLockAsync(lockName).ConfigureAwait(false)) {
+                logger.LogDebug("Acquired lock for {LockName}", lockName);
+
+                var customer = await customerService.UpdateCustomerAsync(resourceId, dto).ConfigureAwait(false);
+                await uow.SaveChangesAsync().ConfigureAwait(false);
+
+                return mapper.MapToDto(customer);
+            }
         }
     }
 }

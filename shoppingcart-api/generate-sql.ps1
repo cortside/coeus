@@ -1,5 +1,5 @@
 # common repository functions
-Import-Module .\Repository.psm1
+Import-Module .\Repository.psm1 -Force
 $config = Get-RepositoryConfiguration
 
 #set variables

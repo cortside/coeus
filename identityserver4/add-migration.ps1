@@ -1,6 +1,7 @@
 [cmdletbinding()]
 param(
-	[parameter(Mandatory = $true)][string]$migration
+	[parameter(Mandatory = $true)][string]$migration,
+	[Parameter(Mandatory = $false)][switch]$updateDatabase
 )
 
 # common repository functions
@@ -22,6 +23,10 @@ dotnet build ./src
 
 .\generate-sql.ps1
 .\generate-sqltriggers.ps1
-.\update-database.ps1
+if ($updateDatabase.IsPresent) {
+	.\update-database.ps1
+} else {
+	echo "Run `./update-database.ps1` to execute the sql scripts and update the database OR include -updateDatabase when running this script"
+}
 
 echo "done"

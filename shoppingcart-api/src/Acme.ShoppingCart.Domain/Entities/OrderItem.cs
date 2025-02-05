@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Acme.ShoppingCart.Domain.Entities {
     [Table("OrderItem")]
+    [Index(nameof(OrderId), nameof(ItemId), IsUnique = true)]
     [Comment("Items that belong to an Order")]
     public class OrderItem : AuditableEntity {
         protected OrderItem() {
@@ -31,7 +32,10 @@ namespace Acme.ShoppingCart.Domain.Entities {
         /// <summary>
         /// FK to Order that the OrderItem belongs to
         /// </summary>
-        /// <remarks>OrderId added explicitly here so that it does not become nullable when inferred by relationships</remarks>
+        /// <remarks>
+        /// OrderId added explicitly here so that it does not become nullable when inferred by relationships.
+        /// The property has a private setter so that it is not inadvertently manipulated
+        /// </remarks>
         [Comment("FK to Order that the OrderItem belongs to")]
         [ForeignKey(nameof(OrderId))]
         public int OrderId { get; private set; }

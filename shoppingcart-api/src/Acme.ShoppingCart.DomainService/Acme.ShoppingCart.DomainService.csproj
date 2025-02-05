@@ -12,6 +12,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Cortside.Common.Correlation" Version="6.4.465-develop" />
+    <PackageReference Include="Cortside.Common.Logging" Version="6.4.468-develop" />
     <PackageReference Include="Cortside.Common.Messages" Version="6.4.465-develop" />
     <PackageReference Include="Cortside.Common.Validation" Version="6.4.465-develop" />
     <PackageReference Include="Cortside.DomainEvent" Version="6.4.348-develop" />

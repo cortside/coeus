@@ -1,6 +1,7 @@
 [cmdletBinding()]
 param(
-	[switch]$quiet
+	[switch]$quiet,
+	[switch]$force
 )
 
 function Remove-EmptyFolders {
@@ -77,7 +78,7 @@ Function Invoke-Cleanup {
 	}
 
 	# clean package, bin and obj folders
-	Get-ChildItem .\ -include packages,bin,obj,node_modules -Recurse | Where-Object {$_.FullName -NotMatch "BuildScripts"} | %{ 
+	Get-ChildItem .\ -include packages,bin,obj,node_modules,TestResults -Recurse | Where-Object {$_.FullName -NotMatch "BuildScripts"} | %{ 
 		Write-Host "Removing $($_.fullname)"; 
 		remove-item $_.fullname -Force -Recurse 
 	}
@@ -111,13 +112,17 @@ Function Invoke-Cleanup {
 	remove "OpenCover"
 	remove "Publish"
 	remove "TestBin"
+	remove "output"
+	remove "coveragereport"
 }
 
-# stop extraneous processes
-dotnet build-server shutdown
+if ($force.IsPresent) {
+	# stop extraneous processes
+	dotnet build-server shutdown
 
-# cleanup all nuget resources
-#dotnet nuget locals --clear all
+	# cleanup all nuget resources
+	#dotnet nuget locals --clear all
+}
 
 # remove all bin/obj folders
 Invoke-Cleanup
