@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Acme.DomainEvent.Events;
 using Acme.ShoppingCart.Facade;
+using Cortside.Common.Logging;
 using Cortside.DomainEvent;
 using Cortside.DomainEvent.Handlers;
-using Medallion.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -29,22 +28,15 @@ namespace Acme.ShoppingCart.DomainEvent {
         }
 
         public async Task<HandlerResult> HandleAsync(DomainEventMessage<OrderStateChangedEvent> @event) {
-            using (logger.BeginScope(new Dictionary<string, object> { ["OrderResourceId"] = @event.Data.OrderResourceId })) {
+            using (logger.PushProperty("OrderResourceId", @event.Data.OrderResourceId)) {
                 logger.LogDebug("Handling {EventName} for ShoppingCart {OrderResourceId}", nameof(OrderStateChangedEvent), @event.Data.OrderResourceId);
 
                 using (IServiceScope scope = serviceProvider.CreateScope()) {
                     var facade = scope.ServiceProvider.GetRequiredService<IOrderFacade>();
-                    var lockProvider = scope.ServiceProvider.GetRequiredService<IDistributedLockProvider>();
-                    var lockName = $"OrderResourceId:{@event.Data.OrderResourceId}";
 
-                    logger.LogDebug("Acquiring lock for {LockName}", lockName);
-                    await using (await lockProvider.AcquireLockAsync(lockName).ConfigureAwait(false)) {
-                        logger.LogDebug("Acquired lock for {LockName}", lockName);
-                        var entity = await facade.SendNotificationAsync(@event.Data.OrderResourceId).ConfigureAwait(false);
-                        logger.LogInformation("Emailing customer at {Email} for change to order {OrderResourceId}", entity.Customer.Email, entity.OrderResourceId);
-                        logger.LogDebug("Handling change event for order {@Order}", entity);
-                        logger.LogInformation("order was observed changing it's state with body: {Body} and entity: {Entity}", JsonConvert.SerializeObject(@event.Data), JsonConvert.SerializeObject(entity));
-                    }
+                    var dto = await facade.SendNotificationAsync(@event.Data.OrderResourceId).ConfigureAwait(false);
+                    logger.LogInformation("Emailing customer at {Email} for change to order {OrderResourceId}", dto.Customer.Email, dto.OrderResourceId);
+                    logger.LogInformation("order was observed changing it's state with body: {Body} and entity: {Entity}", JsonConvert.SerializeObject(@event.Data), JsonConvert.SerializeObject(dto));
                 }
 
                 logger.LogDebug("Successfully handled {EventName} for ShoppingCart {OrderResourceId}", nameof(OrderStateChangedEvent), @event.Data.OrderResourceId);

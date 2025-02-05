@@ -6,6 +6,8 @@ using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.Facade.Mappers;
 using Cortside.AspNetCore.Common.Paging;
 using Cortside.AspNetCore.EntityFramework;
+using Medallion.Threading;
+using Microsoft.Extensions.Logging;
 
 namespace Acme.ShoppingCart.Facade {
     public class OrderFacade : IOrderFacade {
@@ -13,12 +15,20 @@ namespace Acme.ShoppingCart.Facade {
         private readonly ICustomerService customerService;
         private readonly IOrderService orderService;
         private readonly OrderMapper mapper;
+        private readonly IDistributedLockProvider lockProvider;
+        private readonly ILogger<OrderFacade> logger;
 
-        public OrderFacade(IUnitOfWork uow, ICustomerService customerService, IOrderService orderService, OrderMapper mapper) {
+        public OrderFacade(ILogger<OrderFacade> logger, IUnitOfWork uow, ICustomerService customerService, IOrderService orderService, OrderMapper mapper, IDistributedLockProvider lockProvider) {
+            this.logger = logger;
             this.uow = uow;
             this.customerService = customerService;
             this.orderService = orderService;
             this.mapper = mapper;
+            this.lockProvider = lockProvider;
+        }
+
+        private static string GetLockName(Guid id) {
+            return $"OrderResourceId:{id}";
         }
 
         public async Task<OrderDto> AddOrderItemAsync(Guid id, OrderItemDto dto) {
@@ -29,10 +39,17 @@ namespace Acme.ShoppingCart.Facade {
         }
 
         public async Task<OrderDto> SendNotificationAsync(Guid id) {
-            var order = await orderService.SendNotificationAsync(id).ConfigureAwait(false);
-            await uow.SaveChangesAsync().ConfigureAwait(false);
+            var lockName = GetLockName(id);
 
-            return mapper.MapToDto(order);
+            logger.LogDebug("Acquiring lock for {LockName}", lockName);
+            await using (await lockProvider.AcquireLockAsync(lockName).ConfigureAwait(false)) {
+                logger.LogDebug("Acquired lock for {LockName}", lockName);
+
+                var order = await orderService.SendNotificationAsync(id).ConfigureAwait(false);
+                await uow.SaveChangesAsync().ConfigureAwait(false);
+
+                return mapper.MapToDto(order);
+            }
         }
 
         public async Task<OrderDto> CreateOrderAsync(CreateOrderDto input) {
@@ -81,15 +98,28 @@ namespace Acme.ShoppingCart.Facade {
         }
 
         public async Task<OrderDto> UpdateOrderAsync(Guid id, UpdateOrderDto dto) {
-            var order = await orderService.UpdateOrderAsync(id, dto).ConfigureAwait(false);
-            await uow.SaveChangesAsync().ConfigureAwait(false);
+            var lockName = GetLockName(id);
 
-            return mapper.MapToDto(order);
+            logger.LogDebug("Acquiring lock for {LockName}", lockName);
+            await using (await lockProvider.AcquireLockAsync(lockName).ConfigureAwait(false)) {
+                logger.LogDebug("Acquired lock for {LockName}", lockName);
+
+                var order = await orderService.UpdateOrderAsync(id, dto).ConfigureAwait(false);
+                await uow.SaveChangesAsync().ConfigureAwait(false);
+
+                return mapper.MapToDto(order);
+            }
         }
 
         public async Task CancelOrderAsync(Guid id) {
-            await orderService.CancelOrderAsync(id).ConfigureAwait(false);
-            await uow.SaveChangesAsync().ConfigureAwait(false);
+            var lockName = GetLockName(id);
+
+            logger.LogDebug("Acquiring lock for {LockName}", lockName);
+            await using (await lockProvider.AcquireLockAsync(lockName).ConfigureAwait(false)) {
+                logger.LogDebug("Acquired lock for {LockName}", lockName);
+                await orderService.CancelOrderAsync(id).ConfigureAwait(false);
+                await uow.SaveChangesAsync().ConfigureAwait(false);
+            }
         }
     }
 }
