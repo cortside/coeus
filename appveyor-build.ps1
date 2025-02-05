@@ -42,12 +42,11 @@ $files | ForEach-Object {
   $dir = $_ -replace "\/[^\/]+$", ""
   $dir = $dir -replace "/", "\"
   $rootdir = $dir.split("\",3)[0]
-  if (Test-Path "$rootdir\build-dockerimages.ps1") {
+  if (Test-Path "$rootdir\deploy\build-dockerimages.ps1") {
 	Write-Host "Storing $rootdir for build"
 	$dirs.Set_Item($rootdir, 1)
   } else {
 	$dir = $dir -replace "\\[^\\]+$", ""
-	#if (Test-Path "$rootdir\build-dockerimages.ps1") {
 	if (Test-Path "$rootdir\Dockerfile.*") {
 	  Write-Host "Storing $rootdir for build"
 	  $dirs.Set_Item($rootdir, 1)
@@ -66,7 +65,7 @@ $dirs.GetEnumerator() | Sort-Object Name | ForEach-Object {
 	Write-Host "Current directory: $pwd"
 	
 	$env:SONAR_TOKEN = $tokens[$dir];
-	.\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
+	.\deploy\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
 	cd $PSScriptRoot
 }
 
