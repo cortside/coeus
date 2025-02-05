@@ -21,7 +21,8 @@
                         "permissions": [
                             "CanGetReports",
                             "spReport_Tables",
-							"spReport_Table"
+							"spReport_Table",
+							"spReport_OutboxCounts"
                         ]
                     }
                 },

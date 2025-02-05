@@ -13,7 +13,7 @@ Param (
 
 $ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';
 # common repository functions
-Import-Module .\repository.psm1
+Import-Module .\repository.psm1 -Force
 
 # module to execute sql statements
 try {
@@ -44,7 +44,7 @@ Function Execute-Sql {
 	} else {
 		$secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
 		$creds = New-Object System.Management.Automation.PSCredential ($username, $secpasswd)
-		$result = invoke-sqlcmd -Credential $creds -Server $server -Database $database -Query $sql -OutputSqlErrors $true
+		$result = invoke-sqlcmd -Credential $creds -Server $server -Database $database -Query $sql -OutputSqlErrors $true -TrustServerCertificate
 	}
 	
 	if ($error -ne $null) {

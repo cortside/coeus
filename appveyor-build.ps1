@@ -8,7 +8,12 @@ $tokens = @{
 
 $buildNumber = $env:APPVEYOR_BUILD_NUMBER;
 
-if (-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
+if (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER) {
+	$branch = $Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH;
+	$target = $Env:APPVEYOR_REPO_BRANCH;
+	$commit = $Env:APPVEYOR_PULL_REQUEST_HEAD_COMMIT;
+	$pullRequestId = $Env:APPVEYOR_PULL_REQUEST_NUMBER;
+} else {
 	$branch = $Env:APPVEYOR_REPO_BRANCH;
 	if ($branch -ne "master") {
 		$target = "develop";
@@ -16,18 +21,13 @@ if (-not (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER)) {
 			$target = "master";
 		}
 	}
-} else {
-	$branch = $Env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH;
-	$target = $Env:APPVEYOR_REPO_BRANCH;
-	$commit = $Env:APPVEYOR_PULL_REQUEST_HEAD_COMMIT;
-	$pullRequestId = $Env:APPVEYOR_PULL_REQUEST_NUMBER;
 }
 
 echo "building version $version from branch $branch targeting $target (pullRequestId=$pullRequestId, commit=$commit)";
 Write-Host Starting build
 
 $files = ""
-if ( $env:APPVEYOR_PULL_REQUEST_NUMBER ) {
+if (Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER) {
   Write-Host Pull request $env:APPVEYOR_PULL_REQUEST_NUMBER
   $files = $(git --no-pager diff --name-only ..$target)
 } else {
@@ -42,12 +42,11 @@ $files | ForEach-Object {
   $dir = $_ -replace "\/[^\/]+$", ""
   $dir = $dir -replace "/", "\"
   $rootdir = $dir.split("\",3)[0]
-  if (Test-Path "$rootdir\build-dockerimages.ps1") {
+  if (Test-Path "$rootdir\deploy\build-dockerimages.ps1") {
 	Write-Host "Storing $rootdir for build"
 	$dirs.Set_Item($rootdir, 1)
   } else {
 	$dir = $dir -replace "\\[^\\]+$", ""
-	#if (Test-Path "$rootdir\build-dockerimages.ps1") {
 	if (Test-Path "$rootdir\Dockerfile.*") {
 	  Write-Host "Storing $rootdir for build"
 	  $dirs.Set_Item($rootdir, 1)
@@ -66,7 +65,7 @@ $dirs.GetEnumerator() | Sort-Object Name | ForEach-Object {
 	Write-Host "Current directory: $pwd"
 	
 	$env:SONAR_TOKEN = $tokens[$dir];
-	.\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
+	.\deploy\build-dockerimages.ps1 -branch $branch -buildCounter $buildNumber -pushImage -target $target -commit $commit -pullRequestId $pullRequestId;
 	cd $PSScriptRoot
 }
 

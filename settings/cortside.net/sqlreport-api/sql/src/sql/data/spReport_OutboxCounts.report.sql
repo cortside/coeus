@@ -8,7 +8,7 @@ set @name = 'spReport_OutboxCounts'
 --exec @stateQueryId = spAddReportArgumentQuery 'select distinct a.St ID, a.St State from eboa.dbo.Contractor c join eboa.dbo.Address a on c.MailingAddressId=a.AddressID'
 
 set @reportGroupId = 1
-exec @reportId = spAddReport @name, 'spReport_OutboxCounts', @reportGroupId
+exec @reportId = spAddReport @name, 'spReport_OutboxCounts', @reportGroupName = 'General'
 --exec spAddReportArgument @reportId, 'Reference Number', '@referenceNumber', 'BigInt', null, 1
 --exec spAddReportArgument @reportId, 'End Date', '@enddate', 'DateTime', null, 2
 --exec spAddReportArgument @reportId, 'State', '@state', 'varchar(2)', @stateQueryId, 3
@@ -26,48 +26,13 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-    select 'LoanServicing' db, RoutingKey, count(*) messages, min(createddate), max(createddate)
-    from {{LoanServicingDB}}.dbo.outbox with (nolock) 
+    select 'ShoppingCart' db, RoutingKey, count(*) messages, min(createddate), max(createddate)
+    from ShoppingCart.dbo.outbox with (nolock) 
     where ScheduledDate < GETUTCDATE() 
     group by RoutingKey
     union
-    select 'DataMart', RoutingKey, count(*), min(createddate), max(createddate)
-    from {{DataMartDB}}.dbo.outbox with (nolock) 
-    where ScheduledDate < GETUTCDATE() 
-    group by RoutingKey
-    union
-    select 'FundingManagement', RoutingKey, count(*), min(createddate), max(createddate)
-    from {{FundingManagementDB}}.dbo.outbox with (nolock) 
-    where ScheduledDate < GETUTCDATE() 
-    group by RoutingKey
-    union
-    select 'PartnerPortal', RoutingKey, count(*), min(createddate), max(createddate)
-    from {{PartnerPortalDB}}.dbo.outbox with (nolock) 
-    where ScheduledDate < GETUTCDATE() 
-    group by RoutingKey
-    union
-    select 'Document', RoutingKey, count(*), min(createddate), max(createddate)
-    from {{DocumentDB}}.dbo.outbox with (nolock) 
-    where ScheduledDate < GETUTCDATE() 
-    group by RoutingKey
-    union
-    select 'Comms', RoutingKey, count(*), min(createddate), max(createddate)
-    from {{CommsDB}}.dbo.outbox with (nolock) 
-    where ScheduledDate < GETUTCDATE() 
-    group by RoutingKey
-    union
-    select 'Application', RoutingKey, count(*), min(createddate), max(createddate)
-    from {{ApplicationDB}}.dbo.outbox with (nolock) 
-    where ScheduledDate < GETUTCDATE() 
-    group by RoutingKey
-    union
-    select 'Product', RoutingKey, count(*), min(createddate), max(createddate)
-    from {{ProductDB}}.dbo.outbox with (nolock) 
-    where ScheduledDate < GETUTCDATE() 
-    group by RoutingKey
-    union
-    select 'User', RoutingKey, count(*), min(createddate), max(createddate)
-    from [{{UserDB}}].dbo.outbox with (nolock) 
+    select 'IdentityServer', RoutingKey, count(*), min(createddate), max(createddate)
+    from IdentityServer.dbo.outbox with (nolock) 
     where ScheduledDate < GETUTCDATE() 
     group by RoutingKey
 END
