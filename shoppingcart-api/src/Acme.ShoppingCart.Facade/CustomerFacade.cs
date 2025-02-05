@@ -52,7 +52,7 @@ namespace Acme.ShoppingCart.Facade {
         public async Task<PagedList<CustomerDto>> SearchCustomersAsync(CustomerSearchDto search) {
             var customerSearch = mapper.Map(search);
             // Using BeginReadUncommittedAsync on GET endpoints that return a list, this will read uncommitted and
-            // as notracking in ef core.  this will result in a non-blocking dirty read, which is accepted best practice for mssql
+            // AsNoTracking in ef core.  This will result in a non-blocking dirty read, which is accepted best practice for mssql.
             await using (var tx = await uow.BeginReadUncommitedAsync().ConfigureAwait(false)) {
                 var customers = await customerService.SearchCustomersAsync(customerSearch).ConfigureAwait(false);
 

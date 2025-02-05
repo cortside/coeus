@@ -56,8 +56,10 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
         [Authorize(Constants.Authorization.Permissions.GetOrder)]
         [ProducesResponseType(typeof(OrderModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetOrderAsync(Guid id) {
-            var dto = await facade.GetOrderAsync(id).ConfigureAwait(false);
-            return Ok(orderMapper.Map(dto));
+            using (LogContext.PushProperty("OrderResourceId", id)) {
+                var dto = await facade.GetOrderAsync(id).ConfigureAwait(false);
+                return Ok(orderMapper.Map(dto));
+            }
         }
 
         /// <summary>
