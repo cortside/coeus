@@ -10,7 +10,7 @@ using Acme.ShoppingCart.WebApi.Models.Responses;
 using FluentAssertions;
 using Newtonsoft.Json;
 using Xunit;
-using OrderStatus = Acme.ShoppingCart.WebApi.Enumerations.OrderStatus;
+using OrderStatus = Acme.ShoppingCart.WebApi.Models.Enumerations.OrderStatus;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
     public class OrderTest : IClassFixture<IntegrationFixture> {

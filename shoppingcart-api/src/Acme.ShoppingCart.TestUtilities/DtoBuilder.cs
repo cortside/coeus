@@ -1,4 +1,5 @@
 ﻿using Acme.ShoppingCart.Dto;
+using Acme.ShoppingCart.Dto.Input;
 using Cortside.Common.Testing;
 
 namespace Acme.ShoppingCart.TestUtilities {

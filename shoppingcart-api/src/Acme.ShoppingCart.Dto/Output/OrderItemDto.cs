@@ -1,7 +1,7 @@
 using System;
 using Cortside.AspNetCore.Common.Dtos;
 
-namespace Acme.ShoppingCart.Dto {
+namespace Acme.ShoppingCart.Dto.Output {
     public class OrderItemDto : AuditableEntityDto {
         public int OrderItemId { get; set; }
         public Guid ItemId { get; set; }

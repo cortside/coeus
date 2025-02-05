@@ -5,7 +5,7 @@ using Acme.DomainEvent.Events;
 using Acme.ShoppingCart.Data.Repositories;
 using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.Domain.Entities;
-using Acme.ShoppingCart.Dto;
+using Acme.ShoppingCart.Dto.Input;
 using Cortside.AspNetCore.Common.Paging;
 using Cortside.DomainEvent.EntityFramework;
 using Microsoft.Extensions.Logging;

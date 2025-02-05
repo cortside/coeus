@@ -1,4 +1,4 @@
-namespace Acme.ShoppingCart.WebApi.Enumerations {
+namespace Acme.ShoppingCart.WebApi.Models.Enumerations {
     /// <summary>
     /// Order status
     /// </summary>

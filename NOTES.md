@@ -2,6 +2,42 @@
 
 ## todo:
 
+* cortside.common.validation documentation/examples
+* expand configuration extension method, called in webapi builder
+	* https://github.com/gsoft-inc/wl-extensions-configuration-substitution/tree/main
+* add documentation about controller endpoint override
+* documentation about versioning api endpoints
+* add nested transaction and strategy example
+        public bool Save(Entity model) {
+            var strategy = uow.CreateExecutionStrategy();
+            strategy.Execute(() => {
+                using (var dbContextTransaction = uow.BeginTransaction()) {
+                    try {
+						... do work that will result in new entity with db id being created
+                        await uow.SaveChangesAsync();
+
+						... use db id from entity
+						await uow.SaveChangesAsync();
+                    } catch (Exception) {
+                        dbContextTransaction?.Rollback();
+                        throw;
+                    }
+                }
+            });
+        }
+
+
+- add host to health
+* break applications out into another package from core health
+* break ef out into another package from core health
+* add health integration Tests
+
+* add domainevent health output to readme
+
+- review https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks
+- idenentityserver bff
+	* https://medium.com/web-security/implementing-the-bff-security-pattern-with-identityserver4-and-gocloudnative-bff-a8b594308363
+
 - publisher should return published message information -- at least messageId -- would make debugging easier
 - allow publisher to be used to publish multiple events withing a using statement without having to create new connection for each publish
 

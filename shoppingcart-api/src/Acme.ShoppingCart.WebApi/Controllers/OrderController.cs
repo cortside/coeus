@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Acme.ShoppingCart.Dto;
+using Acme.ShoppingCart.Dto.Output;
 using Acme.ShoppingCart.Facade;
 using Acme.ShoppingCart.WebApi.Mappers;
 using Acme.ShoppingCart.WebApi.Models.Requests;

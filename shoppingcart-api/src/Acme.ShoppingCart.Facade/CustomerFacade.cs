@@ -1,7 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using Acme.ShoppingCart.DomainService;
-using Acme.ShoppingCart.Dto;
+using Acme.ShoppingCart.Dto.Input;
+using Acme.ShoppingCart.Dto.Output;
+using Acme.ShoppingCart.Dto.Search;
 using Acme.ShoppingCart.Facade.Mappers;
 using Cortside.AspNetCore.Common.Paging;
 using Cortside.AspNetCore.EntityFramework;

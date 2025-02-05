@@ -1,12 +1,11 @@
 using System;
-using Cortside.AspNetCore.Common.Dtos;
 
-namespace Acme.ShoppingCart.Dto {
-    public class CustomerDto : AuditableEntityDto {
-        public int CustomerId { get; set; }
+namespace Acme.ShoppingCart.Dto.Input {
+    public class CreateOrderCustomerDto {
         public Guid CustomerResourceId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
+        public DateOnly BirthDate { get; set; }
     }
 }

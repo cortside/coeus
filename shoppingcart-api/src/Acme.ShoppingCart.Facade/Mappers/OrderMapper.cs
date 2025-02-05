@@ -1,8 +1,9 @@
 using System.Linq;
 using Acme.ShoppingCart.Data.Searches;
 using Acme.ShoppingCart.Domain.Entities;
-using Acme.ShoppingCart.Dto;
 using Acme.ShoppingCart.Dto.Enumerations;
+using Acme.ShoppingCart.Dto.Output;
+using Acme.ShoppingCart.Dto.Search;
 
 namespace Acme.ShoppingCart.Facade.Mappers {
     public class OrderMapper {
