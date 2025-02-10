@@ -34,7 +34,7 @@ if ((Test-Path env:BUILD_SERVER) -And ($env:BUILD_SERVER -eq "TeamCity")) {
 }
 
 if ($NoVersionLock.IsPresent) {
-	dotnet outdated ./src --pre-release Never --upgrade --exclude restsharp
+	dotnet outdated ./src --pre-release Never --upgrade
 } else {
 	dotnet outdated ./src --version-lock Major --pre-release Never --upgrade
 }

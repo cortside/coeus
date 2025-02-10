@@ -122,6 +122,9 @@ if ($force.IsPresent) {
 
 	# cleanup all nuget resources
 	#dotnet nuget locals --clear all
+	
+	# remove the .vs folder
+	remove "src/.vs"
 }
 
 # remove all bin/obj folders

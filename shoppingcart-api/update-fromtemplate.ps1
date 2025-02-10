@@ -89,6 +89,8 @@ cp .\temp\coeus\shoppingcart-api\update-nugetpackages.ps1
 cp .\temp\coeus\shoppingcart-api\src\.editorconfig .\src\.editorconfig
 cp .\temp\coeus\shoppingcart-api\src\coverlet.runsettings.xml .\src\coverlet.runsettings.xml
 cp .\temp\coeus\shoppingcart-api\.gitignore
+cp .\temp\coeus\shoppingcart-api\coverage.ps1
+
 
 Remove-IfItemExists update-template.ps1
 
