@@ -114,6 +114,7 @@ Function Invoke-Cleanup {
 	remove "TestBin"
 	remove "output"
 	remove "coveragereport"
+	remove ".sonarqube"
 }
 
 if ($force.IsPresent) {
