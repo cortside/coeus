@@ -1,3 +1,8 @@
+#pragma warning disable S1135
+// TODO: should this really use the client directly??
+// TODO: this should be moved to cortside.aspnetcore
+// TODO: no need for roles being exposed
+
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;

@@ -11,18 +11,18 @@
     <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore" Version="6.4.296-develop" />
-    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="6.4.296-develop" />
-    <PackageReference Include="Cortside.Common.BootStrap" Version="6.4.465-develop" />
-    <PackageReference Include="Cortside.Common.Cryptography" Version="6.4.465-develop" />
+    <PackageReference Include="Cortside.AspNetCore" Version="8.0.311-develop" />
+    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="8.0.311-develop" />
+    <PackageReference Include="Cortside.Common.BootStrap" Version="8.0.473-develop" />
+    <PackageReference Include="Cortside.Common.Cryptography" Version="8.0.473-develop" />
     <PackageReference Include="DistributedLock.SqlServer" Version="1.0.6" />
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.12.19">
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.13.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.5.4" />
     <PackageReference Include="MiniProfiler.EntityFrameworkCore" Version="4.5.4" />
-    <PackageReference Include="Roslynator.Analyzers" Version="4.12.11">
+    <PackageReference Include="Roslynator.Analyzers" Version="4.13.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

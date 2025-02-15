@@ -14,24 +14,24 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.Testing" Version="6.4.296-develop" />
-    <PackageReference Include="Cortside.Common.Testing" Version="6.4.465-develop" />
-    <PackageReference Include="Cortside.Common.Testing.EntityFramework" Version="6.4.465-develop" />
-    <PackageReference Include="Cortside.DomainEvent.Stub" Version="6.4.348-develop" />
-    <PackageReference Include="Cortside.MockServer.AccessControl" Version="6.2.74" />
+    <PackageReference Include="Cortside.AspNetCore.Testing" Version="8.0.311-develop" />
+    <PackageReference Include="Cortside.Common.Testing" Version="8.0.473-develop" />
+    <PackageReference Include="Cortside.Common.Testing.EntityFramework" Version="8.0.473-develop" />
+    <PackageReference Include="Cortside.DomainEvent.Stub" Version="8.0.362-multiple" />
+    <PackageReference Include="Cortside.MockServer.AccessControl" Version="8.0.81-develop" />
     <PackageReference Include="coverlet.collector" Version="6.0.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="FluentAssertions" Version="8.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.12" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.12.19">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.13.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Roslynator.Analyzers" Version="4.12.11">
+    <PackageReference Include="Roslynator.Analyzers" Version="4.13.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -39,9 +39,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="WireMock.Net" Version="1.7.1" />
+    <PackageReference Include="WireMock.Net" Version="1.7.2" />
     <PackageReference Include="xunit" Version="2.9.3" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.0.1">
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>

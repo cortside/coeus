@@ -1,3 +1,8 @@
+#pragma warning disable S1135
+
+// TODO: consider moving this to cortside.aspnetcore
+// TODO: consider using ISettingsModel that is registered in DI and letting that serialize the actual object
+
 using System;
 using Acme.ShoppingCart.WebApi.Models.Responses;
 using Asp.Versioning;
