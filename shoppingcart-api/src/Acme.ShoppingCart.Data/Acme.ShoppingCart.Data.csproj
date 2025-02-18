@@ -14,7 +14,7 @@
     <PackageReference Include="Cortside.AspNetCore.Common" Version="8.0.311-develop" />
     <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="8.0.311-develop" />
     <PackageReference Include="Cortside.Common.Security" Version="8.0.473-develop" />
-    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="8.0.362-multiple" />
+    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="8.0.365-develop" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.2" />
