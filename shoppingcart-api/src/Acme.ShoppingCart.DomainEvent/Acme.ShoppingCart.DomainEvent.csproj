@@ -12,7 +12,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Cortside.Common.Logging" Version="8.0.473-develop" />
-    <PackageReference Include="Cortside.DomainEvent" Version="8.0.365-develop" />
+    <PackageReference Include="Cortside.DomainEvent" Version="8.0.366-singleconnection" />
     <PackageReference Include="DistributedLock.SqlServer" Version="1.0.6" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.13.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

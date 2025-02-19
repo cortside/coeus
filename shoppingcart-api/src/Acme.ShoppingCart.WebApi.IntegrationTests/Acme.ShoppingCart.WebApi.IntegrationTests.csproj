@@ -17,7 +17,7 @@
     <PackageReference Include="Cortside.AspNetCore.Testing" Version="8.0.311-develop" />
     <PackageReference Include="Cortside.Common.Testing" Version="8.0.473-develop" />
     <PackageReference Include="Cortside.Common.Testing.EntityFramework" Version="8.0.473-develop" />
-    <PackageReference Include="Cortside.DomainEvent.Stub" Version="8.0.365-develop" />
+    <PackageReference Include="Cortside.DomainEvent.Stub" Version="8.0.366-singleconnection" />
     <PackageReference Include="Cortside.MockServer.AccessControl" Version="8.0.81-develop" />
     <PackageReference Include="coverlet.collector" Version="6.0.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
