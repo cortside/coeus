@@ -1,7 +1,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using Cortside.RestApiClient;
-using FluentAssertions;
+using Shouldly;
 using RestSharp;
 using Xunit;
 using Xunit.Abstractions;
@@ -26,8 +26,8 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             var response = await client.GetAsync(request);
 
             //assert
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            response.Content.Should().Contain(api.MockServer.Url);
+            response.StatusCode.ShouldBe(HttpStatusCode.OK);
+            response.Content.ShouldContain(api.MockServer.Url);
         }
     }
 }

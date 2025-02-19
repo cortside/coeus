@@ -7,7 +7,7 @@ using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.TestUtilities;
 using Acme.ShoppingCart.WebApi.Models.Responses;
 using Cortside.AspNetCore.Common.Paging;
-using FluentAssertions;
+using Shouldly;
 using Newtonsoft.Json;
 using Xunit;
 using Xunit.Abstractions;
@@ -33,7 +33,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             var response = await testServerClient.PostAsync("/api/v1/customers", requestBody);
 
             //assert
-            response.StatusCode.Should().Be(HttpStatusCode.Created);
+            response.StatusCode.ShouldBe(HttpStatusCode.Created);
             var content = await response.Content.ReadAsStringAsync();
             var customer = JsonConvert.DeserializeObject<Models.Responses.CustomerModel>(content);
             Assert.Equal(request.FirstName, customer.FirstName);
@@ -51,7 +51,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             var response = await testServerClient.GetAsync($"api/v1/customers/{id}");
 
             //assert
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            response.StatusCode.ShouldBe(HttpStatusCode.OK);
         }
 
         [Fact]
@@ -71,16 +71,16 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
 
             //assert
             // testserver httpclient does not follow redirects and no current way to make that happen, so have to handle this manually
-            response.StatusCode.Should().Be(HttpStatusCode.SeeOther);
+            response.StatusCode.ShouldBe(HttpStatusCode.SeeOther);
             var location = response.Headers.FirstOrDefault(x => x.Key == "Location").Value.First();
-            location.Should().NotBeNull();
+            location.ShouldNotBeNull();
 
             var customersResponse = await testServerClient.GetAsync(location);
-            customersResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+            customersResponse.StatusCode.ShouldBe(HttpStatusCode.OK);
 
             var content = await customersResponse.Content.ReadAsStringAsync();
             var customers = JsonConvert.DeserializeObject<PagedList<CustomerModel>>(content);
-            customers.Items.ToList().Exists(x => x.CustomerResourceId == id.CustomerResourceId).Should().BeTrue();
+            customers.Items.ToList().Exists(x => x.CustomerResourceId == id.CustomerResourceId).ShouldBeTrue();
         }
 
         [Fact]
@@ -93,11 +93,11 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             var response = await testServerClient.GetAsync($"/api/v1/customers?FirstName={id.FirstName}");
 
             //assert
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            response.StatusCode.ShouldBe(HttpStatusCode.OK);
 
             var content = await response.Content.ReadAsStringAsync();
             var customers = JsonConvert.DeserializeObject<PagedList<CustomerModel>>(content);
-            customers.Items.ToList().Exists(x => x.CustomerResourceId == id.CustomerResourceId).Should().BeTrue();
+            customers.Items.ToList().Exists(x => x.CustomerResourceId == id.CustomerResourceId).ShouldBeTrue();
         }
     }
 }

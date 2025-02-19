@@ -1,5 +1,5 @@
 using Acme.ShoppingCart.TestUtilities;
-using FluentAssertions;
+using Shouldly;
 using Xunit;
 
 namespace Acme.ShoppingCart.Domain.Tests {
@@ -13,9 +13,9 @@ namespace Acme.ShoppingCart.Domain.Tests {
             customer.Update("elmer", "fudd", "elmer@fudd.org");
 
             // Assert
-            customer.FirstName.Should().Be("elmer");
-            customer.LastName.Should().Be("fudd");
-            customer.Email.Should().Be("elmer@fudd.org");
+            customer.FirstName.ShouldBe("elmer");
+            customer.LastName.ShouldBe("fudd");
+            customer.Email.ShouldBe("elmer@fudd.org");
         }
     }
 }

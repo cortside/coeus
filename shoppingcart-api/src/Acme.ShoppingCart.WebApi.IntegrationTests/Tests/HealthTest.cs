@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Cortside.Health.Models;
-using FluentAssertions;
+using Shouldly;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using Xunit;
@@ -39,7 +39,7 @@ namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {
             var content = await response.Content.ReadAsStringAsync();
             var respObj = JsonConvert.DeserializeObject<HealthModel>(content, webApi.SerializerSettings);
             Assert.True(respObj.Healthy, content);
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            response.StatusCode.ShouldBe(HttpStatusCode.OK);
         }
     }
 }

@@ -1,5 +1,5 @@
 using Cortside.AspNetCore;
-using FluentAssertions;
+using Shouldly;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using Xunit;
@@ -24,7 +24,7 @@ namespace Acme.ShoppingCart.WebApi.Tests {
             var url = HttpHelper.BuildUriFromRequest(httpRequestMock.Object);
 
             // assert
-            url.Should().Be("http://localhost/big/stuff");
+            url.ShouldBe("http://localhost/big/stuff");
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace Acme.ShoppingCart.WebApi.Tests {
             var url = HttpHelper.BuildUriFromRequest(httpRequestMock.Object);
 
             // assert
-            url.Should().Be("http://localhost/big/stuff");
+            url.ShouldBe("http://localhost/big/stuff");
         }
     }
 }
