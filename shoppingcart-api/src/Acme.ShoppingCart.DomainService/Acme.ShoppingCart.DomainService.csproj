@@ -11,11 +11,11 @@
     <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.Common.Correlation" Version="8.0.473-develop" />
-    <PackageReference Include="Cortside.Common.Logging" Version="8.0.473-develop" />
-    <PackageReference Include="Cortside.Common.Messages" Version="8.0.473-develop" />
-    <PackageReference Include="Cortside.Common.Validation" Version="8.0.473-develop" />
-    <PackageReference Include="Cortside.DomainEvent" Version="8.0.366-singleconnection" />
+    <PackageReference Include="Cortside.Common.Correlation" Version="8.0.474-develop" />
+    <PackageReference Include="Cortside.Common.Logging" Version="8.0.474-develop" />
+    <PackageReference Include="Cortside.Common.Messages" Version="8.0.474-develop" />
+    <PackageReference Include="Cortside.Common.Validation" Version="8.0.474-develop" />
+    <PackageReference Include="Cortside.DomainEvent" Version="8.0.369-develop" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.13.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
