@@ -9,6 +9,7 @@ using Acme.ShoppingCart.Exceptions;
 using Cortside.AspNetCore.Auditable.Entities;
 using Cortside.Common.Validation;
 using Microsoft.EntityFrameworkCore;
+using UUIDNext;
 
 namespace Acme.ShoppingCart.Domain.Entities {
     [Index(nameof(OrderResourceId), IsUnique = true)]
@@ -20,7 +21,7 @@ namespace Acme.ShoppingCart.Domain.Entities {
         }
 
         public Order(Customer customer, string street, string city, string state, string country, string zipCode) {
-            OrderResourceId = Guid.NewGuid();
+            OrderResourceId = Uuid.NewDatabaseFriendly(Database.SqlServer);
             Customer = customer;
             Address = new Address(street, city, state, country, zipCode);
             items = new List<OrderItem>();

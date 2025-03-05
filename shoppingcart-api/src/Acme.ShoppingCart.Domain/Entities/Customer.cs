@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using Cortside.AspNetCore.Auditable.Entities;
 using Cortside.Common.Messages;
 using Cortside.Common.Messages.MessageExceptions;
+using UUIDNext;
 
 namespace Acme.ShoppingCart.Domain.Entities {
     [Table("Customer")]
@@ -15,7 +16,7 @@ namespace Acme.ShoppingCart.Domain.Entities {
 
         public Customer(string firstName, string lastName, string email) {
             Update(firstName, lastName, email);
-            CustomerResourceId = Guid.NewGuid();
+            CustomerResourceId = Uuid.NewDatabaseFriendly(Database.SqlServer);
         }
 
         [Key]
