@@ -30,7 +30,7 @@ $body = @"
 "@
 
 $startTime = Get-Date
-$stopTime = (Get-Date).AddMinutes(5)
+$stopTime = (Get-Date).AddMinutes(10)
 $iterations = 0
 
 while ((Get-Date) -lt $stopTime) {

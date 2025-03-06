@@ -4,6 +4,8 @@ https://github.com/dotnet/efcore/issues/30753
 
 https://github.com/mareek/UUIDNext
 
+https://techcommunity.microsoft.com/blog/sqlserver/behind-the-scenes-on-optimize-for-sequential-key/806888
+
 
 ```sql
 SELECT S.name as 'Schema',
