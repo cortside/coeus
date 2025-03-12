@@ -1,3 +1,128 @@
+# Release 2025.03
+
+## Library updates
+
+* amqptools
+
+
+* Cortside.Bowdlerizer
+
+    * Changes
+        * Updated powershell scripts to latest versions from coeus/shoppingcart-api
+        * Standardized library build files and resolved code coverage issues
+        * Update target framework to net8.0
+        * Update all dependency nuget packages
+        * Add support for appsettings configured mask strategy ()
+        * Add additional tests to raise code coverage
+        * Add/Fix build badges
+        * Transition to use Shouldly instead of FluentAssertions
+
+
+* serilog.bowdlerizer
+
+    * Changes
+        * Updated powershell scripts to latest versions from coeus/shoppingcart-api
+        * Standardized library build files and resolved code coverage issues
+        * Update target framework to net8.0
+        * Update all dependency nuget packages
+        * Add/Fix build badges
+        * Transition to use Shouldly instead of FluentAssertions
+
+
+* Cortside.Common
+
+    * Changes
+        * Updated powershell scripts to latest versions from coeus/shoppingcart-api
+        * Standardized library build files and resolved code coverage issues
+        * Update target framework to net8.0
+        * Update all dependency nuget packages
+        * Add/Fix build badges
+        * Transition to use Shouldly instead of FluentAssertions
+        * Fixed annotation in Cortside.Common.Testing.EntityFramework to publish nuget package despite Test in the name
+        * Add PreconditionFailedResponseException to be used by Cortside.AspNetCore MessageExceptionResponseFilter
+        * Add Microsoft.Extensions.Logging ILogger extension methods to make adding properties to logging context (similar style to how it's done in Serilog, without having to rely on serilog deep into a solution)
+
+* Cortside.Health
+
+    * Changes
+        * Updated powershell scripts to latest versions from coeus/shoppingcart-api
+        * Standardized library build files and resolved code coverage issues
+        * Update target framework to net8.0
+        * Update all dependency nuget packages
+        * Add/Fix build badges
+        * Transition to use Shouldly instead of FluentAssertions
+        * Add Statistics property to ServiceStatusModel so that checks can add additional information to the health response
+        * Add Host to HealthModel and default to MachineName
+        * Add enforcement of timeout in Check so that a long running check can't cause the loop to take longer than the cache period causing cache eviction and then health failure
+
+
+* Cortside.DomainEvent
+
+    * Changes
+        * Updated powershell scripts to latest versions from coeus/shoppingcart-api
+        * Standardized library build files and resolved code coverage issues
+        * Update target framework to net8.0
+        * Update all dependency nuget packages
+        * Add/Fix build badges
+        * Transition to use Shouldly instead of FluentAssertions
+        * Add DomainEventCheck as new health check that can report broker errors as well as domain event statistics, with README documentation
+        * Add configuration for PublishRetryInterval instead of hard coded 60s value
+        * Add new index on status and last modified to outbox (will require migration)
+        * Updates to documentation to make configuration more understandable.  Separate Azure Service Bus from RabbitMQ documentation
+        * Add support for keyed configuration of receivers and publishers for the benefit of being able to have multiple, i.e. being able to receive from 2 different queues with differing broker configuration
+        * Add update-legacyappsettings.ps1 script (in docs folder) to migrate configuration in appsettings.json to new style, old style will be deprecated in future
+
+
+* Cortside.MockServer
+
+    * Changes
+        * Updated powershell scripts to latest versions from coeus/shoppingcart-api
+        * Standardized library build files and resolved code coverage issues
+        * Update target framework to net8.0
+        * Update all dependency nuget packages
+        * Add/Fix build badges
+        * Transition to use Shouldly instead of FluentAssertions
+        * Add support for mocking of Cortside.Authorization policies
+
+
+* Cortside.RestApiClient
+
+    * Changes
+        * Updated powershell scripts to latest versions from coeus/shoppingcart-api
+        * Standardized library build files and resolved code coverage issues
+        * Update target framework to net8.0
+        * Update all dependency nuget packages
+        * Add/Fix build badges
+        * Transition to use Shouldly instead of FluentAssertions
+        * Add property for EnableForwardHeaders to IRestApiClientOptions to optionally configure forwarding headers, defaults to true for backwards compatability
+
+
+
+* Cortside.AspNetCore
+
+    * Changes
+        * Updated powershell scripts to latest versions from coeus/shoppingcart-api
+        * Standardized library build files and resolved code coverage issues
+        * Update target framework to net8.0
+        * Update all dependency nuget packages
+        * Add/Fix build badges
+        * Transition to use Shouldly instead of FluentAssertions
+        * Add handling of PreconditionFailedResponseException to return 412 in MessageExceptionResponseFilter
+        * Add new EF Core interceptor for handling of audit responsibilities, moving functionality from AuditableDatabaseContext, this will allow other custom implemented database context classes to still benefit from audit stamping
+        * Broke out some common model builder methods from AuditableDatabaseContext to new ModelBuilderExtensions extension class
+        * Add Authorization parameter to swagger model
+        * Add definition for CustomSchemaId and CustomOperationIds to swagger definition
+        * Add helper extension methods for ToPagedResult and ToListResult on IList<T>
+        * Add IConfiguration support for values to have substitutable values anywhere in configuration with IConfiguration extension method ExpandTemplates
+        * Conditionally add security to swagger model if identity authority is configured
+        * Add support for Cortside.Authorization in AccessControlConfiguration
+
+
+## Changes
+
+## Migration notes
+
+
 # Release 2024.09
 
 ## Library updates
