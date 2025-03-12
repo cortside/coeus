@@ -7,12 +7,12 @@ using Acme.ShoppingCart.DomainEvent;
 using Acme.ShoppingCart.Facade;
 using Acme.ShoppingCart.WebApi.Controllers;
 using Cortside.Health.Controllers;
-using Shouldly;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Shouldly;
 using Xunit;
 using Xunit.Abstractions;
 

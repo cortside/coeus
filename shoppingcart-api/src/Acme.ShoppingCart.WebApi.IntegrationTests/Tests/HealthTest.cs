@@ -3,9 +3,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Cortside.Health.Models;
-using Shouldly;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
+using Shouldly;
 using Xunit;
 
 namespace Acme.ShoppingCart.WebApi.IntegrationTests.Tests {

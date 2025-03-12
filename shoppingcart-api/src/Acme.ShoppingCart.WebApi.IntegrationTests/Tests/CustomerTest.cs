@@ -7,8 +7,8 @@ using Acme.ShoppingCart.Data;
 using Acme.ShoppingCart.TestUtilities;
 using Acme.ShoppingCart.WebApi.Models.Responses;
 using Cortside.AspNetCore.Common.Paging;
-using Shouldly;
 using Newtonsoft.Json;
+using Shouldly;
 using Xunit;
 using Xunit.Abstractions;
 

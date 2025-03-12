@@ -1,7 +1,7 @@
 using Cortside.AspNetCore;
-using Shouldly;
 using Microsoft.AspNetCore.Http;
 using Moq;
+using Shouldly;
 using Xunit;
 
 namespace Acme.ShoppingCart.WebApi.Tests {

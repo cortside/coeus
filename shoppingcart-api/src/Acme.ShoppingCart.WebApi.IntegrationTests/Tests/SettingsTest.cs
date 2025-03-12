@@ -1,8 +1,8 @@
 using System.Net;
 using System.Threading.Tasks;
 using Cortside.RestApiClient;
-using Shouldly;
 using RestSharp;
+using Shouldly;
 using Xunit;
 using Xunit.Abstractions;
 
