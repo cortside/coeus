@@ -11,20 +11,20 @@
     <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.Common.Correlation" Version="8.0.474-develop" />
-    <PackageReference Include="Cortside.Common.Logging" Version="8.0.474-develop" />
-    <PackageReference Include="Cortside.Common.Messages" Version="8.0.474-develop" />
-    <PackageReference Include="Cortside.Common.Validation" Version="8.0.474-develop" />
-    <PackageReference Include="Cortside.DomainEvent" Version="8.0.369-develop" />
+    <PackageReference Include="Cortside.Common.Correlation" Version="8.0.476-8.0" />
+    <PackageReference Include="Cortside.Common.Logging" Version="8.0.476-8.0" />
+    <PackageReference Include="Cortside.Common.Messages" Version="8.0.476-8.0" />
+    <PackageReference Include="Cortside.Common.Validation" Version="8.0.476-8.0" />
+    <PackageReference Include="Cortside.DomainEvent" Version="8.0.372-8.0" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.13.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Roslynator.Analyzers" Version="4.13.0">
+    <PackageReference Include="Roslynator.Analyzers" Version="4.13.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="10.6.0.109712">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="10.7.0.110445">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

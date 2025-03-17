@@ -8,15 +8,15 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="8.0.311-develop" />
-    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="8.0.311-develop" />
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="8.0.311-develop" />
-    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="8.0.311-develop" />
-    <PackageReference Include="Cortside.Common.Correlation" Version="8.0.474-develop" />
-    <PackageReference Include="Cortside.Common.Hosting" Version="8.0.474-develop" />
-    <PackageReference Include="Cortside.DomainEvent.Health" Version="8.0.369-develop" />
-    <PackageReference Include="Cortside.Health" Version="8.0.103-develop" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.2">
+    <PackageReference Include="Cortside.AspNetCore.AccessControl" Version="8.0.314-8.0" />
+    <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="8.0.314-8.0" />
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="8.0.314-8.0" />
+    <PackageReference Include="Cortside.AspNetCore.Swagger" Version="8.0.314-8.0" />
+    <PackageReference Include="Cortside.Common.Correlation" Version="8.0.476-8.0" />
+    <PackageReference Include="Cortside.Common.Hosting" Version="8.0.476-8.0" />
+    <PackageReference Include="Cortside.DomainEvent.Health" Version="8.0.372-8.0" />
+    <PackageReference Include="Cortside.Health" Version="8.0.108-8.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -26,7 +26,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Roslynator.Analyzers" Version="4.13.0">
+    <PackageReference Include="Roslynator.Analyzers" Version="4.13.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -42,8 +42,8 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="9.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.2" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="10.6.0.109712">
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.3" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="10.7.0.110445">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
