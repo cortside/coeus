@@ -122,39 +122,27 @@
 
 ## Migration notes
 
-./clean.ps1
-dotnet test src
-./update-nugetpackages.ps1 -NoVersionLock
+* ./clean.ps1
+* dotnet test src
+* ./update-nugetpackages.ps1 -NoVersionLock
+* In DatabaseContext class, if using, change:
+    ```csharp
+    SetDateTime(modelBuilder)l
+    SetCascadeDelete(modelBuilder);
+    ```
 
-In DatabaseContext class, if using, change:
+    to:
 
-```csharp
-SetDateTime(modelBuilder)l
-SetCascadeDelete(modelBuilder);
-```
-
-to:
-
-```csharp
-modelBuilder.SetDateTime()l
-modelBuilder.SetCascadeDelete();
-```
-
-In IntegrationFixture (or whatever name is) class, if not using `services.RegisterInMemoryContext`, add the following with the other Unregister lines:
-
-```cscharp
-services.Unregister<IDbContextOptionsConfiguration<DatabaseContext>>();
-```
-
-make sure tests pass
-dotnet test src
-
-.\add-migration.ps1 -migration OutboxPublisherKey
-
-
-
-
-
+    ```csharp
+    modelBuilder.SetDateTime()l
+    modelBuilder.SetCascadeDelete();
+    ```
+* In IntegrationFixture (or whatever name is) class, if not using `services.RegisterInMemoryContext`, add the following with the other Unregister lines:
+    ```cscharp
+    services.Unregister<IDbContextOptionsConfiguration<DatabaseContext>>();
+    ```
+* make sure tests pass - `dotnet test src`
+* .\add-migration.ps1 -migration OutboxPublisherKey
 services.Unregister<IDbContextOptionsConfiguration<DatabaseContext>>();
 DomainEventPublisherSettings - AppName to Service, PolicyName to Policy
 
