@@ -2,6 +2,13 @@
 
 ## todo:
 
+* research SimpleIdServer and Keycloak as identityserver alternatives
+
+* README in every library repo with valuable documentation
+	* include in nuget package
+	* set all package ownership information
+	* add link to appveyor build, sonar analysis and nuget package links at top of readme 
+	
 * cortside.common.validation documentation/examples
 * expand configuration extension method, called in webapi builder
 	* https://github.com/gsoft-inc/wl-extensions-configuration-substitution/tree/main
@@ -27,7 +34,7 @@
         }
 
 
-- add host to health
+* add host to health
 * break applications out into another package from core health
 * break ef out into another package from core health
 * add health integration Tests
@@ -47,6 +54,7 @@
 	* https://docs.wiremock.io/openAPI/openapi
 	* https://github.com/WireMock-Net/WireMock.Net/blob/master/examples/WireMock.Net.OpenApiParser.ConsoleApp/Program.cs
 
+* https://github.com/Emilien-M/IListExtension
 * correlationId in auditlogtransaction?
 * https://playwright.dev/
 	* could be used for apis too

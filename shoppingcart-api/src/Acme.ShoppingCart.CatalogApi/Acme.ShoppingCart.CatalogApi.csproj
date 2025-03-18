@@ -11,9 +11,9 @@
     <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="8.0.372-8.0" />
-    <PackageReference Include="Cortside.RestApiClient" Version="8.0.203-8.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.13.2">
+    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="8.0.375" />
+    <PackageReference Include="Cortside.RestApiClient" Version="8.0.206" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.13.61">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

@@ -125,6 +125,7 @@
 * ./clean.ps1
 * dotnet test src
 * ./update-nugetpackages.ps1 -NoVersionLock
+* In DomainEventPublisherSettings, change `AppName` to `Service`, `PolicyName` to `Policy`
 * In DatabaseContext class, if using, change:
     ```csharp
     SetDateTime(modelBuilder)l
@@ -143,9 +144,32 @@
     ```
 * make sure tests pass - `dotnet test src`
 * .\add-migration.ps1 -migration OutboxPublisherKey
-services.Unregister<IDbContextOptionsConfiguration<DatabaseContext>>();
-DomainEventPublisherSettings - AppName to Service, PolicyName to Policy
-
+* Use https://github.com/cortside/cortside.domainevent/blob/develop/docs/update-legacyappsettings.ps1 to change domainevent configuration to unified shape:
+    ```json
+    "DomainEvent": {
+        "Connections": [
+          {
+            "Protocol": "amqp",
+            "Server": "localhost",
+            "Username": "admin",
+            "Password": "password",
+            "Queue": "shoppingcart.queue",
+            "Topic": "/exchange/shoppingcart/",
+            "Credits": 5,
+            "ReceiverHostedService": {
+            "Enabled": true,
+            "TimedInterval": 60
+            },
+            "OutboxHostedService": {
+            "BatchSize": 5,
+            "Enabled": true,
+            "Interval": 5,
+            "PurgePublished": false
+            }
+          }
+        ]
+    }
+    ```
 
 # Release 2024.09
 
