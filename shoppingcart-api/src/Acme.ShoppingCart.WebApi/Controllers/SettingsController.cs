@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Acme.ShoppingCart.WebApi.Controllers {
     /// <summary>
-    /// Settings
+    /// Controller to handle settings related requests
     /// </summary>
     [ApiVersionNeutral]
     [Route("api/settings")]
@@ -20,21 +20,22 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
     [Produces("application/json")]
     public class SettingsController : ControllerBase {
         /// <summary>
-        /// Config
+        /// Gets the application configuration
         /// </summary>
         public IConfiguration Configuration { get; }
 
         /// <summary>
-        /// SettingsController constructor
+        /// Initializes a new instance of the <see cref="SettingsController"/> class
         /// </summary>
+        /// <param name="configuration">The application configuration</param>
         public SettingsController(IConfiguration configuration) {
             Configuration = configuration;
         }
 
         /// <summary>
-        /// Service settings that a consumer may need to be aware of
+        /// Gets the service settings that a consumer may need to be aware of
         /// </summary>
-        /// <returns></returns>
+        /// <returns>An <see cref="IActionResult"/> containing the settings model</returns>
         [HttpGet("")]
         [ProducesResponseType(typeof(SettingsModel), 200)]
         [ResponseCache(CacheProfileName = "Default")]
@@ -43,6 +44,10 @@ namespace Acme.ShoppingCart.WebApi.Controllers {
             return Ok(result);
         }
 
+        /// <summary>
+        /// Creates and returns a <see cref="SettingsModel"/> with the current configuration values
+        /// </summary>
+        /// <returns>A <see cref="SettingsModel"/> containing the current configuration values</returns>
         private SettingsModel GetSettingsModel() {
             var serviceBus = Configuration.GetSection("ServiceBus");
             var authConfig = Configuration.GetSection("IdentityServer");

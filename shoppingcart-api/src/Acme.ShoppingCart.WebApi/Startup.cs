@@ -18,10 +18,12 @@ using Cortside.AspNetCore.Swagger;
 using Cortside.DomainEvent;
 using Cortside.DomainEvent.EntityFramework;
 using Cortside.DomainEvent.Health;
+using Cortside.DomainEvent.Mvc.Controllers;
 using Cortside.Health;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -92,10 +94,11 @@ namespace Acme.ShoppingCart.WebApi {
             // add domain event publish with outbox
             services.AddDomainEventOutboxPublisher<DatabaseContext>(Configuration);
 
-            // add controllers and all of the api defaults
-            services.AddApiDefaults(InternalDateTimeHandling.Utc, options => {
+            // add controllers and set api defaults
+            var mvcBuilder = services.AddApiDefaults(InternalDateTimeHandling.Utc, options => {
                 options.Filters.Add<MessageExceptionResponseFilter>();
             });
+            mvcBuilder.PartManager.ApplicationParts.Add(new AssemblyPart(typeof(OutboxController).Assembly));
 
             // add SubjectPrincipal for auditing
             services.AddSubjectPrincipal();

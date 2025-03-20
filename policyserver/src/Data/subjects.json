@@ -179,7 +179,10 @@
                             "GetCustomers",
                             "GetCustomer",
                             "CreateCustomer",
-                            "UpdateCustomer"
+                            "UpdateCustomer",
+							"GetOutboxMessages",
+							"ResetOutboxMessage",
+							"DeleteOutboxMessage"
                         ]
                     }
                 }
