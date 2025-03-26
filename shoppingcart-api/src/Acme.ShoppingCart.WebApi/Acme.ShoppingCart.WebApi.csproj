@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <DocumentationFile>bin\Acme.ShoppingCart.WebApi.xml</DocumentationFile>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AnalysisMode>Recommended</AnalysisMode>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
@@ -14,8 +14,8 @@
     <PackageReference Include="Cortside.AspNetCore.Swagger" Version="8.0.317" />
     <PackageReference Include="Cortside.Common.Correlation" Version="8.0.478" />
     <PackageReference Include="Cortside.Common.Hosting" Version="8.0.478" />
-    <PackageReference Include="Cortside.DomainEvent.Health" Version="8.0.386-SVC-3406" />
-    <PackageReference Include="Cortside.DomainEvent.Mvc" Version="8.0.386-SVC-3406" />
+    <PackageReference Include="Cortside.DomainEvent.Health" Version="8.0.389" />
+    <PackageReference Include="Cortside.DomainEvent.Mvc" Version="8.0.389" />
     <PackageReference Include="Cortside.Health" Version="8.0.111" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
       <PrivateAssets>all</PrivateAssets>
@@ -27,6 +27,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="ReferenceTrimmer" Version="3.3.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Roslynator.Analyzers" Version="4.13.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

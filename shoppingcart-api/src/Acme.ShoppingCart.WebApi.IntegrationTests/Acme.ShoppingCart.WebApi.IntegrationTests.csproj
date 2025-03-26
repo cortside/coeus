@@ -17,7 +17,7 @@
     <PackageReference Include="Cortside.AspNetCore.Testing" Version="8.0.317" />
     <PackageReference Include="Cortside.Common.Testing" Version="8.0.478" />
     <PackageReference Include="Cortside.Common.Testing.EntityFramework" Version="8.0.478" />
-    <PackageReference Include="Cortside.DomainEvent.Stub" Version="8.0.386-SVC-3406" />
+    <PackageReference Include="Cortside.DomainEvent.Stub" Version="8.0.389" />
     <PackageReference Include="Cortside.MockServer.AccessControl" Version="8.0.86" />
     <PackageReference Include="coverlet.collector" Version="6.0.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -29,6 +29,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.13.61">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="ReferenceTrimmer" Version="3.3.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Roslynator.Analyzers" Version="4.13.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
