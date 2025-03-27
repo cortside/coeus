@@ -18,6 +18,7 @@ gci *.csproj -Recurse | %{ if (-not (select-string -inputobject $_ -Pattern "Son
 gci *.csproj -Recurse | %{ if (-not (select-string -inputobject $_ -Pattern "Roslynator.Analyzers")){ echo "add Roslynator.Analyzers to $_.Fullname"; dotnet add $_.FullName package Roslynator.Analyzers }}
 #gci *.csproj -Recurse | %{ if (-not (select-string -inputobject $_ -Pattern "AsyncFixer")){ echo "add AsyncFixer to $_.Fullname"; dotnet add $_.FullName package AsyncFixer }}
 #gci *.csproj -Recurse | %{ if (-not (select-string -inputobject $_ -Pattern "ParallelHelper")){ echo "add ParallelHelper to $_.Fullname"; dotnet add $_.FullName package ParallelHelper }}
+gci *.csproj -Recurse | %{ if (-not (select-string -inputobject $_ -Pattern "ReferenceTrimmer")){ echo "add ReferenceTrimmer to $_.Fullname"; dotnet add $_.FullName package ReferenceTrimmer }}
 
 # remove older packages for test projects
 gci *Test*.csproj -Recurse | %{ if (select-string -inputobject $_ -Pattern "coverlet.msbuild") { echo "remove coverlet.msbuild from $_.Fullname"; dotnet remove $_.FullName package coverlet.msbuild } }
