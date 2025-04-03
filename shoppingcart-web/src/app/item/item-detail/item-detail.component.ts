@@ -1,4 +1,4 @@
-import { Component, Signal, ViewChildren } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ItemModel } from '../models/item.model';
@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule as MuziehFormsModule } from '@muziehdesign/forms'; 
 import { AddToCartModel } from '../models/add-to-cart.model';
-import { ViewChild } from '@angular/core';
+import { ViewChild, AfterViewInit } from '@angular/core';
 import { NgFormModelState, NgFormModelStateFactory } from '@muziehdesign/forms';
 import { ItemFacade } from '../item.facade';
 
@@ -17,7 +17,7 @@ import { ItemFacade } from '../item.facade';
   templateUrl: './item-detail.component.html',
   styleUrls: ['./item-detail.component.scss']
 })
-export class ItemDetailComponent {
+export class ItemDetailComponent implements AfterViewInit {
   item: Signal<ItemModel | undefined>;
   model:AddToCartModel;
   modelState!: NgFormModelState<AddToCartModel>;

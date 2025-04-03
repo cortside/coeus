@@ -16,6 +16,6 @@ describe('ItemDetailRouteService', () => {
     });
 
     it('should be created', () => {
-        expect(1).toBeTruthy();
+        expect(service).toBeTruthy();
     });
 });
