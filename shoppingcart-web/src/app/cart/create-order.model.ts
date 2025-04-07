@@ -1,4 +1,4 @@
-import { ObjectType, required } from "@muziehdesign/forms";
+import { ObjectType } from "@muziehdesign/forms";
 import { AddressInputModel } from "./address-input.model";
 import { CustomerInputModel } from "./customer-input.model";
 

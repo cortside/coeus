@@ -1,12 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService } from '@muziehdesign/core';
-import { Observable, of } from 'rxjs';
-import { assembleOrderSummaryModel, OrderService } from '../core/order.service';
-import { OrderSummaryModel } from '../models/models';
+import { OrderService } from '../core/order.service';
 
 import { CartComponent } from './cart.component';
-import { CreateOrderModel } from './create-order.model';
 
 describe('CartComponent', () => {
   let component: CartComponent;

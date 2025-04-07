@@ -26,7 +26,7 @@ export class CartFacade {
 
     async createOrder(model: CreateOrderModel): Promise<void> {
         const items = this.cart.getSnaptshot();
-        const response = await firstValueFrom(this.service.createOrder(items, model));
+        await firstValueFrom(this.service.createOrder(items, model));
         this.cart.clear();
     }
 

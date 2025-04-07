@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs';
+import { map } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { AddressRequest } from '../api/shopping-cart/models/requests/address.request';
 import { CustomerRequest } from '../api/shopping-cart/models/requests/customer.request';

@@ -1,6 +1,5 @@
 import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, Route, Router, RouterStateSnapshot } from '@angular/router';
-import { catchError, map, of } from 'rxjs';
+import { ActivatedRouteSnapshot, Route } from '@angular/router';
 import { ItemService } from '../core/item.service';
 import { ItemDetailRouteService } from './item-detail-route.service';
 import { ItemDetailComponent } from './item-detail/item-detail.component';
@@ -8,6 +7,7 @@ import { ItemListComponent } from './item-list/item-list.component';
 import { ItemModelAssembler } from './item-model.assembler';
 import { ItemFacade } from './item.facade';
 
+/*
 const canActivateGuard = (route: ActivatedRouteSnapshot) => {
     const service = inject(ItemService);
     const router = inject(Router);
@@ -18,20 +18,20 @@ const canActivateGuard = (route: ActivatedRouteSnapshot) => {
             return of(false);
         })
     );
-};
+};*/
 
-const canActivateGuard2 = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+const canActivateGuard2 = (route: ActivatedRouteSnapshot) => {
     const service = inject(ItemDetailRouteService);
     console.log('activating');
-    return service.canActivate(route, state);
+    return service.canActivate(route);
 };
 
-const itemResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+const itemResolver = () => {
     const service = inject(ItemDetailRouteService);
-    return service.resolve(route, state);
+    return service.resolve();
 };
 
-const titleResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+const titleResolver = (route: ActivatedRouteSnapshot) => {
     console.log('resolving title', route.data);
     return Promise.resolve('test title');
 };

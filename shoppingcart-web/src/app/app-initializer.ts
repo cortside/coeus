@@ -1,8 +1,8 @@
-import { AuthenticationService, AuthorizationData, AuthorizationService, Logger } from '@muziehdesign/core';
-import { delay, firstValueFrom, map, tap } from 'rxjs';
+import { AuthenticationService, AuthorizationData, AuthorizationService } from '@muziehdesign/core';
+import { firstValueFrom, map, tap } from 'rxjs';
 import { ShoppingCartClient } from './api/shopping-cart/shopping-cart.client';
 
-export const initializeApplication = (logger: Logger): (() => Promise<void>) => {
+export const initializeApplication = (): (() => Promise<void>) => {
     return (): Promise<void> => {
         /*authenticationService.onUserSignedOut().pipe(tap((x) => authorizationService.reset()));
         authenticationService.onUserSignedIn().pipe(    
@@ -29,7 +29,7 @@ export const initializeAuthorization = (authentication: AuthenticationService, a
         return firstValueFrom(
             client.getAuthorization().pipe(
                 tap((x) => authorization.register('ShoppingCartClient', x as AuthorizationData)),
-                map((x) => true)
+                map(() => true)
             )
         );
     };

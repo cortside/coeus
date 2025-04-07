@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpContext } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ItemResponse } from './models/responses/item.response';
 import { AppConfig } from 'src/environments/app-config';
 import { PagedResponse } from '../paged.response';

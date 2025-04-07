@@ -1,4 +1,4 @@
-import { BehaviorSubject, ReplaySubject } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 
 export class ObservableStore<T> {
     private state$: BehaviorSubject<T>;
@@ -8,7 +8,8 @@ export class ObservableStore<T> {
     }
 
     patch(partial: Partial<T>) {
-        // TODO
+        const snapshot = this.state$.getValue();
+        this.state$.next({...snapshot, ...partial});
     }
 
     set(newValue: T) {

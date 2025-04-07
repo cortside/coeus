@@ -1,5 +1,5 @@
 import { AuthorizationService } from '@muziehdesign/core';
-import { EMPTY, firstValueFrom, map, Observable, of } from 'rxjs';
+import { firstValueFrom, map, Observable, of } from 'rxjs';
 import { ItemResponse } from '../api/catalog/models/responses/item.response';
 import { ItemService } from '../core/item.service';
 import { ObservableStore } from '../core/observable-store';

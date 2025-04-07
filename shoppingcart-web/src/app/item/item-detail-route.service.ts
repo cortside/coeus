@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import { firstValueFrom, of } from 'rxjs';
-import { ItemResponse } from '../api/catalog/models/responses/item.response';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { ItemService } from '../core/item.service';
 import { RouteContextData } from '../core/route-context-data';
 
@@ -13,7 +12,7 @@ export class ItemDetailRouteService {
         private service: ItemService
     ) { }
 
-    async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
         const item = await firstValueFrom(this.service.getItem(route.params['sku']));
         if (!item) {
             // redirect to not found
@@ -25,11 +24,11 @@ export class ItemDetailRouteService {
         return true;
     }
 
-    resolveItem(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    resolveItem() {
         return this.context.get('item');
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    resolve() {
         const item = this.context.get('item');
         const authorizations = this.service.getItemRelatedAuthorizations();
         return { item, authorizations };

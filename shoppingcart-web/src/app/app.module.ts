@@ -1,7 +1,7 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AuthenticationService, AuthenticationTokenInterceptor, AuthorizationService, LOGGER } from '@muziehdesign/core';
+import { AuthenticationService, AuthenticationTokenInterceptor, AuthorizationService } from '@muziehdesign/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,22 +13,15 @@ import { initializeApplication, initializeAuthorization } from './app-initialize
 import { ShoppingCartClient } from './api/shopping-cart/shopping-cart.client';
 import { LayoutModule } from './layout/layout.module';
 
-@NgModule({
-    declarations: [AppComponent, PageNotFoundComponent, ProfileComponent],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
+@NgModule({ declarations: [AppComponent, PageNotFoundComponent, ProfileComponent],
+    bootstrap: [AppComponent], imports: [BrowserModule,
         CoreModule,
         LayoutModule,
-
         // route
-        AppRoutingModule,
-    ],
-    providers: [
+        AppRoutingModule], providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthenticationTokenInterceptor, multi: true },
-        { provide: APP_INITIALIZER, useFactory: initializeApplication, multi: true, deps: [LOGGER] },
+        { provide: APP_INITIALIZER, useFactory: initializeApplication, multi: true, deps: [] },
         { provide: APP_INITIALIZER, useFactory: initializeAuthorization, multi: true, deps: [AuthenticationService, AuthorizationService, ShoppingCartClient] },
-    ],
-    bootstrap: [AppComponent],
-})
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule {}
