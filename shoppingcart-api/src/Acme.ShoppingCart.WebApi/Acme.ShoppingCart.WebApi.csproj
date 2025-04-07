@@ -12,11 +12,11 @@
     <PackageReference Include="Cortside.AspNetCore.ApplicationInsights" Version="8.0.317" />
     <PackageReference Include="Cortside.AspNetCore.Common" Version="8.0.317" />
     <PackageReference Include="Cortside.AspNetCore.Swagger" Version="8.0.317" />
-    <PackageReference Include="Cortside.Common.Correlation" Version="8.0.478" />
-    <PackageReference Include="Cortside.Common.Hosting" Version="8.0.478" />
-    <PackageReference Include="Cortside.DomainEvent.Health" Version="8.0.389" />
-    <PackageReference Include="Cortside.DomainEvent.Mvc" Version="8.0.389" />
-    <PackageReference Include="Cortside.Health" Version="8.0.111" />
+    <PackageReference Include="Cortside.Common.Correlation" Version="8.0.480" />
+    <PackageReference Include="Cortside.Common.Hosting" Version="8.0.480" />
+    <PackageReference Include="Cortside.DomainEvent.Health" Version="8.0.393" />
+    <PackageReference Include="Cortside.DomainEvent.Mvc" Version="8.0.393" />
+    <PackageReference Include="Cortside.Health" Version="8.0.117" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -37,7 +37,7 @@
     </PackageReference>
     <PackageReference Include="Serilog" Version="4.2.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
-    <PackageReference Include="Serilog.Bowdlerizer" Version="6.1.87" />
+    <PackageReference Include="Serilog.Bowdlerizer" Version="8.0.99" />
     <PackageReference Include="Serilog.Enrichers.AspNetCore" Version="1.0.0" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="3.0.1" />
     <PackageReference Include="Serilog.Enrichers.Thread" Version="4.0.0" />
