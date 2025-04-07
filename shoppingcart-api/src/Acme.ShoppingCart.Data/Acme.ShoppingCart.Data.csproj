@@ -13,8 +13,8 @@
   <ItemGroup>
     <PackageReference Include="Cortside.AspNetCore.Common" Version="8.0.317" />
     <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="8.0.317" />
-    <PackageReference Include="Cortside.Common.Security" Version="8.0.479-monitoredhostedservice" />
-    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="8.0.391-monitoredhostedservice" />
+    <PackageReference Include="Cortside.Common.Security" Version="8.0.480" />
+    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="8.0.393" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.3" />
