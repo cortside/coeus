@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-datasources
+  namespace: mcp
+data:
+  datasource.yml: "apiVersion: 1\ndatasources:\n- name: Prometheus\n  type: prometheus\n\
+    \  access: proxy\n  url: http://prometheus:9090\n  isDefault: true\n  editable:\
+    \ true\n"
+  dashboard.yml: "apiVersion: 1\nproviders:\n- name: MCP Dashboards\n  orgId: 1\n\
+    \  folder: ''\n  type: file\n  disableDeletion: false\n  editable: true\n  options:\n\
+    \    path: /var/lib/grafana/dashboards\n"

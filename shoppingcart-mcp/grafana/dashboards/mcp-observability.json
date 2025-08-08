@@ -1,0 +1,142 @@
+{
+  "title": "MCP Observability (v2)",
+  "uid": "mcp-observability-v2",
+  "version": 1,
+  "schemaVersion": 38,
+  "style": "dark",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Tool Invocations (success) - 5m",
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 0,
+        "y": 0
+      },
+      "targets": [
+        {
+          "expr": "sum by (tool) (rate(mcp_tool_invocations_total{outcome=\"success\"}[5m]))",
+          "legendFormat": "{{tool}}"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ]
+        }
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Tool Errors - 5m",
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 8,
+        "y": 0
+      },
+      "targets": [
+        {
+          "expr": "sum by (tool) (rate(mcp_tool_invocations_total{outcome=\"error\"}[5m]))",
+          "legendFormat": "{{tool}}"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ]
+        }
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Validation Errors - 5m",
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 16,
+        "y": 0
+      },
+      "targets": [
+        {
+          "expr": "sum by (tool) (rate(mcp_tool_validation_errors_total[5m]))",
+          "legendFormat": "{{tool}}"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ]
+        }
+      }
+    },
+    {
+      "type": "bargauge",
+      "title": "HTTP Outcomes by Tool - 5m",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "targets": [
+        {
+          "expr": "sum by (tool, outcome) (rate(mcp_http_requests_total[5m]))",
+          "legendFormat": "{{tool}} {{outcome}}"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "HTTP Request Latency P95 (by Tool)",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum by (tool, method, path, le) (rate(mcp_http_request_latency_seconds_bucket[5m])))",
+          "legendFormat": "{{tool}}"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Circuit Breaker State",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 12
+      },
+      "targets": [
+        {
+          "expr": "mcp_circuit_breaker_state",
+          "legendFormat": "{{tool}} {{method}} {{path}}"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Per-Route Requests (rate)",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      },
+      "targets": [
+        {
+          "expr": "sum by (tool, method, path) (rate(mcp_http_requests_total[5m]))",
+          "legendFormat": "{{tool}} {{method}} {{path}}"
+        }
+      ]
+    }
+  ]
+}

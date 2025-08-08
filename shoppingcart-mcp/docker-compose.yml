@@ -1,0 +1,51 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    container_name: mcp-app-v2
+    environment:
+      - SHOPPINGCART_CLIENT_ID=${SHOPPINGCART_CLIENT_ID}
+      - SHOPPINGCART_CLIENT_SECRET=${SHOPPINGCART_CLIENT_SECRET}
+      - SHOPPINGCART_SCOPE=${SHOPPINGCART_SCOPE:-shoppingcart-api}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - SHOPPINGCART_RETRIES=${SHOPPINGCART_RETRIES:-3}
+      - SHOPPINGCART_TIMEOUT_SECONDS=${SHOPPINGCART_TIMEOUT_SECONDS:-15}
+      - CB_SCOPE=${CB_SCOPE:-per_route}
+      - CB_FAILURE_THRESHOLD=${CB_FAILURE_THRESHOLD:-5}
+      - CB_RECOVERY_SECONDS=${CB_RECOVERY_SECONDS:-30}
+      - CB_HALFOPEN_SUCCESSES=${CB_HALFOPEN_SUCCESSES:-1}
+      - OTEL_SERVICE_NAME=${OTEL_SERVICE_NAME:-acme-shoppingcart-mcp}
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://otel-collector:4318/v1/traces
+      - OTEL_EXPORTER_OTLP_METRICS_ENDPOINT=http://otel-collector:4318/v1/metrics
+      - OTEL_EXPORTER_OTLP_LOGS_ENDPOINT=http://otel-collector:4318/v1/logs
+    ports:
+      - "8000:8000"
+    depends_on: [otel-collector]
+    networks: [obs]
+  otel-collector:
+    image: otel/opentelemetry-collector:latest
+    container_name: otel-collector
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes: [ "./otel-collector-config.yaml:/etc/otel-collector-config.yaml:ro" ]
+    ports: ["4318:4318"]
+    networks: [obs]
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes: [ "./prometheus.yml:/etc/prometheus/prometheus.yml:ro" ]
+    ports: ["9090:9090"]
+    networks: [obs]
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports: ["3000:3000"]
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    networks: [obs]
+networks: { obs: { driver: bridge } }

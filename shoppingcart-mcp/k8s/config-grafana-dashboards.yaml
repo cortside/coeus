@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards
+  namespace: mcp
+data:
+  mcp-observability.json: "{\n  \"title\": \"MCP Observability (v2)\",\n  \"uid\"\
+    : \"mcp-observability-v2\",\n  \"version\": 1,\n  \"schemaVersion\": 38,\n  \"\
+    style\": \"dark\",\n  \"panels\": [\n    {\n      \"type\": \"stat\",\n      \"\
+    title\": \"Tool Invocations (success) - 5m\",\n      \"gridPos\": {\n        \"\
+    h\": 4,\n        \"w\": 8,\n        \"x\": 0,\n        \"y\": 0\n      },\n  \
+    \    \"targets\": [\n        {\n          \"expr\": \"sum by (tool) (rate(mcp_tool_invocations_total{outcome=\\\
+    \"success\\\"}[5m]))\",\n          \"legendFormat\": \"{{tool}}\"\n        }\n\
+    \      ],\n      \"options\": {\n        \"reduceOptions\": {\n          \"calcs\"\
+    : [\n            \"sum\"\n          ]\n        }\n      }\n    },\n    {\n   \
+    \   \"type\": \"stat\",\n      \"title\": \"Tool Errors - 5m\",\n      \"gridPos\"\
+    : {\n        \"h\": 4,\n        \"w\": 8,\n        \"x\": 8,\n        \"y\": 0\n\
+    \      },\n      \"targets\": [\n        {\n          \"expr\": \"sum by (tool)\
+    \ (rate(mcp_tool_invocations_total{outcome=\\\"error\\\"}[5m]))\",\n         \
+    \ \"legendFormat\": \"{{tool}}\"\n        }\n      ],\n      \"options\": {\n\
+    \        \"reduceOptions\": {\n          \"calcs\": [\n            \"sum\"\n \
+    \         ]\n        }\n      }\n    },\n    {\n      \"type\": \"stat\",\n  \
+    \    \"title\": \"Validation Errors - 5m\",\n      \"gridPos\": {\n        \"\
+    h\": 4,\n        \"w\": 8,\n        \"x\": 16,\n        \"y\": 0\n      },\n \
+    \     \"targets\": [\n        {\n          \"expr\": \"sum by (tool) (rate(mcp_tool_validation_errors_total[5m]))\"\
+    ,\n          \"legendFormat\": \"{{tool}}\"\n        }\n      ],\n      \"options\"\
+    : {\n        \"reduceOptions\": {\n          \"calcs\": [\n            \"sum\"\
+    \n          ]\n        }\n      }\n    },\n    {\n      \"type\": \"bargauge\"\
+    ,\n      \"title\": \"HTTP Outcomes by Tool - 5m\",\n      \"gridPos\": {\n  \
+    \      \"h\": 8,\n        \"w\": 12,\n        \"x\": 0,\n        \"y\": 4\n  \
+    \    },\n      \"targets\": [\n        {\n          \"expr\": \"sum by (tool,\
+    \ outcome) (rate(mcp_http_requests_total[5m]))\",\n          \"legendFormat\"\
+    : \"{{tool}} {{outcome}}\"\n        }\n      ]\n    },\n    {\n      \"type\"\
+    : \"timeseries\",\n      \"title\": \"HTTP Request Latency P95 (by Tool)\",\n\
+    \      \"gridPos\": {\n        \"h\": 8,\n        \"w\": 12,\n        \"x\": 12,\n\
+    \        \"y\": 4\n      },\n      \"targets\": [\n        {\n          \"expr\"\
+    : \"histogram_quantile(0.95, sum by (tool, method, path, le) (rate(mcp_http_request_latency_seconds_bucket[5m])))\"\
+    ,\n          \"legendFormat\": \"{{tool}}\"\n        }\n      ]\n    },\n    {\n\
+    \      \"type\": \"timeseries\",\n      \"title\": \"Circuit Breaker State\",\n\
+    \      \"gridPos\": {\n        \"h\": 7,\n        \"w\": 12,\n        \"x\": 0,\n\
+    \        \"y\": 12\n      },\n      \"targets\": [\n        {\n          \"expr\"\
+    : \"mcp_circuit_breaker_state\",\n          \"legendFormat\": \"{{tool}} {{method}}\
+    \ {{path}}\"\n        }\n      ]\n    },\n    {\n      \"type\": \"timeseries\"\
+    ,\n      \"title\": \"Per-Route Requests (rate)\",\n      \"gridPos\": {\n   \
+    \     \"h\": 7,\n        \"w\": 12,\n        \"x\": 12,\n        \"y\": 12\n \
+    \     },\n      \"targets\": [\n        {\n          \"expr\": \"sum by (tool,\
+    \ method, path) (rate(mcp_http_requests_total[5m]))\",\n          \"legendFormat\"\
+    : \"{{tool}} {{method}} {{path}}\"\n        }\n      ]\n    }\n  ]\n}"

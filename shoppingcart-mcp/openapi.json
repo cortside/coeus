@@ -1,0 +1,1740 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Acme.ShoppingCart API",
+    "description": "Acme.ShoppingCart API",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "tags": ["api/health"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cortside.Health.Models.HealthModel"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cortside.Health.Models.HealthModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/settings": {
+      "get": {
+        "tags": ["api/settings"],
+        "summary": "Service settings that a consumer may need to be aware of",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Responses.SettingsModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/authorization": {
+      "get": {
+        "tags": ["api/v1/authorization"],
+        "summary": "Gets the list if permissions associated with the caller, determined by their bearer token (Auth)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Responses.AuthorizationModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      }
+    },
+    "/api/v1/customers": {
+      "get": {
+        "tags": ["api/v1/customers"],
+        "summary": "Gets customers (Auth permission: GetCustomers)",
+        "parameters": [
+          {
+            "name": "CustomerResourceId",
+            "in": "query",
+            "description": "Gets or sets the customer resource identifier.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "FirstName",
+            "in": "query",
+            "description": "Gets or sets the first name.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "LastName",
+            "in": "query",
+            "description": "Gets or sets the last name.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Paging.PagedList`1[Acme.ShoppingCart.WebApi.Models.Responses.CustomerModel]"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      },
+      "post": {
+        "tags": ["api/v1/customers"],
+        "summary": "Create a new customer (Auth permission: CreateCustomer)",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.UpdateCustomerModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.UpdateCustomerModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.UpdateCustomerModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.UpdateCustomerModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Responses.CustomerModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Models.ErrorsModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      }
+    },
+    "/api/v1/customers/{id}": {
+      "get": {
+        "tags": ["api/v1/customers/{id}"],
+        "summary": "Gets a customer by id (Auth permission: GetCustomer)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "the id of the customer to get",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Responses.CustomerModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["api/v1/customers/{id}"],
+        "summary": "Update a customer (Auth permission: UpdateCustomer)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.UpdateCustomerModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.UpdateCustomerModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.UpdateCustomerModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.UpdateCustomerModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Responses.CustomerModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Models.ErrorsModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      }
+    },
+    "/api/v1/customers/{resourceId}/orders": {
+      "post": {
+        "tags": ["api/v1/customers/{resourceId}/orders"],
+        "summary": "Create a new order (Auth permission: CreateOrder)",
+        "parameters": [
+          {
+            "name": "resourceId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CreateCustomerOrderModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CreateCustomerOrderModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CreateCustomerOrderModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CreateCustomerOrderModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Responses.OrderModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Models.ErrorsModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      }
+    },
+    "/api/v1/customers/{resourceId}/publish": {
+      "post": {
+        "tags": ["api/v1/customers/{resourceId}/publish"],
+        "summary": "Update a customer (Auth permission: PublishCustomer)",
+        "parameters": [
+          {
+            "name": "resourceId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Models.ErrorsModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      }
+    },
+    "/api/v1/customers/search": {
+      "post": {
+        "tags": ["api/v1/customers/search"],
+        "summary": "Gets customers by post (Auth permission: GetCustomers)",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CustomerSearchModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CustomerSearchModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CustomerSearchModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CustomerSearchModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Paging.PagedList`1[Acme.ShoppingCart.WebApi.Models.Responses.CustomerModel]"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Models.ErrorsModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      },
+      "get": {
+        "tags": ["api/v1/customers/search"],
+        "summary": "Returns search results for rebate requests (Auth permission: GetCustomers)",
+        "parameters": [
+          {
+            "name": "encryptedParams",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Paging.PagedList`1[Acme.ShoppingCart.WebApi.Models.Responses.CustomerModel]"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      }
+    },
+    "/api/v1/orders": {
+      "get": {
+        "tags": ["api/v1/orders"],
+        "summary": "Gets orders (Auth permission: GetOrders)",
+        "parameters": [
+          {
+            "name": "CustomerResourceId",
+            "in": "query",
+            "description": "Customer's identifier",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "FirstName",
+            "in": "query",
+            "description": "Customer first name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "LastName",
+            "in": "query",
+            "description": "Customer last name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Paging.PagedList`1[Acme.ShoppingCart.WebApi.Models.Responses.OrderModel]"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      },
+      "post": {
+        "tags": ["api/v1/orders"],
+        "summary": "Create a new order (Auth permission: CreateOrder)",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CreateOrderModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CreateOrderModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CreateOrderModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CreateOrderModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Responses.OrderModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Models.ErrorsModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      }
+    },
+    "/api/v1/orders/{id}": {
+      "get": {
+        "tags": ["api/v1/orders/{id}"],
+        "summary": "Gets an order by id (Auth permission: GetOrder)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "the id of the order to get",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Responses.OrderModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["api/v1/orders/{id}"],
+        "summary": "Update an order (Auth permission: UpdateOrder)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.UpdateOrderModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.UpdateOrderModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.UpdateOrderModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.UpdateOrderModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Responses.OrderModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Models.ErrorsModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      }
+    },
+    "/api/v1/orders/{id}/items": {
+      "post": {
+        "tags": ["api/v1/orders/{id}/items"],
+        "summary": "Add an order item (Auth permission: UpdateOrder)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CreateOrderItemModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CreateOrderItemModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CreateOrderItemModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CreateOrderItemModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Responses.OrderModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Models.ErrorsModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      }
+    },
+    "/api/v1/orders/{resourceId}/publish": {
+      "post": {
+        "tags": ["api/v1/orders/{resourceId}/publish"],
+        "summary": "Update an order (Auth permission: PublishOrder)",
+        "parameters": [
+          {
+            "name": "resourceId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Models.ErrorsModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Acme.ShoppingCart.Enumerations.OrderStatus": {
+        "enum": ["created", "paid", "shipped", "cancelled"],
+        "type": "string"
+      },
+      "Acme.ShoppingCart.WebApi.Models.AddressModel": {
+        "type": "object",
+        "properties": {
+          "street": {
+            "type": "string",
+            "description": "Gets or sets the street.",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "description": "Gets or sets the city.",
+            "nullable": true
+          },
+          "state": {
+            "type": "string",
+            "description": "Gets or sets the state.",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "description": "Gets or sets the country.",
+            "nullable": true
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "Gets or sets the zip code.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "An address"
+      },
+      "Acme.ShoppingCart.WebApi.Models.Requests.CreateCustomerOrderModel": {
+        "required": ["address"],
+        "type": "object",
+        "properties": {
+          "address": {
+            "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.AddressModel"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CreateOrderItemModel"
+            },
+            "description": "Gets or sets the items.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request information to create a new order"
+      },
+      "Acme.ShoppingCart.WebApi.Models.Requests.CreateOrderItemModel": {
+        "type": "object",
+        "properties": {
+          "sku": {
+            "type": "string",
+            "description": "Gets or sets the sku.",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "Gets or sets the quantity.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request to add an item to an order"
+      },
+      "Acme.ShoppingCart.WebApi.Models.Requests.CreateOrderModel": {
+        "required": ["address", "customer"],
+        "type": "object",
+        "properties": {
+          "customer": {
+            "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.UpdateOrderCustomerModel"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.AddressModel"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CreateOrderItemModel"
+            },
+            "description": "Gets or sets the items.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request information to create a new customer with a new order"
+      },
+      "Acme.ShoppingCart.WebApi.Models.Requests.CustomerSearchModel": {
+        "type": "object",
+        "properties": {
+          "customerResourceId": {
+            "type": "string",
+            "description": "Gets or sets the customer resource identifier.",
+            "format": "uuid",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Gets or sets the first name.",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Gets or sets the last name.",
+            "nullable": true
+          },
+          "pageNumber": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "sort": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request for customer search options"
+      },
+      "Acme.ShoppingCart.WebApi.Models.Requests.UpdateCustomerModel": {
+        "required": ["birthDate", "email", "firstName", "lastName"],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Gets or sets the first name."
+          },
+          "lastName": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Gets or sets the last name."
+          },
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Gets or sets the email."
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "Gets or sets the email.",
+            "format": "date"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request information to create a new customer"
+      },
+      "Acme.ShoppingCart.WebApi.Models.Requests.UpdateOrderCustomerModel": {
+        "required": ["birthDate", "email", "firstName", "lastName"],
+        "type": "object",
+        "properties": {
+          "customerResourceId": {
+            "type": "string",
+            "description": "Gets or sets the customer resource identifier.",
+            "format": "uuid"
+          },
+          "firstName": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Gets or sets the first name."
+          },
+          "lastName": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Gets or sets the last name."
+          },
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Gets or sets the email."
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "Gets or sets the email.",
+            "format": "date"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request information to create a new customer"
+      },
+      "Acme.ShoppingCart.WebApi.Models.Requests.UpdateOrderModel": {
+        "required": ["address"],
+        "type": "object",
+        "properties": {
+          "address": {
+            "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.AddressModel"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Requests.CreateOrderItemModel"
+            },
+            "description": "Gets or sets the items.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request information to create a new customer with a new order"
+      },
+      "Acme.ShoppingCart.WebApi.Models.Responses.AuthorizationModel": {
+        "type": "object",
+        "properties": {
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Roles",
+            "nullable": true
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Permissions",
+            "nullable": true
+          },
+          "principal": {
+            "$ref": "#/components/schemas/Cortside.Common.Security.SubjectPrincipal"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Authorization model"
+      },
+      "Acme.ShoppingCart.WebApi.Models.Responses.ConfigurationModel": {
+        "type": "object",
+        "properties": {
+          "serviceBus": {
+            "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Responses.ServiceBusModel"
+          },
+          "identityServer": {
+            "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Responses.IdentityServerModel"
+          },
+          "policyServer": {
+            "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Responses.PolicyServerModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Configuration"
+      },
+      "Acme.ShoppingCart.WebApi.Models.Responses.CustomerModel": {
+        "type": "object",
+        "properties": {
+          "customerResourceId": {
+            "type": "string",
+            "description": "Gets or sets the customer resource identifier.",
+            "format": "uuid"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Gets or sets the first name.",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Gets or sets the last name.",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "description": "Gets or sets the email.",
+            "nullable": true
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdSubject": {
+            "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Models.SubjectModel"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastModifiedSubject": {
+            "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Models.SubjectModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Represents a single customer"
+      },
+      "Acme.ShoppingCart.WebApi.Models.Responses.IdentityServerModel": {
+        "type": "object",
+        "properties": {
+          "authority": {
+            "type": "string",
+            "description": "Authority",
+            "nullable": true
+          },
+          "apiname": {
+            "type": "string",
+            "description": "ApiName",
+            "nullable": true
+          },
+          "baseUrl": {
+            "type": "string",
+            "description": "Base Url",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Identity Server model"
+      },
+      "Acme.ShoppingCart.WebApi.Models.Responses.OrderItemModel": {
+        "type": "object",
+        "properties": {
+          "orderItemId": {
+            "type": "integer",
+            "description": "Gets or sets the order item identifier.",
+            "format": "int32"
+          },
+          "itemId": {
+            "type": "string",
+            "description": "Gets or sets the item identifier.",
+            "format": "uuid"
+          },
+          "sku": {
+            "type": "string",
+            "description": "Gets or sets the sku.",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "Gets or sets the quantity.",
+            "format": "int32"
+          },
+          "unitPrice": {
+            "type": "number",
+            "description": "Gets or sets the unit price.",
+            "format": "double"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdSubject": {
+            "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Models.SubjectModel"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastModifiedSubject": {
+            "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Models.SubjectModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "An Item on an Order"
+      },
+      "Acme.ShoppingCart.WebApi.Models.Responses.OrderModel": {
+        "type": "object",
+        "properties": {
+          "orderResourceId": {
+            "type": "string",
+            "description": "Gets or sets the order resource identifier.",
+            "format": "uuid"
+          },
+          "status": {
+            "$ref": "#/components/schemas/Acme.ShoppingCart.Enumerations.OrderStatus"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Responses.CustomerModel"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.AddressModel"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Responses.OrderItemModel"
+            },
+            "description": "Gets or sets the items.",
+            "nullable": true
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdSubject": {
+            "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Models.SubjectModel"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastModifiedSubject": {
+            "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Models.SubjectModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Represents a single order"
+      },
+      "Acme.ShoppingCart.WebApi.Models.Responses.PolicyServerModel": {
+        "type": "object",
+        "properties": {
+          "basePolicy": {
+            "type": "string",
+            "description": "Base Policys",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "description": "Url",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Policy Server Model"
+      },
+      "Acme.ShoppingCart.WebApi.Models.Responses.ServiceBusModel": {
+        "type": "object",
+        "properties": {
+          "nameSpace": {
+            "type": "string",
+            "description": "Name Space",
+            "nullable": true
+          },
+          "queue": {
+            "type": "string",
+            "description": "Queue",
+            "nullable": true
+          },
+          "exchange": {
+            "type": "string",
+            "description": "Exchange",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Service bus model"
+      },
+      "Acme.ShoppingCart.WebApi.Models.Responses.SettingsModel": {
+        "type": "object",
+        "properties": {
+          "service": {
+            "type": "string",
+            "description": "Which service the settings came from",
+            "nullable": true
+          },
+          "build": {
+            "$ref": "#/components/schemas/Cortside.Health.Models.BuildModel"
+          },
+          "configuration": {
+            "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Responses.ConfigurationModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Settings"
+      },
+      "Cortside.AspNetCore.Common.Models.ErrorModel": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "property": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "exception": {
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cortside.AspNetCore.Common.Models.ErrorsModel": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cortside.AspNetCore.Common.Models.ErrorModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cortside.AspNetCore.Common.Models.SubjectModel": {
+        "type": "object",
+        "properties": {
+          "subjectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "givenName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "familyName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "userPrincipalName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cortside.AspNetCore.Common.Paging.PagedList`1[Acme.ShoppingCart.WebApi.Models.Responses.CustomerModel]": {
+        "type": "object",
+        "properties": {
+          "totalItems": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Responses.CustomerModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cortside.AspNetCore.Common.Paging.PagedList`1[Acme.ShoppingCart.WebApi.Models.Responses.OrderModel]": {
+        "type": "object",
+        "properties": {
+          "totalItems": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Acme.ShoppingCart.WebApi.Models.Responses.OrderModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cortside.Common.Security.SubjectClaim": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cortside.Common.Security.SubjectPrincipal": {
+        "type": "object",
+        "properties": {
+          "subjectId": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "givenName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "familyName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "userPrincipalName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "actor": {
+            "$ref": "#/components/schemas/Cortside.Common.Security.SubjectPrincipal"
+          },
+          "claims": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cortside.Common.Security.SubjectClaim"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cortside.Health.Enums.ServiceStatus": {
+        "enum": ["ok", "degraded", "failure"],
+        "type": "string"
+      },
+      "Cortside.Health.Models.Availability": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "success": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "failure": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "uptime": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalDuration": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "averageDuration": {
+            "type": "number",
+            "format": "double"
+          },
+          "lastSuccess": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastFailure": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cortside.Health.Models.BuildModel": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "version": {
+            "type": "string",
+            "nullable": true
+          },
+          "tag": {
+            "type": "string",
+            "nullable": true
+          },
+          "suffix": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cortside.Health.Models.HealthModel": {
+        "type": "object",
+        "properties": {
+          "service": {
+            "type": "string",
+            "nullable": true
+          },
+          "build": {
+            "$ref": "#/components/schemas/Cortside.Health.Models.BuildModel"
+          },
+          "checks": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Cortside.Health.Models.ServiceStatusModel"
+            },
+            "nullable": true
+          },
+          "uptime": {
+            "type": "string",
+            "format": "date-span"
+          },
+          "healthy": {
+            "type": "boolean"
+          },
+          "status": {
+            "$ref": "#/components/schemas/Cortside.Health.Enums.ServiceStatus"
+          },
+          "statusDetail": {
+            "type": "string",
+            "nullable": true
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "availability": {
+            "$ref": "#/components/schemas/Cortside.Health.Models.Availability"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cortside.Health.Models.ServiceStatusModel": {
+        "type": "object",
+        "properties": {
+          "healthy": {
+            "type": "boolean"
+          },
+          "status": {
+            "$ref": "#/components/schemas/Cortside.Health.Enums.ServiceStatus"
+          },
+          "statusDetail": {
+            "type": "string",
+            "nullable": true
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "availability": {
+            "$ref": "#/components/schemas/Cortside.Health.Models.Availability"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "authorizationUrl": "https://identityserver.cortside.net/connect/authorize",
+            "tokenUrl": "https://identityserver.cortside.net/connect/token",
+            "scopes": {
+              "shoppingcart-api": "shoppingcart-api"
+            }
+          }
+        }
+      }
+    }
+  }
+}

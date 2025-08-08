@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: mcp
+data:
+  prometheus.yml: "global:\n  scrape_interval: 5s\nscrape_configs:\n- job_name: mcp-server\n\
+    \  kubernetes_sd_configs:\n  - role: endpoints\n  relabel_configs:\n  - action:\
+    \ keep\n    source_labels:\n    - __meta_kubernetes_service_label_app\n    regex:\
+    \ mcp-app\n  metrics_path: /metrics\n- job_name: otel-collector\n  kubernetes_sd_configs:\n\
+    \  - role: service\n  relabel_configs:\n  - action: keep\n    source_labels:\n\
+    \    - __meta_kubernetes_service_name\n    regex: otel-collector\n"

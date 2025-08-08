@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-app
+  namespace: mcp
+  labels:
+    app: mcp-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mcp-app
+  template:
+    metadata:
+      labels:
+        app: mcp-app
+    spec:
+      containers:
+      - name: app
+        image: ghcr.io/your-org/mcp-app:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        env:
+        - name: SHOPPINGCART_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: mcp-secrets
+              key: SHOPPINGCART_CLIENT_ID
+        - name: SHOPPINGCART_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: mcp-secrets
+              key: SHOPPINGCART_CLIENT_SECRET
+        - name: SHOPPINGCART_SCOPE
+          value: shoppingcart-api
+        - name: LOG_LEVEL
+          value: INFO
+        - name: CB_SCOPE
+          value: per_route
+        - name: CB_FAILURE_THRESHOLD
+          value: '5'
+        - name: CB_RECOVERY_SECONDS
+          value: '30'
+        - name: CB_HALFOPEN_SUCCESSES
+          value: '1'
+        - name: OTEL_SERVICE_NAME
+          value: acme-shoppingcart-mcp
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: http://otel-collector.mcp.svc.cluster.local:4318
+        - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+          value: http://otel-collector.mcp.svc.cluster.local:4318/v1/traces
+        - name: OTEL_EXPORTER_OTLP_METRICS_ENDPOINT
+          value: http://otel-collector.mcp.svc.cluster.local:4318/v1/metrics
+        - name: OTEL_EXPORTER_OTLP_LOGS_ENDPOINT
+          value: http://otel-collector.mcp.svc.cluster.local:4318/v1/logs

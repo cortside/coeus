@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: otel-collector-config
+  namespace: mcp
+data:
+  otel-collector-config.yaml: "receivers:\n  otlp:\n    protocols:\n      http: {}\n\
+    exporters:\n  prometheus:\n    endpoint: 0.0.0.0:9464\n  logging:\n    loglevel:\
+    \ info\nprocessors:\n  batch: {}\nservice:\n  pipelines:\n    traces:\n      receivers:\n\
+    \      - otlp\n      processors:\n      - batch\n      exporters:\n      - logging\n\
+    \    metrics:\n      receivers:\n      - otlp\n      processors:\n      - batch\n\
+    \      exporters:\n      - logging\n      - prometheus\n    logs:\n      receivers:\n\
+    \      - otlp\n      processors:\n      - batch\n      exporters:\n      - logging\n"

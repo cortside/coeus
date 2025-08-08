@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+fastmcp>=2.0.0
+httpx
+pydantic>=2
+prometheus_client
+opentelemetry-api
+opentelemetry-sdk
+opentelemetry-exporter-otlp-proto-http
+opentelemetry-instrumentation-fastapi
+opentelemetry-instrumentation-httpx
+PyYAML
