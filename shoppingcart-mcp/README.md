@@ -32,3 +32,14 @@ kubectl apply -k k8s/
 
 ## Env
 See `.env.example` for required settings (SHOPPINGCART_CLIENT_ID/SECRET).
+
+
+## MCP Inspector
+Use the following to test mcp server directly
+
+```
+npx @modelcontextprotocol/inspector
+```
+
+Transport type = streamable http
+url = http://localhost:8080/mcp (change hostname and port for how it's hosted)

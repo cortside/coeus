@@ -9,7 +9,7 @@ from prometheus_client import make_asgi_app
 logger = configure_logging()
 
 # Create ASGI app from MCP and mount it
-mcp_app = mcp.http_app(path="/mcp")
+mcp_app = mcp.http_app(path="/")
 
 # FastAPI app must use the MCP lifespan
 app = FastAPI(title="Acme.ShoppingCart MCP (FastMCP v2)", lifespan=mcp_app.lifespan)
@@ -29,7 +29,7 @@ async def root():
     return {
         "message": "Acme.ShoppingCart MCP Server (v2) is running",
         "mcp_path": "/mcp/",
-        "tools": [t.name for t in mcp.tools]
+        "tools": [t for t in await mcp.get_tools()]
     }
 
 @app.get("/live")

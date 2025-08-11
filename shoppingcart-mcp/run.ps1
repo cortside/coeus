@@ -2,4 +2,4 @@
 $port = 8080
 netstat -ano | grep $port
 
-uvicorn main:app --reload --port $port
+uvicorn main:app --port $port

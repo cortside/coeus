@@ -4,5 +4,5 @@ global:
 scrape_configs:
   - job_name: 'mcp-server'
     static_configs:
-      - targets: ['app:8000']
+      - targets: ['shoppingcart-mcp:8000']
     metrics_path: /metrics
