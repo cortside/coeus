@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+jose
+httpx
+prometheus-fastapi-instrumentator
+opentelemetry-instrumentation-fastapi
+opentelemetry-sdk
+python-dotenv

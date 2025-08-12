@@ -1,0 +1,32 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Chat Metrics",
+    "panels": [
+      {
+        "type": "graph",
+        "title": "Chat Requests",
+        "targets": [
+          {
+            "expr": "http_requests_total{handler=\"/chat\"}",
+            "legendFormat": "Chat Requests"
+          }
+        ],
+        "datasource": "Prometheus"
+      },
+      {
+        "type": "graph",
+        "title": "Response Time",
+        "targets": [
+          {
+            "expr": "http_request_duration_seconds_bucket{handler=\"/chat\"}",
+            "legendFormat": "Response Time"
+          }
+        ],
+        "datasource": "Prometheus"
+      }
+    ],
+    "schemaVersion": 16,
+    "version": 1
+  }
+}

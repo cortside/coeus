@@ -9,7 +9,7 @@ You are a senior software engineer generating a complete application with two re
 - Endpoints: `/chat` (POST, streaming SSE/WebSocket), `/health`, `/metrics`
 - Infra: Docker Compose + Kubernetes manifests, `.env` for config
 - License: MIT
-- Output in 2 repos: `agent-backend` and `chat-frontend`
+- Output in 2 repos: `agent` and `chatbot`
 - Frontend: Vite + React 19 + TypeScript + Tailwind + shadcn/ui
 - Frontend Auth: OIDC login (PKCE), store JWT in memory
 - Docker + k8s manifests for backend, frontend, Prometheus, Grafana
