@@ -32,7 +32,7 @@ You are a senior software engineer generating a complete application with two re
    - Dockerfile, `.env.example`
    - k8s manifests
 
-3. **Infra**:
+3. **Infrastructure**:
    - `docker-compose.yml` to run backend, frontend, Prometheus, Grafana
    - Grafana dashboard JSON for chat metrics
 
