@@ -6,10 +6,3 @@ from schemas.models import *
 
 class post_api_v1_customers_search_Input(BaseModel):
     body: Acme_ShoppingCart_WebApi_Models_Requests_CustomerSearchModel = Field(..., description="Request body")
-
-from pydantic import BaseModel
-from typing import Optional, Dict, Any
-from schemas.models import *
-
-class post_api_v1_customers_search_Output(BaseModel):
-    data: Optional[Cortside_AspNetCore_Common_Paging_PagedListOf_Acme_ShoppingCart_WebApi_Models_Responses_CustomerModel] = None
