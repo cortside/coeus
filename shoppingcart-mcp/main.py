@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from dotenv import load_dotenv
+load_dotenv()
 from app.mcp_instance import mcp
 import tools  # noqa: F401 - registers tools via decorators
 from utils.error_handler import add_error_handlers

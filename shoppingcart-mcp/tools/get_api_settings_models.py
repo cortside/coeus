@@ -1,15 +1,11 @@
-from pydantic import BaseModel, Field
-from typing import Optional, List, Dict, Any, Literal
-from uuid import UUID
-from datetime import datetime, date
-from schemas.models import *
+from pydantic import BaseModel
+from typing import Optional
+from schemas.models import Acme_ShoppingCart_WebApi_Models_Responses_SettingsModel, Cortside_Health_Models_BuildModel
 
 class get_api_settings_Input(BaseModel):
     pass
 
-from pydantic import BaseModel
-from typing import Optional, Dict, Any
-from schemas.models import *
+class get_api_settings_Output(Acme_ShoppingCart_WebApi_Models_Responses_SettingsModel):
+    pass
 
-class get_api_settings_Output(BaseModel):
-    data: Optional[Acme_ShoppingCart_WebApi_Models_Responses_SettingsModel] = None
+get_api_settings_Output.model_rebuild()

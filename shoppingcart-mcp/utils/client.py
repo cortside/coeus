@@ -5,7 +5,7 @@ from utils.circuit_breaker import registry, CircuitOpenError
 from utils.metrics import http_requests_total, http_request_latency_seconds, set_cb_state
 from utils.tracing import get_tracer
 
-API_BASE="https://shoppingcartapi.cortside.net/api"
+API_BASE=os.getenv("SHOPPINGCART_API_BASE", "https://shoppingcartapi.cortside.net")
 RETRIES=int(os.getenv("SHOPPINGCART_RETRIES","3"))
 TIMEOUT_SECONDS=float(os.getenv("SHOPPINGCART_TIMEOUT_SECONDS","15"))
 

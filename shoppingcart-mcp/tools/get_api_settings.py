@@ -15,12 +15,13 @@ async def get_api_settings(input: get_api_settings_Input) -> get_api_settings_Ou
         from pydantic import ValidationError
         with tracer.start_as_current_span("tool_call") as span:
             span.set_attribute("tool.name", "get_api_settings")
-            res = await call_api("GET", f"/api/settings", params=query_params, tool="get_api_settings")
+            res = await call_api("GET", "/api/settings", params=query_params, tool="get_api_settings")
+            print(f"DEBUG: API response: {res}")  # Debug print
             tool_invocations_total.labels(tool="get_api_settings", outcome="success").inc()
             return create_output(get_api_settings_Output, res)
     except ValidationError:
         tool_validation_errors_total.labels(tool="get_api_settings").inc()
-        return get_api_settings_Output()
+        return get_api_settings_Output(service=None, build=None, configuration=None)
     except Exception:
         tool_invocations_total.labels(tool="get_api_settings", outcome="error").inc()
-        return get_api_settings_Output()
+        return get_api_settings_Output(service=None, build=None, configuration=None)
