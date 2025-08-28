@@ -1,10 +1,12 @@
 [CmdletBinding()]
 Param 
 (
-    [Parameter(Mandatory = $false)][string]$package = "",
+	[Parameter(Mandatory = $false)][string]$package = "",
 	[Parameter(Mandatory = $false)][string]$preupdateExpression = "",
 	[Parameter(Mandatory = $false)][switch]$createPullRequest,
-	[Parameter(Mandatory = $false)][switch]$ignoreChanges
+	[Parameter(Mandatory = $false)][switch]$ignoreChanges,
+	[Parameter(Mandatory = $false)][string]$ticketId = "",
+	[Parameter(Mandatory = $false)][switch]$skipTests
 )
 
 $ErrorActionPreference = "Stop"
@@ -16,13 +18,13 @@ Param(
 	# cleanup and undo changes
 	./clean.ps1
 	git checkout -- *
-	
+ 
 	Write-Error $text 
 	exit 1
 }
 
 Function check-result {
-    if ($LastExitCode -ne 0) { Invoke-BuildError "ERROR: Exiting with error code $LastExitCode"	}
+    if ($LastExitCode -ne 0) { Invoke-BuildError "ERROR: Exiting with error code $LastExitCode" }
     return $true
 }
 
@@ -31,7 +33,7 @@ Function Invoke-Exe {
         [parameter(Mandatory = $true)][string] $cmd,
         [parameter(Mandatory = $true)][string] $args
     )
-	
+ 
     Write-Output "Executing: `"$cmd`" --% $args"
     & "$cmd" "--%" "$args";
     $result = check-result
@@ -56,7 +58,9 @@ Invoke-Exe git -args "pull"
 # check for branch first
 $bot = "BOT-{0:yyyyMMdd}" -f (Get-Date)
 $branch = "feature/$bot"
-if ($package -ne "") {
+if ($ticketId -ne "") {
+	$branch = "feature/$ticketId"
+} elseif ($package -ne "") {
 	$branch = "feature/$bot-$package"
 }
 
@@ -96,39 +100,45 @@ echo "checking to see if anything changed"
 
 $changes = (git status --porcelain)
 if ($changes.Count -ne 0) {
+ if (-not $skipTests) {
 	dotnet test src
 	$result = check-result
+ }
 
-	git status
+ git status
 
-	$bot = "BOT-{0:yyyyMMdd}" -f (Get-Date)
-	$branch = "feature/$bot"
-	if ($package -ne "") {
-		$branch = "feature/$bot-$package"
-	}
+ $bot = "BOT-{0:yyyyMMdd}" -f (Get-Date)
+ $branch = "feature/$bot"
+ if ($ticketId -ne "") {
+	$branch = "feature/$ticketId"
+ } elseif ($package -ne "") {
+	$branch = "feature/$bot-$package"
+ }
+ 
+ git add -u -u
+ git status
+ git checkout -b $branch
+ if ($ticketId -ne "") {
+	git commit -m "[$ticketId] updated nuget packages"
+ } elseif ($package -eq "") {
+	git commit -m "[$branch] updated nuget packages"
+ } else {
+	git commit -m "[$branch] update $package"
+ }
+ git push --set-upstream origin $branch
 
-	git add -u -u
-	git status
-	git checkout -b $branch
-	if ($package -eq "") { 
-		git commit -m "[$branch] updated nuget packages"
-	} else {
-		git commit -m "[$branch] update $package"
-	}
-	git push --set-upstream origin $branch
+ $remote = (git remote -v)
+ $ghexists = if (Get-Command "gh.exe" -ErrorAction SilentlyContinue) { $true } else { $false }
+ if ($remote -like "*github.com*" -and $ghexists) {
+	gh repo set-default
+	gh pr create --title "$bot" --body "$body" --base develop
+ } else {
+	echo "should create the pr here -- everything passed - $branch" 
+	echo $body 
+ }
 
-	$remote = (git remote -v)
-	$ghexists = if (Get-Command "gh.exe" -ErrorAction SilentlyContinue) { $true } else { $false }
-	if ($remote -like "*github.com*" -and $ghexists) {
-		gh repo set-default
-		gh pr create --title "$bot" --body "$body" --base develop
-	} else {
-		echo "should create the pr here -- everything passed - $branch"	
-		echo $body	
-	}
-
-	.\clean.ps1
-	git checkout develop
+ .\clean.ps1
+ git checkout develop
 } else {
 	echo "no files changed"
 }
