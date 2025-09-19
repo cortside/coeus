@@ -1,0 +1,31 @@
+{
+    "service": {
+        "name": "shoppingcart-web"
+    },
+    "catalogApi": {
+        "url": "http://localhost:5001"
+    },
+    "shoppingCartApi": {
+        "url": "http://localhost:5000"
+    },
+    "identity": {
+        "authority": "http://localhost:5002",
+        "clientId": "shoppingcart-web",
+        "responseType": "id_token token",
+        "scope": "openid profile shoppingcart-api catalog-api",
+        "redirectUri": "http://localhost:4200/login-redirect",
+        "silentRedirectUri": "http://localhost:4200/silent-redirect",
+        "postLogoutRedirectUri": "http://localhost:4200/logout",
+        "accessTokenExpiringNotificationTime": 60,
+        "loadUserInfo": true,
+        "automaticSilentRenew": true,
+        "monitorSession": true,
+        "logLevel": "none"
+    },
+    "build": {
+        "timestamp": "2024-01-12T20:16:11.6932Z",
+        "version": "1.0.0",
+        "tag": "1.0-local",
+        "suffix": "local"
+    }
+}
