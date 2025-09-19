@@ -1,0 +1,189 @@
+{
+  "totalItems": 20,
+  "pageNumber": 1,
+  "pageSize": 20,
+  "items": [
+    [
+      {
+        "itemId": "7f2b5e2f-5b4a-4c52-9a0e-324db7c2e36a",
+        "name": "Silver Edged Horehound",
+        "sku": "PLT-001",
+        "unitPrice": 14.99,
+        "imageUrl": "https://example.com/images/silver-edged-horehound.jpg",
+        "description": "A hardy perennial with silver-edged leaves, excellent for ground cover and drought tolerance.",
+        "colors": ["Silver", "Green"]
+      },
+      {
+        "itemId": "aef31c92-0ff7-44db-9a98-1d6f7e6e5bb9",
+        "name": "Allium Millenium Ornamental Onion",
+        "sku": "PLT-002",
+        "unitPrice": 18.5,
+        "imageUrl": "https://example.com/images/allium-millenium.jpg",
+        "description": "A summer-blooming perennial with globe-shaped violet flowers attractive to pollinators.",
+        "colors": ["Purple", "Green"]
+      },
+      {
+        "itemId": "f23875d1-6a65-482a-a6a7-b8ab4c35e1c2",
+        "name": "Beyond Midnight Bluebeard",
+        "sku": "PLT-003",
+        "unitPrice": 22.0,
+        "imageUrl": "https://example.com/images/beyond-midnight-bluebeard.jpg",
+        "description": "Compact shrub with deep midnight-blue flowers and aromatic foliage.",
+        "colors": ["Blue", "Green"]
+      },
+      {
+        "itemId": "28d4cc9b-b6c5-4c4e-91f8-f83311fd1202",
+        "name": "Arizona Apricot Gaillardia",
+        "sku": "PLT-004",
+        "unitPrice": 12.99,
+        "imageUrl": "https://example.com/images/arizona-apricot.jpg",
+        "description": "Cheerful perennial blanket flower with golden apricot blooms.",
+        "colors": ["Orange", "Yellow", "Green"]
+      },
+      {
+        "itemId": "e4c9e3b0-f76f-4d16-80c6-2c23b1fd1b4e",
+        "name": "Lavender Hidcote",
+        "sku": "PLT-005",
+        "unitPrice": 15.0,
+        "imageUrl": "https://example.com/images/lavender-hidcote.jpg",
+        "description": "Compact English lavender with fragrant purple blooms.",
+        "colors": ["Purple", "Green"]
+      },
+      {
+        "itemId": "b821f422-21c1-45b0-90e2-dbb9f8aef1d9",
+        "name": "Echinacea PowWow Wild Berry",
+        "sku": "PLT-006",
+        "unitPrice": 16.75,
+        "imageUrl": "https://example.com/images/echinacea-powwow.jpg",
+        "description": "Coneflower with vibrant magenta-pink blooms, long-lasting and hardy.",
+        "colors": ["Pink", "Green"]
+      },
+      {
+        "itemId": "9260e9fb-5661-4bda-90ea-3162cf216e2f",
+        "name": "Hosta Blue Mouse Ears",
+        "sku": "PLT-007",
+        "unitPrice": 19.25,
+        "imageUrl": "https://example.com/images/hosta-blue-mouse-ears.jpg",
+        "description": "Miniature hosta with thick, blue-green leaves forming compact mounds.",
+        "colors": ["Blue-Green"]
+      },
+      {
+        "itemId": "d89c3e63-cdb1-474a-bcf0-c5d7ed0c3ed5",
+        "name": "Sedum Autumn Joy",
+        "sku": "PLT-008",
+        "unitPrice": 17.5,
+        "imageUrl": "https://example.com/images/sedum-autumn-joy.jpg",
+        "description": "Succulent perennial with pink blooms that deepen to copper-red in fall.",
+        "colors": ["Pink", "Red", "Green"]
+      },
+      {
+        "itemId": "4a37e34f-83d4-4dd7-96f7-d4c6d8d0ac0b",
+        "name": "Russian Sage",
+        "sku": "PLT-009",
+        "unitPrice": 21.0,
+        "imageUrl": "https://example.com/images/russian-sage.jpg",
+        "description": "Tall perennial with airy lavender-blue flowers and silvery foliage.",
+        "colors": ["Lavender", "Silver", "Green"]
+      },
+      {
+        "itemId": "f4b3dc4e-d9e3-4ff3-87fb-65197ccdb49e",
+        "name": "Coral Bells Fire Alarm",
+        "sku": "PLT-010",
+        "unitPrice": 18.0,
+        "imageUrl": "https://example.com/images/coral-bells-fire-alarm.jpg",
+        "description": "Striking perennial with fiery red foliage that brightens shady gardens.",
+        "colors": ["Red", "Green"]
+      },
+      {
+        "itemId": "42cc5e0f-18b6-41cf-97fb-3c4087bcb0a6",
+        "name": "Daylily Stella de Oro",
+        "sku": "PLT-011",
+        "unitPrice": 13.99,
+        "imageUrl": "https://example.com/images/daylily-stella-de-oro.jpg",
+        "description": "Popular compact daylily with golden-yellow blooms all season long.",
+        "colors": ["Yellow", "Green"]
+      },
+      {
+        "itemId": "87417f7e-55ad-42d1-8d40-d2b4dc3cda84",
+        "name": "Shasta Daisy Becky",
+        "sku": "PLT-012",
+        "unitPrice": 14.5,
+        "imageUrl": "https://example.com/images/shasta-daisy-becky.jpg",
+        "description": "Classic perennial daisy with large white petals and sunny yellow centers.",
+        "colors": ["White", "Yellow", "Green"]
+      },
+      {
+        "itemId": "09ad2c66-4f0b-4e83-b5de-d25b9083cf04",
+        "name": "Coreopsis Moonbeam",
+        "sku": "PLT-013",
+        "unitPrice": 15.75,
+        "imageUrl": "https://example.com/images/coreopsis-moonbeam.jpg",
+        "description": "Delicate perennial with pale yellow daisy-like blooms and fine foliage.",
+        "colors": ["Pale Yellow", "Green"]
+      },
+      {
+        "itemId": "ec0ff4bc-cd3b-47aa-a17c-308047165e8d",
+        "name": "Astilbe Fanal",
+        "sku": "PLT-014",
+        "unitPrice": 19.99,
+        "imageUrl": "https://example.com/images/astilbe-fanal.jpg",
+        "description": "Shade-loving perennial with feathery crimson plumes over dark foliage.",
+        "colors": ["Red", "Green"]
+      },
+      {
+        "itemId": "5b56b7ef-0e3e-4a90-8760-2799aaf78d71",
+        "name": "Salvia May Night",
+        "sku": "PLT-015",
+        "unitPrice": 16.25,
+        "imageUrl": "https://example.com/images/salvia-may-night.jpg",
+        "description": "Perennial salvia with deep violet-blue spires, long-blooming and deer resistant.",
+        "colors": ["Blue", "Purple", "Green"]
+      },
+      {
+        "itemId": "17f54a87-8c9a-4cb8-b602-4d11a9c8b120",
+        "name": "Phlox David",
+        "sku": "PLT-016",
+        "unitPrice": 13.75,
+        "imageUrl": "https://example.com/images/phlox-david.jpg",
+        "description": "Tall perennial phlox with clusters of pure white fragrant blooms.",
+        "colors": ["White", "Green"]
+      },
+      {
+        "itemId": "41f8c8f6-dc1c-4624-9118-ec8762cb7398",
+        "name": "Peony Karl Rosenfield",
+        "sku": "PLT-017",
+        "unitPrice": 24.0,
+        "imageUrl": "https://example.com/images/peony-karl-rosenfield.jpg",
+        "description": "Classic garden peony with large double crimson-red blooms.",
+        "colors": ["Red", "Green"]
+      },
+      {
+        "itemId": "c5a9a7df-8467-45d1-9d86-75813fc51560",
+        "name": "Japanese Painted Fern",
+        "sku": "PLT-018",
+        "unitPrice": 17.99,
+        "imageUrl": "https://example.com/images/japanese-painted-fern.jpg",
+        "description": "Fern with silver, purple, and green foliage, perfect for shade gardens.",
+        "colors": ["Silver", "Purple", "Green"]
+      },
+      {
+        "itemId": "2e5a3f77-7c45-4ff2-9c91-8f4b27a9a125",
+        "name": "Black-Eyed Susan Goldsturm",
+        "sku": "PLT-019",
+        "unitPrice": 12.5,
+        "imageUrl": "https://example.com/images/black-eyed-susan-goldsturm.jpg",
+        "description": "Reliable perennial with golden-yellow daisy blooms and dark centers.",
+        "colors": ["Yellow", "Brown", "Green"]
+      },
+      {
+        "itemId": "acd11d84-0ac7-4263-a9a9-7bb9f2dfc2e6",
+        "name": "Bee Balm Jacob Cline",
+        "sku": "PLT-020",
+        "unitPrice": 18.25,
+        "imageUrl": "https://example.com/images/bee-balm-jacob-cline.jpg",
+        "description": "Fragrant perennial with brilliant red blooms that attract hummingbirds.",
+        "colors": ["Red", "Green"]
+      }
+    ]
+  ]
+}
