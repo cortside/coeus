@@ -39,11 +39,11 @@ Function Execute-Sql {
 		$conn.Database = $database;	
 		$result = invoke-sqlcmd -ConnectionString $conn.ConnectionString -Query $sql -OutputSqlErrors $true
 	} elseif ($username -eq "") {
-		$result = invoke-sqlcmd -Server "$server" -Database $database -Query $sql -OutputSqlErrors $true
+		$result = invoke-sqlcmd -Server "$server" -Database $database -Query $sql -OutputSqlErrors $true -TrustServerCertificate
 	} else {
 		$secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
 		$creds = New-Object System.Management.Automation.PSCredential ($username, $secpasswd)
-		$result = invoke-sqlcmd -Credential $creds -Server $server -Database $database -Query $sql -OutputSqlErrors $true
+		$result = invoke-sqlcmd -Credential $creds -Server $server -Database $database -Query $sql -OutputSqlErrors $true -TrustServerCertificate
 	}
 	
 	if ($error -ne $null) {

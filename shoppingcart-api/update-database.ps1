@@ -35,12 +35,12 @@ Function Execute-Sql {
 	$error.clear(); 
 	$result = "";
 	if ($ConnectionString -ne "") {
-		$conn = New-Object System.Data.SqlClient.SqlConnectionStringBuilder
+		$conn = New-Object Microsoft.Data.SqlClient.SqlConnectionStringBuilder
 		$conn.set_ConnectionString($ConnectionString)	
 		$conn.Database = $database;	
 		$result = invoke-sqlcmd -ConnectionString $conn.ConnectionString -Query $sql -OutputSqlErrors $true
 	} elseif ($username -eq "") {
-		$result = invoke-sqlcmd -Server "$server" -Database $database -Query $sql -OutputSqlErrors $true
+		$result = invoke-sqlcmd -Server "$server" -Database $database -Query $sql -OutputSqlErrors $true -TrustServerCertificate
 	} else {
 		$secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
 		$creds = New-Object System.Management.Automation.PSCredential ($username, $secpasswd)
