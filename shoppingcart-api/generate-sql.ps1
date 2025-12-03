@@ -7,6 +7,7 @@ $repo = $config.repository.name
 $project = $config.database.dbContextProject
 $startup = $config.database.startupProject
 $context = $config.database.dbContext
+$efCoreVersion = $config.database.efCoreVersion
 
 echo "Generating transactional SQL migrations for $project..."
 
@@ -34,8 +35,11 @@ GO
 "@
 
 ## make sure dotnet ef is installed and up to date
-dotnet tool update --global dotnet-ef
-
+if ($efCoreVersion) {
+	dotnet tool update --global dotnet-ef --version $efCoreVersion
+} else {
+	dotnet tool update --global dotnet-ef
+}
 ## get list of migrations
 $migrations = (dotnet ef migrations list --no-build --project "$project" --startup-project "$startup" --context "$context")
 

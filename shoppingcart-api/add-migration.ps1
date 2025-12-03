@@ -13,9 +13,14 @@ $repo = $config.repository.name
 $project = $config.database.dbContextProject
 $startup = $config.database.startupProject
 $context = $config.database.dbContext
+$efCoreVersion = $config.database.efCoreVersion
 
 echo "creating new migration $migration for $context context in project $project"
-dotnet tool update --global dotnet-ef
+if ($efCoreVersion) {
+	dotnet tool update --global dotnet-ef --version $efCoreVersion
+} else {
+	dotnet tool update --global dotnet-ef
+}
 
 dotnet ef migrations add $migration --project "$project" --startup-project "$startup" --context "$context"
 
