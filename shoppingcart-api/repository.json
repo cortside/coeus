@@ -16,8 +16,7 @@
         "AuditLogTransaction",
         "Outbox"
       ]
-    },
-    "efCoreVersion": "9.0.11"
+    }
   },
   "docker": {
     "buildImage": "cortside/dotnet-sdk:8.0-alpine",
