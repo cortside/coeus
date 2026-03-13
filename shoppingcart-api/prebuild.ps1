@@ -15,4 +15,4 @@ if ($fail) {
 	throw "Found restricted words or unexpected binary files"
 }
 
-echo "prebuild check succeeded"
+Write-Output "prebuild check succeeded"

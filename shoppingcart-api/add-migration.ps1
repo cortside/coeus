@@ -5,7 +5,7 @@ param(
 )
 
 # common repository functions
-Import-Module .\Repository.psm1 -Force
+Import-Module .\repository.psm1 -Force
 $config = Get-RepositoryConfiguration
 
 #set variables
@@ -15,7 +15,7 @@ $startup = $config.database.startupProject
 $context = $config.database.dbContext
 $efCoreVersion = $config.database.efCoreVersion
 
-echo "creating new migration $migration for $context context in project $project"
+Write-Output "creating new migration $migration for $context context in project $project"
 if ($efCoreVersion) {
 	dotnet tool update --global dotnet-ef --version $efCoreVersion
 } else {
@@ -31,7 +31,7 @@ dotnet build ./src
 if ($updateDatabase.IsPresent) {
 	.\update-database.ps1
 } else {
-	echo "Run `./update-database.ps1` to execute the sql scripts and update the database OR include -updateDatabase when running this script"
+	Write-Output "Run `./update-database.ps1` to execute the sql scripts and update the database OR include -updateDatabase when running this script"
 }
 
-echo "done"
+Write-Output "done"

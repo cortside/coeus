@@ -200,7 +200,7 @@ foreach ($dockerfile in $dockerFiles) {
 		$analysisArgs += " $($config.sonar.propertyPrefix)sonar.scm.revision=$commit $($config.sonar.propertyPrefix)sonar.pullrequest.key=$pullRequestId $($config.sonar.propertyPrefix)sonar.pullrequest.base=$target $($config.sonar.propertyPrefix)sonar.pullrequest.branch=$branch";
 	}
 
-echo $analysisArgs
+Write-Output $analysisArgs
 
 	#$sonarArgs = "--build-arg `"analysisArgs=$analysisArgs`" --build-arg `"sonarhost=$($config.sonar.host)`" --build-arg `"sonartoken=$($config.sonar.token)`" --build-arg `"sonarkey=$($config.sonar.key)`""
 	#}
@@ -271,4 +271,4 @@ echo $analysisArgs
 }
 
 $export | ConvertTo-Json -Depth 5 | Out-File -FilePath buildconfig.json
-cat buildconfig.json
+Get-Content buildconfig.json

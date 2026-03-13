@@ -70,33 +70,33 @@ if ($exists -ne $null) {
 	exit 1
 }
 
-echo "prepping"
+Write-Output "prepping"
 
-.\clean.ps1 -quiet
+.\.clean.ps1 -quiet
 $result = check-result
 
-echo "preupdate"
+Write-Output "preupdate"
 
 if ($preupdateExpression -ne "") {
-	echo "running $preupdateExpression"
+	Write-Output "running $preupdateExpression"
 	Invoke-Expression "& $preupdateExpression"
 }
 
-echo "about to restore"
+Write-Output "about to restore"
 
 Invoke-Exe dotnet -args "restore src --verbosity quiet"
 $result = check-result
 
-echo "ready to update nuget packages"
+Write-Output "ready to update nuget packages"
 if ($package -eq "") { 
 	$body = (.\update-nugetpackages.ps1)
 } else {
 	$body = (Invoke-Exe dotnet -args "outdated src --include $package --pre-release Never --upgrade")
 }
-echo $body
+Write-Output $body
 $result = check-result
 
-echo "checking to see if anything changed"
+Write-Output "checking to see if anything changed"
 
 $changes = (git status --porcelain)
 if ($changes.Count -ne 0) {
@@ -133,12 +133,12 @@ if ($changes.Count -ne 0) {
 	gh repo set-default
 	gh pr create --title "$bot" --body "$body" --base develop
  } else {
-	echo "should create the pr here -- everything passed - $branch" 
-	echo $body 
+	Write-Output "should create the pr here -- everything passed - $branch" 
+	Write-Output $body 
  }
 
  .\clean.ps1
  git checkout develop
 } else {
-	echo "no files changed"
+	Write-Output "no files changed"
 }

@@ -94,9 +94,9 @@ if ($database -eq "" -and $connectionString -eq "") {
 	$database = $config.database.name
 }
 
-echo "Server:   $server"
-echo "Database: $database"
-echo "User:     $username"
+Write-Output "Server:   $server"
+Write-Output "Database: $database"
+Write-Output "User:     $username"
 
 if ($RebuildDatabase.IsPresent) {
 	Write-Output "Rebuilding database..."
@@ -122,12 +122,12 @@ if ($TestData.IsPresent) {
 	$scripts += Get-Files(".\src\sql\testdata\*.sql")
 }
 
-echo "update database..."
+Write-Output "update database..."
 foreach ($script in $scripts) {
-	echo "running $script"
+	Write-Output "running $script"
 	$log = $script -replace "(.*).sql(.*)", '$1.log$2'
 	$result = Execute-Sql -database $database -sql (Get-Content -Raw "$script")
 	$result | Out-File $log
 }
 
-echo "done"
+Write-Output "done"

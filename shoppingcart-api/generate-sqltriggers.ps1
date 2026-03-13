@@ -14,7 +14,7 @@ Param
 $ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';
 
 # common repository functions
-Import-Module .\Repository.psm1 -Force
+Import-Module .\repository.psm1 -Force
 $config = Get-RepositoryConfiguration
 
 #set variables
@@ -37,8 +37,8 @@ if ($server -eq "") {
 	$server = "(LocalDB)\MSSQLLocalDB"
 }
 
-echo "Server: $server"
-echo "User: $username"
+Write-Output "Server: $server"
+Write-Output "User: $username"
 
 $triggergenDbName = "GenerateSqlTriggers"
 
@@ -121,7 +121,7 @@ try {
 		Write-Output "Executing schema file $schemafile on $server with user $username"
 		invoke-sqlcmd -serverInstance $server -username $username -password $password -Database $triggergenDbName -inputFile "$schemafile" -ErrorAction Stop -TrustServerCertificate
 	}
-	rm $schemafile
+	Remove-Item $schemafile
 } catch {
 	Write-Output($error)
 	throw "Problem executing schema file"
@@ -232,7 +232,7 @@ if ($username -eq "") {
 }
 
 foreach ($table in $tables) {
-	echo "$($table.QualifiedName) $($table.TableName)"
+	Write-Output "$($table.QualifiedName) $($table.TableName)"
 	$triggerName = "tr$($table.TableName)"
 
 	if ($table.LastModifiedUserColumn -ne "") {

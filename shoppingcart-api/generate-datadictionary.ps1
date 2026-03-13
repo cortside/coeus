@@ -49,9 +49,9 @@ if ($server -eq "") {
 	$server = "(LocalDB)\MSSQLLocalDB"
 }
 
-echo "Server:   $server"
-echo "Database: $database"
-echo "User:     $username"
+Write-Output "Server:   $server"
+Write-Output "Database: $database"
+Write-Output "User:     $username"
 
 $ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';
 
@@ -75,7 +75,7 @@ WHERE name not in ('master', 'model', 'msdb', 'tempdb')
 ORDER BY name
 "@
 
-echo "generating datadictionary"
+Write-Output "generating datadictionary"
 $databases = Execute-Sql -database $database -sql $sql
 
 $databases | measure-object
@@ -85,7 +85,7 @@ Write-Output "exporting $filename"
 "Database,Schema,Table Name,Table Description,Column Name,Position,Column Description,Data Type, Nullable" | Out-File $filename -Encoding utf8
 
 foreach ($db in $databases) {
-	echo $db.name
+	Write-Output $db.name
 	
 	$sql = @"
 SELECT col.TABLE_CATALOG, col.TABLE_SCHEMA, col.TABLE_NAME, tprop.value TABLE_DESCRIPTION, COLUMN_NAME, ORDINAL_POSITION, prop.value AS [COLUMN_DESCRIPTION],
@@ -114,4 +114,4 @@ ORDER BY col.TABLE_CATALOG, col.TABLE_SCHEMA, col.TABLE_NAME, col.ORDINAL_POSITI
 	}
 }
 
-echo "done"
+Write-Output "done"

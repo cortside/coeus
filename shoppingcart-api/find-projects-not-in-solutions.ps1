@@ -39,7 +39,7 @@ Get-ProjectInSolution $sln | select-object Fullname | sort > projects.txt
 gci *.csproj -r | select-object fullname | %{ 
 	$in = Select-String -Path .\projects.txt -SimpleMatch $_.FullName; 
 	if ($in -eq $null) {
-		echo "Adding $_ to $sln"
+		Write-Output "Adding $_ to $sln"
 		dotnet sln $sln add $_.FullName
 	} 
 }

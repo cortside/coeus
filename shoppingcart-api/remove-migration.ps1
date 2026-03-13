@@ -3,7 +3,7 @@ param(
 )
 
 # common repository functions
-Import-Module .\Repository.psm1 -Force
+Import-Module .\repository.psm1 -Force
 $config = Get-RepositoryConfiguration
 
 #set variables
@@ -13,8 +13,8 @@ $startup = $config.database.startupProject
 $context = $config.database.dbContext
 
 
-echo "removing last migration from $context context in project $project"
+Write-Output "removing last migration from $context context in project $project"
 
 dotnet ef migrations remove --project "$project" --startup-project "$startup" --context "$context"
 
-echo "done"
+Write-Output "done"

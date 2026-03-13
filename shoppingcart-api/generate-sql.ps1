@@ -1,5 +1,5 @@
 # common repository functions
-Import-Module .\Repository.psm1 -Force
+Import-Module .\repository.psm1 -Force
 $config = Get-RepositoryConfiguration
 
 #set variables
@@ -9,7 +9,7 @@ $startup = $config.database.startupProject
 $context = $config.database.dbContext
 $efCoreVersion = $config.database.efCoreVersion
 
-echo "Generating transactional SQL migrations for $project..."
+Write-Output "Generating transactional SQL migrations for $project..."
 
 $begin = @" 
 PRINT 'Before TRY'
@@ -48,7 +48,7 @@ foreach ($migration in $migrations) {
 	if ($migration.StartsWith("20")) {
 		$migration = $migration -replace ' \(Pending\)', ''
 
-		echo "Generating migration $migration..."
+		Write-Output "Generating migration $migration..."
 	
 		$exists = test-path src/sql/table/$migration.migration.sql
 		if (!$exists) {
@@ -62,10 +62,10 @@ foreach ($migration in $migrations) {
 				$text = $text.replace("GO`r`n", "")
 				"$begin$text$end" | Out-File src/sql/table/$migration.migration.sql -Encoding UTF8
 			} else {
-				echo "error generating migration"
+				Write-Output "error generating migration"
 			}
 		} else {
-			echo "skipping, file already exists"
+			Write-Output "skipping, file already exists"
 		}
 	
 		## set last for next loop
@@ -73,4 +73,4 @@ foreach ($migration in $migrations) {
 	}	
 }
 
-echo "done"
+Write-Output "done"

@@ -72,5 +72,5 @@ if ($NoVersionLock.IsPresent) {
 }
 
 if ($cortside.IsPresent) {
-	dotnet outdated ./src --include Cortside --upgrade
+    dotnet outdated ./src --include Cortside --upgrade --pre-release Always -prl develop
 }
