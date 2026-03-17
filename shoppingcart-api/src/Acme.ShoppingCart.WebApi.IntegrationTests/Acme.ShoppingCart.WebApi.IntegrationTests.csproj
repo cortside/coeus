@@ -14,11 +14,11 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.Testing" Version="8.1.324-develop" />
-    <PackageReference Include="Cortside.Common.Testing" Version="8.1.504-develop" />
-    <PackageReference Include="Cortside.Common.Testing.EntityFramework" Version="8.1.504-develop" />
-    <PackageReference Include="Cortside.DomainEvent.Stub" Version="8.1.397-develop" />
-    <PackageReference Include="Cortside.MockServer.AccessControl" Version="8.1.88-develop" />
+    <PackageReference Include="Cortside.AspNetCore.Testing" Version="8.1.326" />
+    <PackageReference Include="Cortside.Common.Testing" Version="8.1.506" />
+    <PackageReference Include="Cortside.Common.Testing.EntityFramework" Version="8.1.506" />
+    <PackageReference Include="Cortside.DomainEvent.Stub" Version="8.1.399" />
+    <PackageReference Include="Cortside.MockServer.AccessControl" Version="8.1.89" />
     <PackageReference Include="coverlet.collector" Version="6.0.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
