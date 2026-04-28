@@ -1,7 +1,7 @@
 using namespace System.Collections.Generic # for List<T> 
 
 $dir = "." # points to "repository root"
-$targetVersion = "net8.0"
+$targetVersion = "net10.0"
 
 $projFiles = Get-ChildItem $dir -Recurse -Filter *.csproj
 
