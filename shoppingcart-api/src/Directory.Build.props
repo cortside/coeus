@@ -1,0 +1,20 @@
+<Project>
+  <ItemGroup>
+    <!--
+      Transitive package version overrides to address known security vulnerabilities.
+      These pin vulnerable transitive dependencies to their patched versions.
+    -->
+
+    <!-- GHSA-g94r-2vxg-569j (Moderate): OpenTelemetry.Api >= 0.5.0-beta.2 < 1.15.3 -->
+    <PackageReference Include="OpenTelemetry.Api" Version="1.15.3" />
+
+    <!-- GHSA-mr8r-92fq-pj8p, GHSA-q834-8qmm-v933 (Moderate): OpenTelemetry.Exporter.OpenTelemetryProtocol >= 1.13.1 < 1.15.3 -->
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.15.3" />
+
+    <!-- GHSA-g4vj-cjjj-v7hg (Low): NuGet.Packaging >= 6.12.0 <= 6.12.4 -->
+    <PackageReference Include="NuGet.Packaging" Version="6.12.5" />
+
+    <!-- GHSA-g4vj-cjjj-v7hg (Low): NuGet.Protocol >= 6.12.0 <= 6.12.4 -->
+    <PackageReference Include="NuGet.Protocol" Version="6.12.5" />
+  </ItemGroup>
+</Project>
