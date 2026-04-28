@@ -12,5 +12,14 @@ namespace Acme.ShoppingCart.Exceptions {
 
         public InvalidOrderStateChangeMessage(string message, System.Exception exception) : base(message, exception) {
         }
+
+        public InvalidOrderStateChangeMessage(System.Exception exception) : base("Current state does not allow requested operation.", exception) {
+        }
+
+        protected InvalidOrderStateChangeMessage(string key, string property, params object[] properties) : base(key, property, properties) {
+        }
+
+        protected InvalidOrderStateChangeMessage(string message, string property) : base(message, property) {
+        }
     }
 }

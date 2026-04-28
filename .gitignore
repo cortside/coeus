@@ -362,3 +362,6 @@ policyserver/*.local.json
 shoppingcart-api/DataDictionary.csv
 
 .env
+
+*.lscache
+

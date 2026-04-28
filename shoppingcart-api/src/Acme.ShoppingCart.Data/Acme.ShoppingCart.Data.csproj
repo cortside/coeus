@@ -11,26 +11,26 @@
     <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.Common" Version="8.0.317" />
-    <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="8.0.317" />
-    <PackageReference Include="Cortside.Common.Security" Version="8.0.480" />
-    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="8.0.393" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.3" />
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.13.61">
+    <PackageReference Include="Cortside.AspNetCore.Common" Version="8.1.324-develop" />
+    <PackageReference Include="Cortside.AspNetCore.EntityFramework" Version="8.1.324-develop" />
+    <PackageReference Include="Cortside.Common.Security" Version="8.1.504-develop" />
+    <PackageReference Include="Cortside.DomainEvent.EntityFramework" Version="8.1.397-develop" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.14" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.14.15">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="ReferenceTrimmer" Version="3.3.11">
+    <PackageReference Include="ReferenceTrimmer" Version="3.4.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Roslynator.Analyzers" Version="4.13.1">
+    <PackageReference Include="Roslynator.Analyzers" Version="4.15.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="10.7.0.110445">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="10.21.0.135717">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
