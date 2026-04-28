@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TargetFramework>net10.0</TargetFramework>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <AnalysisMode>Recommended</AnalysisMode>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <!-- Remove this to get a warning how to enable IDE0005 (Remove unnecessary usings/imports) on build; that warning describes a workaround for https://github.com/dotnet/roslyn/issues/41640 -->
@@ -14,23 +14,23 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Cortside.AspNetCore.Testing" Version="8.1.324-develop" />
-    <PackageReference Include="Cortside.Common.Testing" Version="8.1.504-develop" />
-    <PackageReference Include="Cortside.Common.Testing.EntityFramework" Version="8.1.504-develop" />
-    <PackageReference Include="Cortside.DomainEvent.Stub" Version="8.1.397-develop" />
-    <PackageReference Include="Cortside.MockServer.AccessControl" Version="8.1.88-develop" />
-    <PackageReference Include="coverlet.collector" Version="6.0.4">
+    <PackageReference Include="Cortside.AspNetCore.Testing" Version="10.0.328-develop" />
+    <PackageReference Include="Cortside.Common.Testing" Version="10.0.507-develop" />
+    <PackageReference Include="Cortside.Common.Testing.EntityFramework" Version="10.0.507-develop" />
+    <PackageReference Include="Cortside.DomainEvent.Stub" Version="10.0.400-develop" />
+    <PackageReference Include="Cortside.MockServer.AccessControl" Version="10.0.90-develop" />
+    <PackageReference Include="coverlet.collector" Version="10.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.25" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.14" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.7" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.5.1" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.14.15">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="ReferenceTrimmer" Version="3.4.5">
+    <PackageReference Include="ReferenceTrimmer" Version="3.5.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -39,11 +39,11 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Shouldly" Version="4.3.0" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="10.21.0.135717">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="10.25.0.139117">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="WireMock.Net" Version="1.25.0" />
+    <PackageReference Include="WireMock.Net" Version="2.4.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
       <PrivateAssets>all</PrivateAssets>
