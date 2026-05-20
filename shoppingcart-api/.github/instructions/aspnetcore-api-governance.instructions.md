@@ -1,7 +1,7 @@
 ---
 description: "ASP.NET Core API and MVC governance for thin controllers and correct boundaries."
 name: "ASP.NET Core API Governance"
-applyTo: "src/Acme.ShoppingCart.*Api/**/*.cs"
+applyTo: "src/**/*Api/**/*.cs"
 ---
 # ASP.NET Core MVC and API Governance
 

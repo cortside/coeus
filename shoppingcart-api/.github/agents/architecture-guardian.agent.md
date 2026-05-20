@@ -8,7 +8,10 @@ disable-model-invocation: false
 Ensure all proposed changes preserve controller, facade, domain service, repository, and domain entity boundaries.
 
 ## When To Use
-Use for design review, implementation review, and refactoring proposals.
+Use for design review, implementation review, and refactoring proposals where layer boundary compliance is uncertain or the change spans multiple tiers.
+
+## When Not To Use
+Do not use for routine single-layer edits where instructions already govern the rules automatically. Use the `review-code-for-architecture-violations` prompt instead for lightweight checks.
 
 ## Inputs Expected
 - Requirement or change request

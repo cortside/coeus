@@ -8,7 +8,10 @@ disable-model-invocation: false
 Coordinate safe, auditable troubleshooting iterations.
 
 ## When To Use
-Use when users request fix, debug, investigate, or troubleshooting workflows.
+Use when users request fix, debug, investigate, or troubleshooting workflows and structured iteration governance is needed.
+
+## When Not To Use
+Do not use for planning workflows — that is `Planning Governor`. For routine single-fix changes where the cause is already known, use the `perform-one-approved-troubleshooting-iteration` prompt directly.
 
 ## Inputs Expected
 - Problem statement

@@ -1,22 +1,18 @@
 ---
 description: "Add an API endpoint while preserving architecture boundaries."
 name: "Add Endpoint With Architecture Rules"
-argument-hint: "Endpoint description and request/response contract"
+argument-hint: "Endpoint route, HTTP method, request/response contract, and target facade"
 ---
-Implement an endpoint using this repository architecture.
+Add a new API endpoint following repository architecture.
 
-Required behavior:
-- Controller performs transport-bound validation and mapping.
-- Controller delegates workflow to facade.
-- Facade orchestrates domain services.
-- Domain services interact with repositories.
-- Repositories encapsulate persistence.
+1. Create a thin controller action: bind, validate, map to internal command, delegate to facade, map result to response DTO.
+2. Add or update the facade method to orchestrate domain services.
+3. Add explicit request-to-command and result-to-response mapping at the controller boundary.
+4. Add unit tests for controller and facade behavior.
+5. Add a lightweight integration test for the endpoint pipeline.
 
-Prohibited behavior:
-- No controller business logic.
-- No controller direct repository or DbContext access.
-- No AutoMapper.
+Do not place business logic in the controller.
+Do not call repositories or DbContext directly from the controller.
+Do not use AutoMapper.
 
-Validation:
-- Add unit tests.
-- Add integration tests when endpoint pipeline behavior is affected.
+For a detailed step-by-step playbook use the `add-api-endpoint` skill.

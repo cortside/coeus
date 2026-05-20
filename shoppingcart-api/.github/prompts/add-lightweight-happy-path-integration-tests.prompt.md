@@ -1,13 +1,14 @@
 ---
 description: "Add lightweight happy-path integration tests using WebApplicationFactory."
 name: "Add Happy Path Integration Tests"
-argument-hint: "Endpoint or pipeline behavior to verify"
+argument-hint: "Endpoint route and expected HTTP status code for the happy path"
 ---
-Add deterministic integration tests for important API pipeline behavior.
+Add a lightweight integration test for an API endpoint pipeline.
 
-Requirements:
-- Use Microsoft.AspNetCore.Mvc.Testing and WebApplicationFactory.
-- Focus on happy-path endpoint and dependency wiring behavior.
-- Keep tests isolated from external services.
-- Use test doubles/fakes/approved local alternatives.
-- Keep broad permutation testing in unit tests.
+1. Use WebApplicationFactory<Program> or the project's existing custom factory.
+2. Configure test-specific services to replace external dependencies with fakes or in-memory alternatives.
+3. Write one happy-path test per endpoint that verifies status code, routing, serialization, and DI wiring.
+4. Keep detailed logic permutations in unit tests.
+5. Ensure test is isolated and deterministic — no external service calls.
+
+For a detailed step-by-step playbook use the `add-integration-tests-webapplicationfactory` skill.

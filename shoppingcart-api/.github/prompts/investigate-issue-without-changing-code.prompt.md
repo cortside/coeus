@@ -1,12 +1,13 @@
 ---
 description: "Investigate an issue without changing implementation code."
 name: "Investigate Issue Without Code Changes"
-argument-hint: "Issue description and reproduction context"
+argument-hint: "Issue description, observed vs expected behavior, and any known reproduction steps"
 ---
-Perform analysis-only troubleshooting.
+Perform read-only investigation of the reported issue.
 
-Required workflow:
-1. Create troubleshooting artifact folder with timestamp.
-2. Create iteration notes file documenting inspection and findings.
-3. Do not change implementation code.
-4. Stop and request approval before next iteration.
+1. Create artifact folder: artifacts/YYYYMMDD-HHMMSS-short-description/
+2. Create iteration-001-analysis.md documenting: what was inspected, current behavior, expected behavior, likely root cause candidates, and recommended next step.
+3. Do not change any implementation code during this step.
+4. Stop and request approval before proceeding to a fix iteration.
+
+For a detailed step-by-step playbook use the `investigate-bug-troubleshooting-workflow` skill.

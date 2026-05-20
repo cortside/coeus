@@ -10,6 +10,9 @@ Maintain approved plans in active execution state with accurate task tracking an
 ## When To Use
 Use after a plan is approved and implementation has started, or when completion verification and plan lifecycle moves are needed.
 
+## When Not To Use
+Do not use for creating plans from requirements — that is `Planning Governor`. This agent does not write implementation code.
+
 ## Inputs Expected
 - Current approved plan path
 - Task progress and validation evidence

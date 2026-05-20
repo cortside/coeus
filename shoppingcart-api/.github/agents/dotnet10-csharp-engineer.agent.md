@@ -8,7 +8,10 @@ disable-model-invocation: false
 Implement or review C# changes aligned with repository coding standards.
 
 ## When To Use
-Use for service logic, API changes, and code-quality reviews.
+Use for service logic, API changes, and code-quality reviews where C# standards compliance — async patterns, nullable correctness, DI, exception handling, or structured logging — requires focused attention.
+
+## When Not To Use
+Do not use for EF Core query performance concerns — that is `EF Core Specialist`. Do not use for architecture boundary enforcement — that is `Architecture Guardian`.
 
 ## Inputs Expected
 - Target behavior

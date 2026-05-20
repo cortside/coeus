@@ -1,7 +1,7 @@
 ---
 description: "Entity Framework Core safety and performance governance."
 name: "EF Core Governance"
-applyTo: "src/Acme.ShoppingCart.Data/**/*.cs"
+applyTo: "src/**/*.Data/**/*.cs"
 ---
 # EF Core Governance
 

@@ -1,0 +1,13 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": ".github/hooks/scripts/check-git-write.sh",
+        "osx": ".github/hooks/scripts/check-git-write.sh",
+        "linux": ".github/hooks/scripts/check-git-write.sh",
+        "windows": "powershell -File .github\\hooks\\scripts\\check-git-write.ps1"
+      }
+    ]
+  }
+}

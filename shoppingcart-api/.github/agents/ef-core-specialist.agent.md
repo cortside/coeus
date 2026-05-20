@@ -8,7 +8,10 @@ disable-model-invocation: false
 Design and review EF Core data access changes for correctness and performance.
 
 ## When To Use
-Use when repository queries, persistence logic, or data loading behavior changes.
+Use when repository queries, persistence logic, tracking behavior, migration safety, or data loading strategy requires specialist EF Core judgment.
+
+## When Not To Use
+Do not use for business logic or domain service concerns. Do not use for general repository architecture boundaries — that is `Architecture Guardian`. Use the `change-repository` skill or `add-efcore-repository-method-safely` prompt for routine repository work.
 
 ## Inputs Expected
 - Repository methods or query requirements

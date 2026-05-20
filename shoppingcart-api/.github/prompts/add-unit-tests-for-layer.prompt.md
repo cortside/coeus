@@ -1,18 +1,14 @@
 ---
 description: "Add unit tests for a selected layer with clear behavioral coverage."
 name: "Add Unit Tests For Layer"
-argument-hint: "Layer/component and behavior to test"
+argument-hint: "Component name and behavior or method to test"
 ---
-Create unit tests for the target layer.
+Create unit tests for the specified component.
 
-Coverage requirements:
-- Success path
-- Validation failure path
-- Error path
-- Null/empty or edge behavior
-- Mapping behavior where relevant
+1. Cover: success path, validation failure, error/exception path, null/empty inputs, and important edge cases.
+2. Use Arrange / Act / Assert structure.
+3. Keep tests isolated — mock or stub only what is necessary to clarify behavior.
+4. Test observable behavior, not implementation details.
+5. Include mapping behavior tests where the component performs meaningful transforms.
 
-Testing style:
-- Arrange, Act, Assert
-- Isolated tests
-- Avoid brittle implementation coupling
+For a detailed step-by-step playbook use the `add-unit-tests` skill.

@@ -12,6 +12,9 @@ Convert requirements into an approval-gated, phased plan with complete requireme
 ## When To Use
 Use when a user asks for planning from requirements, plan revisions, or plan governance checks.
 
+## When Not To Use
+Do not use for active implementation tracking after Gate 2 approval — that is `Planning Coordinator`. Do not use for troubleshooting workflows — that is `Troubleshooting Coordinator`.
+
 ## Inputs Expected
 - Requirements text or requirement notes path
 - Planning topic and scope boundaries

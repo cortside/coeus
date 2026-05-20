@@ -1,19 +1,16 @@
 ---
 description: "Review an implementation plan for requirement and task traceability completeness."
 name: "Review Plan Traceability"
-argument-hint: "Path to plan file and requirements file"
+argument-hint: "Paths to the plan file and requirements file in memory-bank/current and docs"
 ---
-Review the provided plan and requirements files for traceability quality.
+Review the plan and requirements files for traceability quality.
 
-Checks:
-1. Every requirement ID maps to one or more task IDs.
-2. Every task maps to one or more requirement IDs.
-3. Every task has owner, status, acceptance criteria, and test expectations.
-4. Plan includes Gate 1 and Gate 2 checkpoints.
-5. Plan includes progress log and completion checklist.
+1. Verify every REQ-### maps to at least one TASK-###.
+2. Verify every TASK-### maps back to at least one REQ-###.
+3. Confirm each task has: owner, status field, acceptance criteria, and test expectations.
+4. Confirm Gate 1 and Gate 2 checkpoints are present.
+5. Confirm a progress log and completion checklist exist.
 
-Output:
-- Findings by severity
-- Missing links or orphaned requirements/tasks
-- Suggested corrections
-- Pass or fail verdict
+Output findings by severity, list orphaned requirements or tasks, suggest corrections, and give a pass/fail verdict.
+
+For formal plan governance invoke the `Planning Governor` agent.

@@ -5,7 +5,7 @@ These rules apply to all Copilot-assisted work in this repository.
 
 ## Source Of Truth
 - If requirement text conflicts with repository conventions, repository code and docs are authoritative.
-- Architecture reference: `docs/ServiceTierResponsibilities.png` and `docs/ServiceDiagram.md`.
+- If architecture diagrams or design docs exist in `docs/`, treat them as authoritative for layer boundaries and naming conventions.
 
 ## Architecture Boundaries
 - Request flow: HTTP Request -> Controller -> Facade -> Domain Service -> Repository -> Database.
@@ -40,4 +40,4 @@ These rules apply to all Copilot-assisted work in this repository.
 - Put global standards in instruction files first.
 - Use prompts and skills for repeatable workflows.
 - Use agents for specialized tasks with explicit role boundaries.
-- Keep blocking hooks limited to critical gates (planning pre-check, git safety, architecture boundaries, and test completeness).
+- The git safety rule is enforced as an executable platform hook. Other governance checklists are documentation only unless converted to executable hooks.
